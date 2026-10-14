@@ -1,0 +1,153 @@
+# ============================================================
+# AFSIM / ysim .gitignore
+# Generated for GitHub upload optimization
+# ============================================================
+
+# ------------------------------------------------------------
+# 1. Third-party dependencies (entire folder, 2.8GB+)
+# ------------------------------------------------------------
+dependencies/
+
+# ------------------------------------------------------------
+# 2. Build output & CMake artifacts
+# ------------------------------------------------------------
+build/
+cmake_uninstall.cmake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.txt
+Makefile
+*.cmake
+!src/cmake/**/*.cmake
+
+# ------------------------------------------------------------
+# 3. Compiled binaries (never commit these)
+# ------------------------------------------------------------
+# Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled headers
+*.gch
+*.pch
+
+# Dynamic libraries
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Fortran modules
+*.mod
+*.smod
+
+# Debug symbols
+*.pdb
+
+# ------------------------------------------------------------
+# 4. Prebuilt third-party binary libs inside src/
+# ------------------------------------------------------------
+src/wsf_plugins/wsf_oms_uci/lib/
+
+# ------------------------------------------------------------
+# 5. Large test mission data (aerodynamic tables, etc.)
+# ------------------------------------------------------------
+src/wsf_plugins/wsf_six_dof/test_mission/
+src/wsf_plugins/wsf_p6dof/test_mission/
+
+# ------------------------------------------------------------
+# 6. Binary asset files (3D models, maps, textures)
+#    These live in dependencies/ but also guard in src/
+# ------------------------------------------------------------
+*.osgb
+*.osg
+*.ive
+*.mbtiles
+*.earth
+*.tga
+*.tif
+*.tiff
+*.jp2
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+
+# ------------------------------------------------------------
+# 7. IDE / Editor files
+# ------------------------------------------------------------
+# Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+.vs/
+x64/
+x86/
+*.tlog
+*.log
+
+# Xcode
+DerivedData/
+*.build
+*.xcodeproj/
+*.xcworkspace/
+
+# VS Code
+.vscode/
+.settings/
+
+# Qt Creator
+*.pro.user
+*.pro.user.*
+
+# JetBrains
+.idea/
+*.iml
+
+# ------------------------------------------------------------
+# 8. OS generated files
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ------------------------------------------------------------
+# 9. Misc
+# ------------------------------------------------------------
+*.pc
+*.conf
+*.backup
+*.bak
+*.swp
+*~
+
+# Gradle / Android
+.gradle/
+.externalNativeBuild/
+local.properties
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
