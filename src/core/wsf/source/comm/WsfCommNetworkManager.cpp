@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -11,6 +11,11 @@
 
 #include "WsfCommNetworkManager.hpp"
 
+// 二次开发（i18n）：WsfCommAddress 仅支持流输出，消息 ID 化时需 std::ostringstream 字符串化
+#include <sstream>
+
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
 #include "WsfComm.hpp"
@@ -173,7 +178,10 @@ bool NetworkManager::PlatformsInitialized()
       auto routerPtr = commPtr->GetPlatform()->GetComponent<router::Router>(commPtr->GetRouterName());
       if (!routerPtr)
       {
-         auto out = ut::log::error() << "Assigned router not found on platform.";
+         // 二次开发（i18n）：错误消息 ID 化 —— comm/router 名作为模板参数（中文界面可完整翻译）
+         const ut::msg::Args args{{"comm", commPtr->GetFullName()},
+                                  {"router", commPtr->GetRouterName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ROUTER_NOT_FOUND, args);
          out.AddNote() << "Comm: " << commPtr->GetFullName();
          out.AddNote() << "Router: " << commPtr->GetRouterName();
          out.AddNote() << "Ensure the specified router name is correct.";
@@ -240,7 +248,8 @@ void NetworkManager::ManageComm(double             aSimTime,
       {
          //! Note: We should never reach this branch during normal operating conditions. If this occurs, we need
          //! to re-evaluate the number of default comm objects allowed in AFSIM, and perhaps allow it to be defined.
-         ut::log::error() << "Maximum number of comm objects defined on default network.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_DEFAULT_NET_FULL, {});
          throw UtException("Default comm object network limit reached.");
       }
    }
@@ -267,7 +276,10 @@ void NetworkManager::ManageComm(double             aSimTime,
 
       if (address.IsNull())
       {
-         auto out = ut::log::error() << "Error assigning comm to network.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 网络/comm 名作为模板参数
+         const ut::msg::Args args{{"network", tempNetworkName},
+                                  {"comm", aCommPtr->GetName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ASSIGN_NETWORK_FAIL, args);
          out.AddNote() << "Network: " << tempNetworkName;
          out.AddNote() << "Comm: " << aCommPtr->GetName();
          out.AddNote() << "Ensure the network can accommodate the required number of hosts.";
@@ -291,7 +303,12 @@ void NetworkManager::ManageComm(double             aSimTime,
          if (!result)
          {
             //! Network creation failed.
-            auto out = ut::log::error() << "Cannot create network of same name.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 地址需经 ostringstream 字符串化（WsfCommAddress 仅支持流输出）
+            std::ostringstream addrStream;
+            addrStream << aNetworkAddress;
+            const ut::msg::Args args{{"address", addrStream.str()},
+                                     {"comm", aCommPtr->GetFullName()}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_CREATE_NETWORK_FAIL, args);
             out.AddNote() << "Address: " << aNetworkAddress;
             out.AddNote() << "Comm: " << aCommPtr->GetFullName();
             throw UtException("Error in comm network creation.");
@@ -307,7 +324,10 @@ void NetworkManager::ManageComm(double             aSimTime,
          auto address     = AddComm(aSimTime, aCommPtr, networkName);
          if (address.IsNull())
          {
-            auto out = ut::log::error() << "Error assigning comm to network.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 网络/comm 名作为模板参数（与上方同 ID 复用）
+            const ut::msg::Args args{{"network", networkName},
+                                     {"comm", aCommPtr->GetName()}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ASSIGN_NETWORK_FAIL, args);
             out.AddNote() << "Network: " << networkName;
             out.AddNote() << "Comm: " << aCommPtr->GetName();
             out.AddNote() << "Ensure the network can accommodate the required number of hosts.";
@@ -324,7 +344,12 @@ void NetworkManager::ManageComm(double             aSimTime,
       auto networkName = AddComm(aSimTime, aCommPtr, aAddress);
       if (networkName.empty())
       {
-         auto out = ut::log::error() << "Error assigning comm to network address.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 地址经 ostringstream 字符串化
+         std::ostringstream addrStream;
+         addrStream << aAddress;
+         const ut::msg::Args args{{"address", addrStream.str()},
+                                  {"comm", aCommPtr->GetName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ASSIGN_ADDR_FAIL, args);
          out.AddNote() << "Address: " << aAddress;
          out.AddNote() << "Comm: " << aCommPtr->GetName();
          out.AddNote() << "Ensure the network can accommodate the required number of hosts.";
@@ -337,7 +362,8 @@ void NetworkManager::ManageComm(double             aSimTime,
    {
       //! The user defined multiple values for network and/or network assignment, resulting in
       //! ambiguous usage. Inform the user and return failure.
-      auto out = ut::log::error() << "Too many inputs for comm.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 条件性附注保持英文原样
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_TOO_MANY_INPUTS, {});
       if (!aAddress.IsNull())
       {
          out.AddNote() << "Address: " << aAddress;
@@ -391,7 +417,10 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
    }
    else
    {
-      auto out = ut::log::error() << "Missing router assignment for comm.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 时刻/通信设备名作为模板参数
+      const ut::msg::Args args{{"t", std::to_string(aSimTime)},
+                               {"comm", aCommPtr->GetFullName()}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_MISSING_ROUTER_ASSIGN, args);
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Comm: " << aCommPtr->GetFullName();
       out.AddNote() << "Ensure the specified 'router_name' references an existing router on this platform.";
@@ -474,7 +503,10 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
 
       if (!platformPtr)
       {
-         auto out = ut::log::error() << "Platform not found during external link creation in network manager.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台/comm 名作为模板参数
+         const ut::msg::Args args{{"platform", platformName},
+                                  {"comm", aCommPtr->GetFullName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_EXT_LINK_NO_PLATFORM, args);
          out.AddNote() << "Missing Platform: " << platformName;
          out.AddNote() << "Comm: " << aCommPtr->GetFullName();
          throw UtException("Platform not found during external link creation in network manager.");
@@ -483,7 +515,9 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
       auto commPtr = platformPtr->GetComponent<Comm>(commName);
       if (!commPtr)
       {
-         auto out = ut::log::error() << "Comm not found during external link creation in network manager.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台.comm 名作为模板参数
+         const ut::msg::Args args{{"comm", platformName + "." + commName}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_EXT_LINK_NO_COMM, args);
          out.AddNote() << "Missing Comm: " << platformName << "." << commName;
          out.AddNote() << "Comm: " << aCommPtr->GetFullName();
          throw UtException("Comm not found during external link creation in network manager.");
@@ -492,7 +526,9 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
       const auto& destinationAddress = commPtr->GetAddress();
       if (destinationAddress.IsNull())
       {
-         auto out = ut::log::error() << "Comm address not found during external link creation in network manager.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台.comm 名作为模板参数
+         const ut::msg::Args args{{"comm", platformName + "." + commName}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_EXT_LINK_NO_ADDR, args);
          out.AddNote() << "Comm: " << platformName << "." << commName;
          throw UtException("Comm address not found during external link creation in network manager.");
       }
@@ -1470,7 +1506,10 @@ void NetworkManager::PlatformInitialized(double aSimTime, WsfPlatform* aPlatform
       auto routerPtr = aPlatform->GetComponent<router::Router>(iter->GetRouterName());
       if (!routerPtr)
       {
-         auto out = ut::log::error() << "Missing router on platform.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台/路由器名作为模板参数
+         const ut::msg::Args args{{"platform", aPlatform->GetName()},
+                                  {"router", iter->GetRouterName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ROUTER_MISSING_ON_PLAT, args);
          out.AddNote() << "Platform: " << aPlatform->GetName();
          out.AddNote() << "Router: " << iter->GetRouterName();
          throw UtException("Invalid router specification in NetworkManager::PlatformInitialized()");

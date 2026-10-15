@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfEM_Antenna.hpp"
 #include "WsfEM_Rcvr.hpp"
@@ -53,9 +55,8 @@ bool SurfaceWaveRadarSensorErrorModel::Initialize(WsfSensorMode* aSensorModePtr)
    bool ok = wsf::StandardSensorErrorModel::Initialize(aSensorModePtr);
    if (dynamic_cast<WsfSurfaceWaveRadarSensor*>(aSensorModePtr->GetSensor()) == nullptr)
    {
-      auto out =
-         ut::log::error()
-         << "Specified 'error_model' not able to be used on sensor types that are not WSF_SURFACE_WAVE_RADAR_SENSOR.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SW_RADAR_EM_BAD_SENSOR, {});
       out.AddNote() << "error_model: " << GetName();
       ok = false;
    }

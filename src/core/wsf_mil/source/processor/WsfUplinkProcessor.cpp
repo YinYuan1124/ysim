@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtCallback.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommNetworkManager.hpp"
 #include "WsfPlatform.hpp"
@@ -495,7 +497,8 @@ bool WsfUplinkProcessor::VerifyUplinks()
       if ((GetPlatform()->GetComponent<WsfSensor>(uplinkPath.mSensorName) == nullptr) ||
           (GetPlatform()->GetComponent<wsf::comm::Comm>(uplinkPath.mCommName) == nullptr))
       {
-         auto out = ut::log::error() << "Unknown sensor or comm specified for uplink_path.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_UPLINK_BAD_PATH, {});
          out.AddNote() << "Sensor: " << uplinkPath.mSensorName;
          out.AddNote() << "Comm: " << uplinkPath.mCommName;
          ok = false;

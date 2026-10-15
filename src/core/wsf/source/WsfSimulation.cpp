@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -29,6 +29,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtScriptData.hpp"
 #include "UtScriptExecutor.hpp"
@@ -316,22 +318,29 @@ bool WsfSimulation::AddPlatform(double aSimTime, WsfPlatform* aPlatformPtr)
          AssignDefaultName(aPlatformPtr); // Assign a default name if none provided
          if (aPlatformPtr == nullptr)
          {
-            ut::log::error() << "WsfSimulation: Attempting to add a null platform pointer.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 英文原文经消息目录生成（可 grep ID），中文译文可经 FormatZh 查询
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLATFORM_NULL_PTR, {});
          }
          else if (PlatformPointerExists(aPlatformPtr))
          {
-            auto out = ut::log::error() << "WsfSimulation: Attempting to add the same platform twice.";
+            // 二次开发（i18n）：错误消息 ID 化，结构化参数随中文模板一并翻译
+            const ut::msg::Args args{{"name", aPlatformPtr->GetName()},
+                                     {"index", std::to_string(aPlatformPtr->GetIndex())}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLATFORM_ADDED_TWICE, args);
             out.AddNote() << "Name: " << aPlatformPtr->GetName();
             out.AddNote() << "Index: " << aPlatformPtr->GetIndex();
          }
          else if (aPlatformPtr->GetNameId() == nullptr)
          {
-            ut::log::error() << "WsfSimulation: Trying to add a platform that does not have a name.";
+            // 二次开发（i18n）：错误消息 ID 化
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLATFORM_NO_NAME, {});
          }
          else if (GetPlatformByName(aPlatformPtr->GetNameId()) != nullptr)
          {
+            // 二次开发（i18n）：错误消息 ID 化，平台名进模板参数（中文界面可完整显示）
+            const ut::msg::Args args{{"name", aPlatformPtr->GetNameId()}};
             auto out = ut::log::error()
-                       << "WsfSimulation: Attempting to add platform with the same name as an existing platform.";
+                       << ut::msg::FormatEnTagged(ut::msg::MSG_PLATFORM_DUP_NAME, args);
             out.AddNote() << "Name: " << aPlatformPtr->GetNameId();
          }
          else
@@ -371,8 +380,9 @@ bool WsfSimulation::AddPlatform(double aSimTime, WsfPlatform* aPlatformPtr)
       }
       else
       {
+         // 二次开发（i18n）：错误消息 ID 化
          ut::log::error()
-            << "WsfSimulation: Attempting to add a platform with a sim-time before Initialize() was called.";
+            << ut::msg::FormatEnTagged(ut::msg::MSG_PLATFORM_BEFORE_INIT, {});
       }
    }
    return ok;

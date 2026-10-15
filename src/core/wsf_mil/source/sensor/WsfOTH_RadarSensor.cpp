@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtStringUtil.hpp"
@@ -528,7 +530,8 @@ WsfOTH_RadarSensor::OTH_Beam::OTH_Beam(const OTH_Beam& aSrc)
 {
    if (aSrc.mClutterPtr != nullptr)
    {
-      ut::log::error() << "Unexpected clone of clutter_model.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_CLUTTER_CLONE, {});
    }
 
    // Indicate the receiver is 'linked' with the transmitter.
@@ -1586,7 +1589,8 @@ bool WsfOTH_RadarSensor::OTH_Beam::Initialize(double       aSimTime,
          mClutterPtr = WsfEM_ClutterTypes::Get(aSensorPtr->GetScenario()).Clone(mClutterType);
          if (mClutterPtr == nullptr)
          {
-            auto out = ut::log::error() << "clutter_model has not been defined.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_CLUTTER_UNDEF, {});
             out.AddNote() << "clutter_model: " << mClutterType;
             ok = false;
          }
@@ -1598,7 +1602,8 @@ bool WsfOTH_RadarSensor::OTH_Beam::Initialize(double       aSimTime,
          }
          else if (!mClutterPtr->Initialize(GetEM_Rcvr()))
          {
-            ut::log::error() << "Failed to initialize clutter_model.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_CLUTTER_INIT, {});
             ok = false;
          }
       }
@@ -1745,14 +1750,16 @@ bool WsfOTH_RadarSensor::OTH_Beam::InitializeMTI(OTH_Mode& aMode)
       // Ensure a PRF was specified.
       if (mXmtrPtr->GetPulseRepetitionFrequency() <= 0.0)
       {
-         ut::log::error() << "'pulse_repetition_frequency' must be specified with 'mti_processor'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_MTI_NO_PRF, {});
          return false;
       }
 
       // Ensure the maximum MTI range was specified
       if (mMTI_MaxRange <= 0.0)
       {
-         ut::log::error() << "'maximum_range' must be specified in 'mti_processor'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_MTI_NO_MAX_RANGE, {});
          return false;
       }
 
@@ -1767,7 +1774,8 @@ bool WsfOTH_RadarSensor::OTH_Beam::InitializeMTI(OTH_Mode& aMode)
       }
       else if ((mMTI_InterpulsePeriod_1 == 0.0) || (mMTI_InterpulsePeriod_2 == 0.0))
       {
-         ut::log::error() << "'interpulse_period_1 and 2' must both be specified in 'mti_processor'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_MTI_NO_IPP, {});
          return false;
       }
 
@@ -1979,8 +1987,8 @@ bool WsfOTH_RadarSensor::OTH_Beam::ProcessInput(UtInput& aInput)
    {
       if (mMTI_AdjustmentTablePtr)
       {
-         ut::log::error()
-            << "WsfOTH_RadarSensor::RadarBeam::ProcessInput: An MTI adjustment table has already been specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_MTI_DUP_TABLE, {});
          throw UtInput::BadValue(aInput, "3: An MTI adjustment table has already been specified!");
       }
 

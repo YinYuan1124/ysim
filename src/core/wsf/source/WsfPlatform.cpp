@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtScriptContext.hpp"
 #include "WsfComm.hpp"
@@ -324,7 +326,10 @@ bool WsfPlatform::Initialize(WsfSimulation* aSimulationPtr, double aSimTime)
       if (!componentPtr->PreInitialize(aSimTime))
       {
          ok       = false;
-         auto out = ut::log::error() << "Platform component failed pre-initialization.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台名/组件名作为模板参数（中文界面可完整翻译）
+         const ut::msg::Args args{{"platform", GetName()},
+                                  {"component", componentPtr->GetComponentName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMPONENT_PREINIT_FAIL, args);
          out.AddNote() << "Platform: " << GetName();
          out.AddNote() << "Component: " << componentPtr->GetComponentName();
       }
@@ -338,7 +343,10 @@ bool WsfPlatform::Initialize(WsfSimulation* aSimulationPtr, double aSimTime)
       if (!componentPtr->Initialize(aSimTime))
       {
          ok       = false;
-         auto out = ut::log::error() << "Platform component failed phase one initialization.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台名/组件名作为模板参数（中文界面可完整翻译）
+         const ut::msg::Args args{{"platform", GetName()},
+                                  {"component", componentPtr->GetComponentName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMPONENT_INIT1_FAIL, args);
          out.AddNote() << "Platform: " << GetName();
          out.AddNote() << "Component: " << componentPtr->GetComponentName();
       }
@@ -379,7 +387,10 @@ bool WsfPlatform::Initialize2(WsfSimulation* aSimulationPtr, double aSimTime)
       if (!componentPtr->Initialize2(aSimTime))
       {
          ok       = false;
-         auto out = ut::log::error() << "Platform component failed phase two initialization.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台名/组件名作为模板参数（中文界面可完整翻译）
+         const ut::msg::Args args{{"platform", GetName()},
+                                  {"component", componentPtr->GetComponentName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMPONENT_INIT2_FAIL, args);
          out.AddNote() << "Platform: " << GetName();
          out.AddNote() << "Component: " << componentPtr->GetComponentName();
       }

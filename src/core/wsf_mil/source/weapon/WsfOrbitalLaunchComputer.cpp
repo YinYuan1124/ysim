@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -25,6 +25,8 @@
 #include "UtEntity.hpp"
 #include "UtInput.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtOrbitalElements.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfArticulatedPart.hpp"
@@ -315,7 +317,8 @@ bool WsfOrbitalLaunchComputer::ReadOrbits(const std::string& aFileName, std::lis
    std::ifstream ifs(aFileName);
    if (!ifs.is_open())
    {
-      auto out = ut::log::error() << "Unable to open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ORBITAL_LC_OPEN_READ, {});
       out.AddNote() << "File: " << aFileName;
    }
 
@@ -336,7 +339,8 @@ bool WsfOrbitalLaunchComputer::ReadOrbits(const std::string& aFileName, std::lis
          orbit.mResidualDeltaV >> orbit.mFuelRemaining >> orbit.mTimeRemaining;
       if (!iss.good())
       {
-         auto out = ut::log::error() << "Error reading line of file.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ORBITAL_LC_LINE_READ, {});
          out.AddNote() << "File: " << aFileName;
          out.AddNote() << "Line: " << lineCount;
          return false;
@@ -361,7 +365,8 @@ bool WsfOrbitalLaunchComputer::WriteOrbits(WsfArticulatedPart*     aSystemPtr,
    std::ofstream ofs(aFileName);
    if (!ofs.is_open())
    {
-      auto out = ut::log::error() << "Unable to open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ORBITAL_LC_OPEN_WRITE, {});
       out.AddNote() << "File: " << aFileName;
       return false;
    }

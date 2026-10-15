@@ -1309,7 +1309,7 @@ void HorizontalMapFunction::WriteDefendedAreaReport(const std::vector<double>& a
       ofs << "  " << std::setw(11) << static_cast<long int>(aAreaByPd[i] * 1.0E-6);
       ofs << "  " << std::setw(11) << static_cast<long int>(areaSum * 1.0E-6) << '\n';
       ofs << std::setprecision(6);
-      ofs << resetiosflags(std::ios::floatfield);
+      ofs << std::resetiosflags(std::ios::floatfield);
    }
    ofs << "  ----  ----  -----------  -----------\n";
    ofs << "              Total Area:  " << std::setprecision(10) << std::setw(11)

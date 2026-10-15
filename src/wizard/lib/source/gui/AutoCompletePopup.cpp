@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -917,7 +917,8 @@ void wizard::AutoCompletePopup::CurrentSuggestionChanged(QListWidgetItem* curren
                if (range.Valid())
                {
                   size_t line = range.mSource->PositionToLineNumber(range.GetBegin());
-                  mDetailFooter->setText("File: " + EditAssist::BuildFileURL(range.GetPosition()));
+                  // 二次开发（i18n）：动态拼接改为参数化 tr() 模板（决策 4）
+                  mDetailFooter->setText(tr("File: %1").arg(EditAssist::BuildFileURL(range.GetPosition())));
                   mDetailFooter->show();
                   size_t              previewLineStart = line > 4 ? line - 4 : 0;
                   size_t              previewLineEnd   = std::min(range.mSource->GetLineCount() - 1, line + 50);

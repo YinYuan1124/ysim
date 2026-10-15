@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtVec3.hpp"
@@ -283,7 +285,8 @@ bool WsfPassiveSensor::TuneFrequencyBand(double       aSimTime,
 {
    if (aLowerFreq >= aUpperFreq)
    {
-      auto out = ut::log::error() << "Passive sensor cannot set frequency band.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_BAD_FREQ_BAND, {});
       out.AddNote() << "Low frequency is greater than high frequency.";
       out.AddNote() << "Low: " << aLowerFreq;
       out.AddNote() << "High: " << aUpperFreq;
@@ -308,7 +311,8 @@ bool WsfPassiveSensor::TuneFrequencyBand(double       aSimTime,
    }
    else
    {
-      auto out = ut::log::error() << "Invalid mode set for passive sensor.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_BAD_MODE, {});
       out.AddNote() << "Mode: " << aModeNameId;
    }
    return false;
@@ -333,7 +337,8 @@ unsigned int WsfPassiveSensor::GetNumberofFrequencyBands(WsfStringId aModeId, si
       }
       else
       {
-         auto out = ut::log::error() << "Invalid beam index used to request the number of frequency bands.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_BAD_BEAM_IDX, {});
          out.AddNote() << "Actual: " << aBeam;
          out.AddNote() << "Expected: 1 <= N <= Beam Count";
          out.AddNote() << "Beam Count = " << modePtr->mBeamList.size(); // Using equals instead of colon
@@ -376,7 +381,8 @@ bool WsfPassiveSensor::PassiveRcvr::Initialize(WsfSimulation& aSimulation)
 
    if (mFrequencyBands.empty())
    {
-      auto out = ut::log::error() << "No frequency bands defined for passive sensor.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_NO_BANDS, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Sensor: " << GetArticulatedPart()->GetName();
       out.AddNote() << "Mode: " << mModePtr->GetName();
@@ -410,7 +416,8 @@ bool WsfPassiveSensor::PassiveRcvr::Initialize(WsfSimulation& aSimulation)
       {
          if (mHavePSOS_FrequencyData)
          {
-            ut::log::error() << "Must specify 'dwell_time' and 'revisit_time' on all bands if used on any band.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（4 处调用点共用同一 ID）
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_ALL, {});
             return false;
          }
       }
@@ -418,12 +425,14 @@ bool WsfPassiveSensor::PassiveRcvr::Initialize(WsfSimulation& aSimulation)
       {
          if (!mHavePSOS_FrequencyData)
          {
-            ut::log::error() << "Must specify 'dwell_time' and 'revisit_time' on all bands if used on any band.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（4 处调用点共用同一 ID）
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_ALL, {});
          }
       }
       else
       {
-         ut::log::error() << "Must specify both 'dwell_time' and 'revisit_time' if either is used.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（多处调用点共用同一 ID）
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_PAIR, {});
          return false;
       }
    }
@@ -577,7 +586,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
       {
          if (((aDwellTime == 0.0) && (aRevisitTime != 0.0)) || ((aDwellTime != 0.0) && (aRevisitTime == 0.0)))
          {
-            ut::log::error() << "Must specify both 'dwell_time' and 'revisit_time' if either is used.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（多处调用点共用同一 ID）
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_PAIR, {});
             return false;
          }
 
@@ -596,7 +606,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
          {
             if (((aDwellTime == 0.0) && (aRevisitTime != 0.0)) || ((aDwellTime != 0.0) && (aRevisitTime == 0.0)))
             {
-               ut::log::error() << "Must specify both 'dwell_time' and 'revisit_time' if either is used.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（多处调用点共用同一 ID）
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_PAIR, {});
                return false;
             }
          }
@@ -606,7 +617,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
             {
                if ((aDwellTime == 0.0) || (aRevisitTime == 0.0))
                {
-                  auto out = ut::log::error() << "Band could not be returned.";
+                  // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（PSOS 模式，与下方非 PSOS 文案相同但 ID 不同）
+                  auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_RET_PSOS, {});
                   out.AddNote() << "The passive sensor was initialized to use the PSOS model.";
                   out.AddNote() << "When returning, both dwell time and revisit time must be non-zero.";
                   out.AddNote() << "Platform: " << GetPlatform()->GetName();
@@ -618,7 +630,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
             else if ((aDwellTime != 0.0) || (aRevisitTime != 0.0))
             {
                {
-                  auto out = ut::log::error() << "Band could not be returned.";
+                  // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（非 PSOS 模式）
+                  auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_RET_NO_PSOS, {});
                   out.AddNote() << "The passive sensor was initialized to NOT use the PSOS model.";
                   out.AddNote() << "When returning, both dwell time and revisit time must be zero.";
                   out.AddNote() << "Platform: " << GetPlatform()->GetName();
@@ -635,7 +648,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
       }
       else
       {
-         auto out = ut::log::error() << "Frequency band does not exist in passive sensor.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_BAND_NO_EXIST, {});
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Sensor: " << GetArticulatedPart()->GetName();
          out.AddNote() << "Band Number: " << aFrequencyBandNumber;
@@ -647,7 +661,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
       {
          if ((aDwellTime == 0.0) || (aRevisitTime == 0.0))
          {
-            auto out = ut::log::error() << "New passive sensor band could not be added.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（PSOS 模式，与下方非 PSOS 文案相同但 ID 不同）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_ADD_PSOS, {});
             out.AddNote() << "The passive sensor was initialized to use the PSOS model.";
             out.AddNote() << "When returning, both dwell time and revisit time must be non-zero.";
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
@@ -658,7 +673,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
       }
       else if ((aDwellTime != 0.0) || (aRevisitTime != 0.0))
       {
-         auto out = ut::log::error() << "New passive sensor band could not be added.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（非 PSOS 模式）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_ADD_NO_PSOS, {});
          out.AddNote() << "The passive sensor was initialized to NOT use the PSOS model.";
          out.AddNote() << "When returning, both dwell time and revisit time must be zero.";
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
@@ -699,7 +715,8 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
       {
          if (mHavePSOS_FrequencyData)
          {
-            ut::log::error() << "Must specify 'dwell_time' and 'revisit_time' on all bands if used on any band.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（4 处调用点共用同一 ID）
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_ALL, {});
             return false;
          }
       }
@@ -707,12 +724,14 @@ bool WsfPassiveSensor::PassiveRcvr::TuneFrequencyBand(double       aSimTime,
       {
          if (!mHavePSOS_FrequencyData)
          {
-            ut::log::error() << "Must specify 'dwell_time' and 'revisit_time' on all bands if used on any band.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（4 处调用点共用同一 ID）
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_ALL, {});
          }
       }
       else
       {
-         ut::log::error() << "Must specify both 'dwell_time' and 'revisit_time' if either is used.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（多处调用点共用同一 ID）
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_DWELL_PAIR, {});
          return false;
       }
    }
@@ -1347,7 +1366,8 @@ bool WsfPassiveSensor::PassiveMode::Initialize(double aSimTime)
 
    if (GetFrameTime() <= 0.0)
    {
-      ut::log::error() << "Unspecified frame_time.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_NO_FRAME_TIME, {});
       ok = false;
    }
 
@@ -2377,7 +2397,8 @@ bool WsfPassiveSensor::PassiveMode::TuneFrequencyBand(double       aSimTime,
    }
    else
    {
-      auto out = ut::log::error() << "Invalid beam number.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_PASSIVE_BAD_BEAM_NUM, {});
       out.AddNote() << "Beam: " << aBeamNumber;
    }
    return false;

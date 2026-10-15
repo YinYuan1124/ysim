@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtStringUtil.hpp"
@@ -532,7 +534,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
 
    if (mOffsets.GetSize() < 2)
    {
-      ut::log::error() << "WsfSAM_LC size of lateral offsets array must be greater than 1.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_OFFSETS_SIZE, {});
       success = false;
    }
    else
@@ -543,7 +546,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
          double offset = mOffsets.Get(i);
          if (offset <= prevOffset)
          {
-            ut::log::error() << "WsfSAM_LC must receive a monotonically increasing array of lateral offsets.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_OFFSETS_MONO, {});
             success = false;
          }
          prevOffset = offset;
@@ -552,7 +556,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
 
    if (mAltitudes.GetSize() < 2)
    {
-      ut::log::error() << "WsfSAM_LC size of altitudes array must be greater than 1.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_ALT_SIZE, {});
       success = false;
    }
    else
@@ -563,7 +568,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
          double alt = mAltitudes.Get(i);
          if (alt <= prevAltitude)
          {
-            ut::log::error() << "WsfSAM_LC must receive a monotonically increasing array of altitudes.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_ALT_MONO, {});
             success = false;
          }
          prevAltitude = alt;
@@ -572,7 +578,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
 
    if (mRanges.GetSize() < 2)
    {
-      ut::log::error() << "WsfSAM_LC size of target ranges array must be greater than 1.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_RANGE_SIZE, {});
       success = false;
    }
    else
@@ -583,7 +590,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
          double range = mRanges.Get(i);
          if (range <= prevRange)
          {
-            ut::log::error() << "WsfSAM_LC must receive a monotonically increasing array of target ranges.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_RANGE_MONO, {});
             success = false;
          }
          prevRange = range;
@@ -592,7 +600,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
 
    if (mSpeeds.GetSize() < 2)
    {
-      ut::log::error() << "WsfSAM_LC size of target speeds array must be greater than 1.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_SPEED_SIZE, {});
       success = false;
    }
    else
@@ -603,7 +612,8 @@ bool WsfSAM_LaunchComputer::InterceptEnvelope::Initialize(bool aIgnoreTOFs)
          double speed = mSpeeds.Get(i);
          if (speed <= prevSpeed)
          {
-            ut::log::error() << "WsfSAM_LC must receive a monotonically increasing array of target speeds.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_SPEED_MONO, {});
             success = false;
          }
          prevSpeed = speed;
@@ -751,7 +761,8 @@ double WsfSAM_LaunchComputer::Interpolator::TimeOfFlightFor(double aOffset, doub
    if ((mOffsetsPtr->GetSize() < 2) || (mAltitudesPtr->GetSize() < 2) || (mRangesPtr->GetSize() < 2) ||
        (mSpeedsPtr->GetSize() < 2))
    {
-      auto out = ut::log::error() << "Time of Flight interpolation cannot be performed.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAM_LC_TOF_INTERP_FAIL, {});
       out.AddNote() << "All tables must have at least two entries.";
       out.AddNote() << "Offsets: " << mOffsetsPtr->GetSize();
       out.AddNote() << "Altitudes: " << mAltitudesPtr->GetSize();

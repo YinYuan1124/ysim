@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 
 #include "WsfEventPipeInterface.hpp"
 
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "Utml.hpp"
 #include "WsfAdvancedBehaviorTreeNode.hpp"
 #include "WsfAntennaPattern.hpp"
@@ -404,7 +406,9 @@ void WsfEventPipeInterface::AddedToSimulation()
          ss >> orValue;
          if (!orList.insert(orValue).second)
          {
-            ut::log::fatal() << "WsfEventPipe error: message_id_or value " << orValue << ", is reused.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 值参数化（中文界面可完整翻译）；throw 保持原样（机器读链路）
+            const ut::msg::Args args{{"value", std::to_string(orValue)}};
+            ut::log::fatal() << ut::msg::FormatEnTagged(ut::msg::MSG_EVENTPIPE_OR_DUP, args);
             throw UtException("WsfEventPipe Error, message id duplication");
          }
       }
@@ -420,7 +424,9 @@ void WsfEventPipeInterface::AddedToSimulation()
             ss << modifiedValue;
             if (!messageIdList.insert(modifiedValue).second)
             {
-               auto out = ut::log::fatal() << "WsfEventPipe error: message_id value " << modifiedValue << " is reused.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 冲突值参数化；throw 保持原样（机器读链路）
+               const ut::msg::Args args{{"value", std::to_string(modifiedValue)}};
+               auto out = ut::log::fatal() << ut::msg::FormatEnTagged(ut::msg::MSG_EVENTPIPE_MSGID_DUP, args);
                out.AddNote() << "message_id_or: " << orValue;
                out.AddNote() << "message id: " << value;
                throw UtException("WsfEventPipe Error, message id duplication");

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtVec3.hpp"
 #include "WsfPlatform.hpp"
@@ -133,7 +135,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
    {
       if (mAR == 0.0)
       {
-         auto out = ut::log::error() << "'aero' properties must specify a non-zero 'aspect_ratio'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_ZERO_ASPECT, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatformName();
 
@@ -142,7 +145,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
 
       if (mE == 0.0)
       {
-         auto out = ut::log::error() << "'aero' must specify a non-zero value for 'oswalds_factor'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_ZERO_OSWALD, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatformName();
 
@@ -159,7 +163,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
    {
       if ((mCd0 == 0.0) && (mCd0s.size() == 0))
       {
-         auto out = ut::log::error() << "'aero' 'zero_lift_cd' was not provided.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_NO_ZERO_LIFT_CD, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatformName();
 
@@ -170,7 +175,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
    {
       if (mCd0s.size() < 2)
       {
-         auto out = ut::log::error() << "'aero' must specify at least two Mach numbers for drag curve interpolation.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_TOO_FEW_MACH, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatformName();
          result = false;
@@ -187,7 +193,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
       {
          if (mCdZeroSubsonic > mCdZeroSupersonic)
          {
-            auto out = ut::log::error() << "'aero' drag coefficient must rise through the transonic region.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_NO_TRANSONIC_RISE, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatformName();
             result = false;
@@ -196,7 +203,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
          if (mMachBeginCdRise > mMachEndCdRise)
          {
             auto out =
-               ut::log::error() << "'aero' beginning transonic Mach number must be greater than ending Mach number.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_BAD_TRANSONIC, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatformName();
             result = false;
@@ -204,7 +212,8 @@ bool WsfAero2D::SetInternalValues(double aSimTime)
 
          if (mMachMaxSupersonic <= mMachEndCdRise)
          {
-            auto out = ut::log::error() << "'aero' ending supersonic Mach number must be above the transonic range.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_AERO_BAD_SUPERSONIC, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatformName();
             result = false;

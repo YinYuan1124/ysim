@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtInputString.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtVec3.hpp"
 #include "WsfAttributeContainer.hpp"
@@ -148,7 +150,8 @@ bool WsfCuedLaserWeapon::Initialize2(double aSimTime)
 
    if (mBeamDirector.has_value() && !beamDirectorFound)
    {
-      auto out = ut::log::error() << "WsfBeamDirector specified for WsfCuedLaserWeapon not found on platform";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CUED_LASER_NO_BEAM_DIR, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "WsfCuedLaserWeapon: " << GetName();
       out.AddNote() << "Desired Beam Director: " << mBeamDirector.value();

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,6 +26,8 @@
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfLaunchComputer.hpp"
 #include "WsfLocalTrack.hpp"
@@ -273,13 +275,14 @@ bool WsfWeaponFuse::Initialize(double aSimTime)
       if (mAGL_Criteria == cDETONATE_ABOVE)
       {
          ok = false;
-         ut::log::error() << "Incompatible inputs with 'air_to_ground_mode' set, and 'detonate_above_height_agl' set.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FUSE_A2G_AGL_SET, {});
       }
       else if (mAGL_Limit != 0.0)
       {
          ok = false;
-         ut::log::error()
-            << "Incompatible inputs, with 'air_to_ground_mode' set, and non-zero 'detonate_above_height_agl' set.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FUSE_A2G_AGL_NONZERO, {});
       }
       else
       {
@@ -755,7 +758,8 @@ void WsfWeaponFuse::PrivateDetonate(double aSimTime)
       if (!WsfWeaponEngagement::Assign(*GetPlatform(), engagementPtr))
       {
          { // RAII block
-            auto out = ut::log::error() << "Failed to create weapon engagement object.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FUSE_NO_ENGAGEMENT, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Fuse: " << GetName();

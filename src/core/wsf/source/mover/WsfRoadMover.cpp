@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfGeoPoint.hpp"
 #include "WsfPathFinder.hpp"
 #include "WsfPlatform.hpp"
@@ -147,7 +149,8 @@ bool WsfRoadMover::GoToTrack(double aSimTime, WsfTrack* aTrackPtr)
    }
    else
    {
-      auto out = ut::log::error() << "Platform was unable to find route.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；两处调用点共用同一 ID）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_ROAD_NO_ROUTE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
    }
@@ -177,7 +180,8 @@ double WsfRoadMover::GetTravelTime(double aSimTime, WsfTrack* aTrackPtr)
    }
    else
    {
-      auto out = ut::log::error() << "Platform was unable to find route.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；两处调用点共用同一 ID）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_ROAD_NO_ROUTE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
    }
@@ -227,7 +231,8 @@ bool WsfRoadMover::UpdateRoute(double aSimTime, const WsfRoute& aRoute)
       return WsfGroundMover::UpdateRoute(aSimTime, route);
    }
 
-   auto out = ut::log::error() << "Platform could not generate shortest path from initial position to destination.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；两处调用点共用同一 ID）
+   auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_ROAD_NO_PATH, {});
    out.AddNote() << "T = " << aSimTime;
    out.AddNote() << "Platform: " << GetPlatform()->GetName();
    out.AddNote() << "Initial Lat: " << wp1.GetLat();
@@ -547,7 +552,8 @@ bool WsfRoadMover::SetOrUpdateRoute(double aSimTime)
       return SetRoute(aSimTime, route);
    }
 
-   auto out = ut::log::error() << "Platform could not generate shortest path from initial position to destination.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；两处调用点共用同一 ID）
+   auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_ROAD_NO_PATH, {});
    out.AddNote() << "T = " << aSimTime;
    out.AddNote() << "Platform: " << GetPlatform()->GetName();
    out.AddNote() << "Initial Lat: " << wp1.GetLat();
@@ -569,7 +575,8 @@ bool WsfRoadMover::Initialize(double aSimTime)
    if (mHaveStartPosition != mHaveEndPosition)
    {
       auto out =
-         ut::log::error() << "If either 'start_position' or 'end_position' is specified, then both must be specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_ROAD_POS_PAIR, {});
       out.AddNote() << "Road Mover: " << GetName();
       out.AddNote() << "Type: " << GetType();
       ok = false;
@@ -577,7 +584,8 @@ bool WsfRoadMover::Initialize(double aSimTime)
 
    if (ok && (mSpeed == 0.0))
    {
-      auto out = ut::log::error() << "Road Mover's 'speed' must specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_ROAD_NO_SPEED, {});
       out.AddNote() << "Road Mover: " << GetName();
       out.AddNote() << "Type: " << GetType();
       ok = false;

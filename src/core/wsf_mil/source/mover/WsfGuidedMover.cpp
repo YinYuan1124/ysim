@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@
 #include "UtLLPos.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
@@ -233,7 +235,8 @@ bool WsfGuidedMover::Initialize(double aSimTime) // override
 
       if (!stage.Initialize(aSimTime, this, mShowStatus))
       {
-         auto out = ut::log::error() << "Platform failed to initialize stage.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 与 TBM_Mover 两文件共用同一 ID（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_TBM_STAGE_INIT_FAIL, {});
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Stage: " << stageIndex + 1;
          auto note = out.AddNote() << "Input or computed values are:";
@@ -274,12 +277,14 @@ bool WsfGuidedMover::Initialize(double aSimTime) // override
       {
          if (mCurState.mDivertFuelMass == 0.0)
          {
-            ut::log::error() << "'divert_fuel_mass' must be specified with 'divert_thrust'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_NEED_DIVERT_FUEL_MASS, {});
             ok = false;
          }
          if (mDivertFuelFlowRate <= 0.0)
          {
-            ut::log::error() << "'divert_fuel_flow_rate' must be specified with 'divert_thrust'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_NEED_DIVERT_FUEL_RATE, {});
             ok = false;
          }
       }
@@ -2383,8 +2388,8 @@ bool WsfGuidedMover::Stage::CompletePairedValues(WsfGuidedMover* aMoverPtr)
          double derivedExitArea = (mThrustVacuum - mThrustSeaLevel) / Psl;
          if (std::abs(derivedExitArea - mNozzleExitArea) / mNozzleExitArea > 0.01)
          {
-            auto out = ut::log::error() << "The input value of 'nozzle_exit_area' is not consistent with the value of "
-                                           "the derived from 'vacuum_thrust' and 'sea_level_thrust'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 多行字符串原文合并为单句（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_NOZZLE_AREA_INCONSISTENT, {});
             out.AddNote() << "Input: " << mNozzleExitArea << " m^2";
             out.AddNote() << "Derived: " << derivedExitArea << " m^2";
             out.AddNote() << "One of the thrust values should be deleted or adjusted.";
@@ -2403,7 +2408,8 @@ bool WsfGuidedMover::Stage::CompletePairedValues(WsfGuidedMover* aMoverPtr)
          }
          else
          {
-            ut::log::error() << "Unable to calculate 'sea_level_specific_impulse'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_CANNOT_CALC_SL_SI, {});
             ok = false;
          }
       }
@@ -2416,7 +2422,8 @@ bool WsfGuidedMover::Stage::CompletePairedValues(WsfGuidedMover* aMoverPtr)
          }
          else
          {
-            ut::log::error() << "Unable to calculate 'vacuum_specific_impulse'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_CANNOT_CALC_VAC_SI, {});
             ok = false;
          }
       }
@@ -2434,7 +2441,8 @@ bool WsfGuidedMover::Stage::CompletePairedValues(WsfGuidedMover* aMoverPtr)
       double specificImpulseRatio = mSpecificImpulseVacuum / mSpecificImpulseSeaLevel;
       if (std::abs(thrustRatio - specificImpulseRatio) > 0.01)
       {
-         auto out = ut::log::error() << "Ratios computed are not equal and should be!";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_RATIOS_NOT_EQUAL, {});
          out.AddNote() << "(Vacuum Thrust) / (Sea Level Thrust): " << thrustRatio;
          out.AddNote() << "(Vacuum Specified Impulse) / (Sea Level Specified Impulse): " << specificImpulseRatio;
          out.AddNote() << "The solution is to either correct one of the thrust or specific_impulse values or to remove "
@@ -2713,7 +2721,8 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
       {
          if ((mThrustReference == cVACUUM) || (mThrustReference == cSEA_LEVEL))
          {
-            ut::log::error() << "'nozzle_exit_area' must be specified for 'vacuum_thrust' or 'sea_level_thrust'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_NEED_NOZZLE_AREA, {});
             ok = false;
          }
       }
@@ -2722,19 +2731,22 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
 
       if ((mEmptyMass <= 0.0) || (mFuelMass <= 0.0) || (mTotalMass <= 0.0))
       {
-         ut::log::error() << "Unable to determine 'empty_mass', 'fuel_mass', or 'total_mass'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_CANNOT_DET_MASS, {});
          ok = false;
       }
       else if ((mEmptyMass >= mTotalMass) || (mFuelMass >= mTotalMass) ||
                (fabs(mTotalMass - mEmptyMass - mFuelMass) > cMASS_TOLERANCE))
       {
-         ut::log::error() << "Inconsistent 'total_mass', 'empty_mass', and 'fuel_mass'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_MASS_INCONSISTENT, {});
          ok = false;
       }
 
       if ((mThrust <= 0.0) || (mBurnRate <= 0.0) || (mSpecificImpulse <= 0.0) || (mThrustDuration <= 0.0))
       {
-         ut::log::error() << "Unable to determine 'thrust', 'burn_rate', or 'specific_impulse'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_CANNOT_DET_THRUST, {});
          ok = false;
       }
       else if ((mThrustTablePtr != nullptr) || (mSeaLevelThrustTablePtr != nullptr) ||
@@ -2752,13 +2764,15 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
             thrust = mSpecificImpulseVacuum * mBurnRate * UtEarth::cACCEL_OF_GRAVITY;
             if (std::abs(thrust - mThrustVacuum) / mThrustVacuum > 0.02)
             {
-               ut::log::error() << "Inconsistent 'vacuum_thrust', 'vacuum_specific_impulse', and 'burn_rate'.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_VAC_THRUST_INCONSISTENT, {});
                ok = false;
             }
             thrust = mSpecificImpulseSeaLevel * mBurnRate * UtEarth::cACCEL_OF_GRAVITY;
             if (std::abs(thrust - mThrustSeaLevel) / mThrustSeaLevel > 0.02)
             {
-               ut::log::error() << "Inconsistent 'sea_level_thrust', 'sea_level_specific_impulse', and 'burn_rate'.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_SL_THRUST_INCONSISTENT, {});
                ok = false;
             }
          }
@@ -2767,7 +2781,8 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
             thrust = mSpecificImpulse * mBurnRate * UtEarth::cACCEL_OF_GRAVITY;
             if ((fabs(thrust - mThrust) / mThrust) > 0.02)
             {
-               ut::log::error() << "Inconsistent 'thrust', 'burn_rate', and 'specific_impulse'.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_THRUST_INCONSISTENT, {});
                ok = false;
             }
          }
@@ -2776,7 +2791,8 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
          double fuelConsumed = mBurnRate * mThrustDuration;
          if (fuelConsumed > (mFuelMass + cMASS_TOLERANCE))
          {
-            ut::log::error() << "Fuel consumed is greater than 'fuel_mass'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_FUEL_EXCEEDS, {});
             ok = false;
          }
       }
@@ -2791,7 +2807,8 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
          mAeroPtr = WsfAeroTypes::Get(aMoverPtr->GetScenario()).Clone(mAeroId);
          if (mAeroPtr == nullptr)
          {
-            ut::log::error() << "'aero' type: " << mAeroId;
+            // 二次开发（i18n）：错误消息 ID 化 —— aero 类型为运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_AERO_TYPE_BAD, {{"aeroType", mAeroId.GetString()}});
             ok = false;
          }
          else if (!mAeroPtr->Initialize(aSimTime, aMoverPtr->GetPlatform()))
@@ -2802,7 +2819,8 @@ bool WsfGuidedMover::Stage::Initialize(double aSimTime, WsfGuidedMover* aMoverPt
    }
    else
    {
-      ut::log::error() << "'aero <aero-type>' or 'aero none' must be specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_AERO_MUST_SPECIFY, {});
       ok = false;
    }
    return ok;

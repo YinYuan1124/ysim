@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
 #include "WsfAttributeContainer.hpp"
@@ -172,7 +174,8 @@ bool WsfHighEnergyLaser::ProcessInput(UtInput& aInput)
       }
       else
       {
-         ut::log::error() << "Value for laser_type not recognized.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HEL_LASER_BAD_TYPE, {});
          throw(UtInput::BadValue(aInput));
       }
    }
@@ -296,8 +299,8 @@ bool WsfHighEnergyLaser::UpdateEngagementGeometry(double             aSimTime,
             if (sOnceSet.find(targetPtr->GetIndex()) == sOnceSet.end())
             {
                sOnceSet.insert(targetPtr->GetIndex());
-               auto out = ut::log::error() << "WsfHighEnergyLaser::UpdateEngagementGeometry: Intersect test for target "
-                                              "is invalid. Check the offset name.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；两处调用点共用同一 ID）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HEL_LASER_INTERSECT, {});
                out.AddNote() << "T = " << aSimTime;
                out.AddNote() << "Target: " << mTargetOffsetName;
             }
@@ -349,8 +352,8 @@ bool WsfHighEnergyLaser::UpdateEngagementGeometry(double             aSimTime,
             if (sOnceSet.find(targetPtr->GetIndex()) == sOnceSet.end())
             {
                sOnceSet.insert(targetPtr->GetIndex());
-               auto out = ut::log::error() << "WsfHighEnergyLaser::UpdateEngagementGeometry: Intersect test for target "
-                                              "is invalid. Check the offset name.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；两处调用点共用同一 ID）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HEL_LASER_INTERSECT, {});
                out.AddNote() << "T = " << aSimTime;
                out.AddNote() << "Target: " << mTargetOffsetName;
             }

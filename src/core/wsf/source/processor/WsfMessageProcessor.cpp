@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommNetworkManager.hpp"
@@ -81,7 +83,8 @@ bool WsfMessageProcessor::Initialize(double aSimTime)
    mMessageVarPtr = mContextPtr->GetContext().FindVar(UtStringIdLiteral("MESSAGE"));
    if (mMessageVarPtr == nullptr)
    {
-      ut::log::error() << "Unable to locate MESSAGE variable.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_MSGPROC_NO_MESSAGE_VAR, {});
    }
 
    // Initialize the various components
@@ -410,7 +413,8 @@ bool WsfMessageProcessor::Action::Initialize(double aSimTime, WsfMessageProcesso
       mScriptPtr = aProcessorPtr->mContextPtr->FindScript(mScriptNameId);
       if (mScriptPtr == nullptr)
       {
-         auto out = ut::log::error() << "Unable to locate script.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_MSGPROC_NO_SCRIPT, {});
          out.AddNote() << "Script: " << mScriptNameId;
          ok = false;
       }
@@ -559,7 +563,8 @@ bool WsfMessageProcessor::Selector::Initialize(double aSimTime, WsfMessageProces
       mScriptPtr = aProcessorPtr->mContextPtr->FindScript(mScriptNameId);
       if (mScriptPtr == nullptr)
       {
-         auto out = ut::log::error() << "Unable to resolve reference to script.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_MSGPROC_SCRIPT_UNRESOLVED, {});
          out.AddNote() << "Script: " << mScriptNameId;
          ok = false;
       }

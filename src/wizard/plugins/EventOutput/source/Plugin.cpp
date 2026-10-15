@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -34,7 +34,9 @@ Plugin::Plugin(QString aPluginName, size_t aUniqueId)
 {
    // provide access from Tools menu
    auto mainWindowPtr = wkfEnv.GetMainWindow();
-   auto toolsMenuPtr  = mainWindowPtr->GetMenuByName("Tools");
+   // 二次开发（i18n）：防御性判空 —— 菜单查找可能因翻译等原因失配返回空，
+   // 空指针调用 addAction 曾致启动崩溃（wizard-exception.log 0x8 读违例）。
+   auto toolsMenuPtr  = (mainWindowPtr != nullptr) ? mainWindowPtr->GetMenuByName("Tools") : nullptr;
 
    // create the "event_output Editor" menu action
    mToolsActionPtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("checklist"), "Event Output Editor...", nullptr);
@@ -50,7 +52,11 @@ Plugin::Plugin(QString aPluginName, size_t aUniqueId)
    connect(wizSignals, &wizard::Signals::ProjectStartupFilesChanged, this, &Plugin::ForceCloseEventOutputDialog);
 
    // add the "Event Output Editor" action to the "Tools" menu
-   toolsMenuPtr->addAction(mToolsActionPtr);
+   // 二次开发（i18n）：菜单存在才挂接动作，缺失时跳过（不崩溃）
+   if (toolsMenuPtr != nullptr)
+   {
+      toolsMenuPtr->addAction(mToolsActionPtr);
+   }
 
    // disable the "Event Output Editor" action on start-up
    mToolsActionPtr->setDisabled(true);

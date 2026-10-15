@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfIntercept.hpp"
 #include "WsfLocalTrack.hpp"
@@ -88,12 +90,14 @@ bool WsfStraightLineMover::Initialize(double aSimTime)
       // Assure that one and only one trajectory option has been specified.
       if ((mAvgSpeed == 0.0) && (mIVs.GetSize() == 0))
       {
-         ut::log::error() << "No trajectory type was specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SLM_NO_TRAJECTORY, {});
          ok = false;
       }
       else if ((mAvgSpeed != 0.0) && (mIVs.GetSize() > 0))
       {
-         ut::log::error() << "Cannot specify more than one trajectory type.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SLM_MULTIPLE_TRAJECTORY, {});
          ok = false;
       }
       else if (mAvgSpeed != 0.0)
@@ -117,7 +121,8 @@ bool WsfStraightLineMover::Initialize(double aSimTime)
       double speed = UtVec3d::Normalize(velNED); // Velocity vector -> velocity unit vector
       if (speed == 0.0)
       {
-         ut::log::error() << "Ejection velocity is zero.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SLM_ZERO_EJECTION, {});
          ok = false;
       }
       // Align the body with the velocity vector.

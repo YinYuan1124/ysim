@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInputBlock.hpp"
 #include "UtInputFile.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfScenario.hpp"
@@ -317,7 +319,8 @@ bool WsfAirToAirLaunchComputer::ATA_InterceptTable::Load(const std::string& aFil
       {
          if (!ProcessInput(inputBlock.GetInput()))
          {
-            auto out = ut::log::error() << "Could not parse the file given.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_A2A_LC_FILE_PARSE, {});
             out.AddNote() << "File: " << aFileName;
             myCommand = false;
          }

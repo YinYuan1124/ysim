@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtVec3dX.hpp"
 #include "WsfMover.hpp"
@@ -807,7 +809,8 @@ bool WsfMobilityAndFirepowerLethality::MFK_Table::Initialize(double aSimTime, Ws
    mIsInitialized = total <= 1.0;
    if (!mIsInitialized)
    {
-      ut::log::error() << "MFK Table specified probabilities that do not sum to Unity.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MFL_MFK_NOT_UNITY, {});
    }
    return mIsInitialized;
 }
@@ -951,7 +954,8 @@ bool WsfMobilityAndFirepowerLethality::Vulnerability::Initialize(double         
    mIsInitialized = (useTable || usePk) && (!(usePk && useTable));
    if (!mIsInitialized)
    {
-      ut::log::error() << "CM Vulnerabilities may use PkFactor or Table, but not both.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MFL_CM_BOTH, {});
    }
    return mIsInitialized;
 }
@@ -1104,7 +1108,8 @@ bool WsfMobilityAndFirepowerLethality::TargetType::Initialize(double            
    mCMsNotUsedTablePtr = aLethalityPtr->GetTable(mCMsNotUsedTableNameId);
    if (mCMsNotUsedTablePtr == nullptr)
    {
-      auto out = ut::log::error() << "Table was not found.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MFL_TABLE_NOT_FOUND, {});
       out.AddNote() << "Name: " << GetName();
       mIsInitialized = false;
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 
 #include "UtInput.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3dX.hpp"
 #include "WsfMoverObserver.hpp"
 #include "WsfPlatform.hpp"
@@ -81,7 +83,8 @@ bool WsfTowedMover::Initialize(double aSimTime)
    }
    else
    {
-      ut::log::error() << "WsfTowedMover could not find weapon engagement on initialization.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TOWED_NO_ENGAGEMENT, {});
       ok = false;
    }
 

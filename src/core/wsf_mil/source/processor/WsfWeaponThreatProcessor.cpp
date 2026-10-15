@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@ class UtEntity;
 #include "UtLineSegment.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtVec3.hpp"
 #include "UtVec3dX.hpp"
@@ -1275,7 +1277,8 @@ void ThreatEvaluatorP::CreateThreatList(const WsfTrack&      aShooterTrack,
    const WsfClassificationProcessor* classifierProcessor = dynamic_cast<const WsfClassificationProcessor*>(processor);
    if (classifierProcessor == nullptr)
    {
-      ut::log::error() << "CreateThreatList: 'classifier' is not type 'WsfClassificationProcessor'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WTP_BAD_CLASSIFIER, {});
       return;
    }
 
@@ -1357,7 +1360,8 @@ void ThreatEvaluatorP::CreateThreatList(const WsfTrack&      aShooterTrack,
             if (!warned)
             {
                warned   = true; // Setting the "address"
-               auto out = ut::log::error() << "GetThreatList: No pkCalculator found for weapon.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WTP_NO_PK_CALC, {});
                out.AddNote() << "Weapon: " << weaponData.mWeaponTypeId.GetString();
                out.AddNote() << "Candidate Entity Type: " << cr.mEntityTypeId.GetString();
                out.AddNote() << "Skipping this combo.";

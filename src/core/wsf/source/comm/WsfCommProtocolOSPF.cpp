@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,9 @@
 #include "WsfCommProtocolOSPF.hpp"
 
 #include "UtCast.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
+#include <sstream>
 #include "WsfAttributeContainer.hpp"
 #include "WsfCommEvent.hpp"
 #include "WsfCommMessage.hpp"
@@ -831,7 +834,10 @@ void ProtocolOSPF::SetRouterRoleType(ProtocolOSPF& aProtocol)
 
    if (areas.empty())
    {
-      auto out = ut::log::error() << "Missing area designation on OSPF enabled router.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 平台/路由器名作为模板参数
+      const ut::msg::Args args{{"platform", aProtocol.GetRouter()->GetPlatform()->GetName()},
+                               {"router", aProtocol.GetRouter()->GetName()}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_OSPF_NO_AREA, args);
       out.AddNote() << "Platform: " << aProtocol.GetRouter()->GetPlatform()->GetName();
       out.AddNote() << "Router: " << aProtocol.GetRouter()->GetName();
       throw UtException("OSPF missing area designation.");
@@ -945,7 +951,11 @@ void ProtocolOSPF::VerifyBackboneConnections(const AreaVector& aAreas)
 
          if (!connected)
          {
-            auto out = ut::log::error() << "OSPF area not connected to designated backbone area.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 区域地址经 ostringstream 字符串化（WsfCommAddress 仅支持流输出）
+            std::ostringstream addrStream;
+            addrStream << area->GetAddress();
+            const ut::msg::Args args{{"area", addrStream.str()}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_OSPF_AREA_DISCONNECTED, args);
             out.AddNote() << "Area: " << area->GetAddress();
             throw UtException("Invalid OSPF backbone setup.");
          }
@@ -1574,7 +1584,11 @@ void ProtocolOSPF::PlatformInitialized(double aSimTime, WsfPlatform* aPlatformPt
                   // This area already exists. Process adding the new router into this area.
                   if ((address == backboneAddress) && !(*areaIt)->IsBackbone())
                   {
-                     auto out = ut::log::error() << "Inconsistent backbone setting.";
+                     // 二次开发（i18n）：错误消息 ID 化 —— 地址经 ostringstream 字符串化（WsfCommAddress 仅支持流输出）
+                     std::ostringstream addrStream;
+                     addrStream << address;
+                     const ut::msg::Args args{{"address", addrStream.str()}};
+                     auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_OSPF_BACKBONE_INCONSIST, args);
                      out.AddNote() << "Address: " << address;
                      out.AddNote() << "Ensure all backbone settings are consistent.";
                      throw UtException("Inconsistent OSPF backbone setting.");

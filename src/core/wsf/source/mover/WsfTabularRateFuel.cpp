@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfFuelFlowTables.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfRoute.hpp"
@@ -83,7 +85,8 @@ bool WsfTabularRateFuel::Initialize(double aSimTime)
    if (mTables.empty())
    {
       success  = false;
-      auto out = ut::log::error() << "Fuel did not define a Fuel Rate Table.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TRF_NO_TABLE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Fuel Rate Table: " << GetName();
@@ -101,7 +104,8 @@ bool WsfTabularRateFuel::Initialize(double aSimTime)
 
    if (GetCurrentTable() == nullptr)
    {
-      auto out = ut::log::error() << "There is no table matching the current 'mode'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TRF_NO_MODE_TABLE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Fuel Rate Table: " << GetName();
@@ -406,7 +410,8 @@ double WsfTabularRateFuel::CalcConsumptionRate()
    {
       return tablePtr->CalcConsumptionRate();
    }
-   auto out = ut::log::error() << "No fuel_table for mode.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 两处调用点共用同一 ID（附注保持英文）
+   auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TRF_NO_FUEL_TABLE, {});
    out.AddNote() << "Platform: " << GetPlatform()->GetName();
    out.AddNote() << "Mode: " << GetMode();
    return 0.0;
@@ -424,7 +429,8 @@ double WsfTabularRateFuel::CalcConsumptionRateAltitudeSpeed(const double aAltitu
    {
       return tablePtr->CalcConsumptionRateAltitudeSpeed(aAltitude, aSpeed);
    }
-   auto out = ut::log::error() << "No fuel_table for mode.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 两处调用点共用同一 ID（附注保持英文）
+   auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TRF_NO_FUEL_TABLE, {});
    out.AddNote() << "Platform: " << GetPlatform()->GetName();
    out.AddNote() << "Mode: " << GetMode();
    return 0.0;

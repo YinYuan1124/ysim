@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfAntennaPattern.hpp"
 #include "WsfDeferredInput.hpp"
@@ -638,14 +640,16 @@ bool WsfEW_FalseTargetEffect::FT_Data::Initialize(WsfSimulation& aSimulation)
 
       if (!mFT_Ptr->Initialize(GetEffectPtr()->GetSimulation()))
       {
-         auto out = ut::log::error() << "Initializing false-target.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_FTE_FT_INIT_FAIL, {});
          out.AddNote() << "False Target: " << mFT_NameId;
          ok = false;
       }
    }
    else
    {
-      auto out = ut::log::error() << "Initializing false-target effect. False target not found.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_FTE_NO_FT, {});
       out.AddNote() << "False Target: " << mFT_NameId;
       ok = false;
    }

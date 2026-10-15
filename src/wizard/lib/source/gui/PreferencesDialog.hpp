@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,7 @@
 
 #include "BackupPrefWidget.hpp"
 #include "EditorPrefWidget.hpp"
+#include "LanguagePrefWidget.hpp"
 #include "NewFilePrefWidget.hpp"
 #include "ToolPrefWidget.hpp"
 #include "WkfPreferencesDialog.hpp"
@@ -26,7 +27,7 @@ public:
    PreferencesDialog(wkf::MainWindow* parent, Qt::WindowFlags f = Qt::WindowFlags())
       : wkf::PreferencesDialog(parent, f)
    {
-      mStandardWidgets << new BackupPrefWidget(this) << new ToolPrefWidget(this);
+      mStandardWidgets << new BackupPrefWidget(this) << new ToolPrefWidget(this) << new LanguagePrefWidget(this);
    }
 
 private:

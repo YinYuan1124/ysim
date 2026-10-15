@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -28,6 +28,8 @@
 #include "UtLonPos.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtScriptData.hpp"
 #include "UtSphericalEarth.hpp"
@@ -188,7 +190,8 @@ bool WsfTBM_Mover::Initialize(double aSimTime)
    {
       if (!mStageList[stageIndex].Initialize(initialTime))
       {
-         auto out = ut::log::error() << "Platform failed to initialize stage.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 与 GuidedMover 两文件共用同一 ID（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GM_TBM_STAGE_INIT_FAIL, {});
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Stage: " << stageIndex + 1;
          ok = false;
@@ -198,7 +201,8 @@ bool WsfTBM_Mover::Initialize(double aSimTime)
 
    if ((mFixedCEP != 0.0) && (mNomRanges.GetSize() > 0))
    {
-      auto out = ut::log::error() << "Platform cannot supply both a 'cep_value' and a 'cep_table'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_CEP_BOTH, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       ok = false;
    }
@@ -410,7 +414,8 @@ bool WsfTBM_Mover::Initialize2(double aSimTime)
 
       if (toofar)
       {
-         auto logError = ut::log::error() << "Platform TBM Trajectory cannot reach the desired location.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto logError = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_CANNOT_REACH, {});
          logError.AddNote() << "Platform: " << GetPlatform()->GetName();
       }
    }
@@ -1734,7 +1739,8 @@ void WsfTBM_Mover::ComputeMaximumRange(double ax, double bx, double cx, double t
    }
 
    { // RAII block
-      auto out = ut::log::error() << "Platform exceeded iteration count determining maximum range.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_MAXRANGE_ITER, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
    }
 
@@ -2272,8 +2278,8 @@ bool WsfTBM_Mover::Stage::Initialize(double aInitialTime)
 
    if ((mPreIgnitionCoastTime <= 0.0) && (mThrustDuration <= 0.0) && (mPreSeparationCoastTime <= 0.0))
    {
-      ut::log::error()
-         << "At least one of 'pre_burn_coast_time', 'burn_time', or 'post_burn_coast_time' must be greater than zero.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 多行字符串原文合并为单句
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_NEED_COAST_TIME, {});
       ok = false;
    }
 
@@ -2281,7 +2287,8 @@ bool WsfTBM_Mover::Stage::Initialize(double aInitialTime)
    {
       if ((mEmptyMass == 0.0) && (mFuelMass == 0.0))
       {
-         ut::log::error() << "If 'total_mass' is not specified then you must specify 'empty_mass' and 'fuel_mass'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_NEED_MASS_DETAIL, {});
          ok = false;
       }
       else
@@ -2292,7 +2299,8 @@ bool WsfTBM_Mover::Stage::Initialize(double aInitialTime)
 
    if ((mFuelMass > 0.0) && (mFuelMassFraction > 0.0))
    {
-      ut::log::error() << "'fuel_mass' and 'fuel_mass_fraction' cannot both be non-zero.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_FUEL_AND_FRACTION, {});
       ok = false;
    }
    else if (mFuelMass <= 0.0)
@@ -2306,7 +2314,8 @@ bool WsfTBM_Mover::Stage::Initialize(double aInitialTime)
 
    if (mFuelMass >= mTotalMass)
    {
-      auto out = ut::log::error() << "'fuel mass' must be less than the total mass.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_FUEL_GE_TOTAL, {});
       out.AddNote() << "Fuel: " << mFuelMass;
       out.AddNote() << "Total: " << mTotalMass;
       ok = false;
@@ -2316,18 +2325,21 @@ bool WsfTBM_Mover::Stage::Initialize(double aInitialTime)
    {
       if (mFuelMass <= 0.0)
       {
-         ut::log::error() << "'fuel_mass' or 'fuel_mass_fraction' must be specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_NEED_FUEL_OR_FRACTION, {});
          ok = false;
       }
 
       if ((mThrust <= 0.0) && (mSpecificImpulse <= 0.0))
       {
-         ut::log::error() << "Either 'thrust' or 'specific_impulse' must be specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_THRUST_OR_SI, {});
          ok = false;
       }
       else if ((mThrust > 0.0) && (mSpecificImpulse > 0.0))
       {
-         ut::log::error() << "'thrust' and 'specific_impulse' cannot both be specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_THRUST_AND_SI, {});
          ok = false;
       }
    }
@@ -2371,7 +2383,8 @@ bool WsfTBM_Mover::Stage::Initialize(double aInitialTime)
       }
       if (fabs(mTotalMass - mEmptyMass - mFuelMass) > 1.0)
       {
-         ut::log::error() << "'total_mass', 'empty_mass' and 'fuel_mass' are not consistent.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TBM_MASS_NOT_CONSISTENT, {});
          ok = false;
       }
 

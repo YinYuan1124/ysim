@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include <utility>
 
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComponentFactory.hpp"
 #include "WsfEM_Rcvr.hpp"
 #include "WsfEM_Xmtr.hpp"
@@ -265,7 +267,8 @@ bool WsfEW_SensorComponent::Initialize(double aSimTime)
          mHasFalseTargetScreeners = true;
          if (!ewMode.mScreenerPtr->Initialize(aSimTime, modePtr, modePtr->ReportsSignalToNoise()))
          {
-            auto out = ut::log::error() << "EW failed to initialize screener for mode.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_SC_SCREENER_INIT, {});
             out.AddNote() << "Mode: " << modePtr->GetName();
             ok = false;
          }
@@ -284,7 +287,8 @@ bool WsfEW_SensorComponent::Initialize(double aSimTime)
          mHasJamStrobeDetectors = true;
          if (!ewMode.mJamStrobeDetector.Initialize(aSimTime, modePtr))
          {
-            auto out = ut::log::error() << "EW failed to initialize jam strobe detector for mode.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_SC_JSD_INIT, {});
             out.AddNote() << "Mode: " << modePtr->GetName();
             ok = false;
          }

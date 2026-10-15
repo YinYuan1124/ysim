@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "TimedRegion.hpp"
 #include "UtInput.hpp"
 #include "UtInputPreprocessor.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtPath.hpp"
 #include "UtStringUtil.hpp"
@@ -345,7 +347,8 @@ std::unique_ptr<WsfSimulation> WsfStandardApplication::CreateSimulation(WsfScena
    catch (WsfException& e)
    {
       { // RAII block
-         auto out = ut::log::error() << "Creation of simulation failed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 异常详情仍走英文 Note（机器读链路）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SIM_CREATE_FAILED, {});
          out.AddNote() << e.what();
       }
       simPtr.reset();

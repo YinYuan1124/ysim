@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
 #include "WsfPlatform.hpp"
@@ -79,14 +81,16 @@ bool WsfAero::Initialize(double aSimTime, UtEntity* aPlatformPtr)
    mEntityPtr = aPlatformPtr;
    if (mEntityPtr == nullptr)
    {
-      auto out = ut::log::error() << "'aero' was not supplied a WsfPlatform during Initialize().";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AERO_NO_PLATFORM, {});
       out.AddNote() << "T = " << aSimTime;
       mInitialized = false;
    }
 
    if (mRefArea == 0.0)
    {
-      auto out = ut::log::error() << "'aero' 'reference_area' was Zero.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AERO_ZERO_REF_AREA, {});
       out.AddNote() << "T = " << aSimTime;
       if (mInitialized)
       {

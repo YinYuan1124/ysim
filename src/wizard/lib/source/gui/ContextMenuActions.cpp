@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -60,7 +60,8 @@ void wizard::ContextMenuActions::MessageReporter::ShowWarningMessage(const QStri
 // -----------------------------------------------------------------------------
 
 wizard::ContextMenuActions::SetAsStartupFile::SetAsStartupFile(const QString& aFilePath, QObject* aParent)
-   : QAction("Set as Startup File", aParent)
+   // 二次开发（i18n）：右键菜单动作文本包裹 tr()
+   : QAction(tr("Set as Startup File"), aParent)
    , mFilePath(aFilePath)
 {
    connect(this, &SetAsStartupFile::triggered, this, &SetAsStartupFile::OnTriggered);
@@ -80,7 +81,8 @@ void wizard::ContextMenuActions::SetAsStartupFile::OnTriggered()
 // -----------------------------------------------------------------------------
 
 wizard::ContextMenuActions::AddToStartupFiles::AddToStartupFiles(const QString& aFilePath, QObject* aParent)
-   : QAction("Add to Startup Files", aParent)
+   // 二次开发（i18n）：右键菜单动作文本包裹 tr()
+   : QAction(tr("Add to Startup Files"), aParent)
    , mFilePath(aFilePath)
 {
    connect(this, &AddToStartupFiles::triggered, this, &AddToStartupFiles::OnTriggered);
@@ -96,7 +98,8 @@ void wizard::ContextMenuActions::AddToStartupFiles::OnTriggered()
 // -----------------------------------------------------------------------------
 
 wizard::ContextMenuActions::RemoveFromStartupFiles::RemoveFromStartupFiles(const QString& aFilePath, QObject* aParent)
-   : QAction("Remove from Startup Files", aParent)
+   // 二次开发（i18n）：右键菜单动作文本包裹 tr()
+   : QAction(tr("Remove from Startup Files"), aParent)
    , mFilePath(aFilePath)
 {
    connect(this, &RemoveFromStartupFiles::triggered, this, &RemoveFromStartupFiles::OnTriggered);
@@ -121,7 +124,8 @@ void wizard::ContextMenuActions::RemoveFromStartupFiles::OnTriggered()
 // -----------------------------------------------------------------------------
 
 wizard::ContextMenuActions::ShowStartupFilesDialog::ShowStartupFilesDialog(QObject* aParent)
-   : QAction("Configure Startup Files...", aParent)
+   // 二次开发（i18n）：右键菜单动作文本包裹 tr()
+   : QAction(tr("Configure Startup Files..."), aParent)
 {
    connect(this, &ShowStartupFilesDialog::triggered, this, &ShowStartupFilesDialog::OnTriggered);
 }
@@ -134,7 +138,8 @@ void wizard::ContextMenuActions::ShowStartupFilesDialog::OnTriggered()
 // -----------------------------------------------------------------------------
 
 wizard::ContextMenuActions::OpenFileInEditor::OpenFileInEditor(const QString& aFilePath, QObject* aParent)
-   : QAction("Open in Editor", aParent)
+   // 二次开发（i18n）：右键菜单动作文本包裹 tr()
+   : QAction(tr("Open in Editor"), aParent)
    , mFilePath(aFilePath)
 {
    connect(this, &OpenFileInEditor::triggered, this, &OpenFileInEditor::OnTriggered);

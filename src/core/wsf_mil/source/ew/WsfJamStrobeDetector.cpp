@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "WsfEM_Antenna.hpp"
 #include "WsfEM_Rcvr.hpp"
@@ -74,7 +76,8 @@ bool WsfJamStrobeDetector::Initialize(double aSimTime, WsfSensorMode* aSensorMod
    // Assure that the jam strobe detector actually reports something (bearing or elevation)
    if (!mReportsBearing && !mReportsElevation)
    {
-      ut::log::error() << "Jam strobe detector does not report anything.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_JSD_NOTHING_REPORT, {});
       return false;
    }
 

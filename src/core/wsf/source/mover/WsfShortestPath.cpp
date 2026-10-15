@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtCast.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 // NOTE: The original version of this class cached the computed path in case it was
 // requested again.  The performance benefit for small networks is negligible while
@@ -62,7 +64,8 @@ bool WsfShortestPath::Initialize(const CostMatrix& aCostMatrix)
 
    if (aCostMatrix.empty())
    {
-      ut::log::error() << "WsfShortestPath: Cost Matrix is empty.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SP_EMPTY_MATRIX, {});
       return false;
    }
 
@@ -73,7 +76,8 @@ bool WsfShortestPath::Initialize(const CostMatrix& aCostMatrix)
    {
       if (aCostMatrix[0].size() != aCostMatrix[rowIndex].size())
       {
-         ut::log::error() << "WsfShortestPath: Cost Matrix is not square.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SP_NOT_SQUARE, {});
          return false;
       }
    }
@@ -87,7 +91,8 @@ bool WsfShortestPath::Initialize(const CostMatrix& aCostMatrix)
       {
          if (aCostMatrix[rowIndex][colIndex] != aCostMatrix[colIndex][rowIndex])
          {
-            ut::log::error() << "WsfShortestPath: Cost Matrix is not symmetric.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SP_NOT_SYMMETRIC, {});
             return false;
          }
       }
@@ -133,7 +138,8 @@ void WsfShortestPath::FindShortestPath(unsigned int aFromNode, unsigned int aToN
    // Make sure the node values are valid.
    if ((aFromNode < 0U) || (aFromNode >= mNodeCount) || (aToNode < 0U) || (aToNode >= mNodeCount))
    {
-      auto out = ut::log::error() << "Node indexing error in WsfShortestPath::FindShortestPath";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文，"To Note" 为原文笔误保持原样）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SP_BAD_NODE_IDX, {});
       out.AddNote() << "From Node: " << aFromNode;
       out.AddNote() << "To Note: " << aToNode;
       out.AddNote() << "Max: " << mNodeCount;

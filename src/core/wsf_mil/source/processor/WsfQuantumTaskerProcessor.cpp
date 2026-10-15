@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtDictionary.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringUtil.hpp"
 #include "WsfAssetPerception.hpp"
 #include "WsfComm.hpp"
@@ -1155,7 +1157,8 @@ bool WsfQuantumTaskerProcessor::RejectTask(double aSimTime, WsfTask& aTask)
    }
    else if (!DropFromPurgedTaskList(mPurgedRcvdTaskList, assignerIndex, aTask.GetTaskId()))
    {
-      auto out = ut::log::error() << "Cannot find task to reject.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_QT_NO_TASK_REJECT, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Processor: " << GetName();

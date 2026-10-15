@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -25,6 +25,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtQuaternion.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
@@ -783,7 +785,8 @@ void WsfTSPI_Mover::OpenFile(const std::string& aFileName)
    else
    {
       mInputStreamPtr->close();
-      auto out = ut::log::error() << "Cannot open TSPI file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TSPI_OPEN_FAIL, {});
       out.AddNote() << "File: " << aFileName;
       throw OpenError(); // Could not open the file
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -35,6 +35,18 @@ wkf::MainWindow::MainWindow()
 {
    mUi.setupUi(this);
    mUi.mActionExit->setShortcut(QKeySequence("Alt+F4"));
+
+   // 二次开发（i18n）：标准菜单挂 objectName 查找键。
+   // 菜单标题是可翻译文本（如 Tools→工具），而插件生态按字符串 GetMenuByName("Tools")
+   // 查找菜单（12+ 处），标题翻译后按 title 匹配会失配（曾致 EventOutput 插件空指针崩溃）。
+   // 故查找键走 objectName（不可翻译），标题翻译不再影响插件定位。
+   mUi.mMenuFile->setObjectName("File");
+   mUi.mMenuOptions->setObjectName("Options");
+   mUi.mMenuHelp->setObjectName("Help");
+   mUi.mMenuView->setObjectName("View");
+   mUi.mMenuToolbars->setObjectName("Toolbars");
+   mUi.mMenuTools->setObjectName("Tools");
+   mUi.menuDeveloper->setObjectName("Developer");
 
    mCallbacks.Add(Observer::LoadSettings.Connect(&MainWindow::LoadSettings, this));
    mCallbacks.Add(Observer::SaveSettings.Connect(&MainWindow::SaveSettings, this));
@@ -148,9 +160,19 @@ QMenu* wkf::MainWindow::GetMenuByName(const QString& aName) const
       QList<QMenu*> menus = menuBar()->findChildren<QMenu*>();
       foreach (QMenu* m, menus)
       {
+         // 二次开发（i18n）：双通道匹配 —— title 命中直接返回；title 因翻译失配时
+         // 回退按 objectName（构造时挂的英文查找键）匹配，保证插件生态翻译后仍可定位。
          if (m->title() == aName)
          {
             // if this is the Tools menu, set it to visible
+            if (aName == "Tools")
+            {
+               m->menuAction()->setVisible(true);
+            }
+            return m;
+         }
+         if (m->objectName() == aName)
+         {
             if (aName == "Tools")
             {
                m->menuAction()->setVisible(true);

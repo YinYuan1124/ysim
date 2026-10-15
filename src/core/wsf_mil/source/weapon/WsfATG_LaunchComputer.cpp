@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfLocalTrack.hpp"
 #include "WsfPlatform.hpp"
@@ -79,15 +81,17 @@ bool WsfATG_LaunchComputer::Initialize(double aSimTime, WsfWeapon* aWeaponPtr)
    {
       if (!ComputerGenerationMode())
       {
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
          auto out = ut::log::error()
-                    << "The WsfATG_LaunchComputer in platform does not contain any LARs for launch evaluation.";
+                    << ut::msg::FormatEnTagged(ut::msg::MSG_ATG_LC_NO_LARS, {});
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          result = false;
       }
    }
    else if ((mWeaponLARs.size() > 1) && (aWeaponPtr->GetUpdateInterval() == 0))
    {
-      auto out = ut::log::error() << "The WsfATG_LaunchComputer's parent weapon requires a defined update_interval.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATG_LC_NO_UPDATE_INTERVAL, {});
       out.AddNote() << "Weapon: " << aWeaponPtr->GetName();
       return false;
    }

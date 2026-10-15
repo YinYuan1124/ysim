@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -44,6 +44,8 @@
 #include "UtLLPos.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
@@ -283,7 +285,8 @@ bool WsfBallisticMissileLaunchComputer::Initialize(double aSimTime, WsfWeapon* a
    // shots are allowed.
    if (!mSS_TablePtr && !mSA_TablePtr)
    {
-      ut::log::error() << "Surface_to_surface or surface_to_air table must be provided.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_NO_TABLE, {});
       ok = false;
    }
 
@@ -1309,7 +1312,8 @@ WsfMover::KinematicModel* WsfBallisticMissileLaunchComputer::GetTargetData(doubl
                {
                   tgtname = tgtPtr->GetName();
                }
-               auto out = ut::log::error() << "Ballistic target data for target is obsolete.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_TARGET_OBSOLETE, {});
                out.AddNote() << "T = " << aSimTime;
                out.AddNote() << "Error: " << delta << " m";
             }
@@ -1570,7 +1574,8 @@ bool WsfBallisticMissileLaunchComputer::SS_Table::Read(const std::string& aFileN
          {
             if (!(ifs >> speed >> flightPathAngle))
             {
-               auto out = ut::log::error() << "Input error encountered.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；3 处调用点共用同一 ID）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_INPUT_ERROR, {});
                out.AddNote() << "File: " << aFileName;
                return false;
             }
@@ -1579,7 +1584,8 @@ bool WsfBallisticMissileLaunchComputer::SS_Table::Read(const std::string& aFileN
             {
                if (!(ifs >> bo_timeOfFlight >> bo_range >> bo_speed >> bo_flightPathAngle))
                {
-                  auto out = ut::log::error() << "Input error encountered.";
+                  // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；3 处调用点共用同一 ID）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_INPUT_ERROR, {});
                   out.AddNote() << "File: " << aFileName;
                   return false;
                }
@@ -1765,7 +1771,8 @@ bool WsfBallisticMissileLaunchComputer::SA_Table::Read(const std::string& aFileN
    std::ifstream ifs(aFileName);
    if (!ifs.is_open())
    {
-      auto out = ut::log::error() << "Unable to open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_FILE_OPEN_FAIL, {});
       out.AddNote() << "File: " << aFileName;
       return false;
    }
@@ -1830,7 +1837,8 @@ bool WsfBallisticMissileLaunchComputer::SA_Table::Read(const std::string& aFileN
          {
             if (!(ifs >> speed >> flightPathAngle))
             {
-               auto out = ut::log::error() << "Input error encountered.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文；3 处调用点共用同一 ID）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_INPUT_ERROR, {});
                out.AddNote() << "File: " << aFileName;
                return false;
             }
@@ -1846,12 +1854,14 @@ bool WsfBallisticMissileLaunchComputer::SA_Table::Read(const std::string& aFileN
          {
             if (range < ranges.back())
             {
-               ut::log::error() << "Ground ranges must be ascending.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_GROUND_NOT_ASC, {});
                return false;
             }
             if (timeOfFlight <= timeOfFlights.back())
             {
-               ut::log::error() << "Time of flight values must be monotonically ascending.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_TOF_NOT_ASC, {});
                return false;
             }
          }
@@ -1871,7 +1881,8 @@ bool WsfBallisticMissileLaunchComputer::SA_Table::Read(const std::string& aFileN
 
       if (ranges.empty())
       {
-         auto out = ut::log::error() << "File contains an empty trajectory.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_EMPTY_TRAJ, {});
          out.AddNote() << "File: " << aFileName;
          return false;
       }
@@ -1921,7 +1932,8 @@ bool WsfBallisticMissileLaunchComputer::SA_Table::Read(const std::string& aFileN
 
    if (trajectories.empty())
    {
-      auto out = ut::log::error() << "No trajectories in file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BM_LC_NO_TRAJ, {});
       out.AddNote() << "File: " << aFileName;
       return false;
    }

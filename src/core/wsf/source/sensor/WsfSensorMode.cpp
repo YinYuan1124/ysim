@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMeasurementUtil.hpp"
 #include "UtRandom.hpp"
@@ -257,7 +259,8 @@ bool WsfSensorMode::Initialize(double aSimTime)
       mOnSuccessModeIndex = modeListPtr->GetModeByName(mOnSuccessModeName);
       if (mOnSuccessModeIndex >= modeListPtr->GetModeCount())
       {
-         auto out = ut::log::error() << "Unknown mode name for 'on_success'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_MODE_BAD_ON_SUCCESS, {});
          out.AddNote() << "Mode: " << mOnSuccessModeName;
          ok = false;
       }
@@ -269,7 +272,8 @@ bool WsfSensorMode::Initialize(double aSimTime)
       mOnFailureModeIndex = modeListPtr->GetModeByName(mOnFailureModeName);
       if (mOnFailureModeIndex >= modeListPtr->GetModeCount())
       {
-         auto out = ut::log::error() << "Unknown mode name for 'on_failure'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_MODE_BAD_ON_FAILURE, {});
          out.AddNote() << "Mode: " << mOnFailureModeName;
          ok = false;
       }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,7 +18,8 @@
 wizard::ContextDocumentationControl::ContextDocumentationControl()
 {
    setObjectName("ContextDocumentationControl");
-   setWindowTitle("Context Help");
+   // 二次开发（i18n）：停靠窗口标题包裹 tr()
+   setWindowTitle(tr("Context Help"));
    setWidget(new BrowserWidget(wkfEnv.GetMainWindow()));
    mBrowserPtr = static_cast<BrowserWidget*>(widget());
 }

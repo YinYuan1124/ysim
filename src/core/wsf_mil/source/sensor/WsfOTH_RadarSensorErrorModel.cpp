@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfOTH_RadarSensor.hpp"
 #include "WsfSensorMode.hpp"
@@ -66,8 +68,8 @@ bool OTH_RadarSensorErrorModel::Initialize(WsfSensorMode* aSensorModePtr)
    bool ok = wsf::StandardSensorErrorModel::Initialize(aSensorModePtr);
    if (dynamic_cast<WsfOTH_RadarSensor*>(aSensorModePtr->GetSensor()) == nullptr)
    {
-      auto out =
-         ut::log::error() << "error_model: Not able to be used on sensor types that are not WSF_OTH_RADAR_SENSOR.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OTH_EM_BAD_SENSOR, {});
       out.AddNote() << "Model Name: " << GetName();
       ok = false;
    }

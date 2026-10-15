@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptContext.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "WsfAssociationMessage.hpp"
@@ -311,14 +313,16 @@ bool WsfTaskManager::Initialize2(double aSimTime)
          }
          else
          {
-            auto out = ut::log::error() << "Track processor must be of type WSF_TRACK_PROCESSOR.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_BAD_TRACKPROC, {});
             out.AddNote() << "Processor: " << mTrackProcessorName;
             ok = false;
          }
       }
       else
       {
-         auto out = ut::log::error() << "Track processor could not be found.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_NO_TRACKPROC, {});
          out.AddNote() << "Processor: " << mTrackProcessorName;
          ok = false;
       }
@@ -859,7 +863,8 @@ bool WsfTaskManager::AcquireResource(double aSimTime, WsfTask& aTask, const WsfT
    else
    {
       ok       = false;
-      auto out = ut::log::error() << "Unknown resource type in AcquireResource.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_UNKNOWN_RES_ACQ, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Task Manager: " << GetName();
@@ -939,7 +944,8 @@ bool WsfTaskManager::ReleaseResource(double aSimTime, WsfTask& aTask)
    }
    else
    {
-      auto out = ut::log::error() << "Unknown resource type in ReleaseResource.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_UNKNOWN_RES_REL, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Task Manager: " << GetName();
@@ -1653,7 +1659,8 @@ bool WsfTaskManager::GetMessageSender(const WsfMessage& aMessage, size_t& aSende
       }
       if (aRcvrCommName == nullptr)
       {
-         auto out = ut::log::error() << "Unable to find comm device for address.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_NO_COMM_FOR_ADDR, {});
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Task Manager: " << GetName();
          out.AddNote() << "Address: " << aMessage.GetDstAddr();
@@ -1861,7 +1868,8 @@ bool WsfTaskManager::SendTaskMessage(double            aSimTime,
       wsf::comm::Comm* commPtr = GetPlatform()->GetComponent<wsf::comm::Comm>(aCommName);
       if (commPtr == nullptr)
       {
-         auto out = ut::log::error() << "Unable to send message. Comm device does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_SEND_NO_COMM, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Task Manager: " << GetName();
@@ -1874,7 +1882,8 @@ bool WsfTaskManager::SendTaskMessage(double            aSimTime,
       WsfPlatform* recipientPtr = GetSimulation()->GetPlatformByIndex(aRecipientIndex);
       if (recipientPtr == nullptr)
       {
-         auto out = ut::log::error() << "Unable to send message. Recipient no longer exists.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_SEND_NO_RCPT, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Task Manager: " << GetName();
@@ -1951,7 +1960,8 @@ bool WsfTaskManager::SendTaskMessage(double            aSimTime,
       }
       else
       {
-         auto out = ut::log::error() << "Unable to send message. Target processor does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_SEND_NO_TGT_PROC, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Task Manager: " << GetName();
@@ -2048,7 +2058,8 @@ bool WsfTaskManager::ProcessTaskAssignMessage(double aSimTime, const WsfTaskAssi
    WsfStringId commName;
    if (!GetMessageSender(aMessage, senderIndex, commName))
    {
-      auto out = ut::log::error() << "Task assignment internal error 1.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_ASSIGN_INTERNAL, {});
       out.AddNote() << "T =" << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Task Manager: " << GetName();
@@ -2219,7 +2230,8 @@ bool WsfTaskManager::ProcessTaskCancelMessage(double aSimTime, const WsfTaskCanc
    }
    else if (!DropFromPurgedTaskList(mPurgedRcvdTaskList, assignerIndex, taskId))
    {
-      auto out = ut::log::error() << "Cannot find received task to cancel.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_TASK_CANCEL_NOT_FOUND, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Task Manager: " << GetName();

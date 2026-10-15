@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include <string>
 
 #include "UtInput.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
@@ -684,7 +686,8 @@ bool WsfBeamDirector::WsfBeamDirectorMode::Initialize(double aSimTime)
    ok &= mXcvrAntenna.Initialize(mSensorPtr);
    if (ok && (mType == cUNDEFINED))
    {
-      auto out = ut::log::error() << "Must specify a type for this mode.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BD_NO_TYPE, {});
       out.AddNote() << "Sensor: " << mSensorPtr->GetName();
       out.AddNote() << "Mode: " << GetName();
       ok = false;

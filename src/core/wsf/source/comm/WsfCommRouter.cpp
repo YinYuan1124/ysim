@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommDatalinkLayer.hpp"
@@ -898,7 +900,8 @@ bool Router::Send(double aSimTime, SendData& aData)
       // model implementation's failure to set this value as required when sending messages.
       if (sourceAddress.IsNull())
       {
-         ut::log::error() << "Invalid send attempt, missing source address in router send method.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ROUTER_SEND_NO_SOURCE, {});
          throw UtException("Invalid null address in WsfCommRouter::Send from Message.");
       }
 
@@ -1229,7 +1232,10 @@ void Router::AddInterface(double aSimTime, Comm* aCommPtr)
       {
          if (!AutomateAddedLinkage(aSimTime, aCommPtr))
          {
-            auto out = ut::log::error() << "Automated linking for comm interface has failed.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 通信设备/路由器名作为模板参数
+            const ut::msg::Args args{{"comm", aCommPtr->GetFullName()},
+                                     {"router", GetName()}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_ROUTER_AUTO_LINK_FAIL, args);
             out.AddNote() << "Comm: " << aCommPtr->GetFullName();
             out.AddNote() << "Router: " << GetName();
             out.AddNote() << "Ensure the network type allows the creation of links for interfaces on this router.";

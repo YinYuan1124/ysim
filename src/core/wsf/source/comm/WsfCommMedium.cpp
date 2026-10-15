@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include "UtCast.hpp"
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfCommEvent.hpp"
 #include "WsfCommLayer.hpp"
 #include "WsfCommLayerEvent.hpp"
@@ -182,14 +184,18 @@ bool Medium::Initialize(double aSimTime)
 
    if (mModes.empty())
    {
-      auto out = ut::log::error() << "No modes defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 介质名作为模板参数
+      const ut::msg::Args args{{"medium", GetName()}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_MEDIUM_NO_MODES, args);
       out.AddNote() << "Medium: " << GetName();
       return false;
    }
 
    if (!GetMode(mDefaultModeName))
    {
-      auto out = ut::log::error() << "Default mode name does not exist.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 默认模式名作为模板参数
+      const ut::msg::Args args{{"mode", mDefaultModeName}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_MEDIUM_BAD_DEFAULT, args);
       out.AddNote() << "Mode name: " << mDefaultModeName;
       return false;
    }

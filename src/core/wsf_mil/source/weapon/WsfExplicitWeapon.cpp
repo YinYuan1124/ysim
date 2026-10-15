@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,11 +15,14 @@
 #include <cfloat>
 #include <memory>
 #include <sstream>
+#include <string>
 
 #include "UtDCM.hpp"
 #include "UtEntity.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtScriptContext.hpp"
 #include "UtScriptData.hpp"
@@ -156,7 +159,11 @@ bool WsfExplicitWeapon::Initialize(double aSimTime)
    ok &= mContextPtr->Initialize(aSimTime, GetPlatform(), this);
    if (GetScenario().FindType("platform_type", GetLaunchedPlatformType()) == nullptr)
    {
-      auto out = ut::log::error() << "Launched platform type is not defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 平台/武器/发射平台类型名作为模板参数
+      const ut::msg::Args args{{"platform", GetPlatform()->GetName()},
+                               {"weapon", GetName()},
+                               {"type", GetLaunchedPlatformType()}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WEAPON_LAUNCHED_TYPE_UNDEF, args);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Weapon: " << GetName();
       out.AddNote() << "Launched Platform Type: " << GetLaunchedPlatformType();
@@ -552,7 +559,11 @@ WsfWeapon::FireResult WsfExplicitWeapon::FireP(double             aSimTime,
    if ((mRequireInterceptPoint && (!haveInterceptPoint)) || (mRequireLoftAngle && (!haveLoftAngle)))
    {
       { // RAII block
-         auto out = ut::log::error() << "Missing or incomplete launch computer solution - launch suppressed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 时刻/平台/武器作为模板参数（时刻为仿真秒）
+         const ut::msg::Args args{{"t", std::to_string(aSimTime)},
+                                  {"platform", GetPlatform()->GetName()},
+                                  {"weapon", GetName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WEAPON_LAUNCH_SOL_MISSING, args);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Weapon: " << GetName();
@@ -688,7 +699,11 @@ WsfWeapon::FireResult WsfExplicitWeapon::FireP(double             aSimTime,
       else
       {
          { // RAII block
-            auto out = ut::log::error() << "Failed to initialize deferred launch weapon platform.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 时刻/平台/武器作为模板参数（时刻为仿真秒）
+            const ut::msg::Args args{{"t", std::to_string(aSimTime)},
+                                     {"platform", GetPlatform()->GetName()},
+                                     {"weapon", GetName()}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WEAPON_DEFERRED_INIT_FAIL, args);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Weapon: " << GetName();
@@ -977,7 +992,11 @@ bool WsfExplicitWeapon::AddWeaponToSimulation(double             aSimTime,
    else
    {
       { // RAII block
-         auto out = ut::log::error() << "Unable to add weapon to the simulation.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台/武器/武器平台名作为模板参数
+         const ut::msg::Args args{{"platform", GetPlatform()->GetName()},
+                                  {"weapon", GetName()},
+                                  {"weapon_platform", aWeaponPlatformPtr->GetName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WEAPON_ADD_TO_SIM_FAIL, args);
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Weapon: " << GetName();
          out.AddNote() << "Weapon Name: " << aWeaponPlatformPtr->GetName();

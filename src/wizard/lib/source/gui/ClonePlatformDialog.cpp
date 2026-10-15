@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -293,10 +293,11 @@ void wizard::ClonePlatformDialog::GenerateNames()
    bool        suffix = mUi.suffixOption->isChecked();
    bool        manual = mUi.manualOption->isChecked();
    mUi.suffixPrefixEdit->setEnabled(!manual);
+   // 二次开发（i18n）：克隆方式标签文本包裹 tr()
    if (prefix)
-      mUi.suffixOrPrefixLabel->setText("Prefix:");
+      mUi.suffixOrPrefixLabel->setText(tr("Prefix:"));
    if (suffix)
-      mUi.suffixOrPrefixLabel->setText("Suffix:");
+      mUi.suffixOrPrefixLabel->setText(tr("Suffix:"));
    for (int i = 0; i < mModelPtr->rowCount(); ++i)
    {
       QStandardItem* itemPtr = mModelPtr->item(i, 0);

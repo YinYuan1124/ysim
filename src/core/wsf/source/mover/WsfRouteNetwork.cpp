@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,6 +32,8 @@
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec2.hpp"
 #include "UtWallClock.hpp"
@@ -929,7 +931,8 @@ void WsfRouteNetwork::AppendSubroute(const WsfRouteNetwork::RouteNode& aStarting
       }
       else
       {
-         auto out = ut::log::error() << "Could not find the associated route for source and destination nodes.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_RN_NO_ROUTE_ASSOC, {});
          out.AddNote() << "Road Network: " << GetName();
          out.AddNote() << "Source Node: " << aStartingWaypoint.mId;
          out.AddNote() << "Destination Node: " << aEndingWaypoint.mId;

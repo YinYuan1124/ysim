@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,7 @@
 
 // Utilities
 #include "UtDynamicLibrary.hpp"
+#include "UtMsgCatalog.hpp"
 #include "UtRunEnvManager.hpp"
 
 namespace
@@ -346,7 +347,15 @@ bool wizard::RunEnvManager::InitDir(UtPath& aDirPath, const std::string& aDirNam
    }
    else
    {
-      aErrorString = "Invalid directory [" + aDirName + "] [" + aDirPath.GetSystemPath() + "]";
+      // 二次开发（i18n）：错误消息 ID 化（决策 1）—— 文本由 UtMsgCatalog 统一生成，
+      // 业务代码不再硬编码英文报错句子。
+      // 双通道：Emit 落日志为 "[E:00060001] Invalid directory [...]"（英文原文+ID，官方排错可 grep）；
+      // aErrorString 仍为英文原文（上层异常链/英文界面行为不变）；
+      // 中文界面通道可经 ut::msg::FormatZh(MSG_WIZARD_INVALID_DIR, args) 获取译文，
+      // 中文诊断说明经 ut::msg::GetCauseZh(MSG_WIZARD_INVALID_DIR) 获取。
+      const ut::msg::Args args{{"dir", aDirName}, {"path", aDirPath.GetSystemPath()}};
+      ut::msg::Emit(ut::msg::MSG_WIZARD_INVALID_DIR, args);
+      aErrorString = ut::msg::FormatEn(ut::msg::MSG_WIZARD_INVALID_DIR, args);
    }
 
    return initialized;

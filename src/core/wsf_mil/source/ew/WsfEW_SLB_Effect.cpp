@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtVec2.hpp"
 #include "WsfAntennaPattern.hpp"
@@ -132,7 +134,8 @@ bool WsfEW_SLB_Effect::Initialize(WsfSimulation& aSimulation)
    }
    else
    {
-      auto out = ut::log::error() << "Antenna pattern not defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 与 SLC_Effect 两文件共用同一 ID（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_ANT_NO_DEF, {});
       out.AddNote() << "Effect: " << GetName();
       ok = false;
    }

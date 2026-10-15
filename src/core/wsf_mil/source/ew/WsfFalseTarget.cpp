@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtStringUtil.hpp"
 #include "UtVec2.hpp"
@@ -241,8 +243,8 @@ bool WsfFalseTarget::Initialize(WsfSimulation* aSimulationPtr)
    }
    if ((mRadarBehavior == cRANDOM_TO_MULTIPLE_RADARS) && (mPlatformBehavior == cCONSISTENT_TO_MULTIPLE_PLATFORMS))
    {
-      auto out = ut::log::error() << "Initializing false-target effect, the combination of 'random_to_multiple_radars' "
-                                     "and 'consistent_to_multiple_platforms' is not allowed.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 多行字符串原文合并为单句（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FT_RADAR_PLAT_COMBO, {});
       out.AddNote() << "False Target: " << GetNameId();
       initialized &= false;
    }
@@ -250,8 +252,8 @@ bool WsfFalseTarget::Initialize(WsfSimulation* aSimulationPtr)
 
    if ((mRadarBehavior == cCONSISTENT_TO_MULTIPLE_RADARS) && !mExplicitReferenceCentroid)
    {
-      auto out = ut::log::error() << "Initializing false-target effect, false target reference centroid not set for "
-                                     "'consistent_to_multiple_radars' distribution.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 多行字符串原文合并为单句（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FT_NO_CENTROID, {});
       out.AddNote() << "False Target: " << GetNameId();
       initialized &= false;
    }
@@ -559,14 +561,14 @@ bool WsfFalseTarget::ProcessInput(UtInput& aInput)
       {
          if (!haveLat)
          {
-            auto out = ut::log::error() << "In Input for false-target effect, false target reference centroid latitude "
-                                           "or position not properly entered.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 多行字符串原文合并为单句（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FT_NO_LAT, {});
             out.AddNote() << "False Target: " << GetNameId();
          }
          if (!haveLon)
          {
-            auto out = ut::log::error() << "In Input for false-target effect, false target reference centroid "
-                                           "longitude or position not properly entered.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 多行字符串原文合并为单句（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_FT_NO_LON, {});
             out.AddNote() << "False Target: " << GetNameId();
          }
          myCommand = false;

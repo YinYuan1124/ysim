@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtEntity.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptBasicTypes.hpp"
@@ -332,7 +334,9 @@ void WsfDrawManager::Start()
          WsfRoute* routePtr = WsfRouteTypes::Get(GetScenario()).Find(command.mObjectNameId.GetString());
          if (routePtr == nullptr)
          {
-            auto out = ut::log::error() << "Draw route: Rout not found.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 路由名作为模板参数（中文界面可完整翻译）
+            const ut::msg::Args args{{"route", command.mObjectNameId}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DRAW_ROUTE_NOT_FOUND, args);
             out.AddNote() << "Route: " << command.mObjectNameId;
             continue;
          }
@@ -356,7 +360,9 @@ void WsfDrawManager::Start()
          WsfRouteNetwork* networkPtr = WsfRouteNetworkTypes::Get(GetScenario()).Find(command.mObjectNameId);
          if (networkPtr == nullptr)
          {
-            auto out = ut::log::error() << "Draw route_network: Route not found.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 路由网络名作为模板参数
+            const ut::msg::Args args{{"route", command.mObjectNameId}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DRAW_NETWORK_NOT_FOUND, args);
             out.AddNote() << "Route: " << command.mObjectNameId;
             continue;
          }

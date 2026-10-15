@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,8 +17,11 @@ namespace wizard
 {
 class BrowserWidget;
 
+// 二次开发（i18n）：补充 Q_OBJECT 宏，使 tr() 拥有独立的翻译 context
 class ContextDocumentationControl : public QDockWidget
 {
+   Q_OBJECT
+
 public:
    explicit ContextDocumentationControl();
    ~ContextDocumentationControl() override = default;

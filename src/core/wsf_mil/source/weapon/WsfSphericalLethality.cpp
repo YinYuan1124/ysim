@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfSimulation.hpp"
@@ -47,17 +49,20 @@ bool WsfSphericalLethality::PreInitialize()
 
    if (MaximumEffectiveRadius() <= mMinRadius)
    {
-      ut::log::error() << "WsfSphericalLethality Maximum radius must be greater than Minimum.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SPH_LETH_RADIUS, {});
       result = false;
    }
    if (mMaxDamage <= mMinDamage)
    {
-      ut::log::error() << "WsfSphericalLethality Maximum damage must be greater than Minimum.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SPH_LETH_DAMAGE, {});
       result = false;
    }
    if (mThreshold > mMaxDamage)
    {
-      ut::log::error() << "WsfSphericalLethality damage Threshold must be less than Max Damage.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SPH_LETH_THRESHOLD, {});
       result = false;
    }
 

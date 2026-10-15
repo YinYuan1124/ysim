@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtException.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfEM_Antenna.hpp"
 #include "WsfEM_Rcvr.hpp"
@@ -98,14 +100,16 @@ bool BistaticErrorModel::Initialize(WsfSensorMode* aSensorModePtr)
       constexpr double cMAX_ANG = UtMath::cPI_OVER_2;
       if (mInitialSigmas.mAzErrorStdDev > cMAX_ANG)
       {
-         auto error = ut::log::error() << "Azimuth standard deviation greater than maximum allowed value";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto error = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BISTATIC_AZ_SIGMA, {});
          error.AddNote() << "Provided value: " << mInitialSigmas.mAzErrorStdDev;
          error.AddNote() << "Maximum value: " << cMAX_ANG;
          initialized = false;
       }
       if (mInitialSigmas.mElErrorStdDev > cMAX_ANG)
       {
-         auto error = ut::log::error() << "Elevation standard deviation greater than maximum allowed value";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto error = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BISTATIC_EL_SIGMA, {});
          error.AddNote() << "Provided value: " << mInitialSigmas.mElErrorStdDev;
          error.AddNote() << "Maximum value: " << cMAX_ANG;
          initialized = false;
@@ -143,7 +147,8 @@ void BistaticErrorModel::LoadPositionSigmaTable(UtInput& aInput)
       WsfSpatialDomain domain;
       if (!WsfTypes::StringToEnum(key.mDomain, domain))
       {
-         auto out = ut::log::error() << "SensorMode::BistaticTable Domain not recognized.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_BISTATIC_BAD_DOMAIN, {});
          out.AddNote() << "Domain: " << key.mDomain;
          throw UtInput::BadValue(aInput, "SensorMode::BistaticTable Domain not recognized - " + key.mDomain);
       }

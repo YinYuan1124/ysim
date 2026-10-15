@@ -12,6 +12,8 @@
 #ifndef WSFTHREADPOOL_HPP
 #define WSFTHREADPOOL_HPP
 
+#include <chrono>
+#include <vector>
 #include "UtSleep.hpp"
 #include "WsfThread.hpp"
 

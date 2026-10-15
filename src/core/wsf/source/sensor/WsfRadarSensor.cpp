@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
@@ -494,7 +496,8 @@ WsfRadarSensor::RadarBeam::RadarBeam(const RadarBeam& aSrc)
 {
    if (aSrc.mClutterPtr != nullptr)
    {
-      ut::log::error() << "Unexpected clone of clutter_model.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（两处调用点共用同一 ID）
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_RADAR_CLUTTER_CLONE, {});
    }
 
    // Indicate the receiver is 'linked' with the transmitter.
@@ -533,7 +536,8 @@ WsfRadarSensor::RadarBeam& WsfRadarSensor::RadarBeam::operator=(const RadarBeam&
 
       if (aRhs.mClutterPtr != nullptr)
       {
-         ut::log::error() << "Unexpected clone of clutter_model.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（两处调用点共用同一 ID）
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_RADAR_CLUTTER_CLONE, {});
       }
 
       // Indicate the receiver is 'linked' with the transmitter.
@@ -1026,7 +1030,8 @@ bool WsfRadarSensor::RadarBeam::Initialize(double       aSimTime,
          mClutterPtr = WsfEM_ClutterTypes::Get(aSensorPtr->GetScenario()).Clone(mClutterType);
          if (mClutterPtr == nullptr)
          {
-            auto out = ut::log::error() << "Undefined 'clutter_model'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_RADAR_CLUTTER_UNDEF, {});
             out.AddNote() << "Model: " << mClutterType;
             ok = false;
          }
@@ -1038,7 +1043,8 @@ bool WsfRadarSensor::RadarBeam::Initialize(double       aSimTime,
          }
          else if (!mClutterPtr->Initialize(GetEM_Rcvr()))
          {
-            ut::log::error() << "Failed to initialize 'clutter_model'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_RADAR_CLUTTER_INIT, {});
             ok = false;
          }
       }

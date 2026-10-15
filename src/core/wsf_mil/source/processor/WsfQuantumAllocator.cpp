@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include <limits>
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScript.hpp"
 #include "UtScriptExecutor.hpp"
 #include "WsfAssetPerception.hpp"
@@ -96,14 +98,16 @@ WsfQuantumAllocatorScript::WsfQuantumAllocatorScript(WsfScriptContext* aContextP
 
    if (mScriptPtr == nullptr)
    {
-      auto out = ut::log::error() << "Unable to find script for quantum allocator.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_QA_NO_SCRIPT, {});
       out.AddNote() << "Type: " << mType;
    }
    else if (!aContextPtr->ValidateScript(mScriptPtr,
                                          "Map<WsfAssetPerception,WsfQuantumTask>",
                                          "Array<Array<double>>, Array<WsfAssetPerception>, Array<WsfQuantumTask>"))
    {
-      auto out = ut::log::error() << "Invalid inputs or outputs for script as quantum allocator.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_QA_BAD_SCRIPT, {});
       out.AddNote() << "Type: " << mType;
       mScriptPtr = nullptr;
    }

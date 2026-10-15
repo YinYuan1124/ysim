@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -25,6 +25,8 @@
 #include "DisTime.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAttributeContainer.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommandChain.hpp"
@@ -946,7 +948,8 @@ bool WsfDisWeaponEvents::InitiateWeaponTransfer(double aSimTime, DisFire* aPduPt
       {
          failMessage = "Unable to clone weapon type requested type not present ";
          ReportErrorMessage(failMessage);
-         auto out = ut::log::error() << "Incoming weapon transfer. Unable to clone weapon type.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_WXFR_NO_CLONE, {});
          out.AddNote() << "Weapon System Type: " << weaponSystemType;
          return false;
       }
@@ -956,7 +959,8 @@ bool WsfDisWeaponEvents::InitiateWeaponTransfer(double aSimTime, DisFire* aPduPt
       {
          failMessage = "Unable to add weapon object";
          ReportErrorMessage(failMessage);
-         auto out = ut::log::error() << "Incoming weapon transfer. Unable to add weapon object.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_WXFR_NO_ADD, {});
          out.AddNote() << "Weapon System Type: " << weaponSystemType;
          delete weaponPtr;
          return false;
@@ -966,7 +970,8 @@ bool WsfDisWeaponEvents::InitiateWeaponTransfer(double aSimTime, DisFire* aPduPt
       {
          failMessage = "Unable to initialize weapon object";
          ReportErrorMessage(failMessage);
-         auto out = ut::log::error() << "Incoming weapon transfer. Unable to initialize weapon object.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_WXFR_NO_INIT, {});
          out.AddNote() << "Weapon System Type: " << weaponSystemType;
          return false;
       }
@@ -1090,14 +1095,16 @@ bool WsfDisWeaponEvents::InitiateWeaponTransfer(double aSimTime, DisFire* aPduPt
    {
       failMessage = "Local weapon firing failed";
       ReportErrorMessage(failMessage);
-      ut::log::error() << "Incoming weapon transfer. Local weapon firing failed.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_WXFR_FIRE_FAIL, {});
       return false;
    }
    if (result.mEngagementPtr == nullptr)
    {
       failMessage = "Weapon engagement pointer is zero after weapon firing";
       ReportErrorMessage(failMessage);
-      ut::log::error() << "Incoming weapon transfer. Weapon engagement pointer is zero after weapon firing.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_WXFR_NO_ENGAGE, {});
       return false;
    }
 

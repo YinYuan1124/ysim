@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtLatPos.hpp"
 #include "UtLog.hpp"
 #include "UtLonPos.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtVec3.hpp"
 #include "WsfAttributeContainer.hpp"
@@ -396,7 +398,8 @@ bool WsfLaunchComputer::Initialize(double aSimTime, WsfWeapon* aWeaponPtr)
    mWeaponPtr   = aWeaponPtr;
    if (mWeaponPtr == nullptr)
    {
-      ut::log::error() << "Weapon pointer was null.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LC_NULL_WEAPON, {});
       success = false;
    }
    if (success && (!ComputerGenerationMode()))
@@ -443,7 +446,8 @@ bool WsfLaunchComputer::InitializeTTIData()
 
    if ((mMaximumTOF == 0.0) && (mCoastTime == 0.0) && (mBurnDuration == 0.0))
    {
-      auto out = ut::log::error() << "Must specify any 2 of the following:";
+      // 二次开发（i18n）：错误消息 ID 化 —— 三选二输入约束（固定提示，无运行时参数）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LC_SPECIFY_TWO, {});
       out.AddNote() << "maximum_time_of_flight";
       out.AddNote() << "coast_duration";
       out.AddNote() << "thrust_duration";
@@ -454,7 +458,8 @@ bool WsfLaunchComputer::InitializeTTIData()
       mBurnDuration = mMaximumTOF - mCoastTime;
       if (mBurnDuration <= 0.0)
       {
-         ut::log::error() << "A negative thrust duration was calculated.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LC_NEG_THRUST_DURATION, {});
          success = false;
       }
    }
@@ -463,7 +468,8 @@ bool WsfLaunchComputer::InitializeTTIData()
       mCoastTime = mMaximumTOF - mBurnDuration;
       if (mCoastTime <= 0.0)
       {
-         ut::log::error() << "A negative coast duration was calculated.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LC_NEG_COAST_DURATION, {});
          success = false;
       }
    }
@@ -474,12 +480,14 @@ bool WsfLaunchComputer::InitializeTTIData()
 
    if (mBurnoutSpeed == 0.0)
    {
-      ut::log::error() << "Burnout speed was not provided.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LC_NO_BURNOUT_SPEED, {});
       success = false;
    }
    else if (mMinTerminalSpeed == 0.0)
    {
-      ut::log::error() << "Minimum terminal speed was not provided.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LC_NO_MIN_TERMINAL_SPEED, {});
       success = false;
    }
    else if (success)

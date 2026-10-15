@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfComponentFactoryList.hpp"
@@ -235,7 +237,11 @@ bool WsfWeapon::Initialize(double aSimTime)
       // If a weapon effects type has been specified, then make sure it is a valid type.
       if (WsfWeaponEffectsTypes::Get(GetScenario()).Find(mWeaponEffectsType) == nullptr)
       {
-         auto out = ut::log::error() << "Undefined weapon_effects for platform weapon.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 平台/武器/weapon_effects 类型名作为模板参数
+         const ut::msg::Args args{{"platform", GetPlatform()->GetName()},
+                                  {"weapon", GetName()},
+                                  {"effects", mWeaponEffectsType.GetString()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WEAPON_EFFECTS_UNDEFINED, args);
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Weapon: " << GetName();
          out.AddNote() << "weapon_effects: " << mWeaponEffectsType.GetString();

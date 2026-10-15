@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfArticulatedPart.hpp"
 #include "WsfDeferredInput.hpp"
 #include "WsfEM_Interaction.hpp"
@@ -620,7 +622,8 @@ WsfEW_Effect::EffectData* WsfEW_Effect::PropagateEffectDataPtr(WsfStringId aSyst
 {
    if (!EffectDataExists(aSystemTypeId))
    {
-      auto out = ut::log::error() << "Cannot propagate effect data due to invalid base effect data.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_EFF_NO_DATA, {});
       out.AddNote() << "Effect: " << GetName();
       return nullptr;
    }

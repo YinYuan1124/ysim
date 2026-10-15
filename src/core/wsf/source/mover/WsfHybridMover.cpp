@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfFollower.hpp"
 #include "WsfMover.hpp"
 #include "WsfPlatform.hpp"
@@ -87,21 +89,24 @@ bool WsfHybridMover::Initialize(double aSimTime)
 
    if (mFollowerMoverPtr == nullptr)
    {
-      ut::log::error() << "Must specify a valid follower_mover inside the hybrid mover block.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HM_NO_FOLLOWER, {});
       return false;
    }
    mFollowerMoverPtr->SetPlatform(GetPlatform());
 
    if (mWaypointMoverPtr == nullptr)
    {
-      ut::log::error() << "Must specify a valid waypoint_mover inside the hybrid mover block.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HM_NO_WAYPOINT, {});
       return false;
    }
    mWaypointMoverPtr->SetPlatform(GetPlatform());
 
    if (mCurrentMoverType == cINVALID)
    {
-      ut::log::error() << "Must specify a current_mover type inside the hybrid mover block.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HM_NO_CURRENT_TYPE, {});
       return false;
    }
 

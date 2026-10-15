@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include <iostream>
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfArticulatedPart.hpp"
 #include "WsfLaunchComputer.hpp"
 #include "WsfPlatform.hpp"
@@ -119,7 +121,8 @@ void WsfLaunchHandoffData::SetLaunchPlatformData(WsfPlatform* aPlatformPtr, WsfA
    }
    if (platformPtr == nullptr)
    {
-      ut::log::error() << "WsfLaunchHandoff cannot determine launch platform.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HANDOFF_NO_LAUNCH_PLATFORM, {});
       return;
    }
 

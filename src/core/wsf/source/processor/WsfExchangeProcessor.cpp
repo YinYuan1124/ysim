@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtVec3dX.hpp"
 #include "WsfAttributeContainer.hpp"
@@ -137,7 +139,8 @@ bool WsfExchangeProcessor::Initialize(double aSimTime)
       {
          if (!mContainers[i].Initialize())
          {
-            auto out = ut::log::error() << "Platform's container failed initialization.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_EXCH_CONTAINER_INIT, {});
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Container: " << mContainers[i].GetName();
             success = false;
@@ -148,7 +151,8 @@ bool WsfExchangeProcessor::Initialize(double aSimTime)
       {
          if (!mTransactors[i].Initialize(aSimTime, this))
          {
-            auto out = ut::log::error() << "Platform's transactor failed initialization.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_EXCH_TRANSACTOR_INIT, {});
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Transactor: " << mTransactors[i].GetName();
             success = false;
@@ -165,7 +169,8 @@ bool WsfExchangeProcessor::Initialize(double aSimTime)
          success &= mContextPtr->ValidateScript(mOnTransactionCompleteScriptPtr, "void", "Transactor");
          if (!success)
          {
-            auto out = ut::log::error() << "Could not validate the 'on_transaction_complete' script.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_EXCH_SCRIPT_COMPLETE, {});
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Exchange Processor: " << GetName();
          }
@@ -181,7 +186,8 @@ bool WsfExchangeProcessor::Initialize(double aSimTime)
          success &= mContextPtr->ValidateScript(mOnRequestFailedScriptPtr, "void", "Transactor");
          if (!success)
          {
-            auto out = ut::log::error() << "Could not validate the 'on_request_failed' script.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PLAT_EXCH_SCRIPT_REQ_FAIL, {});
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Exchange Processor: " << GetName();
          }

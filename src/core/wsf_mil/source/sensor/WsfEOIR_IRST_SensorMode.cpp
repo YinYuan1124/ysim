@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfEM_Attenuation.hpp"
@@ -115,7 +117,8 @@ bool WsfEOIR_IRST_SensorMode::Initialize(double aSimTime)
    }
    else
    {
-      ut::log::error() << "Band not defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_MODE_NO_BAND, {});
       ok = false;
    }
 
@@ -129,12 +132,14 @@ bool WsfEOIR_IRST_SensorMode::Initialize(double aSimTime)
    {
       if (mNoiseEquivalentIrradiance <= 0.0)
       {
-         ut::log::error() << "'noise_equivalent_irradiance' not defined.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_MODE_NO_NEI, {});
          ok = false;
       }
       if (mDetectionThreshold <= 0.0)
       {
-         ut::log::error() << "'detection_threshold' not defined.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_MODE_NO_THRESH, {});
          ok = false;
       }
    }
@@ -156,7 +161,8 @@ bool WsfEOIR_IRST_SensorMode::Initialize(double aSimTime)
       }
       else
       {
-         ut::log::error() << "Failed to initialize 'attenuation_model'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_MODE_ATTEN_INIT, {});
          delete attenuationPtr;
       }
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,6 +26,8 @@
 #include "UtMath.hpp"
 #include "UtMatrix.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
@@ -1516,7 +1518,8 @@ bool WsfSAR_Sensor::SAR_Mode::Initialize(double aSimTime)
       // Compute dwell time from desired resolution
       if (mResolution <= 0.0)
       {
-         auto out = ut::log::error() << "'resolution' must be specified if 'dwell_time' is not specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAR_NO_RESOLUTION, {});
          out.AddNote() << "Sensor: " << GetSensor()->GetType();
          out.AddNote() << "Sensor Type: " << GetSensor()->GetType();
          out.AddNote() << "Mode: " << GetName();
@@ -1528,7 +1531,8 @@ bool WsfSAR_Sensor::SAR_Mode::Initialize(double aSimTime)
       // Compute resolution from dwell time
       if (mDwellTime <= 0.0)
       {
-         auto out = ut::log::error() << "'dwell_time' must be specified if 'resolution' is not specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAR_NO_DWELL_TIME, {});
          out.AddNote() << "Sensor: " << GetSensor()->GetType();
          out.AddNote() << "Sensor Type: " << GetSensor()->GetType();
          out.AddNote() << "Mode: " << GetName();
@@ -3181,7 +3185,8 @@ bool WsfSAR_Sensor::SAR_Mode::SAR_ErrorModel::Initialize(WsfSensorMode* aSensorM
       {
          if (!error)
          {
-            auto out = ut::log::error() << "SAR Sensor Error Statistics were NOT initialized.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SAR_ERR_STATS_NO_INIT, {});
             out.AddNote() << "Sensor: " << GetSensorMode()->GetSensor()->GetName();
             out.AddNote() << "Sensor Type: " << GetSensorMode()->GetSensor()->GetType();
             out.AddNote() << "Mode: " << GetName();

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -85,13 +85,14 @@ void wizard::StartupDialog::BuildRecentContextMenu(QMenu& aMenu, const QStringLi
 
 void wizard::StartupDialog::PopulateLabels()
 {
-   mUi.recentsGroupBox->setTitle("Recent Projects");
-   mUi.newGroupBox->setTitle("Open Project");
-   mUi.filesLineEdit->setPlaceholderText("Drag and drop or enter scenario file(s)...");
-   mUi.appDesc->setText("<p style=\"font - size:10pt; \">Wizard is the AFSIM scenario editor.  It can be used to view "
-                        "scenarios, launch a virtual or constructive simulation, and launch post-process viewers.</p>");
+   // 二次开发（i18n）：启动对话框文本统一包裹 tr()，由 QTranslator 按语言翻译
+   mUi.recentsGroupBox->setTitle(tr("Recent Projects"));
+   mUi.newGroupBox->setTitle(tr("Open Project"));
+   mUi.filesLineEdit->setPlaceholderText(tr("Drag and drop or enter scenario file(s)..."));
+   mUi.appDesc->setText(tr("<p style=\"font - size:10pt; \">Wizard is the AFSIM scenario editor.  It can be used to view "
+                           "scenarios, launch a virtual or constructive simulation, and launch post-process viewers.</p>"));
    mUi.appIcon->setPixmap(QPixmap(QString::fromUtf8(":/icons/wizard_logo_icon.png")));
-   mUi.buttonBox->button(QDialogButtonBox::Ok)->setText("Open");
+   mUi.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Open"));
 }
 
 bool wizard::StartupDialog::ValidateSelection()

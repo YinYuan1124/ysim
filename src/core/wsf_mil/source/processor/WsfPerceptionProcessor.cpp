@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptEnvironment.hpp"
 #include "UtVec3.hpp"
 #include "WsfAssetMessage.hpp"
@@ -640,7 +642,8 @@ bool WsfPerceptionProcessor::SetScriptAssetScoringFunction(UtScriptContext* aCon
 
    if (mAssetFunctionScriptPtr == nullptr)
    {
-      auto out = ut::log::error() << "Unable to find script for asset importance function.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PP_NO_ASSET_SCRIPT, {});
       out.AddNote() << "Script: " << mAssetFunctionScriptName;
       return false;
    }
@@ -654,7 +657,8 @@ bool WsfPerceptionProcessor::SetScriptAssetScoringFunction(UtScriptContext* aCon
 
    if (expectedProtoPtr != mAssetFunctionScriptPtr->mPrototype)
    {
-      auto out = ut::log::error() << "Perception processor asset scoring function received unexpected signature.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PP_ASSET_SIG, {});
       out.AddNote() << "Received: " << environmentPtr->GetPrototypeDescription(mAssetFunctionScriptPtr->mPrototype);
       out.AddNote() << "Expected: " << environmentPtr->GetPrototypeDescription(expectedProtoPtr);
       mAssetFunctionScriptPtr = nullptr;
@@ -678,7 +682,8 @@ bool WsfPerceptionProcessor::SetScriptThreatScoringFunction(UtScriptContext* aCo
 
    if (mThreatFunctionScriptPtr == nullptr)
    {
-      auto out = ut::log::error() << "Unable to find script for threat importance function.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PP_NO_THREAT_SCRIPT, {});
       out.AddNote() << "Script: " << mThreatFunctionScriptName;
       return false;
    }
@@ -692,7 +697,8 @@ bool WsfPerceptionProcessor::SetScriptThreatScoringFunction(UtScriptContext* aCo
 
    if (expectedProtoPtr != mThreatFunctionScriptPtr->mPrototype)
    {
-      auto out = ut::log::error() << "Perception processor threat scoring function received unexpected signature.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PP_THREAT_SIG, {});
       out.AddNote() << "Received: " << environmentPtr->GetPrototypeDescription(mThreatFunctionScriptPtr->mPrototype);
       out.AddNote() << "Expected: " << environmentPtr->GetPrototypeDescription(expectedProtoPtr);
 

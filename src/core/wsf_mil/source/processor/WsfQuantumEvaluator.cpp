@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptDataPack.hpp"
 #include "UtScriptExecutor.hpp"
 #include "UtStringUtil.hpp"
@@ -74,12 +76,14 @@ WsfQuantumEvaluatorScript::WsfQuantumEvaluatorScript(WsfScriptContext* aContextP
 
    if (mScriptPtr == nullptr)
    {
-      auto out = ut::log::error() << "Unable to find script for quantum evaluator.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_QE_NO_SCRIPT, {});
       out.AddNote() << "Type: " << mType;
    }
    else if (!aContextPtr->ValidateScript(mScriptPtr, "double", "WsfQuantumTask, WsfAssetPerception"))
    {
-      auto out = ut::log::error() << "Invalid inputs or outputs for script as quantum evaluator.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_QE_BAD_SCRIPT, {});
       out.AddNote() << "Type: " << mType;
       mScriptPtr = nullptr;
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include <iostream>
 
 #include "UtInput.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtSphericalEarth.hpp"
@@ -542,17 +544,20 @@ bool WsfEOIR_Sensor::EOIR_Mode::Initialize(double aSimTime)
 
    if (GetFrameTime() <= 0.0)
    {
-      ut::log::error() << "'frame_time' not specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_NO_FRAME_TIME, {});
       ok = false;
    }
    if ((mAngularResolution == 0.0) && (mPixelCountWidth == 0))
    {
-      ut::log::error() << "Either 'angular_resolution' or 'pixel_count' must be specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_RES_OR_PIXEL, {});
       ok = false;
    }
    else if ((mAngularResolution) > 0 && (mOmegaResolution <= 0.0))
    {
-      ut::log::error() << "'angular_resolution' too small. Please increase.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EOIR_RES_TOO_SMALL, {});
       ok = false;
    }
    return ok;

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -194,7 +194,8 @@ void wizard::FindResultsControl::SearchDirectory(const QString&         aDirecto
    {
       return;
    }
-   mWaitBox->setText("Searching: " + aDirectory);
+   // 二次开发（i18n）：动态拼接改为参数化 tr() 模板（决策 4）
+   mWaitBox->setText(tr("Searching: %1").arg(aDirectory));
    QApplication::processEvents();
    QDir        dir(aDirectory);
    QStringList files = dir.entryList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);

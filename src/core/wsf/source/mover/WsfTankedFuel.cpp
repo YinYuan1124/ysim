@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfFuelObserver.hpp"
 #include "WsfMover.hpp"
 #include "WsfPlatform.hpp"
@@ -108,7 +110,8 @@ bool WsfTankedFuel::Initialize(double aSimTime)
 
    if ((mReceiveMethod != WsfFuelingOperation::cNO_METHOD) && (mMaxReceiveRate <= 0.0))
    {
-      auto out = ut::log::error() << "Fuel is allowed to receive, but was not given a max receive rate.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TF_NO_MAX_RATE, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Fuel: " << GetName();
       ok = false;
@@ -453,7 +456,8 @@ bool WsfTankedFuel::BeginSupplyingFuelTo(double aSimTime, WsfTankedFuel* aReceiv
    {
       if (DebugEnabled())
       {
-         auto out = ut::log::error() << "Tanker cannot supply fuel to receiver.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 三处调用点共用同一 ID（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TF_CANNOT_SUPPLY, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Tanker: " << GetPlatform()->GetName();
          out.AddNote() << "Receiver: " << aReceiverPtr->GetPlatform()->GetName();
@@ -481,7 +485,8 @@ bool WsfTankedFuel::BeginSupplyingFuelTo(double aSimTime, WsfTankedFuel* aReceiv
    {
       if (DebugEnabled())
       {
-         auto out = ut::log::error() << "Tanker cannot supply fuel to receiver.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 三处调用点共用同一 ID（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TF_CANNOT_SUPPLY, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Tanker:" << GetPlatform()->GetName();
          out.AddNote() << "Receiver: " << aReceiverPtr->GetPlatform()->GetName();
@@ -495,7 +500,8 @@ bool WsfTankedFuel::BeginSupplyingFuelTo(double aSimTime, WsfTankedFuel* aReceiv
    {
       if (DebugEnabled())
       {
-         auto out = ut::log::error() << "Tanker cannot supply fuel to receiver.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 三处调用点共用同一 ID（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TF_CANNOT_SUPPLY, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Tanker:" << GetPlatform()->GetName();
          out.AddNote() << "Receiver: " << aReceiverPtr->GetPlatform()->GetName();

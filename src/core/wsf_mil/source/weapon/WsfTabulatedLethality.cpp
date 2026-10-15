@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfSimulation.hpp"
 #include "WsfStringId.hpp"
@@ -63,7 +65,8 @@ bool WsfTabulatedLethality::PreInitialize()
          // Targets aCell = tgtIter->second;
          if (tgtIter->second.empty())
          {
-            auto out = ut::log::error() << "WsfTabulatedLethality did not specify any CEP  or Pk values for target.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TAB_LETH_NO_CEP_PK, {});
             out.AddNote() << "WsfTabulatedLethality: " << GetName();
             out.AddNote() << "Target: " << tgtIter->first;
             result = false;
@@ -81,7 +84,8 @@ bool WsfTabulatedLethality::PreInitialize()
                {
                   if ((!warned) && (prevPk < cellIter.Pk()))
                   {
-                     ut::log::error() << "WsfTabulatedLethality: Not all Pk values decrease with increasing CEP.";
+                     // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+                     ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TAB_LETH_PK_NOT_DEC, {});
                      warned = true;
                      result = false;
                   }

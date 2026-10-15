@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfCommMediumGuided.hpp"
 
 #include "WsfComm.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfCommEvent.hpp"
 #include "WsfCommLayerEvent.hpp"
 #include "WsfCommLayerMessage.hpp"
@@ -248,7 +250,8 @@ TransmissionResult Guided::TransmitMessage(double aSimTime, Layer* aLayerPtr, Me
    auto modePtr = GetModeForTransmission(aSimTime, aXmtr, *rcvrComm, aMessage);
    if (!modePtr)
    {
-      ut::log::error() << "A medium mode was designated for transmission that does not exist.";
+      // 二次开发（i18n）：错误消息 ID 化 —— Guided/Unguided 介质共用 MSG_COMM_MEDIUM_NO_MODE
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_MEDIUM_NO_MODE, {});
       throw UtException("Invalid mode designation for WsfCommMediumGuided.");
    }
 
@@ -268,7 +271,8 @@ TransmissionResult Guided::TransmitMessage(double aSimTime, Layer* aLayerPtr, Me
    if (!msgIter.second)
    {
       assert(false);
-      ut::log::error() << "A transmit message request was made for a message thats already being transmitted";
+      // 二次开发（i18n）：错误消息 ID 化 —— Guided/Unguided 介质共用 MSG_COMM_MEDIUM_DUP_MSG
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_MEDIUM_DUP_MSG, {});
       throw UtException("Invalid duplicate of message to transmit encountered for WsfCommMediumGuided.");
    }
    MessageStatus&             status     = msgIter.first->second;

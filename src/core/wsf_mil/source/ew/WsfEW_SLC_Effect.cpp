@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec2.hpp"
 #include "WsfAntennaPattern.hpp"
 #include "WsfAntennaPatternTypes.hpp"
@@ -138,7 +140,8 @@ bool WsfEW_SLC_Effect::Initialize(WsfSimulation& aSimulation)
    }
    else
    {
-      auto out = ut::log::error() << "Antenna pattern not defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 与 SLB_Effect 两文件共用同一 ID（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_ANT_NO_DEF, {});
       out.AddNote() << "Effect: " << GetName();
       ok = false;
    }
@@ -155,7 +158,8 @@ bool WsfEW_SLC_Effect::Initialize(WsfSimulation& aSimulation)
 
    if (mCancelationTable.empty())
    {
-      auto out = ut::log::error() << "'cancelation_ratios' were not entered.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 与同文件另一处共用同一 ID（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_SLC_NO_CANCEL, {});
       out.AddNote() << "Effect: " << GetName();
 
       ok = false;
@@ -169,8 +173,9 @@ bool WsfEW_SLC_Effect::Initialize(WsfSimulation& aSimulation)
          {
             if (mExplicitCancelationTable)
             {
-               auto out = ut::log::error()
-                          << "'cancelation_ratios' not entered for 'number_canceled_jammers' or 'jammer_canceled'";
+               // 二次开发（i18n）：错误消息 ID 化 —— 跨两行原文整块替换（附注保持英文）
+               auto out =
+                  ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_SLC_NO_CANCEL_FOR_NJ, {});
                out.AddNote() << "Effect: " << GetName();
                out.AddNote() << "Number Not Entered: " << i;
                ok &= false;
@@ -182,7 +187,8 @@ bool WsfEW_SLC_Effect::Initialize(WsfSimulation& aSimulation)
             }
             else
             {
-               auto out = ut::log::error() << "'cancelation_ratios' were not entered.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 与同文件另一处共用同一 ID（附注保持英文）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EW_SLC_NO_CANCEL, {});
                out.AddNote() << "Effect: " << GetName();
                ok &= false;
                break;

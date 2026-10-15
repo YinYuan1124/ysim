@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -25,6 +25,8 @@
 #include "UtLLPos.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtOrbitalState.hpp"
 #include "UtPolynomial.hpp"
 #include "UtScriptContext.hpp"
@@ -962,7 +964,8 @@ WsfGuidanceProgram::Status AttitudeProgram::Execute(State& aState, Commands& aCo
    // This program is only valid for WsfGuidedMover (may be extended later);
    if (mMoverPtr == nullptr)
    {
-      auto out = ut::log::error() << "Guidance program is valid only with WSF_GUIDED_MOVER.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GP_NEEDS_GUIDED_MOVER, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Type: " << GetBaseType();
       out.AddNote() << "Computer: " << mComputerPtr->GetName();
@@ -1155,7 +1158,8 @@ WsfGuidanceProgram::Status FlightPathAngleProgram::Execute(State& aState, Comman
    }
    if ((commandedFlightPathAngle >= UtMath::cPI_OVER_2) || (commandedFlightPathAngle <= 0.0))
    {
-      auto out = ut::log::error() << "The desired flight path angle is undefined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（两处调用点共用同一 ID，附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GP_NO_FPA, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Computer: " << mComputerPtr->GetName();
       return cCOMPLETE;
@@ -1709,7 +1713,8 @@ WsfGuidanceProgram::Status LegacyFlightPathAngleProgram::Execute(State& aState, 
    }
    if ((commandedFlightPathAngle >= UtMath::cPI_OVER_2) || (commandedFlightPathAngle <= 0.0))
    {
-      auto out = ut::log::error() << "The desired flight path angle is undefined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（两处调用点共用同一 ID，附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GP_NO_FPA, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Computer: " << mComputerPtr->GetName();
       return cCOMPLETE;

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include <iostream>
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfComponentFactory.hpp"
 #include "WsfPlatform.hpp"
@@ -239,7 +241,9 @@ bool WsfWeaponPlatformExtension::SetWeaponEngagement(WsfWeaponEngagement* aEngag
           (mEngagementPtr != nullptr) && (!mEngagementPtr->Initialize(mPlatformPtr)))
       {
          SetWeaponEngagement(nullptr); // Failed to initialize, so delete it.
-         auto out = ut::log::error() << "Weapon Platform Extension: Unable to initialize weapon engagement.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 扩展名作为模板参数
+         const ut::msg::Args args{{"extension", GetName()}};
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WEAPON_ENGAGE_INIT_FAIL, args);
          out.AddNote() << "Extension: " << GetName();
 
          ok = false;

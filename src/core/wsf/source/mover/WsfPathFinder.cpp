@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -39,6 +39,8 @@
 #include "UtLog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "WsfGeoPoint.hpp"
 #include "WsfMover.hpp"
@@ -1000,7 +1002,8 @@ WsfGeoPoint* WsfPathFinder::FindClosestValidPoint(double aSimTime, const WsfGeoP
                }
             }
 
-            auto out = ut::log::error() << "FindClosestValidPoint() could not find a valid point near target.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 两处调用点共用同一 ID（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PF_NO_VALID_POINT, {});
             out.AddNote() << "Target (WCS): " << aGeoPointWCS[0] << ":" << aGeoPointWCS[1];
          }
          else
@@ -1490,7 +1493,8 @@ bool WsfPathFinderList::Initialize(WsfSimulation* aSimulationPtr)
       if (!i->second->Initialize(aSimulationPtr))
       {
          ok       = false;
-         auto out = ut::log::error() << "Failed to initialize path finder.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PF_INIT_FAIL, {});
          out.AddNote() << "Path Finder: " << i->first;
       }
    }

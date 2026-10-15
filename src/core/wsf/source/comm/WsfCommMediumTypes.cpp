@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommMediumContainer.hpp"
@@ -112,7 +114,9 @@ bool Types::LoadMedium(UtInput& aInput, Container& aContainer, bool aIsAdding)
             // Ensure that the type specified is allowed.
             if (!aContainer.IsValidMedium(mediumInstance->GetMediumIdentifier()))
             {
-               auto out = ut::log::error() << "Cannot add invalid medium type.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 介质类型名作为模板参数
+               const ut::msg::Args args{{"medium", type}};
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_COMM_MEDIUM_TYPE_INVALID, args);
                out.AddNote() << "Medium type: " << type;
                out.AddNote() << "This type is not allowed for this object.";
                throw UtInput::BadValue(aInput, "Invalid medium type: " + type);

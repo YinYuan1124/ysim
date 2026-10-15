@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAttributeContainer.hpp"
 #include "WsfException.hpp"
 #include "WsfPlatform.hpp"
@@ -212,7 +214,8 @@ bool WsfHEL_Lethality::ProcessInput(UtInput& aInput)
       }
       else
       {
-         auto out = ut::log::error() << "HEL_Lethality: No effect defined for entry.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HEL_LETH_NO_EFFECT, {});
          out.AddNote() << "Entry: " << entry.GetId();
          throw UtInput::BadValue(aInput);
       }
@@ -290,7 +293,8 @@ void WsfHEL_Lethality::ReadPK_EnergyTable(UtInput& aInput, UtMatrixd* aTablePtr)
    aInput.ReadValue(numRows);
    if (numRows < 2)
    {
-      ut::log::error() << "Pk-energy tables must have at least two rows.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_HEL_LETH_TABLE_ROWS, {});
       throw(UtInput::BadValue(aInput));
    }
    UtMatrixd& PK_Table = *aTablePtr;

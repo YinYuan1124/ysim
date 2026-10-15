@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,10 +13,13 @@
 
 #include <cassert>
 #include <cmath>
+#include <string>
 
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
@@ -304,49 +307,64 @@ void WsfATA_LaunchComputer::ProcessGenerateBlock(UtInputBlock& aInputBlock)
 
    if (aspectBinCount < 3)
    {
-      auto out = ut::log::error() << "'aspect_angle_bin_count' must be 3 or greater.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 当前值作为模板参数
+      const ut::msg::Args args{{"current", std::to_string(aspectBinCount)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_ASPECT_BIN_COUNT, args);
       out.AddNote() << "Current: " << aspectBinCount;
       isError = true;
    }
 
    if (azimuthBinCount < 3)
    {
-      auto out = ut::log::error() << "'azimuth_bin_count' must be 3 or greater.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 当前值作为模板参数
+      const ut::msg::Args args{{"current", std::to_string(azimuthBinCount)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_AZIMUTH_BIN_COUNT, args);
       out.AddNote() << "Current: " << azimuthBinCount;
       isError = true;
    }
 
    if (elevationBinCount < 3)
    {
-      auto out = ut::log::error() << "'elevation_bin_count' must be 3 or greater.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 当前值作为模板参数
+      const ut::msg::Args args{{"current", std::to_string(elevationBinCount)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_ELEVATION_BIN_COUNT, args);
       out.AddNote() << "Current: " << elevationBinCount;
       isError = true;
    }
 
    if (rangeRateBinCount < 3)
    {
-      auto out = ut::log::error() << "'range_rate_bin_count' must be 3 or greater.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 当前值作为模板参数
+      const ut::msg::Args args{{"current", std::to_string(rangeRateBinCount)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_RANGE_RATE_BIN_COUNT, args);
       out.AddNote() << "Current: " << rangeRateBinCount;
       isError = true;
    }
 
    if (rangeBinCount < 3)
    {
-      auto out = ut::log::error() << "'range_bin_count' must be 3 or greater.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 当前值作为模板参数
+      const ut::msg::Args args{{"current", std::to_string(rangeBinCount)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_RANGE_BIN_COUNT, args);
       out.AddNote() << "Current: " << rangeBinCount;
       isError = true;
    }
 
    if (azimuthLimit <= 0.0)
    {
-      auto out = ut::log::error() << "'azimuth_limit' must be greater than zero.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 当前值作为模板参数
+      const ut::msg::Args args{{"current", std::to_string(azimuthLimit)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_AZIMUTH_LIMIT, args);
       out.AddNote() << "Current: " << azimuthLimit;
       isError = true;
    }
 
    if (elevationUpperLimit <= elevationLowerLimit)
    {
-      auto out = ut::log::error() << "'elevation_upper_limit' must be set greater than 'elevation_lower_limit'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 上下限作为模板参数
+      const ut::msg::Args args{{"upper", std::to_string(elevationUpperLimit)},
+                               {"lower", std::to_string(elevationLowerLimit)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_ELEVATION_LIMITS, args);
       out.AddNote() << "Upper Limit: " << elevationUpperLimit;
       out.AddNote() << "Lower Limit: " << elevationLowerLimit;
       isError = true;
@@ -354,7 +372,10 @@ void WsfATA_LaunchComputer::ProcessGenerateBlock(UtInputBlock& aInputBlock)
 
    if (rangeUpperLimit <= rangeLowerLimit)
    {
-      auto out = ut::log::error() << "'range_upper_limit' must be set greater than 'range_lower_limit'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 上下限作为模板参数
+      const ut::msg::Args args{{"upper", std::to_string(rangeUpperLimit)},
+                               {"lower", std::to_string(rangeLowerLimit)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_RANGE_LIMITS, args);
       out.AddNote() << "Upper Limit: " << rangeUpperLimit;
       out.AddNote() << "Lower Limit: " << rangeLowerLimit;
       isError = true;
@@ -362,7 +383,10 @@ void WsfATA_LaunchComputer::ProcessGenerateBlock(UtInputBlock& aInputBlock)
 
    if (rangeRateUpperLimit <= rangeRateLowerLimit)
    {
-      auto out = ut::log::error() << "'range_rate_upper_limit' must be set greater than 'range_rate_lower_limit'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 上下限作为模板参数
+      const ut::msg::Args args{{"upper", std::to_string(rangeRateUpperLimit)},
+                               {"lower", std::to_string(rangeRateLowerLimit)}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_RANGE_RATE_LIMITS, args);
       out.AddNote() << "Upper Limit: " << rangeRateUpperLimit;
       out.AddNote() << "Lower Limit: " << rangeRateLowerLimit;
       isError = true;
@@ -646,7 +670,9 @@ bool WsfATA_LaunchComputer::CheckRanges()
    }
    if (!goodValues)
    {
-      auto out = ut::log::error() << "Launch computer Range values must be continuously increasing.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 平台名作为模板参数
+      const ut::msg::Args args{{"platform", GetPlatform()->GetName()}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ATA_LC_RANGE_NOT_INCREASING, args);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
    }
    return goodValues;

@@ -1,0 +1,1744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS[]>
+<TS version="2.1" language="zh_CN">
+<context>
+    <name>BackupPrefWidget</name>
+    <message>
+        <location filename="../ui/BackupPrefWidget.ui" line="14" />
+        <source>Back-ups</source>
+        <translation>备份</translation>
+    </message>
+    <message>
+        <location filename="../ui/BackupPrefWidget.ui" line="20" />
+        <source>Enable Automatic Backups</source>
+        <translation>启用自动备份</translation>
+    </message>
+</context>
+<context>
+    <name>BrowserWidget</name>
+    <message>
+        <location filename="../ui/BrowserWidget.ui" line="14" />
+        <source>Browser</source>
+        <translation>浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeHistory</name>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="14" />
+        <source>Change History</source>
+        <translation>更改历史</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="45" />
+        <source>Select a restore point:</source>
+        <translation>选择还原点：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="70" />
+        <source>Remove all</source>
+        <translation>全部移除</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="102" />
+        <source>Export the project as it existed at the selected restore point</source>
+        <translation>导出所选还原点时刻的项目</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="105" />
+        <source>Export...</source>
+        <translation>导出...</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="124" />
+        <source>Restore</source>
+        <translation>还原</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="161" />
+        <source>Changes made in this revision:</source>
+        <translation>此修订版所做的更改：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="186" />
+        <source>Lines of context:</source>
+        <translation>上下文行数：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="224" />
+        <source>Files changed in this revision:</source>
+        <translation>此修订版更改的文件：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ChangeHistory.ui" line="255" />
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+</context>
+<context>
+    <name>CloneDialog</name>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="14" />
+        <source>Clone Platforms</source>
+        <translation>克隆平台</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="22" />
+        <source>Renaming</source>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="28" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Each platform name must be changed manually&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;每个平台名称必须手动更改&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="31" />
+        <source>Manual</source>
+        <translation>手动</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="38" />
+        <source>Suffix</source>
+        <translation>后缀</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="48" />
+        <source>Prefix</source>
+        <translation>前缀</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="70" />
+        <source>Suffix:</source>
+        <translation>后缀：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="77" />
+        <source>_clone</source>
+        <translation>_clone</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="102" />
+        <source>Position</source>
+        <translation>位置</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="108" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Move platform north and east by an offset&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;按偏移量向北、东方向移动平台&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="111" />
+        <source>Offset Position</source>
+        <translation>偏移位置</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="123" />
+        <source>North:</source>
+        <translation>北向：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="130" />
+        <location filename="../ui/CloneDialog.ui" line="144" />
+        <source>10 nm</source>
+        <translation>10 nm</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="137" />
+        <source>East:</source>
+        <translation>东向：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="153" />
+        <source>Center on</source>
+        <translation>中心位于</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="162" />
+        <source>Latitude:</source>
+        <translation>纬度：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="172" />
+        <source>Longitude:</source>
+        <translation>经度：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="184" />
+        <source>No Change</source>
+        <translation>不变</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="194" />
+        <source>Options</source>
+        <translation>选项</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="200" />
+        <location filename="../ui/CloneDialog.ui" line="213" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use clone of commander if commander is cloned&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;若指挥平台被克隆，则使用其克隆&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="203" />
+        <source>Update Commander</source>
+        <translation>更新指挥平台</translation>
+    </message>
+    <message>
+        <location filename="../ui/CloneDialog.ui" line="216" />
+        <source>Copy Routes</source>
+        <translation>复制航线</translation>
+    </message>
+</context>
+<context>
+    <name>CreateNewFile</name>
+    <message>
+        <location filename="../ui/CreateNewFile.ui" line="14" />
+        <source>Create New File</source>
+        <translation>新建文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateNewFile.ui" line="22" />
+        <source>File Name</source>
+        <translation>文件名</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateNewFile.ui" line="32" />
+        <source>Directory:</source>
+        <translation>目录：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateNewFile.ui" line="39" />
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateNewFile.ui" line="66" />
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateNewFile.ui" line="79" />
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>CreatePlatform</name>
+    <message>
+        <location filename="../ui/CreatePlatform.ui" line="14" />
+        <source>Create platform</source>
+        <translation>创建平台</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreatePlatform.ui" line="23" />
+        <source>Platform name:</source>
+        <translation>平台名称：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreatePlatform.ui" line="33" />
+        <source>Platform type:</source>
+        <translation>平台类型：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreatePlatform.ui" line="43" />
+        <source>File:</source>
+        <translation>文件：</translation>
+    </message>
+</context>
+<context>
+    <name>CreateType</name>
+    <message>
+        <location filename="../ui/CreateType.ui" line="14" />
+        <source>Create Type</source>
+        <translation>创建类型</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="22" />
+        <source>Name:</source>
+        <translation>名称：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="29" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Name of new type&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;新类型的名称&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="36" />
+        <source>Base Type:</source>
+        <translation>基类型：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="48" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Place new type in a new file&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将新类型放入新文件&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="51" />
+        <source>New File</source>
+        <translation>新文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="63" />
+        <source>File Name:</source>
+        <translation>文件名：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="73" />
+        <source>Directory:</source>
+        <translation>目录：</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="101" />
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="113" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Place new type in an existing file&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将新类型放入现有文件&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="116" />
+        <source>Existing File</source>
+        <translation>现有文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/CreateType.ui" line="128" />
+        <source>File:</source>
+        <translation>文件：</translation>
+    </message>
+</context>
+<context>
+    <name>EditModeBanner</name>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="20" />
+        <source>Form</source>
+        <translation>窗体</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="85" />
+        <source>Visual Mode Active: Text is read-only until changes are handled.</source>
+        <translation>可视模式已激活：在处理更改之前，文本为只读。</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="107" />
+        <source>Revert Changes</source>
+        <translation>还原更改</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="114" />
+        <source>Apply Changes</source>
+        <translation>应用更改</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="157" />
+        <source>Changes:</source>
+        <translation>更改：</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="173" />
+        <source>Changes...</source>
+        <translation>更改...</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="209" />
+        <source>Undo</source>
+        <translation>撤销</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="222" />
+        <source>Redo</source>
+        <translation>重做</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="258" />
+        <source>Text Mode Active</source>
+        <translation>文本模式已激活</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditModeBanner.ui" line="289" />
+        <source>Applying changes, please wait ...</source>
+        <translation>正在应用更改，请稍候...</translation>
+    </message>
+</context>
+<context>
+    <name>EditorPrefWidget</name>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="14" />
+        <source>Text Editor</source>
+        <translation>文本编辑器</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="35" />
+        <source>Show Line Numbers</source>
+        <translation>显示行号</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="42" />
+        <source>Show Syntax Tips</source>
+        <translation>显示语法提示</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="49" />
+        <source>Auto-complete after '.'</source>
+        <translation>在 '.' 后自动补全</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="56" />
+        <source>Enable Pop-ups on Undo for multiple and/or different files</source>
+        <translation>对多个和/或不同文件的撤销启用弹出确认</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="65" />
+        <source>Tab Size</source>
+        <translation>制表符宽度</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="102" />
+        <source>Font:</source>
+        <translation>字体：</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="112" />
+        <source>Size:</source>
+        <translation>大小：</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="150" />
+        <source>Styles</source>
+        <translation>样式</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="170" />
+        <source>Color:</source>
+        <translation>颜色：</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="201" />
+        <source>Bold</source>
+        <translation>加粗</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="208" />
+        <source>Italic</source>
+        <translation>斜体</translation>
+    </message>
+    <message>
+        <location filename="../ui/EditorPrefWidget.ui" line="215" />
+        <source>Underline</source>
+        <translation>下划线</translation>
+    </message>
+</context>
+<context>
+    <name>FindInFilesDialog</name>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="14" />
+        <source>Find In Files</source>
+        <translation>在文件中查找</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="20" />
+        <source>Find what:</source>
+        <translation>查找内容：</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="43" />
+        <source>Match &amp;Case</source>
+        <translation>区分大小写(&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="53" />
+        <source>Look in:</source>
+        <translation>查找范围：</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="74" />
+        <source>Current Document</source>
+        <translation>当前文档</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="84" />
+        <source>All Included or Open Files</source>
+        <translation>所有包含或打开的文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="91" />
+        <source>All Files in Directories</source>
+        <translation>目录中的所有文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="116" />
+        <source>Find Previous</source>
+        <translation>查找上一个</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="123" />
+        <source>Find Next</source>
+        <translation>查找下一个</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindInFilesDialog.ui" line="149" />
+        <source>Find &amp;All</source>
+        <translation>全部查找(&amp;A)</translation>
+    </message>
+</context>
+<context>
+    <name>FindReferencesResultDialog</name>
+    <message>
+        <location filename="../ui/FindReferencesResultDialog.ui" line="14" />
+        <source>Find References</source>
+        <translation>查找引用</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindReferencesResultDialog.ui" line="20" />
+        <source>References:</source>
+        <translation>引用：</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindReferencesResultDialog.ui" line="32" />
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindReferencesResultDialog.ui" line="52" />
+        <source>Jump To</source>
+        <translation>跳转到</translation>
+    </message>
+</context>
+<context>
+    <name>FindResultsControl</name>
+    <message>
+        <location filename="../ui/FindResultsControl.ui" line="14" />
+        <source>Find Results</source>
+        <translation>查找结果</translation>
+    </message>
+    <message>
+        <location filename="../ui/FindResultsControl.ui" line="37" />
+        <source>No Results</source>
+        <translation>无结果</translation>
+    </message>
+</context>
+<context>
+    <name>HeaderSelectionDialog</name>
+    <message>
+        <location filename="../ui/NewFileSelectorDialog.ui" line="14" />
+        <source>New File Header</source>
+        <translation>新文件头</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileSelectorDialog.ui" line="20" />
+        <source>Select a file header:</source>
+        <translation>选择文件头：</translation>
+    </message>
+</context>
+<context>
+    <name>LanguagePrefWidget</name>
+    <message>
+        <location filename="../ui/LanguagePrefWidget.ui" line="14" />
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
+    <message>
+        <location filename="../ui/LanguagePrefWidget.ui" line="22" />
+        <source>Interface Language:</source>
+        <translation>界面语言：</translation>
+    </message>
+    <message>
+        <location filename="../ui/LanguagePrefWidget.ui" line="29" />
+        <source>Language used for menus, dialogs and messages</source>
+        <translation>用于菜单、对话框和消息的语言</translation>
+    </message>
+    <message>
+        <location filename="../ui/LanguagePrefWidget.ui" line="38" />
+        <source>Changing the language takes effect after wizard is restarted.</source>
+        <translation>更改语言后需重启 wizard 才能生效。</translation>
+    </message>
+</context>
+<context>
+    <name>MacroHelpDialog</name>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="14" />
+        <source>Dialog</source>
+        <translation>对话框</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="20" />
+        <source>Macros are tokens in the form of %MACRO%. When generating the header, macros will be replaced by other useful data such as the date or file name. The available macros are listed below.</source>
+        <translation>宏是形如 %MACRO% 的标记。生成文件头时，宏将被替换为日期、文件名等其他有用数据。可用宏如下所示。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="38" />
+        <source>%YEAR%</source>
+        <translation>%YEAR%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="48" />
+        <source>The current year.</source>
+        <translation>当前年份。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="61" />
+        <source>%MONTH%</source>
+        <translation>%MONTH%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="77" />
+        <source>%DAY%</source>
+        <translation>%DAY%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="93" />
+        <source>%DATE%</source>
+        <translation>%DATE%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="109" />
+        <source>%VERSION%</source>
+        <translation>%VERSION%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="125" />
+        <source>%FILE%</source>
+        <translation>%FILE%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="141" />
+        <source>%DIR%</source>
+        <translation>%DIR%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="157" />
+        <source>%PATH%</source>
+        <translation>%PATH%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="174" />
+        <source>Macro</source>
+        <translation>宏</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="188" />
+        <source>Replaced by...</source>
+        <translation>替换为...</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="195" />
+        <source>3-letter abbreviation for the current month.</source>
+        <translation>当前月份的三字母缩写。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="202" />
+        <source>The current day of the month.</source>
+        <translation>当前日期（几号）。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="209" />
+        <source>The current date. Format: Jan 1, 1970</source>
+        <translation>当前日期。格式：Jan 1, 1970</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="216" />
+        <source>The version of AFSIM.</source>
+        <translation>AFSIM 的版本。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="223" />
+        <source>The name of the file generated, with extension.</source>
+        <translation>生成文件的名称（含扩展名）。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="230" />
+        <source>The directory the generated file is in.</source>
+        <translation>生成文件所在的目录。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="237" />
+        <source>The complete path to the generated file.</source>
+        <translation>生成文件的完整路径。</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="250" />
+        <source>%%</source>
+        <translation>%%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="257" />
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFileMacroHelp.ui" line="294" />
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectSettings</name>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="14" />
+        <source>Project Settings</source>
+        <translation>项目设置</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="23" />
+        <source>Root Directory:</source>
+        <translation>根目录：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="30" />
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Root directory shown in the project browser.  All files not in this directory are considered external.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;项目浏览器中显示的根目录。不在此目录中的所有文件视为外部文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="37" />
+        <source>Working Directory:</source>
+        <translation>工作目录：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="49" />
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="58" />
+        <source>Command Line:</source>
+        <translation>命令行：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="70" />
+        <source>Reset to defaults</source>
+        <translation>恢复默认值</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="82" />
+        <source>Configure Startup Files</source>
+        <translation>配置启动文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="104" />
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <location filename="../ui/ProjectSettings.ui" line="117" />
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../source/application/Runner.cpp" line="82" />
+        <source>AFSIM Wizard</source>
+        <translation>AFSIM 向导</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/LanguagePrefWidget.cpp" line="21" />
+        <source>English</source>
+        <translation>English</translation>
+    </message>
+</context>
+<context>
+    <name>RenameFileDialog</name>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="14" />
+        <source>Rename File</source>
+        <translation>重命名文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="20" />
+        <source>File: </source>
+        <translation>文件：</translation>
+    </message>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="27" />
+        <source>description</source>
+        <translation>描述</translation>
+    </message>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="34" />
+        <source>New Name:</source>
+        <translation>新名称：</translation>
+    </message>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="44" />
+        <source>The following includes will be updated:</source>
+        <translation>以下 include 将被更新：</translation>
+    </message>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="69" />
+        <source>OK</source>
+        <translation>确定</translation>
+    </message>
+    <message>
+        <location filename="../ui/RenameFileDialog.ui" line="82" />
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>ReplaceInFilesDialog</name>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="14" />
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="111" />
+        <source>Replace</source>
+        <translation>替换</translation>
+    </message>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="20" />
+        <source>Find what:</source>
+        <translation>查找内容：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="43" />
+        <source>Replace with:</source>
+        <translation>替换为：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="66" />
+        <source>Match &amp;Case</source>
+        <translation>区分大小写(&amp;C)</translation>
+    </message>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="78" />
+        <source>Find Previous</source>
+        <translation>查找上一个</translation>
+    </message>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="85" />
+        <source>Find Next</source>
+        <translation>查找下一个</translation>
+    </message>
+    <message>
+        <location filename="../ui/ReplaceInFilesDialog.ui" line="141" />
+        <source>Replace All</source>
+        <translation>全部替换</translation>
+    </message>
+</context>
+<context>
+    <name>StartupFileDialog</name>
+    <message>
+        <location filename="../ui/StartupFilesDialog.ui" line="14" />
+        <source>Configure Startup Files</source>
+        <translation>配置启动文件</translation>
+    </message>
+    <message>
+        <location filename="../ui/StartupFilesDialog.ui" line="20" />
+        <source>Startup files are processesed in the following order.  Enter one per line.</source>
+        <translation>启动文件按以下顺序处理。每行输入一个。</translation>
+    </message>
+</context>
+<context>
+    <name>ToolLauncherPrefWidget</name>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="14" />
+        <source>Tool Launcher</source>
+        <translation>工具启动器</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="51" />
+        <source>Browse For Tool</source>
+        <translation>浏览选择工具</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="61" />
+        <source>Remove Tool</source>
+        <translation>移除工具</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="75" />
+        <source>Path:</source>
+        <translation>路径：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="89" />
+        <source>Alias:</source>
+        <translation>别名：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="103" />
+        <source>Command Line:</source>
+        <translation>命令行：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="113" />
+        <source>Working Directory:</source>
+        <translation>工作目录：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="123" />
+        <source>Associated Files:</source>
+        <translation>关联文件：</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="133" />
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="143" />
+        <source>Show Variables</source>
+        <translation>显示变量</translation>
+    </message>
+    <message>
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="136" />
+        <location filename="../ui/ToolLauncherPrefWidget.ui" line="146" />
+        <source>Variables</source>
+        <translation>变量</translation>
+    </message>
+</context>
+<context>
+    <name>WkfAboutDialog</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="14" />
+        <source>About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="25" />
+        <source>Additional Info Label</source>
+        <translation>附加信息</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="37" />
+        <source>Warlock Plugin Version Number :</source>
+        <translation>Warlock 插件版本号：</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="49" />
+        <source>Built on :</source>
+        <translation>构建日期：</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="58" />
+        <source>Artwork Attribution...</source>
+        <translation>美术素材致谢...</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="65" />
+        <source>3rd Party Licenses...</source>
+        <translation>第三方许可...</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfAboutDialog.ui" line="72" />
+        <source>System Info...</source>
+        <translation>系统信息...</translation>
+    </message>
+</context>
+<context>
+    <name>WkfDebugPrefWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfDebugPrefWidget.ui" line="14" />
+        <source>Developer Tools</source>
+        <translation>开发者工具</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfDebugPrefWidget.ui" line="26" />
+        <source>Preferences on this page are shared among all AFSIM applications</source>
+        <translation>此页的首选项在所有 AFSIM 应用间共享</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfDebugPrefWidget.ui" line="33" />
+        <source>Enable Developer Menu</source>
+        <translation>启用开发者菜单</translation>
+    </message>
+</context>
+<context>
+    <name>WkfDocumentationDialog</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfDocumentationDialog.ui" line="14" />
+        <source>Documentation</source>
+        <translation>文档</translation>
+    </message>
+</context>
+<context>
+    <name>WkfGeneralPrefWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="14" />
+        <source>General</source>
+        <translation>常规</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="25" />
+        <source>Show Status Bar</source>
+        <translation>显示状态栏</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="39" />
+        <source>Recent Configuration Length</source>
+        <translation>最近配置列表长度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="68" />
+        <source>Theme</source>
+        <translation>主题</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="88" />
+        <source>Application Banner</source>
+        <translation>应用程序横幅</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="97" />
+        <source>Text Color</source>
+        <translation>文本颜色</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="107" />
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="134" />
+        <source>Background Color</source>
+        <translation>背景颜色</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="141" />
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="179" />
+        <source>Font Size</source>
+        <translation>字体大小</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="155" />
+        <source>Use Simulation Name (if available)</source>
+        <translation>使用仿真名称（如可用）</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfGeneralPrefWidget.ui" line="170" />
+        <source>Map Overlay Classification Banner</source>
+        <translation>地图叠加分类横幅</translation>
+    </message>
+</context>
+<context>
+    <name>WkfKeyBindingsWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfKeyBindingsWidget.ui" line="14" />
+        <source>Keyboard Shortcuts</source>
+        <translation>键盘快捷键</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfKeyBindingsWidget.ui" line="29" />
+        <source>Shortcut for selected command:</source>
+        <translation>所选命令的快捷键：</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfKeyBindingsWidget.ui" line="45" />
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfKeyBindingsWidget.ui" line="55" />
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfKeyBindingsWidget.ui" line="65" />
+        <source>Assign</source>
+        <translation>指定</translation>
+    </message>
+</context>
+<context>
+    <name>WkfMainWindowUi</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="65" />
+        <source>File</source>
+        <translation>文件</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="72" />
+        <source>Options</source>
+        <translation>选项</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="77" />
+        <source>Help</source>
+        <translation>帮助</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="82" />
+        <source>View</source>
+        <translation>视图</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="86" />
+        <source>Toolbars</source>
+        <translation>工具栏</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="93" />
+        <source>Tools</source>
+        <translation>工具</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="98" />
+        <source>Developer</source>
+        <translation>开发者</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMainWindow.ui" line="111" />
+        <source>Exit</source>
+        <translation>退出</translation>
+    </message>
+</context>
+<context>
+    <name>WkfMapLayerDockWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMapLayerDockWidget.ui" line="23" />
+        <source>Map Layers</source>
+        <translation>地图图层</translation>
+    </message>
+</context>
+<context>
+    <name>WkfMilStdIconPrefWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="14" />
+        <source>Mil-Std 2525D</source>
+        <translation>Mil-Std 2525D</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="26" />
+        <source>Preferences on this page are shared among all AFSIM applications</source>
+        <translation>此页的首选项在所有 AFSIM 应用间共享</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="33" />
+        <source>Use Mil-Std 2525D symbology</source>
+        <translation>使用 Mil-Std 2525D 符号</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="40" />
+        <source>Show velocity vector</source>
+        <translation>显示速度矢量</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="47" />
+        <source>Teams that are listed in the following box will be categorized according to the specified identity.  </source>
+        <translation>下列方框中列出的阵营将按指定的身份归类。</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="69" />
+        <source>Add</source>
+        <translation>添加</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfMilStdIconPrefWidget.ui" line="111" />
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+</context>
+<context>
+    <name>WkfPermissionDialog</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPermissionDialog.ui" line="14" />
+        <source>Permissions</source>
+        <translation>权限</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPermissionDialog.ui" line="75" />
+        <source>Restore Defaults</source>
+        <translation>恢复默认值</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPermissionDialog.ui" line="82" />
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+</context>
+<context>
+    <name>WkfPlotDockWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPlotDockWidget.ui" line="14" />
+        <source>Plot</source>
+        <translation>绘图</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPlotDockWidget.ui" line="39" />
+        <location filename="../../../tools/wkf/core/ui/WkfPlotDockWidget.ui" line="46" />
+        <source>GroupBox</source>
+        <translation>分组框</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPlotDockWidget.ui" line="53" />
+        <source>Clear Data</source>
+        <translation>清除数据</translation>
+    </message>
+</context>
+<context>
+    <name>WkfPluginManagerDialogUi</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPluginManagerDialog.ui" line="14" />
+        <source>Plugin Manager</source>
+        <translation>插件管理器</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPluginManagerDialog.ui" line="74" />
+        <source>Auto-start</source>
+        <translation>自动启动</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPluginManagerDialog.ui" line="81" />
+        <source>Unload</source>
+        <translation>卸载</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPluginManagerDialog.ui" line="103" />
+        <source> Auto-start all plugins</source>
+        <translation> 自动启动所有插件</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPluginManagerDialog.ui" line="123" />
+        <source>Open Plugin Folders</source>
+        <translation>打开插件文件夹</translation>
+    </message>
+</context>
+<context>
+    <name>WkfPreferencesDialog</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfPreferencesDialog.ui" line="14" />
+        <source>Preferences</source>
+        <translation>首选项</translation>
+    </message>
+</context>
+<context>
+    <name>WkfStartupDialog</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="17" />
+        <source>Startup</source>
+        <translation>启动</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="35" />
+        <source>Did You Know?</source>
+        <translation>你知道吗？</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="91" />
+        <source>Place Holder!</source>
+        <translation>占位符！</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="119" />
+        <source>Next Tip</source>
+        <translation>下一条提示</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="134" />
+        <source>Documentation</source>
+        <translation>文档</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="215" />
+        <source>New XYZ</source>
+        <translation>新建 XYZ</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="229" />
+        <source>Drag and drop or enter XYZ file(s)...</source>
+        <translation>拖放或输入 XYZ 文件...</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="244" />
+        <source>Browse...</source>
+        <translation>浏览...</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="268" />
+        <source>Recent XYZ</source>
+        <translation>最近的 XYZ</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="337" />
+        <source>About</source>
+        <translation>关于</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfStartupDialog.ui" line="343" />
+        <source>Place holder text!</source>
+        <translation>占位符文本！</translation>
+    </message>
+</context>
+<context>
+    <name>WkfTeamVisibilityPrefWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="14" />
+        <source>Team Visibility</source>
+        <translation>阵营可见性</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="26" />
+        <source>Team Visibility &amp;&amp; Color</source>
+        <translation>阵营可见性与颜色</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="54" />
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="59" />
+        <source>Visible</source>
+        <translation>可见</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="64" />
+        <source>Color</source>
+        <translation>颜色</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="74" />
+        <source>New Team Name</source>
+        <translation>新阵营名称</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityPrefWidget.ui" line="84" />
+        <source>Add Team</source>
+        <translation>添加阵营</translation>
+    </message>
+</context>
+<context>
+    <name>WkfTeamVisibilityWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTeamVisibilityWidget.ui" line="20" />
+        <source>Team Visibility</source>
+        <translation>阵营可见性</translation>
+    </message>
+</context>
+<context>
+    <name>WkfTypeVisibilityPrefWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTypeVisibilityPrefWidget.ui" line="14" />
+        <source>Type Visibility</source>
+        <translation>类型可见性</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTypeVisibilityPrefWidget.ui" line="20" />
+        <source>Platforms that have a type listed in the following List Box will not be visible within the Application </source>
+        <translation>类型列于下列列表框中的平台将不在应用中显示</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTypeVisibilityPrefWidget.ui" line="35" />
+        <source>Add</source>
+        <translation>添加</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTypeVisibilityPrefWidget.ui" line="62" />
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+</context>
+<context>
+    <name>WkfTypeVisibilityWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTypeVisibilityWidget.ui" line="20" />
+        <source>Type Visibility</source>
+        <translation>类型可见性</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfTypeVisibilityWidget.ui" line="59" />
+        <source>Show All</source>
+        <translation>全部显示</translation>
+    </message>
+</context>
+<context>
+    <name>WkfUnitsWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="14" />
+        <source>Units</source>
+        <translation>单位</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="22" />
+        <source>Default Format</source>
+        <translation>默认格式</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="32" />
+        <source>Latitude / Longitude</source>
+        <translation>纬度 / 经度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="42" />
+        <source>Time</source>
+        <translation>时间</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="52" />
+        <source>Date</source>
+        <translation>日期</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="86" />
+        <source>Ratio</source>
+        <translation>比率</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="106" />
+        <source>Torque</source>
+        <translation>扭矩</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="133" />
+        <source>Power</source>
+        <translation>功率</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="150" />
+        <source>Acceleration</source>
+        <translation>加速度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="164" />
+        <source>Angular Acceleration</source>
+        <translation>角加速度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="174" />
+        <source>Pressure</source>
+        <translation>压强</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="191" />
+        <source>Default Unit</source>
+        <translation>默认单位</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="208" />
+        <source>Mass Transfer</source>
+        <translation>质量流量</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="215" />
+        <source>Altitude (low)</source>
+        <translation>高度（低空）</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="225" />
+        <source>Value Type</source>
+        <translation>数值类型</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="238" />
+        <source>Angular Rate</source>
+        <translation>角速率</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="265" />
+        <source>Speed</source>
+        <translation>速度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="292" />
+        <source>Precision</source>
+        <translation>精度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="302" />
+        <source>Frequency</source>
+        <translation>频率</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="309" />
+        <source>Angle</source>
+        <translation>角度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="333" />
+        <source>Mass</source>
+        <translation>质量</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="340" />
+        <source>Power DB</source>
+        <translation>功率（分贝）</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="360" />
+        <source>Altitude (space)</source>
+        <translation>高度（太空）</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="374" />
+        <source>Force</source>
+        <translation>力</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="391" />
+        <source>Length</source>
+        <translation>长度</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="398" />
+        <source>Duration</source>
+        <translation>时长</translation>
+    </message>
+    <message>
+        <location filename="../../../tools/wkf/core/ui/WkfUnitsWidget.ui" line="423" />
+        <source>Preferences on this page are shared among all AFSIM applications</source>
+        <translation>此页的首选项在所有 AFSIM 应用间共享</translation>
+    </message>
+</context>
+<context>
+    <name>newFilePrefWidget</name>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="14" />
+        <source>New File Header</source>
+        <translation>新文件头</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="22" />
+        <source>Select Header:</source>
+        <translation>选择文件头：</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="39" />
+        <source>Add header</source>
+        <translation>添加文件头</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="49" />
+        <source>Remove header</source>
+        <translation>移除文件头</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="61" />
+        <source>Insert header as a comment</source>
+        <translation>以注释形式插入文件头</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="70" />
+        <source>Replace text macros</source>
+        <translation>替换文本宏</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="90" />
+        <source>Macro help</source>
+        <translation>宏帮助</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="99" />
+        <source>Header Name:</source>
+        <translation>文件头名称：</translation>
+    </message>
+    <message>
+        <location filename="../ui/NewFilePrefWidget.ui" line="109" />
+        <source>Header Contents:</source>
+        <translation>文件头内容：</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::AutoCompletePopup</name>
+    <message>
+        <location filename="../source/gui/AutoCompletePopup.cpp" line="921" />
+        <source>File: %1</source>
+        <translation>文件: %1</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ClonePlatformDialog</name>
+    <message>
+        <location filename="../source/gui/ClonePlatformDialog.cpp" line="298" />
+        <source>Prefix:</source>
+        <translation>前缀：</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/ClonePlatformDialog.cpp" line="300" />
+        <source>Suffix:</source>
+        <translation>后缀：</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ContextDocumentationControl</name>
+    <message>
+        <location filename="../source/gui/ContextDocumentationControl.cpp" line="22" />
+        <source>Context Help</source>
+        <translation>上下文帮助</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ContextMenuActions::AddToStartupFiles</name>
+    <message>
+        <location filename="../source/gui/ContextMenuActions.cpp" line="85" />
+        <source>Add to Startup Files</source>
+        <translation>添加到启动文件</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ContextMenuActions::OpenFileInEditor</name>
+    <message>
+        <location filename="../source/gui/ContextMenuActions.cpp" line="142" />
+        <source>Open in Editor</source>
+        <translation>在编辑器中打开</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ContextMenuActions::RemoveFromStartupFiles</name>
+    <message>
+        <location filename="../source/gui/ContextMenuActions.cpp" line="102" />
+        <source>Remove from Startup Files</source>
+        <translation>从启动文件移除</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ContextMenuActions::SetAsStartupFile</name>
+    <message>
+        <location filename="../source/gui/ContextMenuActions.cpp" line="64" />
+        <source>Set as Startup File</source>
+        <translation>设为启动文件</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ContextMenuActions::ShowStartupFilesDialog</name>
+    <message>
+        <location filename="../source/gui/ContextMenuActions.cpp" line="128" />
+        <source>Configure Startup Files...</source>
+        <translation>配置启动文件...</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::CreatePlatformDialog</name>
+    <message>
+        <location filename="../source/gui/CreatePlatformDialog.cpp" line="360" />
+        <source>Platform with this name already exists</source>
+        <translation>已存在同名平台</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::DeveloperActions</name>
+    <message>
+        <location filename="../source/gui/DeveloperActions.cpp" line="70" />
+        <location filename="../source/gui/DeveloperActions.cpp" line="89" />
+        <source>Grammar T: %1</source>
+        <translation>语法分析耗时: %1</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/DeveloperActions.cpp" line="74" />
+        <location filename="../source/gui/DeveloperActions.cpp" line="90" />
+        <source>Parse T: %1</source>
+        <translation>解析耗时: %1</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/DeveloperActions.cpp" line="78" />
+        <location filename="../source/gui/DeveloperActions.cpp" line="91" />
+        <source>Deserialize T: %1</source>
+        <translation>反序列化耗时: %1</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/DeveloperActions.cpp" line="82" />
+        <location filename="../source/gui/DeveloperActions.cpp" line="92" />
+        <source>Merge/GUI T: %1</source>
+        <translation>合并/界面更新耗时: %1</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::Editor</name>
+    <message>
+        <location filename="../source/editor/Editor.cpp" line="405" />
+        <source>Print Document</source>
+        <translation>打印文档</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::Environment</name>
+    <message>
+        <location filename="../source/core/Environment.cpp" line="575" />
+        <source>Failed to start tool: </source>
+        <translation>启动工具失败：</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::FindReferencesResultDialog</name>
+    <message>
+        <location filename="../source/gui/FindReferencesResultDialog.cpp" line="44" />
+        <source>References:</source>
+        <translation>引用：</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::FindResultsControl</name>
+    <message>
+        <location filename="../source/gui/FindResultsControl.cpp" line="198" />
+        <source>Searching: %1</source>
+        <translation>正在搜索: %1</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ProxyDumpWindow</name>
+    <message>
+        <location filename="../source/gui/DeveloperActions.cpp" line="209" />
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/DeveloperActions.cpp" line="213" />
+        <source>watching proxy path</source>
+        <translation>监视的代理路径</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::StartupDialog</name>
+    <message>
+        <location filename="../source/gui/StartupDialog.cpp" line="89" />
+        <source>Recent Projects</source>
+        <translation>最近的项目</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/StartupDialog.cpp" line="90" />
+        <location filename="../source/gui/StartupDialog.hpp" line="36" />
+        <source>Open Project</source>
+        <translation>打开项目</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/StartupDialog.cpp" line="91" />
+        <source>Drag and drop or enter scenario file(s)...</source>
+        <translation>拖放或输入想定文件...</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/StartupDialog.cpp" line="92" />
+        <source>&lt;p style="font - size:10pt; "&gt;Wizard is the AFSIM scenario editor.  It can be used to view scenarios, launch a virtual or constructive simulation, and launch post-process viewers.&lt;/p&gt;</source>
+        <translation>&lt;p style="font - size:10pt; "&gt;Wizard 是 AFSIM 想定编辑器，可用于查看想定、启动虚拟或构造仿真，以及启动后处理查看器。&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../source/gui/StartupDialog.cpp" line="95" />
+        <source>Open</source>
+        <translation>打开</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::TextLocationItemModel</name>
+    <message>
+        <location filename="../source/core/TextLocationItemModel.cpp" line="97" />
+        <source>Location</source>
+        <translation>位置</translation>
+    </message>
+    <message>
+        <location filename="../source/core/TextLocationItemModel.cpp" line="101" />
+        <source>Text</source>
+        <translation>文本</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::WsfEditor</name>
+    <message>
+        <location filename="../source/editor/WsfEditor.cpp" line="1016" />
+        <source>Find References</source>
+        <translation>查找引用</translation>
+    </message>
+    <message>
+        <location filename="../source/editor/WsfEditor.cpp" line="1016" />
+        <source>No reference found.</source>
+        <translation>未找到引用。</translation>
+    </message>
+    <message>
+        <location filename="../source/editor/WsfEditor.cpp" line="1271" />
+        <source>Choose Location</source>
+        <translation>选择位置</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::KeyBindingsWidget</name>
+    <message>
+        <location filename="../../../tools/wkf/core/source/WkfKeyBindingsWidget.cpp" line="146" />
+        <source>Shortcut shared by more than one command:
+</source>
+        <translation>多个命令共用的快捷键：</translation>
+    </message>
+</context>
+</TS>

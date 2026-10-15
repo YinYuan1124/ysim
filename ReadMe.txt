@@ -1,5 +1,0 @@
-1.使用CMake配置并生成工程
-2.All_build 全部编译，生成文件在release下
-3.完成之后install编译，生成文件在wsf_install下，
-然后把wsf_install文件夹下的bin目录下的所有文件copy到release下并覆盖
-4.把wizard设置启动项，并将所需要的resource，demo，document拷到Build目录下

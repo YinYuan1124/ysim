@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfStringId.hpp"
 
@@ -72,7 +74,8 @@ bool WsfVariableRateFuel::Initialize(double aSimTime)
    if (mTables.empty())
    {
       success  = false;
-      auto out = ut::log::error() << "Fuel did not define a Fuel Rate Table.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_VRF_NO_TABLE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Fuel: " << GetName();
@@ -83,7 +86,8 @@ bool WsfVariableRateFuel::Initialize(double aSimTime)
       {
          if (i->second.mAltitudes.empty())
          {
-            auto out = ut::log::error() << "Fuel Rate Table does not contain any defined altitudes.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_VRF_NO_ALTITUDES, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Fuel: " << GetName();
@@ -97,7 +101,8 @@ bool WsfVariableRateFuel::Initialize(double aSimTime)
 
    if (!GetCurrentTable())
    {
-      auto out = ut::log::error() << "There is no Fuel Rate Table matching the current 'mode'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_VRF_NO_MODE_TABLE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Fuel: " << GetName();
@@ -354,7 +359,8 @@ double WsfVariableRateFuel::CalcConsumptionRateAltitudeSpeed(const double aAltit
    Table* tblPtr = GetCurrentTable();
    if (tblPtr == nullptr)
    {
-      auto out = ut::log::error() << "Platform has no table in variable rate fuel for mode.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_VRF_NO_TABLE_MODE, {});
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Mode: " << GetMode();
       return 0.0;

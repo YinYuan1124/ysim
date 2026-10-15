@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtAzElLookup.hpp"
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtVec3.hpp"
@@ -174,7 +176,8 @@ bool WsfLaserTracker::Initialize(double aSimTime)
    mLaserDesignationsPtr = static_cast<WsfLaserDesignations*>(GetSimulation()->FindExtension("laser_designations"));
    if (mLaserDesignationsPtr == nullptr)
    {
-      ut::log::error() << "Could not find 'laser_designations'. Required for WSF_LASER_TRACKER.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LASER_TRACKER_NO_EXT, {});
       ok = false;
    }
 

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtAzElLookup.hpp"
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtVec3.hpp"
@@ -109,7 +111,8 @@ bool WsfLaserDesignator::Initialize(double aSimTime)
    mLaserDesignationsPtr = static_cast<WsfLaserDesignations*>(GetSimulation()->FindExtension("laser_designations"));
    if (mLaserDesignationsPtr == nullptr)
    {
-      ut::log::error() << "Extension 'laser_designations' not available.  Cannot initialize WSF_LASER_DESIGNATOR.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LASER_DESIG_NO_EXT, {});
       ok = false;
    }
    mTerrain = new wsf::Terrain(GetSimulation()->GetTerrainInterface());
@@ -449,7 +452,8 @@ bool WsfLaserDesignator::LaserDesignationMode::Initialize(double aSimTime)
    mLD_Ptr = dynamic_cast<WsfLaserDesignator*>(mSensorPtr);
    if (mLD_Ptr == nullptr)
    {
-      ut::log::error() << "WsfLaserDesignator LaserDesignationMode not provided with proper sensor type.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+   ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_LASER_DESIG_BAD_SENSOR, {});
       ok = false;
    }
 

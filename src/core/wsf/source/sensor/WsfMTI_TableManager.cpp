@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 
 #include "UtException.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtTypeInfo.hpp"
 #include "UtWallClock.hpp"
@@ -75,7 +77,9 @@ bool WsfMTI_TableManager::ReadCsv(const std::string& aFileName, MTI_AdjustmentTa
    std::ifstream ifs(aFileName);
    if (!ifs.is_open() || ifs.fail())
    {
-      auto out = ut::log::error() << "MTI_Table::ReadCsv: Unable to open MTI table file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 文件名作为模板参数
+      const ut::msg::Args args{{"file", aFileName}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_MTI_OPEN_FAIL, args);
       out.AddNote() << "File: " << aFileName;
       throw UtException("MTI_TABLE::ReadCsv: Unable to open MTI table file: " + aFileName);
    }
@@ -133,7 +137,8 @@ bool WsfMTI_TableManager::ReadCsv(const std::string& aFileName, MTI_AdjustmentTa
          {
             if ((!speedValues.empty()) && (closingRate <= speedValues.back()))
             {
-               ut::log::error() << "MTI_Table::ReadCsv MTI_AdjustmentTable2: Values must be monotonically ascending.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 数据校验失败无参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_MTI_NOT_ASCENDING, {});
                throw UtException("MTI_Table::ReadCsv MTI_AdjustmentTable2: Values must be monotonically ascending.");
             }
 
@@ -142,7 +147,10 @@ bool WsfMTI_TableManager::ReadCsv(const std::string& aFileName, MTI_AdjustmentTa
          }
          else
          {
-            auto out = ut::log::error() << "MTI_Table::ReadCsv: Failed reading row.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 行号/值序作为模板参数
+            const ut::msg::Args args{{"row", std::to_string(row)},
+                                     {"value", std::to_string(i)}};
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SENSOR_MTI_ROW_FAIL, args);
             out.AddNote() << "Row: " << row;
             out.AddNote() << "Values in Row: " << i;
             throw UtException("MTI_Table::- reading row failed!  Numbers fields");

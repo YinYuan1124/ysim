@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfCallback.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfPlatformObserver.hpp"
 #include "WsfProcessor.hpp"
@@ -77,7 +79,11 @@ bool WsfCallback::ExecuteAndNotify(double aSimTime, WsfPlatform* aPlatformPtr, W
    }
    else
    {
-      auto out = ut::log::error() << "Platform unable to invoke callback.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 时间/平台/回调名作为模板参数（中文界面可完整翻译）
+      const ut::msg::Args args{{"t", std::to_string(aSimTime)},
+                               {"platform", aPlatformPtr->GetName()},
+                               {"callback", aCallbackName}};
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CALLBACK_NOT_FOUND, args);
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << aPlatformPtr->GetName();
       out.AddNote() << "Callback: " << aCallbackName;

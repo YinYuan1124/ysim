@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -51,6 +51,8 @@
 #include "UtLonPos.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfGeoPoint.hpp"
 #include "WsfGuidanceProgram.hpp"
@@ -213,7 +215,8 @@ bool WsfGuidanceComputer::Initialize(double aSimTime)
    // Can't do anything unless at least one phase has been defined.
    if (mPhaseList.empty())
    {
-      ut::log::error() << "No phases have been defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_NO_PHASES, {});
       return false;
    }
 
@@ -234,7 +237,8 @@ bool WsfGuidanceComputer::Initialize(double aSimTime)
    }
    else
    {
-      auto out = ut::log::error() << "Invalid initial_phase name.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_BAD_INIT_PHASE, {});
       out.AddNote() << "Name: " << mInitialPhaseName;
       ok = false;
    }
@@ -266,7 +270,8 @@ bool WsfGuidanceComputer::Initialize(double aSimTime)
       Phase& phase = mPhaseList[pi];
       if (!phase.Initialize(aSimTime, *mContextPtr))
       {
-         auto out = ut::log::error() << "Initialization of phase failed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_PHASE_INIT_FAIL, {});
          out.AddNote() << "Phase: " << phase.mPhaseName;
          ok = false;
       }
@@ -289,7 +294,8 @@ bool WsfGuidanceComputer::Initialize(double aSimTime)
       {
          if (FindProgram(*spi) == nullptr)
          {
-            auto out = ut::log::error() << "Unable to find program referenced by phase.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_NO_PROGRAM, {});
             out.AddNote() << "Program: " << *spi;
             out.AddNote() << "Phase: " << phase.mPhaseName;
             ok = false;
@@ -315,7 +321,8 @@ bool WsfGuidanceComputer::Initialize(double aSimTime)
          WsfGuidanceProgram& program = *definedProgram;
          if (!program.Initialize(aSimTime, this))
          {
-            auto out = ut::log::error() << "Failed to initialize program.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_PROG_INIT_FAIL, {});
             out.AddNote() << "Program: " << program.GetName();
             ok = false;
          }
@@ -1054,7 +1061,8 @@ bool WsfGuidanceComputer::SetAimpointAzimuthOffset(WsfStringId aPhaseName, doubl
       }
       else
       {
-         auto out = ut::log::error() << "Invalid value of 'aimpoint_azimuth_offset' direction.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_BAD_AZ_DIR, {});
          out.AddNote() << "Direction: " << aDirection;
          return false;
       }
@@ -1342,7 +1350,8 @@ bool WsfGuidanceComputer::SetGuidanceTarget(WsfStringId aPhaseName, const std::s
       }
       else
       {
-         auto out = ut::log::error() << "Invalid value for 'guidance_target'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_BAD_TARGET, {});
          out.AddNote() << "Value: " << aValue;
          return false;
       }
@@ -1553,7 +1562,8 @@ bool WsfGuidanceComputer::SetProportionalNavigationMethod(WsfStringId aPhaseName
       }
       else
       {
-         auto out = ut::log::error() << "Unknown 'proportional_navigation_method'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_BAD_PN_METHOD, {});
          out.AddNote() << "Value: " << aValue;
          return false;
       }
@@ -1768,7 +1778,8 @@ bool WsfGuidanceComputer::BeginExternalCommand(WsfStringId aPhaseName, unsigned 
       aPhaseIndex = FindPhase(aPhaseName);
       if (aPhaseIndex >= mPhaseList.size())
       {
-         auto out = ut::log::error() << "Invalid phase name specified on a script command.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_SCRIPT_BAD_PHASE, {});
          out.AddNote() << "T = " << GetSimTime();
          out.AddNote() << "Phase: " << aPhaseName;
          ok = false;
@@ -2055,7 +2066,8 @@ void WsfGuidanceComputer::CheckForPhaseChange(double aSimTime, double aEndTime)
          }
          break;
       default:
-         auto out = ut::log::error() << "Unknown phase change variable.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_BAD_PHASE_VAR, {});
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Computer: " << GetName();
          continue;
@@ -2395,7 +2407,8 @@ void WsfGuidanceComputer::SelectPhase(double aSimTime, double aChangeTime, WsfSt
    unsigned int newPhaseIndex = FindPhase(aPhaseName);
    if (newPhaseIndex >= mPhaseList.size())
    {
-      auto out = ut::log::error() << "Requested guidance phase does not exist.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_PHASE_MISSING, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Requested Phase: " << aPhaseName;
@@ -3086,7 +3099,8 @@ bool WsfGuidanceComputer::ValidateNextPhaseName(const Phase& aPhase, WsfStringId
    if ((aNextPhaseName != 0) && (FindPhase(aNextPhaseName) >= mPhaseList.size()))
    {
       isValid  = false;
-      auto out = ut::log::error() << "Phase has a 'next_phase' command that refers to undefined phase.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_NEXT_PHASE_UNDEF, {});
       out.AddNote() << "Phase: " << aPhase.mPhaseName;
       out.AddNote() << "Undefined Phase: " << aNextPhaseName;
    }
@@ -3314,8 +3328,8 @@ bool WsfGuidanceComputer::Phase::Initialize(double aSimTime, WsfScriptContext& a
    if (((mAimpointAzimuthOffset == 0.0) && (mAimpointRangeOffset != 0.0)) ||
        ((mAimpointAzimuthOffset != 0.0) && (mAimpointRangeOffset == 0.0)))
    {
-      ut::log::error()
-         << "'aimpoint_azimuth_offset' and 'aimpoint_range_offset' must both be specified if either is specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GC_OFFSET_PAIR, {});
       ok = false;
    }
    return ok;

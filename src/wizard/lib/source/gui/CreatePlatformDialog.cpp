@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -356,7 +356,8 @@ void wizard::CreatePlatformDialog::OnNameTextChanged(const QString& aName)
    else
    {
       UtQtSetTextColor(mUi.platNameLineEdit, Qt::red);
-      mUi.platNameLineEdit->setToolTip("Platform with this name already exists");
+      // 二次开发（i18n）：校验提示文本包裹 tr()
+      mUi.platNameLineEdit->setToolTip(tr("Platform with this name already exists"));
    }
 }
 

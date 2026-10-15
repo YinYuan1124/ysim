@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfLocalTrack.hpp"
 #include "WsfMessage.hpp"
@@ -119,7 +121,8 @@ bool WsfWeaponTrackProcessor::Initialize(double aSimTime)
       sensor.mSensorPtr = GetPlatform()->GetComponent<WsfSensor>(sensor.mSensorName);
       if (sensor.mSensorPtr == nullptr)
       {
-         auto out = ut::log::error() << "Sensor does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_WTRACK_NO_SENSOR, {});
          out.AddNote() << "Sensor: " << sensor.mSensorName;
          ok = false;
       }

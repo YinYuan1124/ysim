@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfWeaponEngagement.hpp"
@@ -467,7 +469,8 @@ bool WsfGraduatedLethality::Table::Sort(double& aMaxRSquared)
 
    if (iterA == iterB)
    {
-      ut::log::error() << "No radius/Pk values were specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GRAD_LETH_NO_RADIUS_PK, {});
       success = false;
    }
    else
@@ -490,7 +493,8 @@ bool WsfGraduatedLethality::Table::Sort(double& aMaxRSquared)
          {
             if ((iterA->Pk() < iterB->Pk()) || (iterA->RadSqrd() >= iterB->RadSqrd()))
             {
-               ut::log::error() << "Pk values do not decrease with increasing miss distance.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_GRAD_LETH_PK_NOT_DEC, {});
                success = false;
             }
 

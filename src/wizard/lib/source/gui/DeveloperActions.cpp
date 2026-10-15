@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -63,31 +63,33 @@ wizard::DeveloperActions::DeveloperActions(QObject* aParent)
       // Lambda to populate the parser/proxy timer actions with the respective times
       auto populateParserTimers = [this]()
       {
+         // 二次开发（i18n）：动态拼接改为参数化 tr() 模板（决策 4），避免翻译失效
          // Display the time to parse the WSF grammar
          // Note:  This becomes negligible after the user loads a scenario file for the first time.
          UtTimeValue grammar{ProjectWorkspace::Instance()->GetLastGrammarParseTime()};
-         mGrammarTimer->setText("Grammar T: " + QString::fromStdString(vespa::VaUtils::ToString(grammar)));
+         mGrammarTimer->setText(tr("Grammar T: %1").arg(QString::fromStdString(vespa::VaUtils::ToString(grammar))));
 
          // Display the time to parse the WSF input files
          UtTimeValue parse{ProjectWorkspace::Instance()->GetLastInputParseTime()};
-         mParseTimer->setText("Parse T: " + QString::fromStdString(vespa::VaUtils::ToString(parse)));
+         mParseTimer->setText(tr("Parse T: %1").arg(QString::fromStdString(vespa::VaUtils::ToString(parse))));
 
          // Display the time to deserialize the parse tree into the proxy
          UtTimeValue deserialize{ProjectWorkspace::Instance()->GetLastProxyDeserializeTime()};
-         mDeserializeTimer->setText("Deserialize T: " + QString::fromStdString(vespa::VaUtils::ToString(deserialize)));
+         mDeserializeTimer->setText(tr("Deserialize T: %1").arg(QString::fromStdString(vespa::VaUtils::ToString(deserialize))));
 
          // Display the time to update the GUIs after deserialization
          UtTimeValue mergeGUI{ProjectWorkspace::Instance()->GetLastProxyMergeGUI_Time()};
-         mMergeGUI_Timer->setText("Merge/GUI T: " + QString::fromStdString(vespa::VaUtils::ToString(mergeGUI)));
+         mMergeGUI_Timer->setText(tr("Merge/GUI T: %1").arg(QString::fromStdString(vespa::VaUtils::ToString(mergeGUI))));
       };
 
       // Lambda to clear the parser/proxy timer actions
       auto clearParserTimers = [this]()
       {
-         mGrammarTimer->setText("Grammar T: ");
-         mParseTimer->setText("Parse T: ");
-         mDeserializeTimer->setText("Deserialize T: ");
-         mMergeGUI_Timer->setText("Merge/GUI T: ");
+         // 二次开发（i18n）：清空时同样使用参数化模板（空参数），保持与填充态同源
+         mGrammarTimer->setText(tr("Grammar T: %1").arg(""));
+         mParseTimer->setText(tr("Parse T: %1").arg(""));
+         mDeserializeTimer->setText(tr("Deserialize T: %1").arg(""));
+         mMergeGUI_Timer->setText(tr("Merge/GUI T: %1").arg(""));
       };
 
       // Lambda to disable/enable actions on project close/open
@@ -203,11 +205,12 @@ wizard::ProxyDumpWindow::ProxyDumpWindow(wizard::Project* aProjectPtr)
    QWidget* options = new QWidget();
    options->setLayout(new QHBoxLayout);
 
-   QPushButton* refreshBn = new QPushButton("Refresh", options);
+   // 二次开发（i18n）：开发者面板按钮与提示文本包裹 tr()
+   QPushButton* refreshBn = new QPushButton(tr("Refresh"), options);
    connect(refreshBn, &QPushButton::clicked, [this]() { UpdateDisplay(true); });
    options->layout()->addWidget(refreshBn);
    mPathInput = new QLineEdit(options);
-   mPathInput->setToolTip("watching proxy path");
+   mPathInput->setToolTip(tr("watching proxy path"));
    connect(mPathInput, &QLineEdit::editingFinished, [this]() { UpdateDisplay(true); });
    options->layout()->addWidget(mPathInput);
    layout()->addWidget(options);
