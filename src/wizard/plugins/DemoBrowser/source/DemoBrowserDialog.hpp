@@ -55,6 +55,7 @@ private:
 
 class DemoBrowserDialog : public QDialog
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 上下文命中本类
 public:
    DemoBrowserDialog(QMainWindow* aParent);
    ~DemoBrowserDialog() override = default;

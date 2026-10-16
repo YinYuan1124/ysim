@@ -34,7 +34,7 @@ DemoBrowser::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
 
 QList<wkf::StartupWidgetWrapper*> DemoBrowser::Plugin::GetStartupWidgets() const
 {
-   QPushButton*               demoBrowserButtonPtr = new QPushButton("Demo Browser");
+   QPushButton*               demoBrowserButtonPtr = new QPushButton(tr("Demo Browser")); // 二次开发（i18n）
    wkf::StartupWidgetWrapper* demoBrowserStartupWidget =
       new wkf::StartupWidgetWrapper(wkf::StartupDialogLayouts::cNEW, demoBrowserButtonPtr);
    connect(demoBrowserButtonPtr, &QPushButton::clicked, this, &DemoBrowser::Plugin::Show);

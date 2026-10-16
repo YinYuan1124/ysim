@@ -196,7 +196,7 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
       QHBoxLayout* buttonlo    = new QHBoxLayout(buttonGroup);
       buttonGroup->setLayout(buttonlo);
       buttonlo->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding));
-      QPushButton* openDoc = new QPushButton("Open Documentation", buttonGroup);
+      QPushButton* openDoc = new QPushButton(tr("Open Documentation") // 二次开发（i18n）, buttonGroup);
 
       buttonlo->addWidget(openDoc);
       QUrl openDocumentationUrl;
@@ -204,7 +204,7 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
       openDocumentationUrl.setHost("documentation");
       openDocumentationUrl.setPath("/docs/" + it.GetAttribute("name") + ".html");
       connect(openDoc, &QPushButton::clicked, [=]() { wizEnv.OpenUrl(openDocumentationUrl); });
-      QPushButton* openProj = new QPushButton("Open Project", buttonGroup);
+      QPushButton* openProj = new QPushButton(tr("Open Project") // 二次开发（i18n）, buttonGroup);
       buttonlo->addWidget(openProj);
 
       QUrl projectUrl;
@@ -224,7 +224,7 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
       openProjectUrl.setQuery(openProjectUrlQuery);
       connect(openProj, &QPushButton::clicked, [=]() { wizEnv.OpenUrl(openProjectUrl); });
 
-      QPushButton* copyProj = new QPushButton("Copy Project", buttonGroup);
+      QPushButton* copyProj = new QPushButton(tr("Copy Project") // 二次开发（i18n）, buttonGroup);
       buttonlo->addWidget(copyProj);
       buttonlo->setContentsMargins(0, 0, 0, 0);
       connect(copyProj, &QPushButton::clicked, [=]() { wizEnv.OpenUrl(copyProjectUrl); });
@@ -269,9 +269,9 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
          QGridLayout* grid     = new QGridLayout(contents);
          contents->setLayout(grid);
          matchedFilesG->AddContentWidget(contents);
-         grid->addWidget(new QLabel("<b>Filename:</b>", contents), 0, 0);
-         grid->addWidget(new QLabel("<b>Content:</b>", contents), 0, 1);
-         grid->addWidget(new QLabel("<b>Line:</b>", contents), 0, 2);
+         grid->addWidget(new QLabel(tr("<b>Filename:</b>") // 二次开发（i18n）, contents), 0, 0);
+         grid->addWidget(new QLabel(tr("<b>Content:</b>") // 二次开发（i18n）, contents), 0, 1);
+         grid->addWidget(new QLabel(tr("<b>Line:</b>") // 二次开发（i18n）, contents), 0, 2);
          int row = 1;
          for (auto&& it : matchedFiles)
          {
