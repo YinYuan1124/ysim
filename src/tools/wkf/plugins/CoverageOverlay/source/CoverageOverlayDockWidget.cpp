@@ -30,6 +30,7 @@ CoverageOverlayDockWidget::CoverageOverlayDockWidget(const UtQtGradientMap& aGra
    , mCurrentUnitType(UtUnits::UnitType::_cUNIT_TYPE_COUNT)
 {
    mUI.setupUi(this);
+   setWindowTitle(tr("Coverage Overlays")); // 二次开发（i18n）
    mUI.mGradientLegend->SetVariableName(QString{""});
 
    connect(mUI.mLoadDataButton, &QPushButton::pressed, this, &CoverageOverlayDockWidget::OnLoadDataPressed);

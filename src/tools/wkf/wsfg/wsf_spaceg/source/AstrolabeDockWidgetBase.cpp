@@ -31,6 +31,7 @@ AstrolabeDockWidgetBase::AstrolabeDockWidgetBase(const AstrolabeConfig& aConfig,
    , mPreviewManager{}
 {
    mUI.setupUi(this);
+   setWindowTitle(tr("Astrolabe")); // 二次开发（i18n）
 
    if (aConfig.IsValid())
    {

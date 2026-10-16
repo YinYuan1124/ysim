@@ -24,6 +24,7 @@ namespace wkf
 {
 class WKF_COMMON_EXPORT VisibilityDockWidget : public QDockWidget
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 上下文命中本类
 public:
    VisibilityDockWidget(QWidget* aParent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
    void Update();

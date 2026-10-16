@@ -14,6 +14,7 @@ wkf::VisibilityDockWidget::VisibilityDockWidget(QWidget* aParent, Qt::WindowFlag
    : QDockWidget(aParent, f)
 {
    mUI.setupUi(this);
+   setWindowTitle(tr("Visibility")); // 二次开发（i18n）
 
    setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 

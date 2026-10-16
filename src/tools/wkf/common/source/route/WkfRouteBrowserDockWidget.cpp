@@ -39,6 +39,7 @@ wkf::RouteBrowserDockWidget::RouteBrowserDockWidget(QWidget* aParent /*=0*/, Qt:
    mCreateDialog = new RouteBrowserCreateDialog(aParent);
 
    mUi.setupUi(this);
+   setWindowTitle(tr("Route Browser")); // 二次开发（i18n）
 
    mUi.treeWidget->setColumnCount(2);
    mUi.treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);

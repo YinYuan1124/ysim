@@ -262,6 +262,7 @@ wkf::ZoneBrowserDockWidget::ZoneBrowserDockWidget(wkf::ZoneBrowserDataContainer&
    , mDefaultFillColor()
 {
    mUI.setupUi(this);
+   setWindowTitle(tr("Zone Browser")); // 二次开发（i18n）
    mUI.mTreeWidget->setHeaderHidden(true);
    mUI.gridLayout_2->setContentsMargins(0, 0, 0, 0);
    connect(&mDataContainer, &ZoneBrowserDataContainer::ClearZoneData, this, &ZoneBrowserDockWidget::ClearData);
