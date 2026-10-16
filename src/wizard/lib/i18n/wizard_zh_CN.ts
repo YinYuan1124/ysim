@@ -2640,4 +2640,64 @@ Choose Unlist to remove from your recent list or OK to create.</source>
         <translation>地图显示</translation>
     </message>
 </context>
+<context>
+    <name>ProjectBrowser::DockWidget</name>
+    <message>
+        <source>Project Browser</source>
+        <translation>工程浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>PlatformBrowser::DockWidget</name>
+    <message>
+        <source>Platform Browser</source>
+        <translation>平台浏览器</translation>
+    </message>
+    <message>
+        <source>Platform Browser (%1)</source>
+        <translation>平台浏览器（%1）</translation>
+    </message>
+</context>
+<context>
+    <name>TypeBrowser::DockWidget</name>
+    <message>
+        <source>Type Browser</source>
+        <translation>类型浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::CommandChain::DockWidget</name>
+    <message>
+        <source>Command Chain Browser</source>
+        <translation>命令链浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>TaskList::DockWidget</name>
+    <message>
+        <source>Task List</source>
+        <translation>任务列表</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ModelImport::DockWidget</name>
+    <message>
+        <source>Model Import</source>
+        <translation>模型导入</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::SimulationManager::OutputDock</name>
+    <message>
+        <source>Output</source>
+        <translation>输出</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::SimulationManager::ScriptBreakpointControl</name>
+    <message>
+        <source>Breakpoints</source>
+        <translation>断点</translation>
+    </message>
+</context>
 </TS>
