@@ -559,10 +559,10 @@ void Engage::Dialog::AddRunOutputCB()
       QTableWidgetItem* phaseItem = new QTableWidgetItem(newItem.GetPhase());
       mUi.mRunOutputTableWidget->setItem(curRow, 0, nameItem);
       mUi.mRunOutputTableWidget->setItem(curRow, 1, phaseItem);
-      QPushButton* removeItemButton = new QPushButton("Remove", mUi.mRunOutputTableWidget);
+      QPushButton* removeItemButton = new QPushButton(tr("Remove") // 二次开发（i18n）, mUi.mRunOutputTableWidget);
       removeItemButton->setFixedWidth(50);
 
-      QPushButton* editItemButton = new QPushButton("Edit", mUi.mRunOutputTableWidget);
+      QPushButton* editItemButton = new QPushButton(tr("Edit") // 二次开发（i18n）, mUi.mRunOutputTableWidget);
 
       QDialogButtonBox* buttonBox = new QDialogButtonBox(Qt::Horizontal);
       buttonBox->addButton(removeItemButton, QDialogButtonBox::ActionRole);
@@ -585,10 +585,10 @@ void Engage::Dialog::AddOutputRateCB()
       mOutputRateItems.push_back(newItem);
       QTableWidgetItem* nameItem = new QTableWidgetItem(newItem.GetFileName());
       mUi.mOutputRateTableWidget->setItem(curRow, 0, nameItem);
-      QPushButton* removeItemButton = new QPushButton("Remove", mUi.mOutputRateTableWidget);
+      QPushButton* removeItemButton = new QPushButton(tr("Remove") // 二次开发（i18n）, mUi.mOutputRateTableWidget);
       removeItemButton->setFixedWidth(50);
 
-      QPushButton* editItemButton = new QPushButton("Edit", mUi.mOutputRateTableWidget);
+      QPushButton* editItemButton = new QPushButton(tr("Edit") // 二次开发（i18n）, mUi.mOutputRateTableWidget);
 
       QDialogButtonBox* buttonBox = new QDialogButtonBox(Qt::Horizontal);
       buttonBox->addButton(removeItemButton, QDialogButtonBox::ActionRole);
