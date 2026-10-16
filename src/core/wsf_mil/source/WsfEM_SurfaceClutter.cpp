@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
 #include "WsfAntennaPattern.hpp"
@@ -78,8 +80,8 @@ bool WsfEM_SurfaceClutter::Initialize(WsfEM_Rcvr* aRcvrPtr)
       aRcvrPtr->GetAntenna()->GetLocationLLA(lat, lon, alt);
       if (alt < sWaveHeight[seaState])
       {
-         auto out = ut::log::warning() << "surface_clutter: Antenna altitude is too low compared to wave height, and "
-                                          "may produce undesired results.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SURFCLUT_LOW_ALT);
          out.AddNote() << "Platform: " << aRcvrPtr->GetPlatform()->GetName();
          out.AddNote() << "Antenna Altitude: " << alt << " m";
          out.AddNote() << "Wave Height: " << sWaveHeight[seaState] << " m";

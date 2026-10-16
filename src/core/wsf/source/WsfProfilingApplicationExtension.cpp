@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "ProfilingSystem.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfStandardApplication.hpp"
 
@@ -42,7 +44,9 @@ int WsfProfilingApplicationExtension::ProcessCommandLine(WsfStandardApplication:
       ++numArgsProcessed;
       if (numArgsProcessed >= aArgc)
       {
-         ut::log::warning() << "Command-line option " << profilingLibraryPathArg << " requires exactly one argument";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"option", profilingLibraryPathArg}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_PROFILING_ARG_ONE, args);
       }
       else
       {
@@ -55,7 +59,9 @@ int WsfProfilingApplicationExtension::ProcessCommandLine(WsfStandardApplication:
       ++numArgsProcessed;
       if (numArgsProcessed >= aArgc)
       {
-         ut::log::warning() << "Command-line option " << profilingOutputArg << " requires exactly one argument";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"option", profilingOutputArg}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_PROFILING_ARG_ONE, args);
       }
       else
       {

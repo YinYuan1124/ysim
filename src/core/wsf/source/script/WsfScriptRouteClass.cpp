@@ -474,7 +474,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptRouteClass, WsfRoute, GetWaypointAt, 1, "WsfGeo
    static bool deprecationShown = false;
    if (!deprecationShown)
    {
-      auto out = ut::log::warning() << "WsfRoute.GetWaypointAt() is deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPTROUTE_WP_AT_DEP);
       out.AddNote() << "Please use Waypoint().";
       deprecationShown = true;
    }
@@ -532,7 +533,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptRouteClass, WsfRoute, PauseTime, 1, "double", "
    static bool deprecationShown = false;
    if (!deprecationShown)
    {
-      ut::log::warning() << "WsfRoute.PauseTime() is deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SCRIPTROUTE_PAUSE_DEP);
       deprecationShown = true;
    }
 
@@ -552,7 +554,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptRouteClass, WsfRoute, SetPauseTime, 2, "void", 
    static bool deprecationShown = false;
    if (!deprecationShown)
    {
-      ut::log::warning() << "WsfRoute.SetPauseTime() is deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SCRIPTROUTE_SET_PAUSE_DEP);
       deprecationShown = true;
    }
 

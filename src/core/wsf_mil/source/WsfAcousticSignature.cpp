@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfAcousticSignature.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAcousticSignatureTypes.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfScenario.hpp"
@@ -137,7 +139,8 @@ double WsfAcousticSignature::GetValue(WsfPlatform* aPlatformPtr, double aFrequen
    {
       // Signature not defined... use the default signature.
       { // RAII block
-         auto out = ut::log::warning() << "Acoustic_signature not defined. Using default.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ACOUSTIC_NOT_DEF);
          out.AddNote() << "Platform: " << aPlatformPtr->GetName();
          out.AddNote() << "Acoustic_Signature: " << aPlatformPtr->GetType();
       }
@@ -156,13 +159,15 @@ double WsfAcousticSignature::GetValue(WsfPlatform* aPlatformPtr, double aFrequen
    {
       // Signature not defined... use the default signature.
       { // RAII block
-         auto out = ut::log::warning() << "'acoustic_signature' not defined. Using default.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ACOUSTIC_NOT_DEF2);
          out.AddNote() << "Platform: " << aPlatformPtr->GetName();
          out.AddNote() << "Platform Type: " << aPlatformPtr->GetType();
       }
 
-      ut::log::warning() << aPlatformPtr->GetName() << "." << aPlatformPtr->GetType()
-                         << ": acoustic_signature not defined; using default.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"plat", aPlatformPtr->GetName()}, {"type", aPlatformPtr->GetType()}};
+      ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ACOUSTIC_PLAT_VAR, args);
       signaturePtr = new DefaultAcousticSignature();
       interfacePtr->SetSignature(signaturePtr);
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfCallback.hpp"
@@ -1303,7 +1305,8 @@ public:
             if ((aRoute[i].GetLat() < -90.0) || (aRoute[i].GetLat() > 90.0) || (aRoute[i].GetLon() < -180.0) ||
                 (aRoute[i].GetLon() > 180.0))
             {
-               auto out = ut::log::warning() << "Attempting to add an invalid lat/lon to the route of a platform.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTEMOVER_BAD_LATLON);
                if (mPlatformPtr != nullptr)
                {
                   out.AddNote() << "Platform: " << mPlatformPtr->GetName();

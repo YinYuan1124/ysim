@@ -768,8 +768,8 @@ bool WsfScriptObserverExtension::ProcessInput(UtInput& aInput)
             aInput.ReadValue(callbackName);
             if (callbackName == "PLATFORM_KILLED")
             {
-               auto out = ut::log::warning() << "The PLATFORM_KILLED event has been deprecated and will be removed "
-                                             << "in a future release. Use PLATFORM_BROKEN instead.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EVENTOUT_DEPRECATED);
                out.AddNote() << aInput.GetLocation();
             }
             std::string scriptName; // The name of the script to be invoked.

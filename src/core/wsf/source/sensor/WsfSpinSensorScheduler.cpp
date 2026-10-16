@@ -113,10 +113,11 @@ bool WsfSpinSensorScheduler::Initialize(double aSimTime, WsfSensor* aSensorPtr, 
       // potentially pre-defined az angle
       if (mInitialAngle != 0.0)
       {
-         ut::log::warning() << "Initial azimuth angle set to " << mInitialAngle
-                            << " while scheduler set to use randomized starting azimuth on sensor: "
-                            << aSensorPtr->GetName() << " for platform: " << aSensorPtr->GetPlatform()->GetName()
-                            << ". Possible loss of user data.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"angle", std::to_string(mInitialAngle)},
+                                  {"sensor", aSensorPtr->GetName()},
+                                  {"platform", aSensorPtr->GetPlatform()->GetName()}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_SPIN_RANDOM_AZ_IGNORED, args);
       }
 
       mInitialAngle = GetSimulation()->GetRandom().Uniform(-UtMath::cPI, UtMath::cPI);
@@ -129,11 +130,11 @@ bool WsfSpinSensorScheduler::Initialize(double aSimTime, WsfSensor* aSensorPtr, 
    // Original behavior is kept to preserve possible EZJA use-case.
    if (mRandomAzimuthPositionCheck && !mRandomAzimuthPosition)
    {
-      ut::log::warning()
-         << "Initial azimuth angle set to randomized starting azimuth while scheduler was set to an initial angle of "
-         << mInitialAngle
-         << " while scheduler set to use randomized starting azimuth on sensor: " << aSensorPtr->GetName()
-         << " for platform: " << aSensorPtr->GetPlatform()->GetName() << ". Possible loss of user data.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"angle", std::to_string(mInitialAngle)},
+                               {"sensor", aSensorPtr->GetName()},
+                               {"platform", aSensorPtr->GetPlatform()->GetName()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_SPIN_RANDOM_AZ_CONFLICT, args);
    }
 
    // Reduce future dynamic casting by extracting derived class mode pointers.

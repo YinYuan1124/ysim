@@ -437,7 +437,8 @@ bool WsfTankedFuel::SetDefaultSupplyConfig()
          return true;
       }
    }
-   auto out = ut::log::warning() << "Refueling Supply configuration ambiguous.";
+   // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+   auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TANKEDFUEL_AMBIGUOUS);
    out.AddNote() << "Platform: " << GetPlatform()->GetName();
    out.AddNote() << "Fuel: " << GetName();
    out.AddNote() << "Communications during run-time must properly configure the tanker for supply operations.";

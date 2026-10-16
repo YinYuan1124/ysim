@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -30,6 +30,8 @@
 
 #include "UtEntity.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptBasicTypes.hpp"
 #include "UtScriptVec3.hpp"
@@ -486,7 +488,8 @@ void WsfWeaponEngagement::SetWeaponEffects(WsfStringId aWeaponEffectsType)
       mEffectPtr = WsfWeaponEffectsTypes::Get(scenario).Clone(aWeaponEffectsType);
       if (mEffectPtr == nullptr)
       {
-         auto out = ut::log::warning() << "Undefined weapon_effect.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WEAPENG_UNDEF_EFFECT);
          out.AddNote() << "Weapon Effect Type: " << aWeaponEffectsType;
          out.AddNote() << "A default effect will be used.";
       }
@@ -506,7 +509,8 @@ void WsfWeaponEngagement::SetWeaponEffects(WsfStringId aWeaponEffectsType)
    {
       if (!mEffectPtr->Initialize(mStartTime, this))
       {
-         auto out = ut::log::warning() << "Unable to initialize weapon_effect.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WEAPENG_INIT_EFFECT_FAIL);
          out.AddNote() << "Weapon Effect Type: " << aWeaponEffectsType;
       }
    }

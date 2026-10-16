@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAntennaPattern.hpp"
 #include "WsfEM_Interaction.hpp"
 #include "WsfEM_Rcvr.hpp"
@@ -405,7 +407,8 @@ void WsfRF_Repeater::SensorTrackUpdated(double aSimTime, const WsfTrack* aTrackP
                   out.AddNote() << "Track Id: " << aTrackPtr->GetTrackId();
                   out.AddNote() << "Target: " << aTrackPtr->GetTargetName();
                }
-               auto out = ut::log::warning() << "FAILED Raw Track merge.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_RPT_RAW_TRACK_MERGE);
                out.AddNote() << "Will result in incorrect track drop while operating the repeater in this mode.";
             }
          }

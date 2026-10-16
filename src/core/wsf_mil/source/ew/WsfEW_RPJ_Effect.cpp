@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "WsfEM_Rcvr.hpp"
 #include "WsfEM_Xmtr.hpp"
@@ -188,7 +190,8 @@ void WsfEW_RPJ_Effect::UpdateEffects(double                                 aSim
       {
          if ((pulseWidth <= 0.0) || (pri <= 0.0))
          {
-            auto out = ut::log::warning() << "WSF_RPJ_EFFECT- pulsewidth and/or PRI not specified on radar.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_RPJ_NO_PW_PRI);
             out.AddNote() << "Radar: " << radarRcvrPtr->GetArticulatedPart()->GetName();
          }
       }

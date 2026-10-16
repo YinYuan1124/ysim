@@ -72,7 +72,8 @@ QString wizard::StartupDialog::GetRecentLabelDisplayName(const QStringList& aFil
 
 void wizard::StartupDialog::BuildRecentContextMenu(QMenu& aMenu, const QStringList& aLink)
 {
-   connect(aMenu.addAction("Open File"),
+   // 二次开发（i18n）：最近列表右键菜单动作文本 tr() 化（上下文 wizard::StartupDialog）
+   connect(aMenu.addAction(tr("Open File")),
            &QAction::triggered,
            [aLink]()
            {

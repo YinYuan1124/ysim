@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "UtStringUtil.hpp"
 #include "UtVec3.hpp"
@@ -276,14 +278,15 @@ bool WsfMilRadarSignature::SharedData::InitializeType(WsfObject& aBase)
       if (mBistaticSigDefined)
       {
          mMonoStaticSigDefined = false;
-         auto out = ut::log::warning() << "Radar Signature's 'mono-static signature' not defined, bistatic signature "
-                                          "will be used for mono-static cases.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MILRADAR_NO_MONO);
          out.AddNote() << "Radar Signature: " << aBase.GetType();
       }
       else
       {
          ok = false;
-         ut::log::warning() << "The Radar Signature state 'default' does not exist.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_MILRADAR_NO_DEF_STATE);
       }
    }
 
@@ -294,7 +297,8 @@ bool WsfMilRadarSignature::SharedData::InitializeType(WsfObject& aBase)
       if (mStates[stateIndex].mPolarization[WsfEM_Types::cPOL_DEFAULT].empty())
       {
          ok       = false;
-         auto out = ut::log::warning() << "The 'default' polarization does not exist for state.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MILRADAR_NO_DEF_POL);
          out.AddNote() << "State: " << mStates[stateIndex].mStateId;
       }
       else

@@ -275,7 +275,9 @@ bool WsfHEL_Lethality::ProcessInput(UtInput& aInput)
    else if ((command == "use_launch_pk") || (command == "use_intercept_pk") || (command == "launch_pk") ||
             (command == "intercept_pk") || (command == "use_pk_table"))
    {
-      auto out = ut::log::warning() << "The " + command + " command is incompatible with a WSF_HEL_LETHALITY object.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_HEL_CMD_INCOMPAT, args);
       out.AddNote() << "Location: " << aInput.GetLocation();
    }
    else
@@ -381,7 +383,8 @@ bool WsfHEL_Lethality::Initialize(double aSimTime, const WsfWeaponEngagement* aE
          else
          {
             // print a warning
-            auto out = ut::log::warning() << "hel_lethality: No damage_radius was specified for target.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_HEL_NO_DAMAGE_RADIUS);
             out.AddNote() << "Target: " << aEngagementPtr->GetTargetPlatform()->GetName();
          }
       }

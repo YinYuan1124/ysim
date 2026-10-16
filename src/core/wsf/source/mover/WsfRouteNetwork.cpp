@@ -162,7 +162,9 @@ bool WsfRouteNetwork::ProcessInput(UtInput& aInput)
    {
       if (!Add(std::move(newRoutePtr)))
       {
-         auto out = ut::log::warning() << "Route not added to route_network " << GetName();
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"name", GetName()}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTENET_NOT_ADDED, args);
          out.AddNote() << "Does route have at least two waypoints?";
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
@@ -1192,7 +1194,8 @@ void WsfRouteNetwork::TestNetwork()
          bestPath.clear();
          if (!mGraph.shortest_path(iter1, iter2, bestPath, bestCost, &mCostFunc))
          {
-            auto out = ut::log::warning() << "Could not solve shortest path.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTENET_NO_SHORTPATH);
             out.AddNote() << "From: " << iter1->first.mId;
             out.AddNote() << "To: " << iter2->first.mId;
          }

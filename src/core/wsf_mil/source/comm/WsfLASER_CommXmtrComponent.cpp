@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 
@@ -203,9 +205,8 @@ bool WsfLASER_CommXmtrComponent::Modulation::Initialize(WsfEM_Xmtr& aXmtr)
    {
       if (aXmtr.GetPulseRepetitionFrequency() > 0.0)
       {
-         auto out = ut::log::warning()
-                    << "Laser transmitter 'pulse_repetition_frequency' will be set based on modulation type and either "
-                       "'pulse_width' or 'slot_duration' inputs (not the provided 'pulse_repetition_frequency' input).";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_LASER_PRF_OVERRIDE);
          out.AddNote() << "Xmtr Platform: " << aXmtr.GetPlatform();
       }
       aXmtr.SetPulseRepetitionFrequency(mDutyCycle / mSlotDuration);

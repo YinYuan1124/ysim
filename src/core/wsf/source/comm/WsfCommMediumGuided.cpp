@@ -428,7 +428,8 @@ void Guided::EndPropagation(double aSimTime, MessageStatus& aMessageStatus, cons
    {
       const auto& xmtrAddress = msg.GetTraceRoute().back();
       const auto& rcvrAddress = msg.SourceMessage()->GetNextHopAddr();
-      auto        out         = ut::log::warning() << "Message delivery failure due to abort condition.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MEDIUM_DELIVERY_ABORT);
       out.AddNote() << "Transmitter: " << xmtrAddress;
       out.AddNote() << "Receiver: " << rcvrAddress;
       out.AddNote() << "Message serial: " << aIdentifier.GetSerialNumber();

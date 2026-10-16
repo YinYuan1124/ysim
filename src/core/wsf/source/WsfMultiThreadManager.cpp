@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtSleep.hpp"
 #include "UtWallClock.hpp"
 #include "WsfLOS_Manager.hpp"
@@ -174,7 +176,8 @@ void WsfMultiThreadManager::UpdateSensors(double aCurrentFrameTime)
          if (!allDone)
          {
             mBreakUpdate = true;
-            ut::log::warning() << "Multi-Thread Manager: Skipping out of sensor updates.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_MTM_SKIP_SENSOR_UPD, {});
             // Despite signalling early termination with BreakUpdate, we must
             // still wait for the termination to finish to avoid violating
             // multithreading invariants of the still running parallel sensor updates.
@@ -372,7 +375,8 @@ WsfMultiThreadManager::SimulationUpdateThread::FunctionType WsfMultiThreadManage
          }
          else
          {
-            auto out = ut::log::warning() << "Multi-Thread Manager: Platform could not be found.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MTM_PLATFORM_NOT_FOUND, {});
             out.AddNote() << "Platform Index: " << platformElement.mPlatformIndex;
          }
       }

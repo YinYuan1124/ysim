@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfCommMediumTypeIdentifier.hpp"
 #include "WsfCommMediumTypes.hpp"
 #include "WsfCommNetworkLayer.hpp"
@@ -563,7 +565,8 @@ void Comm::Setup()
       mGateway.mAddress      = Address();
       mGateway.mPlatformName = mGateway.mCommName = std::string();
 
-      auto out = ut::log::warning() << "Invalid gateway was set for comm.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMM_INVALID_GATEWAY);
       out.AddNote() << "Comm: " << GetFullName();
       out.AddNote() << "Ensure the name and address are correct.";
    }
@@ -603,7 +606,8 @@ void Comm::SetGateway(const Address& aAddress)
 
    if (!ValidateGateway())
    {
-      auto out = ut::log::warning() << "Cannot change the gateway address.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMM_CANNOT_CHANGE_GATEWAY);
       out.AddNote() << "Comm: " << GetFullName();
       out.AddNote() << "Gateway Address: " << aAddress;
       out.AddNote() << "The gateway has not changed. Ensure the provided gateway is a valid interface.";

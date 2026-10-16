@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfArticulatedPart.hpp"
@@ -306,13 +308,15 @@ bool WsfEM_Xmtr::Initialize(WsfSimulation& aSimulation)
       {
          if (GetPower() == 0.0)
          {
-            auto out = ut::log::warning() << "Allowing initialization to continue with power of 0.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_XMTR_POWER_ZERO, {});
             out.AddNote() << "User beware - set power for platform.";
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
          }
          if (mFrequency == 0.0)
          {
-            auto out = ut::log::warning() << "Allowing initialization to continue with frequency of 0.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_XMTR_FREQ_ZERO, {});
             out.AddNote() << "User beware - set frequency for platform.";
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
          }

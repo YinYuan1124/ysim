@@ -95,6 +95,63 @@ namespace msg
    constexpr uint32_t MSG_SCRIPT_SM_NO_NEXT_STATE     = 0x0001001C; ///< next_state 不存在
    constexpr uint32_t MSG_SCRIPT_SM_NO_SCRIPT          = 0x0001001D; ///< 状态机找不到脚本
 
+   // ---- 想定解析段（0x0001xxxx）warning 级（第二十批）----
+   constexpr uint32_t MSG_W_ZONE_POINTS_CIRCULAR    = 0x0001001E; ///< 极坐标/经纬点与圆形区域共用
+   constexpr uint32_t MSG_W_ZONE_POINTS_ELLIPTICAL  = 0x0001001F; ///< 极坐标/经纬点与椭圆区域共用
+   constexpr uint32_t MSG_W_ZONE_RADIUS_ANGLE_POLY   = 0x00010020; ///< 半径/角度约束与多边形区域共用
+   constexpr uint32_t MSG_W_ZONE_POINTS_SPHERICAL    = 0x00010021; ///< 极坐标/经纬点与球形区域共用
+   constexpr uint32_t MSG_W_ZONE_CMD_NOT_POLY        = 0x00010022; ///< 命令不适用于多边形区域（4 处共用）
+   constexpr uint32_t MSG_W_ZONE_CMD_ONLY_POLY       = 0x00010023; ///< 命令仅适用于多边形区域（3 处共用）
+   constexpr uint32_t MSG_W_ZONE_SHAPE_CONFLICT      = 0x00010024; ///< 区域定义形状类型冲突
+   constexpr uint32_t MSG_W_ZONE_MIN_ALT_CONFLICT    = 0x00010025; ///< 区域定义最低高度冲突
+   constexpr uint32_t MSG_W_ZONE_MAX_ALT_CONFLICT    = 0x00010026; ///< 区域定义最高高度冲突
+   constexpr uint32_t MSG_W_ZONE_MIN_RADIUS_CONFLICT = 0x00010027; ///< 区域定义最小半径冲突
+   constexpr uint32_t MSG_W_ZONE_MAX_RADIUS_CONFLICT = 0x00010028; ///< 区域定义最大半径冲突
+   constexpr uint32_t MSG_W_ZONE_LONG_AXIS_CONFLICT  = 0x00010029; ///< 区域定义纵轴冲突
+   constexpr uint32_t MSG_W_ZONE_LAT_AXIS_CONFLICT   = 0x0001002A; ///< 区域定义横轴冲突
+   constexpr uint32_t MSG_W_ZONE_START_ANGLE_CONFLICT = 0x0001002B; ///< 区域定义起始角冲突
+   constexpr uint32_t MSG_W_ZONE_STOP_ANGLE_CONFLICT  = 0x0001002C; ///< 区域定义终止角冲突
+   constexpr uint32_t MSG_W_ZONE_IGNORE_POLYGONAL    = 0x0001002D; ///< 忽略多边形点列指定
+   constexpr uint32_t MSG_W_ZONE_REL_CONFLICT        = 0x0001002E; ///< 区域参照关系冲突
+   constexpr uint32_t MSG_W_ZONE_NO_REF_LOC          = 0x0001002F; ///< 缺少参照位置
+   constexpr uint32_t MSG_W_ZONE_REF_PROBLEMS        = 0x00010030; ///< 区域与参照区间存在冲突（汇总）
+   constexpr uint32_t MSG_W_ZONE_MODIFIERS_IGNORED   = 0x00010031; ///< 相对区域修饰值被忽略
+   constexpr uint32_t MSG_W_ZONE_HEADING_IGNORED     = 0x00010032; ///< heading 输入被忽略
+   constexpr uint32_t MSG_W_ZONE_ANGLES_IGNORED      = 0x00010033; ///< start/end_angle 输入被忽略
+   constexpr uint32_t MSG_W_ZONE_MIN_RADIUS_IGNORED  = 0x00010034; ///< minimum_radius 输入被忽略
+   constexpr uint32_t MSG_W_ZRF_UNABLE_AVOID         = 0x00010035; ///< 无法避开区域（ZoneRouteFinder）
+   constexpr uint32_t MSG_W_SCN_TRUNC_INIT_RUN       = 0x00010036; ///< initial_run_number 被截断
+   constexpr uint32_t MSG_W_SCN_TRUNC_FINAL_RUN      = 0x00010037; ///< final_run_number 被截断
+   constexpr uint32_t MSG_W_SCN_NULL_PLATFORM         = 0x00010038; ///< WsfScenario 添加空平台指针
+   constexpr uint32_t MSG_W_SCN_ADD_TWICE            = 0x00010039; ///< WsfScenario 重复添加同一平台
+   constexpr uint32_t MSG_W_SCN_NO_NAME              = 0x0001003A; ///< WsfScenario 添加未命名平台
+   constexpr uint32_t MSG_W_OTL_DERIVED_REDEFINED    = 0x0001003B; ///< 派生类型被重复定义
+   constexpr uint32_t MSG_W_CONSOLE_OPEN_FAIL        = 0x0001003C; ///< 控制台重定向文件打开失败
+   constexpr uint32_t MSG_W_EVENTOUT_DEPRECATED      = 0x0001003D; ///< PLATFORM_KILLED 事件已废弃
+   constexpr uint32_t MSG_W_SIM_DELETE_NULL_PLATFORM = 0x0001003E; ///< 删除空平台指针
+   constexpr uint32_t MSG_W_SIM_SCRIPT_DEFS_CHANGED  = 0x0001003F; ///< 脚本定义已变更可能降性能
+   constexpr uint32_t MSG_W_SIM_COMPLETE_BAD_STATE   = 0x00010040; ///< 非期望状态无法完成仿真
+   constexpr uint32_t MSG_W_SIM_RESET_BAD_STATE      = 0x00010041; ///< 非期望状态无法重置仿真
+   constexpr uint32_t MSG_W_SIM_TERMINATE_BAD_STATE  = 0x00010042; ///< 非期望状态无法终止仿真
+   constexpr uint32_t MSG_W_SIM_ONPLATFORM_BAD_SIG   = 0x00010043; ///< on_platform_injection 签名错误
+   constexpr uint32_t MSG_W_APP_LOGHOST_BAD          = 0x00010044; ///< -log-server-host 参数处理失败
+   constexpr uint32_t MSG_W_APP_LOGPORT_BAD          = 0x00010045; ///< -log-server-port 参数处理失败
+   constexpr uint32_t MSG_W_APP_LOGCONN_FAIL         = 0x00010046; ///< 日志客户端连接服务器失败
+   constexpr uint32_t MSG_W_FSS_FRAME_EXCEEDED       = 0x00010047; ///< 帧时间超限
+   constexpr uint32_t MSG_W_PROFILING_ARG_ONE        = 0x00010048; ///< 性能分析选项须一个参数（2 处共用）
+   constexpr uint32_t MSG_W_MTM_SKIP_SENSOR_UPD      = 0x00010049; ///< 跳出传感器更新
+   constexpr uint32_t MSG_W_MTM_PLATFORM_NOT_FOUND   = 0x0001004A; ///< 多线程管理找不到平台
+   constexpr uint32_t MSG_W_PLUGIN_LOAD_FAIL         = 0x0001004B; ///< 插件加载失败（3 处共用）
+   constexpr uint32_t MSG_W_SCRIPT_ATTIME_DEP       = 0x0001004C; ///< at_time 已废弃
+   constexpr uint32_t MSG_W_SCRIPTPLAT_BAD_CONFIG   = 0x0001004D; ///< 平台配置状态无效
+   constexpr uint32_t MSG_W_SCRIPTPLAT_BAD_CONCEAL  = 0x0001004E; ///< 隐蔽系数无效（2 处共用）
+   constexpr uint32_t MSG_W_SCRIPTPLAT_NO_ZONE      = 0x0001004F; ///< 找不到区域
+   constexpr uint32_t MSG_W_SCRIPTROUTE_WP_AT_DEP  = 0x00010050; ///< GetWaypointAt 已废弃
+   constexpr uint32_t MSG_W_SCRIPTROUTE_PAUSE_DEP   = 0x00010051; ///< PauseTime 已废弃
+   constexpr uint32_t MSG_W_SCRIPTROUTE_SET_PAUSE_DEP = 0x00010052; ///< SetPauseTime 已废弃
+   constexpr uint32_t MSG_W_SCRIPTZONE_NO_POINTS    = 0x00010053; ///< 区域无法设置点列
+   constexpr uint32_t MSG_W_SCRIPTCOMM_NULL_GETTER   = 0x00010054; ///< 脚本无法向 comm 发送消息
+
    // ---- 平台/运动段（0x0002xxxx）已分配的消息 ID ----
    constexpr uint32_t MSG_PLATFORM_NULL_PTR      = 0x00020001; ///< 添加空平台指针
    constexpr uint32_t MSG_PLATFORM_ADDED_TWICE   = 0x00020002; ///< 重复添加同一平台
@@ -281,6 +338,105 @@ namespace msg
    constexpr uint32_t MSG_ROAD_NO_VEHICLE_TYPE     = 0x000200AD; ///< road_traffic 车辆类型不存在
    constexpr uint32_t MSG_ROAD_NO_CONVOY_TYPE      = 0x000200AE; ///< road_traffic 车队车辆类型不存在
 
+   // ---- 平台/运动段（0x0002xxxx）warning 级（第二十批）----
+   constexpr uint32_t MSG_W_PLAT_PRECESSION_DEP    = 0x000200AF; ///< precession_nutation_update_interval 已废弃
+   constexpr uint32_t MSG_W_PLAT_SIDE_CHANGE_INIT  = 0x000200B0; ///< 初始化后改 side 被拒
+   constexpr uint32_t MSG_W_PLAT_SWAPMOVER_EXT     = 0x000200B1; ///< 外部控制平台 SwapMover 失败
+   constexpr uint32_t MSG_W_XMTR_POWER_ZERO       = 0x000200B2; ///< 发射机功率为零仍继续初始化
+   constexpr uint32_t MSG_W_XMTR_FREQ_ZERO        = 0x000200B3; ///< 发射机频率为零仍继续初始化
+   constexpr uint32_t MSG_W_ABT_CREATE_SHARED_BB  = 0x000200B4; ///< 共享黑板已存在无法创建
+   constexpr uint32_t MSG_W_ABT_DELETE_BB_VAR     = 0x000200B5; ///< 黑板变量不存在无法删除
+   constexpr uint32_t MSG_W_ABT_DEL_SBB_VAR_FROM  = 0x000200B6; ///< 共享黑板变量不存在无法删除
+   constexpr uint32_t MSG_W_ABT_DEL_SBB_VAR_NO_SBB = 0x000200B7; ///< 共享黑板不存在无法删除变量
+   constexpr uint32_t MSG_W_ABT_GET_BB_VAR        = 0x000200B8; ///< 黑板变量不存在
+   constexpr uint32_t MSG_W_ABT_GET_SBB_VAR_ON    = 0x000200B9; ///< 共享黑板上找不到变量
+   constexpr uint32_t MSG_W_ABT_GET_SBB_VAR_NO_SBB = 0x000200BA; ///< 共享黑板不存在找不到变量
+   constexpr uint32_t MSG_W_ABT_SET_SBB_VAR_CREATE = 0x000200BB; ///< 共享黑板不存在正创建（SetVar）
+   constexpr uint32_t MSG_W_ABT_SET_SBB_TRACKVAR_CREATE = 0x000200BC; ///< 共享黑板不存在正创建（SetTrackVar）
+   constexpr uint32_t MSG_W_ABT_SET_SBB_PLATVAR_CREATE = 0x000200BD; ///< 共享黑板不存在正创建（SetPlatformVar）
+   constexpr uint32_t MSG_W_ABT_SHARE_BB_DUP      = 0x000200BE; ///< 黑板已存在无法共享（2 处共用）
+   constexpr uint32_t MSG_W_EXTLINK_RESOLVE       = 0x000200BF; ///< 无法解析外部链路（5 处共用）
+   constexpr uint32_t MSG_W_EXTLINK_RESOLVE_PEER  = 0x000200C0; ///< 无法解析外部链路（对等接收者）
+   constexpr uint32_t MSG_W_EXTLINK_FIND          = 0x000200C1; ///< 找不到外部链路
+   constexpr uint32_t MSG_W_EXTLINK_ADD           = 0x000200C2; ///< 无法添加外部链路（4 处共用）
+   constexpr uint32_t MSG_W_EXTLINK_ADD_GROUP     = 0x000200C3; ///< 无法添加组外部链路
+   constexpr uint32_t MSG_W_EXTLINK_SEND_ABORT    = 0x000200C4; ///< 外部链路消息发送中止（2 处共用）
+   constexpr uint32_t MSG_W_INTLINK_PART_UNABLE  = 0x000200C5; ///< 平台部件无法链接
+   constexpr uint32_t MSG_W_TERRAIN_INVALID_MAP_CMD = 0x000200C6; ///< 无效地图配置命令
+   constexpr uint32_t MSG_W_TERRAIN_QUERY_UNKNOWN = 0x000200C7; ///< 地形接口不认识的查询类型
+   constexpr uint32_t MSG_W_TM_HANDOFF_INIT_FAIL  = 0x000200C8; ///< 移交轨迹初始化失败
+   constexpr uint32_t MSG_W_TSC_SHOW_TRANSITIONS_DEP = 0x000200C9; ///< show_transitions 已废弃
+   constexpr uint32_t MSG_W_ATTR_ATTRIBUTE_DEP    = 0x000200CA; ///< attribute 容器 attribute 命令已废弃
+   constexpr uint32_t MSG_W_MASK_DEFAULT_STATE_MISSING = 0x000200CB; ///< default 状态不存在
+   constexpr uint32_t MSG_W_NETIF_DISABLED         = 0x000200CC; ///< 按用户输入禁用接口
+   constexpr uint32_t MSG_W_MSGTABLE_SUBTYPE_IGNORED = 0x000200CD; ///< default 类型 subtype 定义被忽略
+   constexpr uint32_t MSG_W_PAVAIL_EXCL_ZONE_UNDEF = 0x000200CE; ///< 排除区未定义
+   constexpr uint32_t MSG_W_PAVAIL_INCL_ZONE_UNDEF = 0x000200CF; ///< 包含区未定义
+   constexpr uint32_t MSG_W_LOSM_INCONSISTENT_STATE = 0x000200D0; ///< LOS 管理器状态数据不一致
+   constexpr uint32_t MSG_W_RADARSIG_UNDEF         = 0x000200D1; ///< 雷达特征未定义用默认（2 处共用）
+   constexpr uint32_t MSG_W_SIGLIST_STATE_UNDEF    = 0x000200D2; ///< 特征状态未定义
+   constexpr uint32_t MSG_W_EQFOV_NO_CUE           = 0x000200D3; ///< 铰接部件无法提供当前指向
+   constexpr uint32_t MSG_W_ABT_SBBVAR_EXISTS_NO_SBB = 0x000200D4; ///< SharedBlackboardVarExists 黑板不存在
+   // ---- 运动段（0x0002xxxx）mover warning 级（第二十批）----
+   constexpr uint32_t MSG_W_FUEL_GT_MAX               = 0x000200D5; ///< 初始油量超最大油量被约束
+   constexpr uint32_t MSG_W_FUEL_ZERO_INIT            = 0x000200D6; ///< 初始油量为零或负
+   constexpr uint32_t MSG_W_WPMOVER_PAUSED            = 0x000200D7; ///< 暂停状态无法执行航线
+   constexpr uint32_t MSG_W_OFFSETMOVER_TETHER         = 0x000200D8; ///< tether 附着类型仍在开发
+   constexpr uint32_t MSG_W_ROUTENET_NOT_ADDED        = 0x000200D9; ///< 航线未加入路径网络
+   constexpr uint32_t MSG_W_ROUTENET_NO_SHORTPATH      = 0x000200DA; ///< 无法求解最短路径
+   constexpr uint32_t MSG_W_ROUTEMOVER_BAD_LATLON      = 0x000200DB; ///< 航点经纬度超出范围
+   constexpr uint32_t MSG_W_NAVERR_FILE_OPEN           = 0x000200DC; ///< 导航时间历史文件打开失败
+   constexpr uint32_t MSG_W_TANKEDFUEL_AMBIGUOUS       = 0x000200DD; ///< 加油供给配置歧义
+   constexpr uint32_t MSG_W_ROUTE_TRANSFORM_DEP       = 0x000200DE; ///< transform_route 已废弃
+   constexpr uint32_t MSG_W_MATH3D_SWITCH_ON_PASSING  = 0x000200DF; ///< switch_on_passing 未实现被忽略
+   constexpr uint32_t MSG_W_MATH3D_ALT_OFFSET          = 0x000200E0; ///< altitude_offset 未实现被忽略
+   constexpr uint32_t MSG_W_MATH3D_TURN_FAILURE        = 0x000200E1; ///< on_turn_failure 未实现被忽略
+   // ---- 处理器段（0x0002xxxx）processor warning 级（第二十批）----
+   constexpr uint32_t MSG_W_TASKMGR_BAD_SENSOR_MODE    = 0x000200E2; ///< 轨迹请求的传感器模式无效
+   constexpr uint32_t MSG_W_TASKMGR_STARTTRACK_FAIL    = 0x000200E3; ///< StartTracking 失败
+   constexpr uint32_t MSG_W_TASKMGR_STOPTRACK_FAIL      = 0x000200E4; ///< StopTracking 失败
+   constexpr uint32_t MSG_W_TASKMGR_REPORT_COMPLETE    = 0x000200E5; ///< 上报任务完成状态
+   constexpr uint32_t MSG_W_TASKMGR_REPORT_PROGRESS    = 0x000200E6; ///< 上报进度状态找不到受派者
+   constexpr uint32_t MSG_W_TASKMGR_MSG_TIMEOUT        = 0x000200E7; ///< 消息超时
+   constexpr uint32_t MSG_W_TASKMGR_NO_TASK            = 0x000200E8; ///< 找不到任务
+   constexpr uint32_t MSG_W_PROCTYPES_TM_DEP          = 0x000200E9; ///< WSF_TRACK_MANAGER 已废弃（2 处共用）
+   constexpr uint32_t MSG_W_SENPROC_ATTACH_FAIL        = 0x000200EA; ///< 传感器处理器找不到要挂接的传感器
+   constexpr uint32_t MSG_W_SENPROC_REMOVE_FAIL        = 0x000200EB; ///< 传感器处理器找不到要移除的传感器
+   constexpr uint32_t MSG_W_TRACKPROC_NO_EXTLINKS       = 0x000200EC; ///< 无外部通信链路不上报轨迹
+   // ---- 签名段（0x0002xxxx）wsf_mil warning 级（第二十批 C）----
+   constexpr uint32_t MSG_W_EXTDETON_INIT_FAIL         = 0x000200ED; ///< ExtDetonation 无法初始化交战
+   constexpr uint32_t MSG_W_ACOUSTIC_NOT_DEF          = 0x000200EE; ///< 声学签名未定义用默认
+   constexpr uint32_t MSG_W_ACOUSTIC_NOT_DEF2         = 0x000200EF; ///< 声学签名未定义用默认（带引号变体）
+   constexpr uint32_t MSG_W_ACOUSTIC_PLAT_VAR         = 0x000200F0; ///< 平台声学签名未定义用默认（参数化）
+   constexpr uint32_t MSG_W_COMPOPT_IR_BY_OPT         = 0x000200F1; ///< 红外签名由光学签名模型提供
+   constexpr uint32_t MSG_W_BISTATIC_NO_DEF_POL       = 0x000200F2; ///< 双基地状态缺 default 极化
+   constexpr uint32_t MSG_W_BISTATIC_MIN_AZEL         = 0x000200F3; ///< 双基地状态方位/俯仰集不足
+   constexpr uint32_t MSG_W_SURFCLUT_LOW_ALT          = 0x000200F4; ///< 天线高度低于浪高
+   constexpr uint32_t MSG_W_IR_NOT_DEF                = 0x000200F5; ///< 红外签名未定义用默认
+   constexpr uint32_t MSG_W_MILRADAR_NO_MONO          = 0x000200F6; ///< 雷达签名缺单基地定义
+   constexpr uint32_t MSG_W_MILRADAR_NO_DEF_STATE     = 0x000200F7; ///< 雷达签名缺 default 状态
+   constexpr uint32_t MSG_W_MILRADAR_NO_DEF_POL       = 0x000200F8; ///< 雷达签名状态缺 default 极化
+   constexpr uint32_t MSG_W_INHCON_NOT_DEF            = 0x000200F9; ///< 固有对比度未定义用默认
+   constexpr uint32_t MSG_W_OPTSIG_NOT_DEF            = 0x000200FA; ///< 光学签名未定义用默认
+   constexpr uint32_t MSG_W_OPTREFL_NOT_DEF           = 0x000200FB; ///< 光学反射率未定义用默认
+   // ---- 导弹运动段（0x0002xxxx）wsf_mil mover warning 级（第二十批 C）----
+   constexpr uint32_t MSG_W_GMB_NO_HISTFILE           = 0x000200FC; ///< 无法打开时间历史文件
+   constexpr uint32_t MSG_W_GMB_STAGING_MSG           = 0x000200FD; ///< 级间分离/点火失败消息（2 处共用）
+   constexpr uint32_t MSG_W_GM_RK_ACCURACY            = 0x000200FE; ///< RK 积分精度受限
+   constexpr uint32_t MSG_W_GM_BAD_BURNRATE           = 0x000200FF; ///< 燃烧率可能计算有误
+   // ---- wsf_mil 处理器段（0x0002xxxx）warning 级（第二十批 C）----
+   constexpr uint32_t MSG_W_WTP_NO_INTERCEPT          = 0x00020100; ///< 无法计算拦截点
+   constexpr uint32_t MSG_W_WTP_NO_VALID_LOC          = 0x00020101; ///< 轨迹无有效位置
+   constexpr uint32_t MSG_W_WTP_NO_VALID_VEL          = 0x00020102; ///< 轨迹无有效速度
+   constexpr uint32_t MSG_W_WTP_NO_CLASSIFIER         = 0x00020103; ///< 无法访问分类处理器
+   constexpr uint32_t MSG_W_FUSE_GROSS_LT_FINE        = 0x00020104; ///< 粗更新间隔须大于精更新间隔
+   constexpr uint32_t MSG_W_FUSE_DISABLE_DEP          = 0x00020105; ///< disable_launch_proximity 已废弃
+   constexpr uint32_t MSG_W_IMGPROC_NO_PROCESS        = 0x00020106; ///< 图像处理器不处理该消息
+   constexpr uint32_t MSG_W_WTM_FIRESALVO_FAIL        = 0x00020107; ///< 齐射失败
+   constexpr uint32_t MSG_W_WTM_STOPJAM_FREQ_FAIL     = 0x00020108; ///< 按频段停扰失败
+   constexpr uint32_t MSG_W_WTM_STOPJAM_TRACK_FAIL    = 0x00020109; ///< 按轨迹停扰失败
+   constexpr uint32_t MSG_W_GUIDANCE_BAD_MOVER        = 0x0002010A; ///< 运动器类型错误制导关闭
+
    // ---- 传感器段（0x0003xxxx）已分配的消息 ID ----
    constexpr uint32_t MSG_SENSOR_MTI_OPEN_FAIL      = 0x00030001; ///< MTI 表文件打开失败
    constexpr uint32_t MSG_SENSOR_MTI_NOT_ASCENDING  = 0x00030002; ///< MTI 表数值非单调递增
@@ -351,6 +507,24 @@ namespace msg
    constexpr uint32_t MSG_PD_NO_CONT_SENS          = 0x0003003F; ///< 连续波灵敏度未定义（2 处共用）
    constexpr uint32_t MSG_PD_NO_PULSED_SENS        = 0x00030040; ///< 脉冲灵敏度未定义
    constexpr uint32_t MSG_PD_NO_PULSE_SENS         = 0x00030063; ///< 脉冲灵敏度未定义（无 d 变体原文）（2 处共用）
+
+   // ---- 传感器段（0x0003xxxx）warning 级（第二十批）----
+   constexpr uint32_t MSG_W_SECTORSCAN_INSUFFICIENT = 0x00030064; ///< 扇区定义数据不足
+   constexpr uint32_t MSG_W_SENSOR_SLAVE_WHEN_ON  = 0x00030065; ///< 传感器开机时禁止改从属状态
+   constexpr uint32_t MSG_W_SENSORMODE_NOT_REPORT = 0x00030066; ///< 传感器模式不上报任何内容
+   constexpr uint32_t MSG_W_SENSORMODE_MISSING_FIELDS = 0x00030067; ///< 传感器模式无法上报全部请求字段
+   constexpr uint32_t MSG_W_SPIN_RANDOM_AZ_IGNORED = 0x00030068; ///< 初始方位角将被随机覆盖
+   constexpr uint32_t MSG_W_SPIN_RANDOM_AZ_CONFLICT = 0x00030069; ///< 随机起始方位与初始角冲突
+   constexpr uint32_t MSG_W_RADAR_SIGPROC_CONFLICT = 0x0003006A; ///< signal_processor 与探测距离参数冲突
+   // ---- wsf_mil 传感器段（0x0003xxxx）warning 级（第二十批 C）----
+   constexpr uint32_t MSG_W_SAR_MIN_RES            = 0x0003006B; ///< SAR 分辨率低于近似最小值
+   constexpr uint32_t MSG_W_SAR_ANGRES_DEP        = 0x0003006C; ///< angular_resolution 已废弃
+   constexpr uint32_t MSG_W_BISTERR_RANGE_IGNORE   = 0x0003006D; ///< 距离误差由模型计算输入值被忽略
+   constexpr uint32_t MSG_W_OTH_BAD_IONO          = 0x0003006E; ///< 电离层特征无效
+   constexpr uint32_t MSG_W_OTH_FREQ_LT_MUF       = 0x0003006F; ///< 发射频率低于最低可用频率
+   constexpr uint32_t MSG_W_OTH_SIGPROC_CONFLICT  = 0x00030070; ///< signal_processor 与探测距离参数冲突
+   constexpr uint32_t MSG_W_OTH_RANGE_OVERRIDE    = 0x00030071; ///< 电离层距离计算覆盖距离限制
+   constexpr uint32_t MSG_W_OTH_CMD_DEP           = 0x00030072; ///< 命令已废弃（参数化）
    constexpr uint32_t MSG_PD_NO_THRESH_OR_SENS     = 0x00030041; ///< 须定义检测阈值或灵敏度
    constexpr uint32_t MSG_MTI_ADJ_NO_TABLE         = 0x00030042; ///< data_table 型 MTI 缺 mti_data_table
    constexpr uint32_t MSG_MTI_ADJ_BAD_MODE         = 0x00030043; ///< MTI 处理器要求雷达模式
@@ -472,6 +646,58 @@ namespace msg
    constexpr uint32_t MSG_EW_JSD_NOTHING_REPORT     = 0x0004004F; ///< 干扰方位探测器不报告任何量
    constexpr uint32_t MSG_EW_EFF_NO_DATA            = 0x00040050; ///< 基础效果数据无效无法传播
 
+   // ---- 交战段（0x0004xxxx）warning 级（第二十批）----
+   constexpr uint32_t MSG_W_EXT_CLONE_FAIL        = 0x00040051; ///< ExtInterface 无法克隆平台
+   constexpr uint32_t MSG_W_EXT_ENTITYID_INUSE    = 0x00040052; ///< 预分配实体 ID 已被占用
+   // ---- 电子战段（0x0004xxxx）wsf_mil ew warning 级（第二十批 C）----
+   constexpr uint32_t MSG_W_EW_SEL_APPLY_IDX     = 0x00040053; ///< 选择技术失败：系统类型不兼容（按索引）
+   constexpr uint32_t MSG_W_EW_SEL_NO_VALID_IDX   = 0x00040054; ///< 选择技术失败：索引处无有效技术
+   constexpr uint32_t MSG_W_EW_SEL_IDX_TOO_LARGE = 0x00040055; ///< 选择技术失败：索引超限
+   constexpr uint32_t MSG_W_EW_SEL_APPLY_NOAN    = 0x00040056; ///< 选择技术失败：系统类型不兼容
+   constexpr uint32_t MSG_W_EW_SEL_NOT_FOUND_ST  = 0x00040057; ///< 选择技术失败：找不到该系统类型技术
+   constexpr uint32_t MSG_W_EW_DESEL_APPLY_IDX   = 0x00040058; ///< 取消技术失败：系统类型不兼容（按索引）
+   constexpr uint32_t MSG_W_EW_DESEL_NO_VALID_IDX = 0x00040059; ///< 取消技术失败：索引处无有效技术
+   constexpr uint32_t MSG_W_EW_DESEL_IDX_TOO_LARGE = 0x0004005A; ///< 取消技术失败：索引超限
+   constexpr uint32_t MSG_W_EW_DESEL_APPLY_FAIL   = 0x0004005B; ///< 取消技术失败：系统类型不兼容
+   constexpr uint32_t MSG_W_EW_DESEL_NOT_FOUND    = 0x0004005C; ///< 取消技术失败：找不到技术
+   constexpr uint32_t MSG_W_EW_DESEL_NOT_FOUND_ST = 0x0004005D; ///< 取消技术失败：找不到该系统类型技术
+   constexpr uint32_t MSG_W_EAEP_SEL_NO_VALID     = 0x0004005E; ///< 选择技术失败：索引处无有效技术（冒号变体）
+   constexpr uint32_t MSG_W_EAEP_SEL_IDX_LARGE     = 0x0004005F; ///< 选择技术失败：索引超限（冒号变体）
+   constexpr uint32_t MSG_W_EAEP_SEL_NOT_FOUND    = 0x00040060; ///< 选择技术失败：找不到技术（冒号变体）
+   constexpr uint32_t MSG_W_EA_SETDELTAGAIN_FAIL   = 0x00040061; ///< 无法设置增量增益调制技术
+   constexpr uint32_t MSG_W_FT_BAD_SCAN_INT        = 0x00040062; ///< 扫描间隔值无效
+   constexpr uint32_t MSG_W_FT_BAD_PERSIST         = 0x00040063; ///< 持续性值无效
+   constexpr uint32_t MSG_W_FT_INIT_NFT_REDEF      = 0x00040064; ///< 假目标初始数量重复定义
+   constexpr uint32_t MSG_W_SCREEN_SCAN_DEP        = 0x00040065; ///< 筛选器扫描模式已废弃（参数化，2 处共用）
+   constexpr uint32_t MSG_W_EFFECTVAL_UNDEF_TYPE   = 0x00040066; ///< 未定义的数值类型字符串
+   constexpr uint32_t MSG_W_EFFECTVAL_UNDEF_COH    = 0x00040067; ///< 未定义的相干检查类型字符串
+   constexpr uint32_t MSG_W_EACOH_UNDEF            = 0x00040068; ///< EA 相干检查类型未定义
+   constexpr uint32_t MSG_W_TECH_SETDELTAGAIN_FAIL = 0x00040069; ///< 无法设置增量增益效果
+   constexpr uint32_t MSG_W_SFT_NO_PULSEWIDTH      = 0x0004006A; ///< 雷达未指定脉宽
+   constexpr uint32_t MSG_W_RPJ_NO_PW_PRI           = 0x0004006B; ///< 雷达未指定脉宽和/或 PRI
+   constexpr uint32_t MSG_W_FT_NO_PULSEWIDTH       = 0x0004006C; ///< 雷达未指定脉宽（FT 效果）
+   constexpr uint32_t MSG_W_DST_UNDETECTED_BLIP     = 0x0004006D; ///< 假目标检测收到未检测回波
+   constexpr uint32_t MSG_W_EFF_UNDEF_COH_STR      = 0x0004006E; ///< 未定义的相干类型字符串
+   // ---- 武器段（0x0004xxxx）wsf_mil weapon warning 级（第二十批 C）----
+   constexpr uint32_t MSG_W_WEAP_INHIBIT_DEP      = 0x0004006F; ///< 装填 inhibit 命令已废弃（参数化，2 处共用）
+   constexpr uint32_t MSG_W_WEAP_CMD_INCOMPAT      = 0x00040070; ///< 命令与该武器类型不兼容（参数化，6 处共用）
+   constexpr uint32_t MSG_W_GRADLETH_RADIUS_EXCEED = 0x00040071; ///< 表最大半径超过显式最大半径
+   constexpr uint32_t MSG_W_WEAPENG_UNDEF_EFFECT  = 0x00040072; ///< 未定义的武器效果
+   constexpr uint32_t MSG_W_WEAPENG_INIT_EFFECT_FAIL = 0x00040073; ///< 无法初始化武器效果
+   constexpr uint32_t MSG_W_RPT_RAW_TRACK_MERGE     = 0x00040074; ///< 原始轨迹合并失败
+   constexpr uint32_t MSG_W_EXPL_LAUNCHER_NO_CHAIN = 0x00040075; ///< 发射时找不到 LAUNCHER_COMMANDER 命令链
+   constexpr uint32_t MSG_W_EXPL_ADD_CHAIN_FAIL     = 0x00040076; ///< 无法向发射武器添加命令链
+   constexpr uint32_t MSG_W_MOBILITY_DEFAULT_TABLE = 0x00040077; ///< 自动插入默认概率表
+   constexpr uint32_t MSG_W_HEL_CMD_INCOMPAT       = 0x00040078; ///< 命令与 WSF_HEL_LETHALITY 不兼容（参数化）
+   constexpr uint32_t MSG_W_HEL_NO_DAMAGE_RADIUS   = 0x00040079; ///< 目标未指定 damage_radius
+   constexpr uint32_t MSG_W_WFX_INCDMG_DEP           = 0x0004007A; ///< 附带损伤允许命令已废弃（参数化，2 处共用）
+   constexpr uint32_t MSG_W_BMLC_RANGE_LIMITS       = 0x0004007B; ///< 目标距离超出射程限制
+   constexpr uint32_t MSG_W_BMLC_NO_LAUNCH_WINDOW   = 0x0004007C; ///< 无法确定发射窗口结束
+   constexpr uint32_t MSG_W_BMLC_TABLE_ALT_TRANS     = 0x0004007D; ///< 发射表高度由降转升异常
+   // 二次开发（i18n）：ew 域 EA/EP 同义但文案有差异的变体（忠实原文分别登记）
+   constexpr uint32_t MSG_W_EW_SEL_APPLY_AN         = 0x0004007E; ///< 选择技术失败：系统类型不兼容（有 an 变体）
+   constexpr uint32_t MSG_W_EW_DESEL_NO_VALID_ST    = 0x0004007F; ///< 取消技术失败：索引处无有效技术（长版）
+
    // ---- 通信段（0x0005xxxx）已分配的消息 ID ----
    constexpr uint32_t MSG_COMM_ROUTER_NOT_FOUND     = 0x00050001; ///< 通信设备指定的 router 不在平台上
    constexpr uint32_t MSG_COMM_ASSIGN_NETWORK_FAIL  = 0x00050002; ///< 通信设备入网失败（按网络名）
@@ -533,6 +759,81 @@ namespace msg
    constexpr uint32_t MSG_XIO_AUTO_DIS_MAP_INIT_FAIL    = 0x00050034; ///< XIO 自动 DIS 映射初始化失败
    constexpr uint32_t MSG_XIO_CANNOT_TX_MSG             = 0x00050035; ///< 无法通过 XIO 发送 WsfMessage
 
+   // ---- 通信段（0x0005xxxx）comm warning 级（第二十批，按真实侦察重排）----
+   constexpr uint32_t MSG_W_COMM_INVALID_GATEWAY     = 0x00050036; ///< comm 网关无效
+   constexpr uint32_t MSG_W_COMM_CANNOT_CHANGE_GATEWAY = 0x00050037; ///< 无法更改网关地址
+   constexpr uint32_t MSG_W_COMMADDR_NON_NUMERIC_FIELD = 0x00050038; ///< 地址字段非数字
+   constexpr uint32_t MSG_W_COMMADDR_BAD_FIELD_VALUE  = 0x00050039; ///< 地址字段值超范围
+   constexpr uint32_t MSG_W_MEDIUMCMD_WRONG_SCOPE     = 0x0005003A; ///< 此作用域不能设置介质命令
+   constexpr uint32_t MSG_W_MEDIUM_DELIVERY_ABORT     = 0x0005003B; ///< 中止条件致消息投递失败
+   constexpr uint32_t MSG_W_MEDIUM_REPLACE_BY_ADD     = 0x0005003C; ///< 添加介质将替换已有介质
+   constexpr uint32_t MSG_W_MEDIUM_SHARED_EDITS       = 0x0005003D; ///< 介质共享编辑全局生效
+   constexpr uint32_t MSG_W_COMMNET_ADDR_NOT_FOUND     = 0x0005003E; ///< 网络成员地址未找到
+   constexpr uint32_t MSG_W_COMMNET_UNASSIGNED_ADDR    = 0x0005003F; ///< 网络成员地址未分配被跳过
+   constexpr uint32_t MSG_W_COMMNET_NAMED_LINK_MISSING = 0x00050040; ///< 命名链路成员未找到
+   constexpr uint32_t MSG_W_COMMNET_ADDR_LINK_MISSING  = 0x00050041; ///< 地址链路成员未找到
+   constexpr uint32_t MSG_W_NETMGR_CONFLICTING_NET     = 0x00050042; ///< comm 网络指派冲突
+   constexpr uint32_t MSG_W_NETMGR_ADDCONN_FAIL        = 0x00050043; ///< 添加连接失败（4 处共用）
+   constexpr uint32_t MSG_W_NETMGR_NULL_COMM           = 0x00050044; ///< 空 comm 引用无法管理
+   constexpr uint32_t MSG_W_NETMGR_ALREADY_MANAGED     = 0x00050045; ///< comm 已被网络管理器管理
+   constexpr uint32_t MSG_W_NETMGR_REJECT_ADD          = 0x00050046; ///< comm 入指定网络被拒
+   constexpr uint32_t MSG_W_NETSTAR_NO_HUB              = 0x00050047; ///< 星型网络无中心节点
+   constexpr uint32_t MSG_W_IGMP_ONLY_ONE               = 0x00050048; ///< 每 comm 仅允许一个 IGMP
+   constexpr uint32_t MSG_W_OSPF_NEED_L2_MULTICAST     = 0x00050049; ///< OSPF 需二级多播一致性（2 处共用）
+   constexpr uint32_t MSG_W_OSPF_NO_MULTICAST_PROTO     = 0x0005004A; ///< 路由器无多播协议
+   constexpr uint32_t MSG_W_OSPF_NO_DESIGNATED_RTR      = 0x0005004B; ///< OSPF 无法选出指定路由器
+   constexpr uint32_t MSG_W_ROUTER_NO_NETMGR            = 0x0005004C; ///< 路由器缺少网络管理器
+   constexpr uint32_t MSG_W_ROUTER_BAD_GATEWAY          = 0x0005004D; ///< 平台网关设置无效
+   constexpr uint32_t MSG_W_ROUTER_CMD_NOT_SUPPORTED    = 0x0005004E; ///< 路由器对象不支持该命令
+   constexpr uint32_t MSG_W_ROUTER_LOST_GATEWAY         = 0x0005004F; ///< 失去连通性路由器丢失网关
+   constexpr uint32_t MSG_W_ROUTER_CANNOT_CHANGE_GW     = 0x00050050; ///< 路由器无法更改网关
+   constexpr uint32_t MSG_W_ROUTER_TTL_EXCEEDED         = 0x00050051; ///< 消息超 TTL 被丢弃
+   constexpr uint32_t MSG_W_EVENTPIPE_BAD_EVENT_TYPE     = 0x00050052; ///< event_pipe 事件类型无效
+   constexpr uint32_t MSG_W_EVENTPIPE_RECORD_DEP        = 0x00050053; ///< Record 带 sim_time 已废弃
+   constexpr uint32_t MSG_W_XIO_PDU_BAD_VERSION         = 0x00050054; ///< XIO 收到版本无效的 PDU
+   constexpr uint32_t MSG_W_XIOSIM_DROP_TRACK_NO_TARGET  = 0x00050055; ///< 弃轨消息目标索引不存在
+   constexpr uint32_t MSG_W_DISIN_NONSTD_DEPRECATED     = 0x00050056; ///< 非标准 DIS 命令已废弃（6 处共用）
+   constexpr uint32_t MSG_W_DISIN_AGEOUT_DEPRECATED     = 0x00050057; ///< age_out_time 已废弃
+   constexpr uint32_t MSG_W_DISIF_SHADOW_ADD_FAIL       = 0x00050058; ///< 影子平台添加失败（2 处共用）
+   constexpr uint32_t MSG_W_DISIF_RANGE_FILTER_NO_PLATFORM = 0x00050059; ///< 距离过滤平台不存在
+   constexpr uint32_t MSG_W_DISIF_NULL_ENTITY_ID        = 0x0005005A; ///< 实体状态 PDU 无实体 ID
+   constexpr uint32_t MSG_W_DATAR_UNKNOWN_REPLY         = 0x0005005B; ///< DataR 收到未知数据回复
+   constexpr uint32_t MSG_W_DATAR_UNPARSED_VARIABLE     = 0x0005005C; ///< DataR 收到未解析变量
+   constexpr uint32_t MSG_W_DATAR_CANT_INTERPRET        = 0x0005005D; ///< DataR 无法解释全部返回值
+   constexpr uint32_t MSG_W_DATAR_UNKNOWN_INITIATOR     = 0x0005005E; ///< DataR 不识别发起 PDU 类型
+   constexpr uint32_t MSG_W_DATAR_TIMEADV_REPORT        = 0x0005005F; ///< DataR 未处理时间推进上报
+   constexpr uint32_t MSG_W_TIMEDOUT_UNHANDLED          = 0x00050060; ///< TimedOut 虚函数未重载（10 处共用）
+   constexpr uint32_t MSG_W_ARR_RESIGN_NO_RESPONSE      = 0x00050061; ///< 退出演习请求未获充分响应
+   constexpr uint32_t MSG_W_ARR_REQ_NOT_INTERPRETED     = 0x00050062; ///< 动作请求无法被 WSF 解释
+   constexpr uint32_t MSG_W_ARR_TIMEADV_IGNORED         = 0x00050063; ///< 忽略时间推进请求
+   constexpr uint32_t MSG_W_ARR_UNKNOWN_FIXED_DATUM     = 0x00050064; ///< 遇到未知固定数据项
+   constexpr uint32_t MSG_W_SETDATAR_CANT_FULLY_RESPOND  = 0x00050065; ///< SetDataR 无法完整响应查询
+   constexpr uint32_t MSG_W_SETDATAR_BAD_FIXED_DATUM    = 0x00050066; ///< SetDataR 固定数据项不支持
+   constexpr uint32_t MSG_W_SETDATAR_BAD_VARIABLE_DATUM = 0x00050067; ///< SetDataR 可变数据项不支持
+   constexpr uint32_t MSG_W_DATARQ_NULL_QUERY            = 0x00050068; ///< DataQueryR 收到空查询
+   constexpr uint32_t MSG_W_DATARQ_CANT_RESPOND_ALL      = 0x00050069; ///< DataQueryR 无法响应全部查询
+   constexpr uint32_t MSG_W_SETR_POPULATE_NOT_IMPL       = 0x0005006A; ///< SetRecordR 未实现 PopulateReply
+   constexpr uint32_t MSG_W_SETR_NOT_PROCESSING         = 0x0005006B; ///< SetRecordR 尚不处理数据
+   constexpr uint32_t MSG_W_CER_CANT_COMPLY              = 0x0005006C; ///< CreateEntityR 无法执行请求
+   constexpr uint32_t MSG_W_RER_CANT_COMPLY              = 0x0005006D; ///< RemoveEntityR 无法执行请求
+   constexpr uint32_t MSG_W_EXCH_NO_TYPE_MAPPING         = 0x0005006E; ///< Exchange 无 entity_type 映射
+   constexpr uint32_t MSG_W_EXCH_SUPPLIED_UNKNOWN         = 0x0005006F; ///< sEVENT_SUPPLIED 发往未知参与方
+   constexpr uint32_t MSG_W_RQR_NO_DATA_RECORDS           = 0x00050070; ///< RecordQueryR 无数据记录响应
+   constexpr uint32_t MSG_W_AR_NO_JOIN_ACTION             = 0x00050071; ///< 不对加入演习请求采取行动
+   constexpr uint32_t MSG_W_DQ_NOT_ENABLED                = 0x00050072; ///< 未启用响应传入查询
+   constexpr uint32_t MSG_W_ENTITYSTATE_SUSPICIOUS         = 0x00050073; ///< 实体状态 PDU 数据可疑
+   constexpr uint32_t MSG_W_DISPLAT_MAX_BEAMS              = 0x00050074; ///< 超过最大波束数量
+   constexpr uint32_t MSG_W_DISIF_SHADOW_ADD_FAIL2         = 0x00050075; ///< 影子平台添加失败（原文无句点变体）
+   // 二次开发（i18n）：第二十批子批 C wsf_mil warning 级消息 ID（0x0005 段续排，dis 4 + comm 4）
+   constexpr uint32_t MSG_W_DISWEAP_NO_ENT_TYPE           = 0x00050076; ///< DIS 武器事件未指定实体类型
+   constexpr uint32_t MSG_W_DEFIRE_BAD_RECORD            = 0x00050077; ///< 定向能射击 PDU 记录类型不支持
+   constexpr uint32_t MSG_W_DEFIRE_NO_ENGAGE             = 0x00050078; ///< 定向能射击无交战对象
+   constexpr uint32_t MSG_W_DISFIRE_INIT_FAIL            = 0x00050079; ///< DIS 射击交战对象初始化失败
+   constexpr uint32_t MSG_W_LASER_PRF_OVERRIDE           = 0x0005007A; ///< 激光发射机 PRF 由调制类型等输入决定
+   constexpr uint32_t MSG_W_JTIDS_ADD_TWICE              = 0x0005007B; ///< JTIDS 槽位组重复加入网络
+   constexpr uint32_t MSG_W_JTIDS_MERGED                 = 0x0005007C; ///< JTIDS 槽位组已合并
+   constexpr uint32_t MSG_W_HWSUB_NO_POWER               = 0x0005007D; ///< 潜艇通信发射机未指定功率
+
    // ---- 工具/UI 段（0x0006xxxx）已分配的消息 ID ----
    // 目录初始化失败：目录不存在或不可写（wizard 启动环境检查）
    constexpr uint32_t MSG_WIZARD_INVALID_DIR = 0x00060001;
@@ -583,6 +884,13 @@ namespace msg
    /// 落盘日志为 "[E:XXXXXXXX] 英文原文"（可 grep ID），与 Emit 输出格式一致
    UT_EXPORT std::string FormatEnTagged(uint32_t aId, const Args& aArgs);
 
+   /// 警告级流式版本（第二十批新增）：格式化 + "[W:ID]" 前缀 —— 供 warning 日志
+   /// 保留 AddNote() 流式结构时使用：
+   ///   auto out = ut::log::warning() << ut::msg::FormatWEnTagged(id, args);
+   ///   out.AddNote() << "Name: " << ...;
+   /// 落盘日志为 "[W:XXXXXXXX] 英文原文"，与 EmitWarning 输出格式一致
+   UT_EXPORT std::string FormatWEnTagged(uint32_t aId, const Args& aArgs = {});
+
    /// 中文通道格式化（界面显示专用快捷方式）
    UT_EXPORT std::string FormatZh(uint32_t aId, const Args& aArgs);
 
@@ -591,7 +899,7 @@ namespace msg
    UT_EXPORT void Emit(uint32_t aId, const Args& aArgs);
 
    /// 日志双通道 —— 警告级：以 "[W:XXXXXXXX] 英文原文" 形式写入 ut::log
-   UT_EXPORT void EmitWarning(uint32_t aId, const Args& aArgs);
+   UT_EXPORT void EmitWarning(uint32_t aId, const Args& aArgs = {});
 
    /// 获取条目的中文原因说明（无则返回空串）
    UT_EXPORT std::string GetCauseZh(uint32_t aId);

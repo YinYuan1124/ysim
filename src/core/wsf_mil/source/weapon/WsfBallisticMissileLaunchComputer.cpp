@@ -1122,7 +1122,8 @@ bool WsfBallisticMissileLaunchComputer::ComputeGroundIntercept(double       aSim
          oss << "***** WARNING: Target range " << std::setprecision(4) << range
              << " m is not within the range limits [ " << minRange << ' ' << maxRange << " ]";
          GetPlatform()->Comment(aSimTime, oss.str());
-         auto out = ut::log::warning() << std::fixed << "Target range is not within the range limits.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_BMLC_RANGE_LIMITS);
          out.AddNote() << "Range: " << std::setprecision(4) << range << " m";
          out.AddNote() << "Minimum Range: " << minRange;
          out.AddNote() << "Maximum Range: " << maxRange;
@@ -1176,7 +1177,8 @@ void WsfBallisticMissileLaunchComputer::ComputeLaunchWindows(double             
       else
       {
          // Couldn't find the end of the launch window (which shouldn't happen). Issue a warning and simply use the start point.
-         auto out = ut::log::warning() << "Could not determine end of launch window.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_BMLC_NO_LAUNCH_WINDOW);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          launchWindow.mLastLaunchTime    = launchWindow.mFirstLaunchTime;
@@ -2015,7 +2017,8 @@ bool WsfBallisticMissileLaunchComputer::SA_Table::Read(const std::string& aFileN
             }
             else if (intersection.mAltitude > (lastAltitude + 1.1))
             {
-               ut::log::warning() << "Unexpected transition from decreasing to increasing altitudes in launch table.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               ut::msg::EmitWarning(ut::msg::MSG_W_BMLC_TABLE_ALT_TRANS);
             }
          }
          else

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtLog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptClassDefine.hpp"
 #include "UtScriptTypes.hpp"
 #include "WsfEM_Util.hpp"
@@ -209,7 +211,8 @@ float WsfOpticalSignature::GetValue(double aSimTime, WsfPlatform* aPlatformPtr, 
       {
          // Signature not defined... use the default signature.
          { // RAII block
-            auto out = ut::log::warning() << "Optical signature not defined. Using default.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OPTSIG_NOT_DEF);
             out.AddNote() << "Platform: " << aPlatformPtr->GetName();
             out.AddNote() << "Type: " << aPlatformPtr->GetType();
          }

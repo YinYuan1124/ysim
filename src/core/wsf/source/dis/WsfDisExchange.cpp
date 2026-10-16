@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -24,6 +24,8 @@
 #include "DisTransactionEnums.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfExchangeObserver.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisExt.hpp"
@@ -189,8 +191,9 @@ void WsfDisExchange::ExchangeQueried(double aSimTime, const WsfExchange::Query& 
          // externally, there is no common medium of exchange.  Give up.
          if (sDebug)
          {
-            auto out = ut::log::warning()
-                       << "WsfDisExchange: ExchangeQueried(): DIS Interface entity_type mapping not found.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out =
+               ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXCH_NO_TYPE_MAPPING);
             out.AddNote() << "Type: " << aQuery.ItemId().GetString();
             out.AddNote() << "Type will be ignored.";
          }
@@ -358,7 +361,8 @@ void WsfDisExchange::ExchangeQueried(double aSimTime, const WsfExchange::Query& 
 
       if ((requesterPtr == nullptr) || (requesterPtr->GetQueryPtr() == nullptr))
       {
-         ut::log::warning() << "WsfDisExchange: ExchangeQueried(): sEVENT_SUPPLIED to unknown player.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_EXCH_SUPPLIED_UNKNOWN);
       }
       else
       {

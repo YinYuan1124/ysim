@@ -117,7 +117,8 @@ void WsfStandardApplication::ProcessCommandLine(Options& aOptions, int argc, cha
          // out of bounds indexing on standard [] is undefined behavior.
          if (argIndex >= argc)
          {
-            ut::log::warning() << "Failed to process -log-server-host, attempting connection to localhost";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_APP_LOGHOST_BAD, {});
          }
          else
          {
@@ -139,7 +140,8 @@ void WsfStandardApplication::ProcessCommandLine(Options& aOptions, int argc, cha
          }
          catch (std::exception&)
          {
-            ut::log::warning() << "Failed to process -log-server-port, attempting connection to 18888.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_APP_LOGPORT_BAD, {});
          }
       }
       else if (argValue == "-mi")
@@ -609,7 +611,8 @@ void WsfStandardApplication::ConnectToLogServer()
       else
       {
          ut::log::newline();
-         auto out = ut::log::warning() << "Log Client Failed to Connect to Logging Server";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_APP_LOGCONN_FAIL, {});
          out.AddNote() << "Host: " << mLogServerHost;
          out.AddNote() << "Port: " << mLogServerPort;
          ut::log::newline();

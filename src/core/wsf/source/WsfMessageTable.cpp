@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "WsfMessage.hpp"
 #include "WsfStringId.hpp"
@@ -369,8 +371,9 @@ bool WsfMessageTable::ProcessMessageSubTypes(UtInputBlock& aInputBlock, WsfStrin
             // 'sub_type' definitions were allowed in old input files but they had no effect in the code.
             // (The Find method never looked for the default type with a non-null sub-type, as well it shouldn't).
             // Write out a warning message and continue.
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
             auto out = ut::log::warning()
-                       << "'subtype' definitions are not applicable for the 'default' type and will be ignored.";
+                       << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MSGTABLE_SUBTYPE_IGNORED, {});
             out.AddNote() << "In File: " << aInputBlock.GetInput().GetLocation();
          }
       }

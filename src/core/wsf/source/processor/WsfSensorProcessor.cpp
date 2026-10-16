@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptClassDefine.hpp"
 #include "UtScriptTypes.hpp"
 #include "WsfPlatform.hpp"
@@ -191,7 +193,8 @@ bool WsfSensorProcessor::AddSensor(WsfStringId aPlatformNameId, WsfStringId aSen
       }
       else
       {
-         auto out = ut::log::warning() << "Sensor processor could not find sensor to attach.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SENPROC_ATTACH_FAIL);
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Processor: " << GetName();
          out.AddNote() << "Sensor Platform: " << pltfrmNameId;
@@ -241,7 +244,8 @@ bool WsfSensorProcessor::RemoveSensor(WsfStringId aPlatformNameId, WsfStringId a
       }
       else
       {
-         auto out = ut::log::warning() << "Sensor processor could not find sensor to remove.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SENPROC_REMOVE_FAIL);
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Processor: " << GetName();
          out.AddNote() << "Sensor Platform: " << pltfrmNameId;

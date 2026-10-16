@@ -590,7 +590,8 @@ void WsfFalseTarget::SetScanInterval(double aScanInterval)
    }
    else
    {
-      ut::log::warning() << "WsfFalseTarget:SetScanInterval: Bad scan interval value.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_FT_BAD_SCAN_INT);
    }
 }
 
@@ -603,7 +604,8 @@ void WsfFalseTarget::SetPersistence(double aPersistence)
    }
    else
    {
-      ut::log::warning() << "WsfFalseTarget:SetPersistence: Bad persistence value.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_FT_BAD_PERSIST);
    }
 }
 
@@ -613,9 +615,10 @@ void WsfFalseTarget::SetInitialNumberOfFTs(unsigned int aInitialNumberOfFTs, boo
    unsigned int numberOfFTs(0);
    if (mExplicitNumberOfFTs && (aInitialNumberOfFTs != mInitialNumberOfFTs))
    {
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
       auto out =
          ut::log::warning()
-         << "WsfFalseTarget::SetInitialNumberOfFTs: Already had an initial number of false targets explicitly defined.";
+         << ut::msg::FormatWEnTagged(ut::msg::MSG_W_FT_INIT_NFT_REDEF);
       out.AddNote() << "False Target: " << GetName();
       out.AddNote() << "Type: " << GetType();
       auto note = out.AddNote() << "Will be resetting to the maximum of these values:";

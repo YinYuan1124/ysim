@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtVec3.hpp"
 #include "WsfEnvironment.hpp"
@@ -211,7 +213,9 @@ bool WsfPlatformAvailability::PlatformIsAvailable(WsfPlatform* aPlatformPtr, Wsf
                }
                else if (warningZones.find(exclusionZone) != warningZones.end())
                {
-                  auto out = ut::log::warning() << "Undefined platform_availability exclusion_zone.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning()
+                             << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PAVAIL_EXCL_ZONE_UNDEF, {});
                   out.AddNote() << "Zone: " << exclusionZone;
                   warningZones.insert(exclusionZone); // Prevent repetitive messages
                }
@@ -237,7 +241,9 @@ bool WsfPlatformAvailability::PlatformIsAvailable(WsfPlatform* aPlatformPtr, Wsf
                }
                else if (warningZones.find(inclusionZone) != warningZones.end())
                {
-                  auto out = ut::log::warning() << "Undefined platform_availability inclusion_zone.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning()
+                             << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PAVAIL_INCL_ZONE_UNDEF, {});
                   out.AddNote() << "Zone: " << inclusionZone;
                   warningZones.insert(inclusionZone); // Prevent repetitive messages
                }

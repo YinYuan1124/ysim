@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -24,6 +24,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
@@ -222,8 +224,8 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
          mShapeType = cCIRCULAR;
          if (mPointsInputIsPolar || mPointsAreLatLon)
          {
-            auto out = ut::log::warning() << "Polar or lat/lon points are not intended to be used with circular zones, "
-                                             "and may modify the zone in unexpected ways.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_POINTS_CIRCULAR, {});
             out.AddNote() << "Location: " << aInput.GetLocation();
          }
       }
@@ -239,8 +241,8 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
          mShapeType = cELLIPTICAL;
          if (mPointsInputIsPolar || mPointsAreLatLon)
          {
-            auto out = ut::log::warning() << "Polar or lat/lon points are not intended to be used with elliptical "
-                                             "zones, and may modify the zone in unexpected ways.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_POINTS_ELLIPTICAL, {});
             out.AddNote() << "Location: " << aInput.GetLocation();
          }
       }
@@ -257,8 +259,8 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
          if ((mMinRadiusSq != cUNSPECIFIED) || (mMaxRadiusSq != cUNSPECIFIED) || (mStartAngle != cUNSPECIFIED) ||
              (mStopAngle != cUNSPECIFIED))
          {
-            auto out = ut::log::warning() << "Radius or angle constraints are not intended to be used with polygonal "
-                                             "zones, and may modify the zone in unexpected ways.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_RADIUS_ANGLE_POLY, {});
             out.AddNote() << "Location: " << aInput.GetLocation();
          }
       }
@@ -274,8 +276,8 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
          mShapeType = cSPHERICAL;
          if (mPointsInputIsPolar || mPointsAreLatLon)
          {
-            auto out = ut::log::warning() << "Polar or lat/lon points are not intended to be used with spherical "
-                                             "zones, and may modify the zone in unexpected ways.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_POINTS_SPHERICAL, {});
             out.AddNote() << "Location: " << aInput.GetLocation();
          }
       }
@@ -310,9 +312,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
 
       if (mShapeType == cPOLYGONAL)
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is not intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_NOT_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
 
@@ -329,9 +331,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
 
       if (mShapeType == cPOLYGONAL)
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is not intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_NOT_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
 
@@ -374,9 +376,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
       mStartAngle = UtMath::NormalizeAngle0_TwoPi(mStartAngle);
       if (mShapeType == cPOLYGONAL)
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is not intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_NOT_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
    }
@@ -386,9 +388,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
       mStopAngle = UtMath::NormalizeAngle0_TwoPi(mStopAngle);
       if (mShapeType == cPOLYGONAL)
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is not intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_NOT_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
       if (mStopAngle == 0)
@@ -402,9 +404,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
       mRelativeTo      = cINTERNAL;
       if ((mShapeType != cNO_SHAPE) && (mShapeType != cPOLYGONAL))
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is only intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_ONLY_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
    }
@@ -415,9 +417,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
       mRelativeTo        = cINTERNAL;
       if ((mShapeType != cNO_SHAPE) && (mShapeType != cPOLYGONAL))
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is only intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_ONLY_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
    }
@@ -426,9 +428,9 @@ bool WsfZoneDefinition::ProcessInput(UtInput& aInput)
       mPointsInputIsPolar = true;
       if ((mShapeType != cNO_SHAPE) && (mShapeType != cPOLYGONAL))
       {
-         auto out = ut::log::warning()
-                    << "Command " << command
-                    << " is only intended to be used with polygonal zones, and may modify the zone in unexpected ways.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"command", command}};
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_CMD_ONLY_POLY, args);
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
    }
@@ -1864,7 +1866,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
       bool ok = true;
       if ((mShapeType != cNO_SHAPE) && (mShapeType != mRefZonePtr->mShapeType))
       {
-         auto out = ut::log::warning() << "Zone Definition: Shape type conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_SHAPE_CONFLICT, {});
          out.AddNote() << "Shape: " << ShapeToString(mShapeType);
          out.AddNote() << "Ref Zone Shape: " << ShapeToString(mRefZonePtr->mShapeType);
 
@@ -1876,7 +1878,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
       }
       if ((mMinAlt != cUNSPECIFIED) && (mMinAlt != mRefZonePtr->mMinAlt))
       {
-         auto out = ut::log::warning() << "Zone Definition: Minimum altitude conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_MIN_ALT_CONFLICT, {});
          out.AddNote() << "Min Alt: " << mMinAlt;
          out.AddNote() << "Ref Zone Min Alt: " << mRefZonePtr->mMinAlt;
 
@@ -1889,7 +1891,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if ((mMaxAlt != cUNSPECIFIED) && (mMaxAlt != mRefZonePtr->mMaxAlt))
       {
-         auto out = ut::log::warning() << "Zone Definition: Maximum altitude conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_MAX_ALT_CONFLICT, {});
          out.AddNote() << "Max Alt: " << mMaxAlt;
          out.AddNote() << "Ref Zone Max Alt: " << mRefZonePtr->mMaxAlt;
          ok = false;
@@ -1900,7 +1902,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
       }
       if ((mMinRadiusSq != cUNSPECIFIED) && (mMinRadiusSq != mRefZonePtr->mMinRadiusSq))
       {
-         auto out = ut::log::warning() << "Zone Definition: Minimum radius conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_MIN_RADIUS_CONFLICT, {});
          out.AddNote() << "Min Radius: " << std::sqrt(mMinRadiusSq);
          out.AddNote() << "Ref Zone Min Radius: " << std::sqrt(mRefZonePtr->mMinRadiusSq);
          ok = false;
@@ -1912,7 +1914,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if ((mMaxRadiusSq != cUNSPECIFIED) && (mMaxRadiusSq != mRefZonePtr->mMaxRadiusSq))
       {
-         auto out = ut::log::warning() << "Zone Definition: Maximum radius conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_MAX_RADIUS_CONFLICT, {});
          out.AddNote() << "Max Radius: " << std::sqrt(mMaxRadiusSq);
          out.AddNote() << "Ref Zone Max Radius: " << std::sqrt(mRefZonePtr->mMaxRadiusSq);
          ok = false;
@@ -1923,7 +1925,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
       }
       if ((mLongitudinalAxis != cUNSPECIFIED) && (mLongitudinalAxis != mRefZonePtr->mLongitudinalAxis))
       {
-         auto out = ut::log::warning() << "Zone Definition: Longitudinal axis conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_LONG_AXIS_CONFLICT, {});
          out.AddNote() << "Long Axis: " << mLongitudinalAxis;
          out.AddNote() << "Ref Zone Long Axis: " << mRefZonePtr->mLongitudinalAxis;
          ok = false;
@@ -1935,7 +1937,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if ((mLateralAxis != cUNSPECIFIED) && (mLateralAxis != mRefZonePtr->mLateralAxis))
       {
-         auto out = ut::log::warning() << "Zone Definition: Lateral axis conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_LAT_AXIS_CONFLICT, {});
          out.AddNote() << "Lat Axis: " << mLateralAxis;
          out.AddNote() << "Ref Zone Lat Axis: " << mRefZonePtr->mLateralAxis;
          ok = false;
@@ -1947,7 +1949,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if ((mStartAngle != cUNSPECIFIED) && (mStartAngle != mRefZonePtr->mStartAngle))
       {
-         auto out = ut::log::warning() << "Zone Definition: Start angle conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_START_ANGLE_CONFLICT, {});
          out.AddNote() << "Start Angle: " << mStartAngle;
          out.AddNote() << "Ref Zone Start Angle: " << mRefZonePtr->mStartAngle;
          ok = false;
@@ -1959,7 +1961,7 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if ((mStopAngle != cUNSPECIFIED) && (mStopAngle != mRefZonePtr->mStopAngle))
       {
-         auto out = ut::log::warning() << "Zone Definition: Stop angle conflict.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_STOP_ANGLE_CONFLICT, {});
          out.AddNote() << "Stop Angle: " << mStopAngle;
          out.AddNote() << "Ref Zone Stop Angle: " << mRefZonePtr->mStopAngle;
          ok = false;
@@ -1971,7 +1973,8 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if (!mPoints.empty())
       {
-         ut::log::warning() << "Zone Definition: Ignoring polygonal specification.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_ZONE_IGNORE_POLYGONAL, {});
          ok = false;
          mPoints.clear();
       }
@@ -2005,7 +2008,8 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
 
       if ((mRelativeTo == cINTERNAL) && (mRelativeTo != mRefZonePtr->mRelativeTo))
       {
-         ut::log::warning() << "Zone Definition: Zone relationship conflict.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_ZONE_REL_CONFLICT, {});
          ok = false;
       }
       else
@@ -2017,14 +2021,15 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
       {
          if (mReferenceWCS[0] == cUNSPECIFIED)
          {
-            ut::log::warning() << "Zone Definition: No reference location.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_ZONE_NO_REF_LOC, {});
             ok = false;
          }
       }
 
       if (!ok)
       {
-         auto out = ut::log::warning() << "Zone Definition: Problems encountered between zone and reference zone.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_REF_PROBLEMS, {});
          out.AddNote() << "Zone: " << GetName();
          out.AddNote() << "Reference Zone: " << mRefZonePtr->GetName();
          out.AddNote() << "See the preceding messages describing the problems.";
@@ -2069,24 +2074,23 @@ void WsfZoneDefinition::Initialize(const WsfScenario& aScenario)
       {
          // I'm not sure why this one uses GetName() for the "relative zone" instead of the "zone", but that's what was
          // there previously.
-         auto out = ut::log::warning() << "Modifier values for relative zone will be ignored.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_MODIFIERS_IGNORED, {});
          out.AddNote() << "Relative Zone: " << GetName();
       }
       else if ((mShapeType == cPOLYGONAL) && (mReferenceHeading != 0.0))
       {
-         auto out = ut::log::warning() << "'heading' input will be ignored for zone-based attenuation calculations.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_HEADING_IGNORED, {});
          out.AddNote() << "Zone: " << GetName();
       }
       else if ((mStartAngle != WsfZone::cUNSPECIFIED) || (mStopAngle != WsfZone::cUNSPECIFIED))
       {
          auto out = ut::log::warning()
-                    << "'start_angle' and 'end_angle' input will be ignored for zone-based attenuation calculations.";
+                    << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_ANGLES_IGNORED, {});
          out.AddNote() << "Zone: " << GetName();
       }
       else if (mMinRadiusSq != WsfZone::cUNSPECIFIED)
       {
-         auto out =
-            ut::log::warning() << "'minimum_radius' input will be ignored for zone-based attenuation calculations.";
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZONE_MIN_RADIUS_IGNORED, {});
          out.AddNote() << "Zone: " << GetName();
       }
    }

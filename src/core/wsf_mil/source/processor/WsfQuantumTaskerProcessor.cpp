@@ -667,7 +667,8 @@ bool WsfQuantumTaskerProcessor::ProcessTaskStatusMessage(double aSimTime, const 
          }
          if (showWarning)
          {
-            auto out = ut::log::warning() << "Could not find task.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_NO_TASK);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Processor: " << GetName();

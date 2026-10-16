@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtConvexHull.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfRoute.hpp"
 #include "WsfScenario.hpp"
@@ -246,7 +248,8 @@ void WsfZoneRouteFinder::AvoidZone(WsfZone* aZonePtr)
       }
       else
       {
-         auto out = ut::log::warning() << "Unable to avoid zone.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ZRF_UNABLE_AVOID, {});
          out.AddNote() << "Zone: " << aZonePtr->GetName();
          out.AddNote() << "It is not a polygonal zone with lat-lon points.";
       }

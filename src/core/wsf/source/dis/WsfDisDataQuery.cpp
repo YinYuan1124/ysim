@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "Dis.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisUtil.hpp"
 
@@ -54,7 +56,8 @@ bool WsfDisDataQuery::TakeAction()
    {
       // For now, our only action is to say that we can't...
       tookAction = true;
-      ut::log::warning() << "WsfDisDataQuery: Not enabled to act on incoming queries.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_DQ_NOT_ENABLED);
    }
    return tookAction;
 }

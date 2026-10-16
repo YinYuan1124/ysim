@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QCoreApplication>
 #include <QCursor>
 #include <QMenu>
 #include <QMimeData>
@@ -70,27 +71,29 @@ bool wizard::PasteContext::Exec(const QMimeData* aData) const
       return false;
    }
 
+   // 二次开发（i18n）：PasteContext 非 QObject，使用显式上下文 QCoreApplication::translate("wizard::PasteContext")；
+   // 动态拼接参数化为 "Paste %1"，避免翻译失效
    bool    needPopup     = false;
-   QString defaultOption = "Paste ";
+   QString defaultLabels = QString();
    for (auto&& action : mActionList)
    {
       if (!action.mIsGrouped)
          needPopup = true;
       else
       {
-         defaultOption += action.mLabel;
+         defaultLabels += action.mLabel;
       }
    }
 
    if (needPopup)
    {
       QMenu    pop;
-      QAction* defaultAction = pop.addAction(defaultOption);
+      QAction* defaultAction = pop.addAction(QCoreApplication::translate("wizard::PasteContext", "Paste %1").arg(defaultLabels));
       for (auto&& action : mActionList)
       {
          if (!action.mIsGrouped)
          {
-            QAction* act = pop.addAction("Paste " + action.mLabel);
+            QAction* act = pop.addAction(QCoreApplication::translate("wizard::PasteContext", "Paste %1").arg(action.mLabel));
             act->setData(QString::fromStdString(action.mName));
          }
       }
@@ -136,7 +139,11 @@ bool wizard::PasteContext::Exec(const QMimeData* aData) const
       {
          action.mIsChosen = true;
       }
-      UndoContext undoCtx(defaultOption.toStdString().c_str());
+      // 二次开发（i18n）：撤销上下文描述同步使用参数化翻译串（原 defaultOption 变量已重构为 defaultLabels）
+      UndoContext undoCtx(QCoreApplication::translate("wizard::PasteContext", "Paste %1")
+                             .arg(defaultLabels)
+                             .toStdString()
+                             .c_str());
       // Dispatch
       wizSignals->PasteQuery(aData, *this, true);
       return true;

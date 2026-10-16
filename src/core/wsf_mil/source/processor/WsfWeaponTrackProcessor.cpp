@@ -514,7 +514,8 @@ void WsfWeaponTrackProcessor::GetInterceptData(double aSimTime, double& aTimeToG
       {
          if (DebugEnabled())
          {
-            ut::log::warning() << "Unable to calculate intercept location. Target track may not be a valid 3-D track.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_WTP_NO_INTERCEPT);
          }
       }
    }

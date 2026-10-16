@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtStringUtil.hpp"
@@ -664,7 +666,8 @@ void WsfEW_SimpleFT_Effect::UpdateJammerPulseDensity(WsfEM_Xmtr* aJammerXmtrPtr,
          }
          else
          {
-            auto out = ut::log::warning() << "WSF_SIMPLE_FT_EFFECT: pulsewidth not specified on radar.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SFT_NO_PULSEWIDTH);
             out.AddNote() << "Radar: " << aRadarXmtrPtr->GetArticulatedPart()->GetName();
          }
          SetJammerPulseDensity(mEffectedSystemId, jammerPulseDensity, false);

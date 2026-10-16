@@ -116,9 +116,10 @@ bool BistaticErrorModel::Initialize(WsfSensorMode* aSensorModePtr)
       }
       if (mInitialSigmas.mRangeErrorStdDev > 0.0)
       {
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
          auto warning =
             ut::log::warning()
-            << "BistaticErrorModel: Range error will be computed by the model; the provided value will be ignored.";
+            << ut::msg::FormatWEnTagged(ut::msg::MSG_W_BISTERR_RANGE_IGNORE);
          warning.AddNote() << "Provided value: " << mInitialSigmas.mRangeErrorStdDev;
       }
    }

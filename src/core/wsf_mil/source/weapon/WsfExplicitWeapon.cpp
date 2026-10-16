@@ -1046,8 +1046,9 @@ void WsfExplicitWeapon::InitializeCommandChains(double aSimTime, WsfPlatform* aP
             WsfCommandChain* chainPtr = GetPlatform()->GetComponent<WsfCommandChain>(commandChain.mCommandChainName);
             if (chainPtr == nullptr)
             {
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
                auto out = ut::log::warning()
-                          << "Could not locate command chain for LAUNCHER_COMMANDER during weapon launch.";
+                          << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXPL_LAUNCHER_NO_CHAIN);
                out.AddNote() << "T = " << aSimTime;
                out.AddNote() << "Platform: " << GetPlatform()->GetName();
                out.AddNote() << "Weapon: " << GetName();
@@ -1065,7 +1066,8 @@ void WsfExplicitWeapon::InitializeCommandChains(double aSimTime, WsfPlatform* aP
          if (!aPlatformPtr->AddComponent(newChainPtr))
          {
             delete newChainPtr;
-            auto out = ut::log::warning() << "Failed to add command chain to launched weapon.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXPL_ADD_CHAIN_FAIL);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Weapon: " << GetName();

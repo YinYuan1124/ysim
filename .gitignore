@@ -123,6 +123,7 @@ DerivedData/
 
 # TRAE IDE
 .trae/
+temp/
 
 # ------------------------------------------------------------
 # 8. OS generated files

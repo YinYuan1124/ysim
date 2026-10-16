@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "DisIO.hpp"
 #include "UtLatPos.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtVec3.hpp"
@@ -199,7 +201,8 @@ int WsfDisDirectedEnergyFire::Process()
       {
          if (WsfDisUtil::DebugEnabled(mInterfacePtr))
          {
-            auto out = ut::log::warning() << "DisDirectedEnergyFire PDU Record Type not supported (ignoring).";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DEFIRE_BAD_RECORD);
             out.AddNote() << "Record Type: " << deRecord->GetRecordType();
          }
          return 1;
@@ -290,7 +293,8 @@ int WsfDisDirectedEnergyFire::Process()
    }
    else
    {
-      ut::log::warning() << "No engagement object.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_DEFIRE_NO_ENGAGE);
    }
 
    return 1;

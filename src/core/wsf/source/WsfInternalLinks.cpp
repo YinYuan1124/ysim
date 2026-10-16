@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "WsfFuel.hpp"
 #include "WsfMessage.hpp"
 #include "WsfMover.hpp"
@@ -222,7 +224,8 @@ bool WsfInternalLinks::LinkRecipient(WsfStringId aRecipientId)
    WsfPlatformPart* recipientPtr = platformPtr->GetComponent<WsfPlatformPart>(aRecipientId);
    if (recipientPtr == nullptr)
    {
-      auto out = ut::log::warning() << "Platform part unable to link.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_INTLINK_PART_UNABLE, {});
       out.AddNote() << "Platform: " << platformPtr->GetName();
       out.AddNote() << "Part: " << mPlatformPartPtr->GetName();
       out.AddNote() << "Recipient: " << aRecipientId;

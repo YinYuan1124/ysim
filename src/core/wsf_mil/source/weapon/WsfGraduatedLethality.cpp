@@ -115,8 +115,8 @@ bool WsfGraduatedLethality::PreInitialize()
       }
       else if (maxRadius > maxRadiusBase)
       {
-         auto out =
-            ut::log::warning() << "In weapon_effects - maximum radius from tables exceeds explicit maximum_radius.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_GRADLETH_RADIUS_EXCEED);
          out.AddNote() << "Type: " << GetType();
       }
    }

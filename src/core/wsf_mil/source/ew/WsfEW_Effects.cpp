@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include <iostream>
 
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptBasicTypes.hpp"
 #include "WsfEM_Interaction.hpp"
@@ -330,7 +332,8 @@ double GetJammingEffectValue(WsfEW_Effects::EW_JammingEffect* aJammingEffectPtr,
       }
       else
       {
-         auto out = ut::log::warning() << "EffectValue: Undefined value type string.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EFFECTVAL_UNDEF_TYPE);
          out.AddNote() << "Type String: " << aValueTypeString;
          value = -1.0;
       }
@@ -392,7 +395,8 @@ double GetEffectValue(WsfEW_Effects*     aEW_EffectsPtr,
       }
       else
       {
-         auto out = ut::log::warning() << "EffectValue: Undefined coherency check type string.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EFFECTVAL_UNDEF_COH);
          out.AddNote() << "Type String: " << aEA_CoherencyMask;
       }
 
@@ -474,7 +478,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptEW_EffectsClass, WsfEW_Effects, EA_CoherencyChe
    }
    else
    {
-      auto out = ut::log::warning() << "EA_CoherencyCheck: Undefined coherency check type string.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EACOH_UNDEF);
       out.AddNote() << "Type String: " << coherencyTypeString;
    }
    aReturnVal.SetBool(cohMatch);

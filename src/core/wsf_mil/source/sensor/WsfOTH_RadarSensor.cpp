@@ -987,7 +987,8 @@ bool WsfOTH_RadarSensor::OTH_Beam::AreIonosphericParametersValid()
 
    if (!ok)
    {
-      ut::log::warning() << "Invalid ionospheric characterization in WsfOTH_RadarSensor.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_OTH_BAD_IONO);
    }
 
    return ok;
@@ -1054,8 +1055,8 @@ void WsfOTH_RadarSensor::OTH_Beam::ComputeIonosphericCharacteristics()
    double radarFrequency = mXmtrPtr->GetFrequency();
    if (radarFrequency <= mIonosphericCharacteristics.mMinUsableFrequency)
    {
-      auto out = ut::log::warning() << "Current Transmitter Frequency is LESS than OTH Minimum Usable Frequency for "
-                                       "the chosen Ionospheric Conditions, transmit Signal will not propagate.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OTH_FREQ_LT_MUF);
       out.AddNote() << "Defined Transmitter Frequency: " << radarFrequency / 1000000.0 << " MHz";
       out.AddNote() << "Computed Minimum Usable Frequency: " << mIonosphericCharacteristics.mMinUsableFrequency / 1000000.0
                     << " MHz";
@@ -1577,8 +1578,8 @@ bool WsfOTH_RadarSensor::OTH_Beam::Initialize(double       aSimTime,
 
       if ((!GetSignalProcessors().Empty()) && ((mOneM2DetectRange > 0.0) || (mLoopGain > 0.0)))
       {
-         ut::log::warning()
-            << "Signal_processor should not be used with one_m2_detect_range, range_product or loop_gain.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_OTH_SIGPROC_CONFLICT);
       }
 
 
@@ -1627,8 +1628,9 @@ bool WsfOTH_RadarSensor::OTH_Beam::Initialize(double       aSimTime,
          // reset to computed values.
          if (mAntennaPtr->GetMinimumRange() != 0.0 || mAntennaPtr->GetMaximumRange() != DBL_MAX)
          {
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
             auto out = ut::log::warning()
-                       << "OTH Ionospheric Constrained Range Computation will override defined min/max Range Limits.";
+                       << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OTH_RANGE_OVERRIDE);
             out.AddNote() << "Sensor: " << aSensorPtr->GetName();
             out.AddNote() << "Sensor Type: " << aSensorPtr->GetType();
          }
@@ -1952,7 +1954,9 @@ bool WsfOTH_RadarSensor::OTH_Beam::ProcessInput(UtInput& aInput)
    else if ((command == "azimuth_error_factor") || (command == "elevation_error_factor") ||
             (command == "range_error_factor") || (command == "angle_error_factor"))
    {
-      ut::log::warning() << "'" << command << "' has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_OTH_CMD_DEP, args);
    }
    else if (command == "one_m2_detect_range")
    {

@@ -338,8 +338,8 @@ bool WsfGuidedMover::Initialize(double aSimTime) // override
 
       if (!mComputeForcesEachSubstep && (mIntegrationMethod == cRK2 || mIntegrationMethod == cRK4))
       {
-         auto warn = ut::log::warning() << "WSF_GUIDED_MOVER Runge-Kutta integration without selecting "
-                                           "'compute_all_forces_each_substep' is less accurate.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto warn = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_GM_RK_ACCURACY);
          warn.AddNote() << "Please see WSF_GUIDED_MOVER documentation.";
       }
 
@@ -2554,7 +2554,8 @@ bool WsfGuidedMover::Stage::ComputeUnknownValues(WsfGuidedMover* aMoverPtr, int&
       }
       else
       {
-         ut::log::warning() << "Potentially erroneous 'burn_rate' calculated.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_GM_BAD_BURNRATE);
          mBurnRate = mThrust / mSpecificImpulse / UtEarth::cACCEL_OF_GRAVITY;
       }
       recompute = true;

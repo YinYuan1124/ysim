@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfInherentContrast.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfInherentContrastTypes.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfScenario.hpp"
@@ -142,7 +144,8 @@ float WsfInherentContrast::GetValue(WsfPlatform* aPlatformPtr, double aAzimuth, 
       // Signature not defined... use the default signature.
       if (aLogWarning)
       {
-         auto out = ut::log::warning() << "Platform's Inherent Contrast not defined. Using Default.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_INHCON_NOT_DEF);
          out.AddNote() << "Platform: " << aPlatformPtr->GetName();
          out.AddNote() << "Inherent Contrast: " << aPlatformPtr->GetType();
       }

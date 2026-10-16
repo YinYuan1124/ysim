@@ -156,7 +156,8 @@ bool Types::LoadMedium(UtInput& aInput, Container& aContainer, bool aIsAdding)
             auto curMediumPtr = aContainer.GetMedium();
             if (curMediumPtr)
             {
-               auto out = ut::log::warning() << "Medium is being replaced by adding a medium.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MEDIUM_REPLACE_BY_ADD);
                out.AddNote() << "Only one medium is allowed at any time.";
                out.AddNote() << "Existing medium type: " << curMediumPtr->GetType();
                out.AddNote() << "Replacing medium type: " << type;
@@ -180,8 +181,9 @@ bool Types::LoadMedium(UtInput& aInput, Container& aContainer, bool aIsAdding)
          {
             if (displayWarning)
             {
-               auto out = ut::log::warning()
-                          << "Medium is shared, and edits will apply changes across all mediums of this type.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out =
+                  ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MEDIUM_SHARED_EDITS);
                out.AddNote() << "Medium type: " << type;
                out.AddNote() << "Location: " << aInput.GetLocation();
                displayWarning = false;

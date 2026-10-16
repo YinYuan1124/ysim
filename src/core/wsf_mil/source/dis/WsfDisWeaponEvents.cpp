@@ -852,7 +852,8 @@ bool WsfDisWeaponEvents::InitiateWeaponTransfer(double aSimTime, DisFire* aPduPt
       failMessage = "Weapon Entity Type not specified";
       ReportErrorMessage(failMessage);
 
-      ut::log::warning() << "Weapon Entity type not specified.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISWEAP_NO_ENT_TYPE);
       return false;
    }
 

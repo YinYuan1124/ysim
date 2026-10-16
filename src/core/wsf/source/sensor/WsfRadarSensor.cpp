@@ -1020,8 +1020,8 @@ bool WsfRadarSensor::RadarBeam::Initialize(double       aSimTime,
 
       if ((!GetSignalProcessors().Empty()) && ((mOneM2DetectRange > 0.0) || (mLoopGain > 0.0)))
       {
-         ut::log::warning()
-            << "'signal_processor' should not be used with 'one_m2_detect_range', 'range_product', or 'loop_gain'";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_RADAR_SIGPROC_CONFLICT);
       }
 
       // Load and initialize the clutter model object.

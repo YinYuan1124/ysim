@@ -822,7 +822,8 @@ bool WsfTaskManager::AcquireResource(double aSimTime, WsfTask& aTask, const WsfT
       WsfStringId modeNameId = aTask.GetResourceMode();
       if ((modeNameId != 0) && (sensorPtr->GetModeIndex(modeNameId) >= sensorPtr->GetModeCount()))
       {
-         auto out = ut::log::warning() << "Invalid sensor mode requested for track.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_BAD_SENSOR_MODE);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Sensor: " << sensorPtr->GetName();
@@ -846,7 +847,8 @@ bool WsfTaskManager::AcquireResource(double aSimTime, WsfTask& aTask, const WsfT
             }
             else
             {
-               auto out = ut::log::warning() << "Sensor failed StartTracking for track.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_STARTTRACK_FAIL);
                out.AddNote() << "T = " << aSimTime;
                out.AddNote() << "Platform: " << GetPlatform()->GetName();
                out.AddNote() << "Sensor: " << sensorPtr->GetName();
@@ -923,7 +925,8 @@ bool WsfTaskManager::ReleaseResource(double aSimTime, WsfTask& aTask)
          {
             if (!sensorPtr->StopTracking(aSimTime, aTask.GetTrackId()))
             {
-               auto out = ut::log::warning() << "Sensor failed StopTracking for track.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_STOPTRACK_FAIL);
                out.AddNote() << "T = " << aSimTime;
                out.AddNote() << "Platform: " << GetPlatform()->GetName();
                out.AddNote() << "Sensor: " << sensorPtr->GetName();
@@ -1350,7 +1353,8 @@ bool WsfTaskManager::ReportTaskComplete(double            aSimTime,
       if (FindTask(mPurgedRcvdTaskList, GetPlatform()->GetIndex(), aTrackId, aTaskType, aResourceName) !=
           mPurgedRcvdTaskList.end())
       {
-         auto out = ut::log::warning() << "Reporting completion status for task.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_REPORT_COMPLETE);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Task Manager: " << GetName();
@@ -1400,8 +1404,8 @@ bool WsfTaskManager::ReportTaskProgress(double            aSimTime,
    else
    {
       ok = false;
-      auto out =
-         ut::log::warning() << "Reporting progress status. Could not find Track's Assignee Platform or Resource";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_REPORT_PROGRESS);
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Task Manager: " << GetName();
@@ -1717,7 +1721,8 @@ void WsfTaskManager::CheckMessageAcknowledged(double aSimTime, unsigned int aSer
 
          if (!pendingMessage.mSuppressTimeoutMessage)
          {
-            auto out = ut::log::warning() << "Message timed out.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_MSG_TIMEOUT);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Task Manager: " << GetName();
@@ -2319,7 +2324,8 @@ bool WsfTaskManager::ProcessTaskStatusMessage(double aSimTime, const WsfTaskStat
          }
          if (showWarning)
          {
-            auto out = ut::log::warning() << "Could not find task.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TASKMGR_NO_TASK);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Task Manager: " << GetName();

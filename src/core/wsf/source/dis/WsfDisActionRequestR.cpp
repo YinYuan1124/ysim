@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@
 #include "GenIConvertBigEndian.hpp"
 #include "GenOConvertBigEndian.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisActionResponseR.hpp"
 #include "dis/WsfDisUtil.hpp"
@@ -108,15 +110,16 @@ DisPdu* WsfDisActionRequestR::ProduceResponse(bool aComplete)
       }
       if (WsfDisUtil::DebugEnabled(mInterfacePtr))
       {
-         ut::log::warning() << "WsfDisActionRequestR: Resign Exercise Request is not given an adequate response yet.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_ARR_RESIGN_NO_RESPONSE);
       }
    }
    else
    {
       if (WsfDisUtil::DebugEnabled(mInterfacePtr))
       {
-         auto out =
-            ut::log::warning() << "WsfDisActionRequestR: Action Request received that cannot be interpreted by WSF.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ARR_REQ_NOT_INTERPRETED);
          out.AddNote() << "An acknowledge response was returned, but the request was ignored.";
       }
    }
@@ -131,7 +134,9 @@ void WsfDisActionRequestR::TimedOut()
 {
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
-      ut::log::warning() << "WsfDisActionRequestR: Unhandled virtual TimedOut() call.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cls", "WsfDisActionRequestR"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_TIMEDOUT_UNHANDLED, args);
    }
 }
 
@@ -244,7 +249,8 @@ bool WsfDisActionRequestR::ProcessTimeAdvance(double aSimTime, double aSimRate, 
    // aSimTime as our Max Clock time, and start the clock.
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
-      ut::log::warning() << "WsfDisActionRequestR: ProcessTimeAdvanceRequest ignored.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_ARR_TIMEADV_IGNORED);
    }
    return true;
 }
@@ -316,7 +322,8 @@ bool WsfDisActionRequestR::ParseData(double&       aSimTime,
       {
          if (WsfDisUtil::DebugEnabled(mInterfacePtr))
          {
-            auto out = ut::log::warning() << "WsfDisActionRequestR: Unknown fixed datum encountered.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ARR_UNKNOWN_FIXED_DATUM);
             out.AddNote() << "Ignored.";
          }
       }

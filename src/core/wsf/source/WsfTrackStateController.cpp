@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtCast.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptContext.hpp"
 #include "UtScriptData.hpp"
 #include "WsfEvent.hpp"
@@ -260,7 +262,8 @@ bool WsfTrackStateController::ProcessInput(const WsfScenario& aScenario, UtInput
    }
    else if (command == "show_transitions")
    {
-      ut::log::warning() << "'show_transitions' has been deprecated. Use 'show_state_transitions'.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_TSC_SHOW_TRANSITIONS_DEP, {});
       mShowStateTransitions = true;
    }
    else if (command == "show_state_transitions")

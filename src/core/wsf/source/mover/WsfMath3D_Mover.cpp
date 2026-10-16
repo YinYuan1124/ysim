@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtEntity.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "WsfPlatform.hpp"
 
@@ -111,20 +113,23 @@ bool WsfMath3D_Mover::ProcessInput(UtInput& aInput)
    }
    else if (command == "switch_on_passing")
    {
-      ut::log::warning() << "The 'switch_on_passing' keyword is not implemented by WSF_KINEMATIC_MOVER. Ignored.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_MATH3D_SWITCH_ON_PASSING);
    }
    else if (command == "altitude_offset")
    {
       double offsetValueNotUsed;
       aInput.ReadValueOfType(offsetValueNotUsed, UtInput::cLENGTH);
-      ut::log::warning() << "The 'altitude_offset' keyword is not implemented by WSF_KINEMATIC_MOVER. Ignored.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_MATH3D_ALT_OFFSET);
    }
    else if (command == "on_turn_failure")
    {
       std::string other_option;
       aInput.ReadValue(other_option);
-      ut::log::warning() << "The 'on_turn_failure' and sub-keyword " << other_option
-                         << " are not implemented by WSF_KINEMATIC_MOVER. Ignored.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"option", other_option}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_MATH3D_TURN_FAILURE, args);
    }
    else if (mMotion.ProcessInput(aInput))
    {

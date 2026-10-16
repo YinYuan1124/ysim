@@ -129,7 +129,8 @@ bool WsfMobilityAndFirepowerLethality::Initialize(double aSimTime, const WsfWeap
       if (GetTable(cDEFAULT) == nullptr)
       {
          Add(MFK_Table(cDEFAULT));
-         auto out = ut::log::warning() << "Weapon is automatically inserting a 'default' probablity table.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MOBILITY_DEFAULT_TABLE);
          out.AddNote() << "Weapon: " << MyFullName();
          out.AddNote() << "Type: " << cMY_TYPE;
       }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS[]>
 <TS version="2.1" language="zh_CN">
 <context>
@@ -1626,6 +1626,30 @@
         <source>Merge/GUI T: %1</source>
         <translation>合并/界面更新耗时: %1</translation>
     </message>
+    <message>
+        <source>Document Memory Usage</source>
+        <translation>文档内存占用</translation>
+    </message>
+    <message>
+        <source>Object Mode</source>
+        <translation>对象模式</translation>
+    </message>
+    <message>
+        <source>Parse Tree Dump</source>
+        <translation>解析树转储</translation>
+    </message>
+    <message>
+        <source>Proxy Dump</source>
+        <translation>代理转储</translation>
+    </message>
+    <message>
+        <source>Watch Proxy</source>
+        <translation>监视代理</translation>
+    </message>
+    <message>
+        <source>Parser/Proxy Timers</source>
+        <translation>解析器/代理计时器</translation>
+    </message>
 </context>
 <context>
     <name>wizard::Editor</name>
@@ -1642,6 +1666,48 @@
         <source>Failed to start tool: </source>
         <translation>启动工具失败：</translation>
     </message>
+    <message>
+        <source>Open Project...</source>
+        <translation>打开项目...</translation>
+    </message>
+    <message>
+        <source>Open Recent</source>
+        <translation>最近打开</translation>
+    </message>
+    <message>
+        <source>(no recent files)</source>
+        <translation>（无最近文件）</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translation>未找到文件</translation>
+    </message>
+    <message>
+        <source>Could not find file: %1.
+Choose Unlist to remove from your recent list or OK to create.</source>
+        <translation>未找到文件：%1。
+选择“取消列表”将其从最近列表移除，或选择“确定”创建该文件。</translation>
+    </message>
+    <message>
+        <source>Unlist</source>
+        <translation>取消列表</translation>
+    </message>
+    <message>
+        <source>Wizard Debugger still running</source>
+        <translation>向导调试器仍在运行</translation>
+    </message>
+    <message>
+        <source>Opening a new project will cause the current run to stop. Do you wish to continue?</source>
+        <translation>打开新项目将导致当前运行停止。是否继续？</translation>
+    </message>
+    <message>
+        <source>Select Files</source>
+        <translation>选择文件</translation>
+    </message>
+    <message>
+        <source>AFSIM Input(*.afproj *.txt);; AFSIM Project(*.afproj);; All Files (*.*)</source>
+        <translation>AFSIM 输入(*.afproj *.txt);; AFSIM 项目(*.afproj);; 所有文件 (*.*)</translation>
+    </message>
 </context>
 <context>
     <name>wizard::FindReferencesResultDialog</name>
@@ -1657,6 +1723,28 @@
         <location filename="../source/gui/FindResultsControl.cpp" line="198" />
         <source>Searching: %1</source>
         <translation>正在搜索: %1</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::PasteContext</name>
+    <message>
+        <source>Paste %1</source>
+        <translation>粘贴 %1</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::Project</name>
+    <message>
+        <source>Open in Text Editor</source>
+        <translation>在文本编辑器中打开</translation>
+    </message>
+    <message>
+        <source>Unknown file type</source>
+        <translation>未知文件类型</translation>
+    </message>
+    <message>
+        <source>This file is non-ascii and no tools are configured for this file type. Cannot open file.</source>
+        <translation>该文件为非文本文件，且未为此文件类型配置任何工具。无法打开文件。</translation>
     </message>
 </context>
 <context>
@@ -1700,6 +1788,10 @@
         <source>Open</source>
         <translation>打开</translation>
     </message>
+    <message>
+        <source>Open File</source>
+        <translation>打开文件</translation>
+    </message>
 </context>
 <context>
     <name>wizard::TextLocationItemModel</name>
@@ -1731,6 +1823,38 @@
         <source>Choose Location</source>
         <translation>选择位置</translation>
     </message>
+    <message>
+        <source>Go To File: %1</source>
+        <translation>转到文件：%1</translation>
+    </message>
+    <message>
+        <source>Open: %1</source>
+        <translation>打开：%1</translation>
+    </message>
+    <message>
+        <source>Go To Include: %1</source>
+        <translation>转到包含文件：%1</translation>
+    </message>
+    <message>
+        <source>Create File: %1</source>
+        <translation>创建文件：%1</translation>
+    </message>
+    <message>
+        <source>Command Documentation...</source>
+        <translation>命令文档...</translation>
+    </message>
+    <message>
+        <source>Script Info...</source>
+        <translation>脚本信息...</translation>
+    </message>
+    <message>
+        <source> (new directory)</source>
+        <translation>（新建目录）</translation>
+    </message>
+    <message>
+        <source>Create file: %1%2</source>
+        <translation>创建文件：%1%2</translation>
+    </message>
 </context>
 <context>
     <name>wkf::KeyBindingsWidget</name>
@@ -1740,7 +1864,8 @@
 </source>
         <translation>多个命令共用的快捷键：</translation>
     </message>
-</context><context>
+</context>
+<context>
     <name>WkfMainWindowUi</name>
     <message>
         <source>File</source>
@@ -1961,6 +2086,62 @@
         <source>File</source>
         <translation>文件</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation>保存文件</translation>
+    </message>
+    <message>
+        <source>Print...</source>
+        <translation>打印...</translation>
+    </message>
+    <message>
+        <source>Find Include Locations...</source>
+        <translation>查找包含位置...</translation>
+    </message>
+    <message>
+        <source>Browse Containing Folder...</source>
+        <translation>浏览所在文件夹...</translation>
+    </message>
+    <message>
+        <source>Rename File...</source>
+        <translation>重命名文件...</translation>
+    </message>
+    <message>
+        <source>Copy Full Path to Clipboard</source>
+        <translation>复制完整路径到剪贴板</translation>
+    </message>
+    <message>
+        <source>Close Editor</source>
+        <translation>关闭编辑器</translation>
+    </message>
+    <message>
+        <source>Close All Editors</source>
+        <translation>关闭所有编辑器</translation>
+    </message>
+    <message>
+        <source>Close All Other Editors</source>
+        <translation>关闭其他所有编辑器</translation>
+    </message>
+    <message>
+        <source>Close All Editors to the Left</source>
+        <translation>关闭左侧所有编辑器</translation>
+    </message>
+    <message>
+        <source>Close All Editors to the Right</source>
+        <translation>关闭右侧所有编辑器</translation>
+    </message>
+    <message>
+        <source>Open Project Startup File(s)</source>
+        <translation>打开项目启动文件</translation>
+    </message>
+    <message>
+        <source>Open File</source>
+        <translation>打开文件</translation>
+    </message>
+    <message>
+        <source>Create New File</source>
+        <translation>新建文件</translation>
+    </message>
 </context>
 <context>
     <name>wkf::PreferencesDialog</name>
@@ -2134,6 +2315,63 @@
     <message>
         <source>Table Plotter...</source>
         <translation>表格绘图器...</translation>
+    </message>
+</context>
+<context>
+    <name>ProjectBrowser::DockWidget</name>
+    <message>
+        <source>Collapse All</source>
+        <translation>全部折叠</translation>
+    </message>
+    <message>
+        <source>Expand All</source>
+        <translation>全部展开</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览...</translation>
+    </message>
+    <message>
+        <source>New File...</source>
+        <translation>新建文件...</translation>
+    </message>
+    <message>
+        <source>Remove Directory from Project</source>
+        <translation>从项目中移除目录</translation>
+    </message>
+    <message>
+        <source>Add Directory &quot;%1&quot; to Project</source>
+        <translation>将目录“%1”添加到项目</translation>
+    </message>
+</context>
+<context>
+    <name>CommandChain::DockWidget</name>
+    <message>
+        <source>Collapse All</source>
+        <translation>全部折叠</translation>
+    </message>
+    <message>
+        <source>Expand All</source>
+        <translation>全部展开</translation>
+    </message>
+    <message>
+        <source>Platform Info...</source>
+        <translation>平台信息...</translation>
+    </message>
+    <message>
+        <source>Add to new command chain</source>
+        <translation>添加到新命令链</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorList::ErrorDock</name>
+    <message>
+        <source>Error List (%1)</source>
+        <translation>错误列表（%1）</translation>
+    </message>
+    <message>
+        <source>Error List</source>
+        <translation>错误列表</translation>
     </message>
 </context>
 </TS>

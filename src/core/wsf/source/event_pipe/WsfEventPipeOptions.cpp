@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 // ================================================================================================
 // WsfEventPipeOptions
@@ -45,7 +47,8 @@ bool WsfEventPipeOptions::ProcessInput(UtInput& aInput, const std::vector<std::s
       }
       else
       {
-         auto warning = ut::log::warning() << "Invalid \"event_pipe\" event type";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto warning = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EVENTPIPE_BAD_EVENT_TYPE);
          warning.AddNote() << "Event: " << what;
          warning.AddNote() << "Location: " << aInput.GetLocation();
       }

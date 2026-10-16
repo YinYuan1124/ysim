@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include <memory>
 
 #include "UtInput.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfEM_XmtrRcvr.hpp"
 #include "WsfEW_Effect.hpp"
 #include "WsfEW_Technique.hpp"
@@ -308,7 +310,8 @@ bool WsfEW_EA_EP::SelectTechnique(unsigned int aIndex)
       {
          if (mDebug)
          {
-            auto out = ut::log::warning() << "Select Technique Failed: Could not find a valid technique at index.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EAEP_SEL_NO_VALID);
             out.AddNote() << "Index: " << aIndex;
          }
          return false;
@@ -318,7 +321,8 @@ bool WsfEW_EA_EP::SelectTechnique(unsigned int aIndex)
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Select Technique Failed: Index too large.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EAEP_SEL_IDX_LARGE);
          out.AddNote() << "Index: " << aIndex;
          out.AddNote() << "Max Index: " << mTechniques.size();
       }
@@ -358,7 +362,8 @@ bool WsfEW_EA_EP::SelectTechnique(WsfEW_Types::TechniqueId aId)
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Select Technique Failed. Could not find technique.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EAEP_SEL_NOT_FOUND);
          out.AddNote() << "Technique: " << aId;
       }
       return false;
@@ -399,7 +404,8 @@ bool WsfEW_EA_EP::DeselectTechnique(unsigned int aIndex)
       {
          if (mDebug)
          {
-            auto out = ut::log::warning() << "Deselect Technique Failed. Could not find a valid technique at index.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_NO_VALID_IDX);
             out.AddNote() << "Index: " << aIndex;
          }
          return false;
@@ -409,7 +415,8 @@ bool WsfEW_EA_EP::DeselectTechnique(unsigned int aIndex)
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Deselect Technique Failed. Index too large.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_IDX_TOO_LARGE);
          out.AddNote() << "Index: " << aIndex;
          out.AddNote() << "Max Index: " << mTechniques.size();
       }
@@ -449,7 +456,8 @@ bool WsfEW_EA_EP::DeselectTechnique(WsfEW_Types::TechniqueId aId)
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Deselect Technique Failed. Could not find technique.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_NOT_FOUND);
          out.AddNote() << "Technique: " << aId;
       }
       return false;

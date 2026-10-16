@@ -220,7 +220,8 @@ bool WsfSensorMode::Initialize(double aSimTime)
 
    if (GetReportingFlags() == 0)
    {
-      auto out = ut::log::warning() << "Sensor does not report anything.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SENSORMODE_NOT_REPORT);
       out.AddNote() << "Platform: " << mPlatformPtr->GetName();
       out.AddNote() << "Sensor: " << mSensorPtr->GetName();
       out.AddNote() << "Mode: " << GetName();
@@ -1162,7 +1163,8 @@ bool WsfSensorMode::InitializeReporting()
       }
       else // Notify the user of the inconsistency.
       {
-         auto out = ut::log::warning() << "Platform's Sensor in Mode is unable to report all requested fields.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SENSORMODE_MISSING_FIELDS);
          out.AddNote() << "Platform: " << GetSensor()->GetPlatform()->GetName();
          out.AddNote() << "Sensor: " << GetSensor()->GetName();
          out.AddNote() << "Mode: " << GetName();

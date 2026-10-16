@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtLexicalCast.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 namespace wsf
 {
@@ -349,7 +351,8 @@ bool Address::IsValidAddress(const std::string& aPossibleAddress)
 
          if (!IsNumber(token))
          {
-            auto out = ut::log::warning() << "Address contains a field that is not a number.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMMADDR_NON_NUMERIC_FIELD);
             out.AddNote() << "Field: " << token;
             return false;
          }
@@ -357,7 +360,8 @@ bool Address::IsValidAddress(const std::string& aPossibleAddress)
          auto fieldValue = std::stoi(token);
          if ((fieldValue < 0) || (fieldValue > 255))
          {
-            auto out = ut::log::warning() << "Invalid address field value.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMMADDR_BAD_FIELD_VALUE);
             out.AddNote() << "Address: " << fieldValue;
             out.AddNote() << "Address must be between 0 and 255.";
             return false;

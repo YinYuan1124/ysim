@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtSleep.hpp"
 #include "WsfComm.hpp"
 #include "WsfEvent.hpp"
@@ -221,7 +223,8 @@ double WsfFrameStepSimulation::AdvanceFrame()
          mWorstFrameOverTime = timeLeft;
       }
       { // RAII block
-         auto out = ut::log::warning() << "Exceeded frame time.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_FSS_FRAME_EXCEEDED, {});
          out.AddNote() << "T = " << mNextFrameTime;
          out.AddNote() << "Wall T = " << clockTime;
          out.AddNote() << "Exceeded By: " << 100.0 * timeLeft / GetFrameTime() << "%";

@@ -1434,7 +1434,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, SetConfigurationSta
    int configurationState = aVarArgs[0].GetInt();
    if (configurationState < 0 || configurationState > 15)
    {
-      auto out = ut::log::warning() << "Invalid configuration state.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPTPLAT_BAD_CONFIG);
       out.AddNote() << "Expected an integer in the range [0..15].";
       out.AddNote() << "Provided: " << configurationState;
       out.AddNote() << "Script: WsfScriptPlatformClass::SetConfigurationState";
@@ -1456,7 +1457,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, SetConcealmentFacto
    float concealFactor = static_cast<float>(aVarArgs[0].GetDouble());
    if (concealFactor < 0.0F)
    {
-      auto out = ut::log::warning() << "Invalid concealment factor.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPTPLAT_BAD_CONCEAL);
       out.AddNote() << "Expected a value in the range [0..1].";
       out.AddNote() << "Provided: " << concealFactor;
       out.AddNote() << "Using Value: 0";
@@ -1466,7 +1468,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, SetConcealmentFacto
    }
    else if (concealFactor > 1.0F)
    {
-      auto out = ut::log::warning() << "Invalid concealment factor.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPTPLAT_BAD_CONCEAL);
       out.AddNote() << "Expected a value in the range [0..1].";
       out.AddNote() << "Provided: " << concealFactor;
       out.AddNote() << "Using Value: 1";
@@ -4642,7 +4645,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, Zone, 1, "WsfZone",
    }
    else
    {
-      auto out = ut::log::warning() << "Could not find zone.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPTPLAT_NO_ZONE);
       out.AddNote() << "Zone: " << aVarArgs[0].GetString();
       aReturnVal.SetPointer(new UtScriptRef(nullptr, aReturnClassPtr, UtScriptRef::cMANAGE));
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -116,7 +116,9 @@ void wizard::Environment::UpdateMenus()
    {
       PopulateRecents();
 
-      QAction* open = new QAction("Open Project...", file);
+      // 二次开发（i18n）：动作文本 tr() 化；补 objectName 查找键（FileOpen 按 objectName 路由，防止翻译后 text 比较失配）
+      QAction* open = new QAction(tr("Open Project..."), file);
+      open->setObjectName("FileOpenProjectAction");
       connect(open, &QAction::triggered, this, &Environment::FileOpen);
       file->insertAction(*file->actions().begin(), open);
       file->addSeparator();
@@ -132,7 +134,8 @@ void wizard::Environment::PopulateRecents()
       QMenu* recent = file->findChild<QMenu*>("Open Recent");
       if (!recent)
       {
-         recent = new QMenu("Open Recent", file);
+         // 二次开发（i18n）：菜单标题 tr() 化；下方 setObjectName 保留英文查找键（findChild 通道不受翻译影响）
+         recent = new QMenu(tr("Open Recent"), file);
          recent->setObjectName("Open Recent");
          file->insertMenu(*file->actions().begin(), recent);
       }
@@ -151,7 +154,7 @@ void wizard::Environment::PopulateRecents()
       }
       if (rlist.isEmpty())
       {
-         auto* action = recent->addAction("(no recent files)");
+         auto* action = recent->addAction(tr("(no recent files)"));
          action->setEnabled(false);
       }
    }
@@ -191,16 +194,17 @@ bool wizard::Environment::LoadScenario(const QStringList& aFiles)
          path.MakeFullPath();
          if (path.Stat() == UtPath::cSTAT_ERROR)
          {
-            QString message = "Could not find file: " + QString::fromStdString(path.GetSystemPath()) +
-                              ".\nChoose Unlist to remove from your recent list or OK to create.";
-            QMessageBox* box = new QMessageBox(QString("File not found"),
+            // 二次开发（i18n）：对话框文本 tr() 化，动态拼接参数化（上下文 wizard::Environment）
+            QString message = tr("Could not find file: %1.\nChoose Unlist to remove from your recent list or OK to create.")
+                                 .arg(QString::fromStdString(path.GetSystemPath()));
+            QMessageBox* box = new QMessageBox(tr("File not found"),
                                                message,
                                                QMessageBox::Question,
                                                QMessageBox::Ok,
                                                QMessageBox::Discard,
                                                QMessageBox::NoButton,
                                                wkfEnv.GetMainWindow());
-            box->button(QMessageBox::Discard)->setText("Unlist");
+            box->button(QMessageBox::Discard)->setText(tr("Unlist"));
             int b = box->exec();
             delete box;
             if (b == QMessageBox::Discard)
@@ -256,10 +260,11 @@ void wizard::Environment::FileOpen()
    QAction* sender = dynamic_cast<QAction*>(QObject::sender());
    if (!ProjectWorkspace::Instance()->GetExecutions().empty())
    {
+      // 二次开发（i18n）：警告框文本 tr() 化
       if (QMessageBox::Yes ==
           QMessageBox::warning(nullptr,
-                               "Wizard Debugger still running",
-                               "Opening a new project will cause the current run to stop. Do you wish to continue?",
+                               tr("Wizard Debugger still running"),
+                               tr("Opening a new project will cause the current run to stop. Do you wish to continue?"),
                                QMessageBox::Yes,
                                QMessageBox::No))
       {
@@ -270,13 +275,15 @@ void wizard::Environment::FileOpen()
          return;
       }
    }
-   if ((nullptr == sender) || (sender->text() == "Open Project..."))
+   // 二次开发（i18n）：路由比较改用 objectName 查找键（动作文本已翻译，原 text 比较会失配）
+   if ((nullptr == sender) || (sender->objectName() == "FileOpenProjectAction"))
    {
+      // 二次开发（i18n）：文件选择对话框标题与过滤器 tr() 化
       QStringList files =
          QFileDialog::getOpenFileNames(wkfEnv.GetMainWindow(),
-                                       "Select Files",
+                                       tr("Select Files"),
                                        "",
-                                       "AFSIM Input(*.afproj *.txt);; AFSIM Project(*.afproj);; All Files (*.*)");
+                                       tr("AFSIM Input(*.afproj *.txt);; AFSIM Project(*.afproj);; All Files (*.*)"));
       if (!files.isEmpty())
       {
          if (ProjectWorkspace::Instance()->RequestClose())

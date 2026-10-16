@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtException.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfArticulatedPart.hpp"
 #include "WsfPlatform.hpp"
@@ -142,8 +144,8 @@ bool WsfEquatorialFieldOfView::GetCuedAzElPlatformLat(double& aCuedAz, double& a
 
    if (!GetArticulatedPart()->GetActualCuedOrientation(aCuedAz, aCuedEl))
    {
-      ut::log::warning()
-         << "WsfArticulatedPart not able to give current cue for articulated part using equatorial field of view.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_EQFOV_NO_CUE, {});
       return false;
    }
 

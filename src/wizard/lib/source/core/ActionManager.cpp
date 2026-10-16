@@ -393,55 +393,56 @@ void wizard::ActionManager::AppendEditActions(QMenu* aMenuPtr)
 
 void wizard::ActionManager::BuildUpTitleBarMenu(QMenu& aMenu, Editor* aEditorPtr)
 {
+   // 二次开发（i18n）：编辑器标签页右键菜单动作文本 tr() 化（上下文 wizard::ActionManager）
    if (aEditorPtr->document()->isModified())
    {
-      QAction* fileSave = new QAction(QIcon::fromTheme("disk"), "Save File", &aMenu);
+      QAction* fileSave = new QAction(QIcon::fromTheme("disk"), tr("Save File"), &aMenu);
       connect(fileSave, &QAction::triggered, [aEditorPtr]() { aEditorPtr->GetSource()->Save(); });
       aMenu.addAction(fileSave);
    }
-   QAction* fileSaveAs = new QAction(QString("Save File As..."), &aMenu);
+   QAction* fileSaveAs = new QAction(tr("Save File As..."), &aMenu);
    connect(fileSaveAs, &QAction::triggered, [aEditorPtr]() { aEditorPtr->GetSource()->SaveAs(); });
    aMenu.addAction(fileSaveAs);
    aMenu.addSeparator();
-   QAction* filePrint = new QAction(QString("Print..."), &aMenu);
+   QAction* filePrint = new QAction(tr("Print..."), &aMenu);
    connect(filePrint, &QAction::triggered, [aEditorPtr]() { aEditorPtr->PrintFile(); });
    aMenu.addAction(filePrint);
    aMenu.addSeparator();
-   QAction* findInclude = new QAction(QString("Find Include Locations..."), &aMenu);
+   QAction* findInclude = new QAction(tr("Find Include Locations..."), &aMenu);
    connect(findInclude, &QAction::triggered, [aEditorPtr]() { aEditorPtr->GetSource()->FindIncludeLocations(); });
    aMenu.addAction(findInclude);
-   QAction* browseFolder = new QAction(QString("Browse Containing Folder..."), &aMenu);
+   QAction* browseFolder = new QAction(tr("Browse Containing Folder..."), &aMenu);
    connect(browseFolder, &QAction::triggered, [aEditorPtr]() { aEditorPtr->GetSource()->BrowseContainingFolder(); });
    aMenu.addAction(browseFolder);
-   QAction* renameFile = new QAction(QString("Rename File..."), &aMenu);
+   QAction* renameFile = new QAction(tr("Rename File..."), &aMenu);
    connect(renameFile, &QAction::triggered, [this, aEditorPtr]() { Rename(aEditorPtr); });
    aMenu.addAction(renameFile);
-   QAction* copyPath = new QAction(QString("Copy Full Path to Clipboard"), &aMenu);
+   QAction* copyPath = new QAction(tr("Copy Full Path to Clipboard"), &aMenu);
    connect(copyPath, &QAction::triggered, [aEditorPtr]() { aEditorPtr->GetSource()->CopyPathToClipboard(); });
    aMenu.addAction(copyPath);
    aMenu.addSeparator();
-   QAction* closeEditor = new QAction(QString("Close Editor"), &aMenu);
+   QAction* closeEditor = new QAction(tr("Close Editor"), &aMenu);
    connect(closeEditor, &QAction::triggered, [aEditorPtr]() { aEditorPtr->close(); });
    aMenu.addAction(closeEditor);
-   QAction* closeAllEditors = aMenu.addAction("Close All Editors");
+   QAction* closeAllEditors = aMenu.addAction(tr("Close All Editors"));
    connect(closeAllEditors, &QAction::triggered, this, &ActionManager::CloseAll);
-   QAction* closeAllBut = new QAction(QString("Close All Other Editors"), &aMenu);
+   QAction* closeAllBut = new QAction(tr("Close All Other Editors"), &aMenu);
    connect(closeAllBut, &QAction::triggered, [this, aEditorPtr]() { CloseAllBut(aEditorPtr); });
    aMenu.addAction(closeAllBut);
-   QAction* closeAllLeft = new QAction(QString("Close All Editors to the Left"), &aMenu);
+   QAction* closeAllLeft = new QAction(tr("Close All Editors to the Left"), &aMenu);
    connect(closeAllLeft, &QAction::triggered, [this, aEditorPtr]() { CloseAllTabsLeft(aEditorPtr); });
    aMenu.addAction(closeAllLeft);
-   QAction* closeAllRight = new QAction(QString("Close All Editors to the Right"), &aMenu);
+   QAction* closeAllRight = new QAction(tr("Close All Editors to the Right"), &aMenu);
    connect(closeAllRight, &QAction::triggered, [this, aEditorPtr]() { CloseAllTabsRight(aEditorPtr); });
    aMenu.addAction(closeAllRight);
    aMenu.addSeparator();
-   QAction* openProjectStartup = new QAction(QString("Open Project Startup File(s)"), &aMenu);
+   QAction* openProjectStartup = new QAction(tr("Open Project Startup File(s)"), &aMenu);
    connect(openProjectStartup, &QAction::triggered, this, &ActionManager::OpenProjectStartup);
    aMenu.addAction(openProjectStartup);
-   QAction* openFile = new QAction(QString("Open File"), &aMenu);
+   QAction* openFile = new QAction(tr("Open File"), &aMenu);
    connect(openFile, &QAction::triggered, this, &ActionManager::OpenFile);
    aMenu.addAction(openFile);
-   QAction* createFile = new QAction(QString("Create New File"), &aMenu);
+   QAction* createFile = new QAction(tr("Create New File"), &aMenu);
    connect(createFile, &QAction::triggered, this, &ActionManager::NewFile);
    aMenu.addAction(createFile);
 }
@@ -462,26 +463,27 @@ void wizard::ActionManager::BuildUpProjectContextMenu(QMenu& aMenu)
 
 void wizard::ActionManager::BuildUpTextSourceContextMenu(QMenu& aMenu, TextSource* aSource, int aMainFile)
 {
+   // 二次开发（i18n）：文本编辑器右键菜单动作文本 tr() 化（上下文 wizard::ActionManager）
    if (aSource->IsModified())
    {
-      QAction* fileSave = new QAction(QIcon::fromTheme("disk"), "Save File", &aMenu);
+      QAction* fileSave = new QAction(QIcon::fromTheme("disk"), tr("Save File"), &aMenu);
       connect(fileSave, &QAction::triggered, [aSource]() { aSource->Save(); });
       aMenu.addAction(fileSave);
    }
-   QAction* fileSaveAs = new QAction(QString("Save File As..."), &aMenu);
+   QAction* fileSaveAs = new QAction(tr("Save File As..."), &aMenu);
    connect(fileSaveAs, &QAction::triggered, [aSource]() { aSource->SaveAs(); });
    aMenu.addAction(fileSaveAs);
    aMenu.addSeparator();
-   QAction* copyPath = new QAction(QString("Copy Full Path to Clipboard"), &aMenu);
+   QAction* copyPath = new QAction(tr("Copy Full Path to Clipboard"), &aMenu);
    connect(copyPath, &QAction::triggered, [aSource]() { aSource->CopyPathToClipboard(); });
    aMenu.addAction(copyPath);
-   QAction* findInclude = new QAction(QString("Find Include Locations..."), &aMenu);
+   QAction* findInclude = new QAction(tr("Find Include Locations..."), &aMenu);
    connect(findInclude, &QAction::triggered, [aSource]() { aSource->FindIncludeLocations(); });
    aMenu.addAction(findInclude);
-   QAction* renameFile = new QAction(QString("Rename File..."), &aMenu);
+   QAction* renameFile = new QAction(tr("Rename File..."), &aMenu);
    connect(renameFile, &QAction::triggered, [this, aSource]() { Rename(aSource); });
    aMenu.addAction(renameFile);
-   QAction* browseFolder = new QAction(QString("Browse Containing Folder..."), &aMenu);
+   QAction* browseFolder = new QAction(tr("Browse Containing Folder..."), &aMenu);
    connect(browseFolder, &QAction::triggered, [aSource]() { aSource->BrowseContainingFolder(); });
    aMenu.addAction(browseFolder);
 

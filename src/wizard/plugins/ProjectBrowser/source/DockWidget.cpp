@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -246,12 +246,13 @@ void ProjectBrowser::DockWidget::ContextEvent(const QModelIndex& aIndex, QPoint 
       if (itemPtr->IsDir())
       {
          QMenu    menu;
-         QAction* collapsePtr = menu.addAction("Collapse All");
-         QAction* expandPtr   = menu.addAction("Expand All");
+         QAction* collapsePtr = menu.addAction(tr("Collapse All"));
+         QAction* expandPtr   = menu.addAction(tr("Expand All"));
          menu.addSeparator();
 
-         QAction* browsePtr         = menu.addAction("Browse...");
-         QAction* newFileActionPtr  = menu.addAction("New File...");
+         // 二次开发（i18n）：项目浏览器右键菜单文本 tr() 化（上下文 ProjectBrowser::DockWidget）
+         QAction* browsePtr         = menu.addAction(tr("Browse..."));
+         QAction* newFileActionPtr  = menu.addAction(tr("New File..."));
          QAction* removeFromProject = nullptr;
 
          // Don't allow removal of project directory
@@ -259,7 +260,7 @@ void ProjectBrowser::DockWidget::ContextEvent(const QModelIndex& aIndex, QPoint 
          if (!itemParentPtr->IsDir() && (itemPtr->GetItemIndex() != 0))
          {
             menu.addSeparator();
-            removeFromProject = menu.addAction("Remove Directory from Project");
+            removeFromProject = menu.addAction(tr("Remove Directory from Project"));
          }
 
          QAction* actionPtr = menu.exec(aPos);
@@ -314,8 +315,8 @@ void ProjectBrowser::DockWidget::ContextEvent(const QModelIndex& aIndex, QPoint 
       else if (itemPtr->IsExternal() || itemPtr->IsExternalDir())
       {
          QMenu    menu;
-         QAction* collapsePtr = menu.addAction("Collapse All");
-         QAction* expandPtr   = menu.addAction("Expand All");
+         QAction* collapsePtr = menu.addAction(tr("Collapse All"));
+         QAction* expandPtr   = menu.addAction(tr("Expand All"));
          menu.addSeparator();
 
          if (itemPtr->IsExternal())
@@ -335,8 +336,9 @@ void ProjectBrowser::DockWidget::ContextEvent(const QModelIndex& aIndex, QPoint 
                         menu.addSeparator();
                         addSep = false;
                      }
+                     // 二次开发（i18n）：动态拼接串 tr() 参数化
                      QString actionStr =
-                        QString("Add Directory \"%1\" to Project").arg(QString::fromStdString(path.GetSystemPath()));
+                        tr("Add Directory \"%1\" to Project").arg(QString::fromStdString(path.GetSystemPath()));
                      auto lambdaVar = mProjectPtr;
                      QObject::connect(menu.addAction(actionStr),
                                       &QAction::triggered,

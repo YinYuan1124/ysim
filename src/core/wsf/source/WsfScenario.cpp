@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 #include "UtInputBlock.hpp"
 #include "UtInputFile.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptEnvironment.hpp"
 #include "UtWallClock.hpp"
@@ -924,7 +926,8 @@ void WsfScenario::SetInitialRunNumber(unsigned int aInitialRunNumber)
    if ((seedListSize != 0) && (mInitialRunNumber > seedListSize))
    {
       mInitialRunNumber = seedListSize;
-      auto out          = ut::log::warning() << "Truncating initial_run_number to size of random_seeds list.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out          = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCN_TRUNC_INIT_RUN, {});
       out.AddNote() << "New initial_run_number: " << mInitialRunNumber;
    }
 }
@@ -939,7 +942,8 @@ void WsfScenario::SetFinalRunNumber(unsigned int aFinalRunNumber)
    {
       mFinalRunNumber = seedListSize;
 
-      auto out = ut::log::warning() << "Truncating final_run_number to size of random_seeds list.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCN_TRUNC_FINAL_RUN, {});
       out.AddNote() << "New final_run_number: " << mFinalRunNumber;
    }
 }
@@ -1221,17 +1225,18 @@ bool WsfScenario::AddInputPlatform(std::unique_ptr<WsfPlatform> aPlatformPtr)
    bool ok = false;
    if (aPlatformPtr == nullptr)
    {
-      ut::log::warning() << "WsfScenario: Attempting to add a null platform pointer.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SCN_NULL_PLATFORM, {});
    }
    else if (find(mInputPlatforms.begin(), mInputPlatforms.end(), aPlatformPtr) != mInputPlatforms.end())
    {
-      auto out = ut::log::warning() << "WsfScenario: Attempting to add the same platform twice.";
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCN_ADD_TWICE, {});
       out.AddNote() << "Name: " << aPlatformPtr->GetName();
       out.AddNote() << "Index: " << aPlatformPtr->GetIndex();
    }
    else if (aPlatformPtr->GetNameId() == nullptr)
    {
-      auto out = ut::log::warning() << "WsfScenario: Attempting to add a platform that does not have a name.";
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCN_NO_NAME, {});
       out.AddNote() << "Pointer: " << aPlatformPtr.get();
    }
    else

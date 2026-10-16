@@ -388,13 +388,17 @@ bool WsfWeapon::ProcessInput(UtInput& aInput)
    else if (command == "fire_inhibit_while_reloading")
    {
       mInhibitWhileReloading = true;
-      auto out               = ut::log::warning() << "'fire_inhibit_while_reloading' has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cmd", "fire_inhibit_while_reloading"}};
+      auto out               = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WEAP_INHIBIT_DEP, args);
       out.AddNote() << "Use 'inhibit_while_reloading true'.";
    }
    else if (command == "no_fire_inhibit_while_reloading")
    {
       mInhibitWhileReloading = false;
-      auto out               = ut::log::warning() << "'no_fire_inhibit_while_reloading' has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cmd", "no_fire_inhibit_while_reloading"}};
+      auto out               = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WEAP_INHIBIT_DEP, args);
       out.AddNote() << "Use 'inhibit_while_reloading false'.";
    }
    else if (command == "ifc_enabled")

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtEntity.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringUtil.hpp"
 #include "UtVec3.hpp"
 #include "WsfEM_Util.hpp"
@@ -91,7 +93,8 @@ bool WsfBistaticSig::Initialize()
       if (mStates[stateIndex].mPolarization[WsfEM_Types::cPOL_DEFAULT].empty())
       {
          ok       = false;
-         auto out = ut::log::warning() << "The 'default' polarization does not exist for bistatic state.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_BISTATIC_NO_DEF_POL);
          out.AddNote() << "State: " << mStates[stateIndex].mStateId;
       }
       else
@@ -113,8 +116,8 @@ bool WsfBistaticSig::Initialize()
             if (!table.mTablePtr->Validate(table.mTablePtr->mTgtToXmtrAz.GetSize(), table.mTablePtr->mTgtToXmtrEl.GetSize()))
             {
                ok &= false;
-               auto out = ut::log::warning() << "Bistatic signature state does not have the required minimum of at "
-                                                "least two azimuth/elevation sets defined.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_BISTATIC_MIN_AZEL);
                out.AddNote() << "State: " << mStates[stateIndex].mStateId;
                out.AddNote() << "Polarization: "
                              << WsfEM_Util::EnumToString(static_cast<WsfEM_Types::Polarization>(polarization));

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include "GenI.hpp"
 #include "GenO.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 WsfXIO_UDP_Header::WsfXIO_UDP_Header(int aVersionID)
    : mXIO_Version(0xfeedbeef ^ aVersionID)
@@ -53,7 +55,8 @@ bool WsfXIO_UDP_Header::ReadHeader(GenBuffer& aIO, int& aPacketID, int& aPacketL
    if (!valid && !mReceivedInvalidPacket)
    {
       mReceivedInvalidPacket = true;
-      auto out               = ut::log::warning() << "xio_interface: Received PDU with invalid version.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out               = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_XIO_PDU_BAD_VERSION);
       out.AddNote() << "XIO versions may not match.";
    }
    return valid;

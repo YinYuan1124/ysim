@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfRadarSignature.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptClassDefine.hpp"
@@ -174,7 +176,8 @@ float WsfRadarSignature::GetValue(WsfPlatform*              aPlatformPtr,
    {
       // Signature not defined... use the default signature.
       { // RAII block
-         auto out = ut::log::warning() << "Undefined radar signature.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_RADARSIG_UNDEF, {});
          out.AddNote() << "Platform: " << aPlatformPtr->GetName();
          out.AddNote() << "Platform Type: " << aPlatformPtr->GetType();
          out.AddNote() << "Using default.";
@@ -218,7 +221,8 @@ float WsfRadarSignature::GetValue(WsfPlatform* aPlatformPtr,
    {
       // Signature not defined... use the default signature.
       { // RAII block
-         auto out = ut::log::warning() << "Undefined radar signature.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_RADARSIG_UNDEF, {});
          out.AddNote() << "Platform: " << aPlatformPtr->GetName();
          out.AddNote() << "Platform Type: " << aPlatformPtr->GetType();
          out.AddNote() << "Using default.";

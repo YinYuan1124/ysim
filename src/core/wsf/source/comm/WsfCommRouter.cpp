@@ -144,7 +144,8 @@ bool Router::Initialize(double aSimTime)
    mNetworkManager = GetSimulation()->GetCommNetworkManager();
    if (!mNetworkManager)
    {
-      auto out = ut::log::warning() << "Missing network manager.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTER_NO_NETMGR);
       out.AddNote() << "Router: " << GetName();
       return false;
    }
@@ -184,7 +185,8 @@ void Router::Setup()
       mGateway.mAddress         = Address();
       mGateway.mGatewayCommName = std::string();
 
-      auto out = ut::log::warning() << "Invalid gateway set for platform.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTER_BAD_GATEWAY);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Router: " << GetName();
       out.AddNote()
@@ -318,10 +320,9 @@ bool Router::ProcessInput(UtInput& aInput)
    // legacy comm framework behavior. This should be removed in AFSIM 3.0.
    else if (command == "off" || command == "non_operational" || command == "broken" || command == "dead")
    {
-      ut::log::warning()
-         << "The " << command << " command is not supported for router objects. All routers are "
-         << "required to be operational by default to support legacy AFSIM behavior. Disabling/turning off the router "
-         << "is still supported via script method usage after instantiation in the simulation.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTER_CMD_NOT_SUPPORTED, args);
    }
    else if (WsfPlatformPart::ProcessInput(aInput))
    {
@@ -485,7 +486,8 @@ bool Router::RemoveLink(double             aSimTime,
    //! then we will provide a warning and clear the gateway, as it is no longer viable.
    if (mGateway.mAddress == aDestination)
    {
-      auto out = ut::log::warning() << "Router no longer has a gateway due to loss of connectivity with the gateway.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTER_LOST_GATEWAY);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Router: " << GetName();
 
@@ -726,7 +728,8 @@ void Router::SetGateway(const Address& aAddress)
 
    if (!ValidateGateway())
    {
-      auto out = ut::log::warning() << "Router cannot change gateway.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTER_CANNOT_CHANGE_GW);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Router: " << GetName();
       out.AddNote() << "Old Address: " << prevGateway.mAddress;
@@ -908,7 +911,8 @@ bool Router::Send(double aSimTime, SendData& aData)
       // Check TTL limit.
       if (message.GetTraceRoute().size() >= message.GetTTL())
       {
-         auto out = ut::log::warning() << "A message exceeded TTL and has been dropped.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTER_TTL_EXCEEDED);
          out.AddNote() << "Sent From: " << sourceAddress;
          out.AddNote() << "Sent To: " << destinationAddress;
          return false;

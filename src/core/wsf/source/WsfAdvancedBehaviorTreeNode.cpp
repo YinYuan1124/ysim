@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtInputBlock.hpp"
 #include "UtInputString.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtPath.hpp"
 #include "UtRandom.hpp"
@@ -111,8 +113,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
    }
    else
    {
-      ut::log::warning() << "CreateSharedBlackboard: Could not create the shared blackboard '"
-                         << aVarArgs[0].GetString() << "', it already exists!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"name", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_CREATE_SHARED_BB, args);
    }
 }
 
@@ -120,8 +123,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass, WsfAdvancedBehav
 {
    if (!aObjectPtr->GetBlackboard()->Delete(aVarArgs[0].GetString()))
    {
-      ut::log::warning() << "DeleteBlackboardVar: Could not delete the blackboard var '" << aVarArgs[1].GetString()
-                         << "', it doesn't exist!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"var", aVarArgs[1].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_DELETE_BB_VAR, args);
    }
 }
 
@@ -137,14 +141,16 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
    {
       if (!sharedBB->Delete(aVarArgs[1].GetString()))
       {
-         ut::log::warning() << "DeleteSharedBlackboardVar: Could not delete var '" << aVarArgs[1].GetString()
-                            << "' from shared blackboard '" << aVarArgs[0].GetString() << "', it doesn't exist!";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"var", aVarArgs[1].GetString()}, {"board", aVarArgs[0].GetString()}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_ABT_DEL_SBB_VAR_FROM, args);
       }
    }
    else
    {
-      ut::log::warning() << "DeleteSharedBlackboardVar: Could not delete var '" << aVarArgs[1].GetString()
-                         << "', the shared blackboard '" << aVarArgs[0].GetString() << "' doesn't exist!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"var", aVarArgs[1].GetString()}, {"board", aVarArgs[0].GetString()}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_ABT_DEL_SBB_VAR_NO_SBB, args);
    }
 }
 
@@ -204,7 +210,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass, WsfAdvancedBehav
    }
    else
    {
-      ut::log::warning() << "GetBlackboardVar: The blackboard var '" << aVarArgs[0].GetString() << "' doesn't exist!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"var", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_GET_BB_VAR, args);
       aReturnVal.SetPointer(new UtScriptRef(nullptr, aReturnClassPtr));
    }
 }
@@ -261,15 +269,17 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
       }
       else
       {
-         ut::log::warning() << "GetSharedBlackboardVar: Could not find the var '" << aVarArgs[1].GetString()
-                            << "' on the shared blackboard '" << aVarArgs[0].GetString() << "'.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"var", aVarArgs[1].GetString()}, {"board", aVarArgs[0].GetString()}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_ABT_GET_SBB_VAR_ON, args);
          aReturnVal.SetPointer(new UtScriptRef(nullptr, aReturnClassPtr));
       }
    }
    else
    {
-      ut::log::warning() << "GetSharedBlackboardVar: Could not find the var '" << aVarArgs[1].GetString()
-                         << "', the shared blackboard '" << aVarArgs[0].GetString() << "' doesn't exist!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         const ut::msg::Args args{{"var", aVarArgs[1].GetString()}, {"board", aVarArgs[0].GetString()}};
+         ut::msg::EmitWarning(ut::msg::MSG_W_ABT_GET_SBB_VAR_NO_SBB, args);
       aReturnVal.SetPointer(new UtScriptRef(nullptr, aReturnClassPtr));
    }
 }
@@ -358,8 +368,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
 {
    if (!aObjectPtr->GetTopRootNode()->GetOwningTree()->SharedBlackboardExists(aVarArgs[0].GetString()))
    {
-      ut::log::warning() << "SetSharedBlackboardVar: Shared blackboard '" << aVarArgs[0].GetString()
-                         << "' doesn't exist, creating it now...";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"board", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_SET_SBB_VAR_CREATE, args);
 
       aObjectPtr->GetTopRootNode()->GetOwningTree()->AddBlackboard(aVarArgs[0].GetString(),
                                                                    std::make_shared<WsfAttributeContainer>());
@@ -414,8 +425,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
 {
    if (!aObjectPtr->GetTopRootNode()->GetOwningTree()->SharedBlackboardExists(aVarArgs[0].GetString()))
    {
-      ut::log::warning() << "SetSharedBlackboardTrackVar: Shared blackboard '" << aVarArgs[0].GetString()
-                         << "' doesn't exist, creating it now...";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"board", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_SET_SBB_TRACKVAR_CREATE, args);
 
       aObjectPtr->GetTopRootNode()->GetOwningTree()->AddBlackboard(aVarArgs[0].GetString(),
                                                                    std::make_shared<WsfAttributeContainer>());
@@ -437,8 +449,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
 {
    if (!aObjectPtr->GetTopRootNode()->GetOwningTree()->SharedBlackboardExists(aVarArgs[0].GetString()))
    {
-      ut::log::warning() << "SetSharedBlackboardPlatformVar: Shared blackboard '" << aVarArgs[0].GetString()
-                         << "' doesn't exist, creating it now...";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"board", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_SET_SBB_PLATVAR_CREATE, args);
 
       aObjectPtr->GetTopRootNode()->GetOwningTree()->AddBlackboard(aVarArgs[0].GetString(),
                                                                    std::make_shared<WsfAttributeContainer>());
@@ -460,7 +473,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass, WsfAdvancedBehav
    }
    else
    {
-      ut::log::warning() << "ShareBlackboard: Could not share the blackboard '" << nodeName << "', it already exists!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"name", nodeName}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_SHARE_BB_DUP, args);
    }
 }
 
@@ -478,8 +493,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
    }
    else
    {
-      ut::log::warning() << "ShareBlackboard: Could not share the blackboard '" << aVarArgs[0].GetString()
-                         << "', it already exists!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"name", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_SHARE_BB_DUP, args);
    }
 }
 
@@ -507,8 +523,9 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptAdvancedBehaviorTreeNodeClass,
    }
    else
    {
-      ut::log::warning() << "SharedBlackboardVarExists: Could not find shared blackboard var '" << aVarArgs[1].GetString()
-                         << "', the shared blackboard '" << aVarArgs[0].GetString() << "' doesn't exist!";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"var", aVarArgs[1].GetString()}, {"board", aVarArgs[0].GetString()}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_ABT_SBBVAR_EXISTS_NO_SBB, args);
       aReturnVal.SetBool(false);
    }
 }

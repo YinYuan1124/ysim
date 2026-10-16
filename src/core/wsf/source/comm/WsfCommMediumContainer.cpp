@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfCommMediumContainer.hpp"
 
 #include "UtStringIdLiteral.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfCommMediumTypes.hpp"
 
 namespace wsf
@@ -108,7 +110,9 @@ bool Container::ProcessInput(UtInput& aInput)
             // parent instance. In such cases, usage of legacy input
             // results in an error. Provide feedback to the user to
             // aid in understanding why there is a failure.
-            auto out = ut::log::warning() << "Cannot set this command " << command << "at this scope.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            const ut::msg::Args args{{"command", command}};
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_MEDIUMCMD_WRONG_SCOPE, args);
             out.AddNote() << "A medium instance has already been added.";
             out.AddNote() << "Modify the medium directly, or remove the medium being added.";
             myCommand = false;

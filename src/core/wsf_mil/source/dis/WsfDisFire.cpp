@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include "DisIO.hpp"
 #include "UtLatPos.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtVec3.hpp"
@@ -203,7 +205,8 @@ int WsfDisFire::Process()
    }
    else
    {
-      ut::log::warning() << "WsfDisFire failed to initialize engagement object.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISFIRE_INIT_FAIL);
    }
    if (deleteWeaponEngagement)
    {

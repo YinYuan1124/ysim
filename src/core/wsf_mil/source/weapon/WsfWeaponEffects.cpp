@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtDCM.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtScriptContext.hpp"
 #include "UtScriptData.hpp"
@@ -195,14 +197,18 @@ bool WsfWeaponEffects::ProcessInput(UtInput& aInput)
    else if (command == "allow_incidental_damage") // NO_DOC | deprecated as of 2.9
    {
       mIncidentalDamageAllowed = true;
-      auto out                 = ut::log::warning() << "'allow_incidental_damage' has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cmd", "allow_incidental_damage"}};
+      auto out                 = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WFX_INCDMG_DEP, args);
       out.AddNote() << "Use 'incidental_damage_allowed true'.";
       out.AddNote() << "Location: " << aInput.GetLocation();
    }
    else if (command == "do_not_allow_incidental_damage") // NO_DOC | deprecated as of 2.9
    {
       mIncidentalDamageAllowed = false;
-      auto out                 = ut::log::warning() << "'do_not_allow_incidental_damage' has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cmd", "do_not_allow_incidental_damage"}};
+      auto out                 = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WFX_INCDMG_DEP, args);
       out.AddNote() << "Use 'incidental_damage_allowed false'.";
       out.AddNote() << "Location: " << aInput.GetLocation();
    }

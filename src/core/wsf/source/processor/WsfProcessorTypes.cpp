@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfProcessorTypes.hpp"
 
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComponentFactory.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfScenario.hpp"
@@ -44,8 +46,8 @@ public:
          auto proc      = aPlatform.GetComponentEntryByRole(cCOMPONENT_ROLE<WsfProcessor>(), procCount - 1);
          if (static_cast<WsfProcessor*>(proc)->GetType() == "WSF_TRACK_MANAGER")
          {
-            auto out = ut::log::warning() << "WSF_TRACK_MANAGER is deprecated and will be removed in a future release."
-                                          << " Use WSF_TRACK_PROCESSOR instead.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PROCTYPES_TM_DEP);
             out.AddNote() << "Location: " << aInput.GetLocation();
          }
       }
@@ -103,8 +105,8 @@ bool WsfProcessorTypes::DeferredLoadTypeP(UtInput& aInput, WsfObject*& aLoadedOb
    bool result = LoadTypeP(aInput, aLoadedObjectPtr);
    if (result && aLoadedObjectPtr->GetBaseType() == "WSF_TRACK_MANAGER")
    {
-      auto out = ut::log::warning() << "WSF_TRACK_MANAGER is deprecated and will be removed in a future release."
-                                    << " Use WSF_TRACK_PROCESSOR instead.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PROCTYPES_TM_DEP);
       out.AddNote() << "Location: " << aInput.GetLocation();
    }
    return result;

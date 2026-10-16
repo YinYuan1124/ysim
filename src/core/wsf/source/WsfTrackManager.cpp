@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInputBlock.hpp"
 #include "UtInputString.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtVec3.hpp"
 #include "WsfAttributeContainer.hpp"
@@ -318,7 +320,8 @@ bool WsfTrackManager::Initialize2(double aSimTime)
          else
          {
             // This should never fail, but just in case.
-            auto out = ut::log::warning() << "Could not initialize the hand-off track.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TM_HANDOFF_INIT_FAIL, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
          }

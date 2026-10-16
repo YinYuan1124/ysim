@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtMemory.hpp"
 #include "UtStringIdLiteral.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComm.hpp"
 #include "WsfComponentFactory.hpp"
 #include "WsfExplicitWeapon.hpp"
@@ -394,7 +396,8 @@ bool WsfWeaponTaskManager::AcquireResource(double aSimTime, WsfTask& aTask, cons
          }
          else
          {
-            auto out = ut::log::warning() << "Failed FireSalvo for track.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WTM_FIRESALVO_FAIL);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
             out.AddNote() << "Weapon: " << weaponPtr->GetName();
@@ -474,7 +477,8 @@ bool WsfWeaponTaskManager::ReleaseResource(double aSimTime, WsfTask& aTask)
             if (GetProcessor()->DebugEnabled())
             {
                { // RAII block
-                  auto out = ut::log::warning() << "Failed StopJamming for frequency.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WTM_STOPJAM_FREQ_FAIL);
                   out.AddNote() << "T = " << aSimTime;
                   out.AddNote() << "Platform: " << GetPlatform()->GetName();
                   out.AddNote() << "Weapon: " << weaponPtr->GetName();
@@ -486,7 +490,8 @@ bool WsfWeaponTaskManager::ReleaseResource(double aSimTime, WsfTask& aTask)
                   }
                }
                { // RAII block
-                  auto out = ut::log::warning() << "Failed StopJamming on Track Id.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WTM_STOPJAM_TRACK_FAIL);
                   out.AddNote() << "T = " << aSimTime;
                   out.AddNote() << "Platform: " << GetPlatform()->GetName();
                   out.AddNote() << "Weapon: " << weaponPtr->GetName();

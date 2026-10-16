@@ -825,7 +825,8 @@ void WsfDisInterface::AddShadowPlatform(double aSimTime, const WsfPlatform* aPla
 
       if (!GetSimulation().AddPlatform(aSimTime, shadowPtr))
       {
-         ut::log::warning() << "Unable to add shadow platform to simulation";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_DISIF_SHADOW_ADD_FAIL2);
          delete shadowPtr;
       }
       Dis::SetSite(saveSite);
@@ -834,7 +835,8 @@ void WsfDisInterface::AddShadowPlatform(double aSimTime, const WsfPlatform* aPla
    }
    else
    {
-      auto out = ut::log::warning() << "Unable to add shadow platform to simulation.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DISIF_SHADOW_ADD_FAIL);
       out.AddNote() << "Platform type " << aPlatformPtr->GetType() << " is not defined for this simulation.";
    }
 }
@@ -1369,8 +1371,8 @@ bool WsfDisInterface::RunFilterChecks(const DisPdu* aPduPtr)
                   }
                   else
                   {
-                     auto out = ut::log::warning()
-                                << "Platform specified for range filtering, does not (or, does no longer) exist.";
+                     // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                     auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DISIF_RANGE_FILTER_NO_PLATFORM);
                      out.AddNote() << "Platform: " << std::get<0>(mRangeFilteredPlatforms[platformNum]);
 
                      mRangeFilteredPlatforms.erase(mRangeFilteredPlatforms.begin() + platformNum);
@@ -3266,7 +3268,8 @@ void WsfDisInterface::ReceivedBadEntityState()
    ++mNullEntityIdCount;
    if (mNullEntityIdCount <= mMaxBadPDU_Count)
    {
-      auto out = ut::log::warning() << "Entity State PDU received with no entity ID. Ignored.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DISIF_NULL_ENTITY_ID);
       if (mNullEntityIdCount == mMaxBadPDU_Count)
       {
          out.AddNote() << "Future occurrences of this message will be suppressed.";

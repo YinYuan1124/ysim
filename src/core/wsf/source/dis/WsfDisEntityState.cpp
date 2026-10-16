@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -25,6 +25,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtVec3.hpp"
@@ -205,7 +207,8 @@ bool WsfDisEntityState::ContentsAreValid()
       }
       if (count <= mInterfacePtr->mMaxBadPDU_Count)
       {
-         auto out = ut::log::warning() << "WsfDisEntityState: Suspicious data in Entity State PDU.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ENTITYSTATE_SUSPICIOUS);
          out.AddNote() << "Entity: " << GetEntityId();
          out.AddNote() << "Location WCS: " << location[0] << ' ' << location[1] << ' ' << location[2];
          out.AddNote() << "Location Magnitude: " << UtVec3d::Magnitude(location) << " m";

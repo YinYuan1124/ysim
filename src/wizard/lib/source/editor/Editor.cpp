@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QCoreApplication>
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QPainter>
@@ -402,7 +403,8 @@ void wizard::Editor::PrintFile()
 {
    QPrinter     printer;
    QPrintDialog dialog(&printer, this);
-   dialog.setWindowTitle(tr("Print Document"));
+   // 二次开发（i18n）：Editor 无 Q_OBJECT（tr() 落 QPlainTextEdit 上下文），改显式上下文 translate 复活 ts 条目
+   dialog.setWindowTitle(QCoreApplication::translate("wizard::Editor", "Print Document"));
 
    if (dialog.exec() == QDialog::Accepted)
    {

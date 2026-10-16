@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtMath.hpp"
 #include "UtRandom.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAttributeContainer.hpp"
 #include "WsfFilter.hpp"
 #include "WsfFilterTypes.hpp"
@@ -344,7 +346,8 @@ bool WsfImageProcessor::ProcessMessage(double aSimTime, const WsfMessage& aMessa
    }
    else if (DebugEnabled())
    {
-      auto out = ut::log::warning() << "The WSF_IMAGE_PROCESSOR will not process.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_IMGPROC_NO_PROCESS);
       out.AddNote() << "Messages: " << aMessage.GetType();
    }
 

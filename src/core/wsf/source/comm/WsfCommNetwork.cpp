@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommNetworkManager.hpp"
 #include "WsfPlatform.hpp"
@@ -77,7 +79,8 @@ bool Network::InitializeLinkage(WsfSimulation& aSimulation)
       }
       else
       {
-         auto out = ut::log::warning() << "Address not found for network member.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMMNET_ADDR_NOT_FOUND);
          out.AddNote() << "Network: " << GetType();
          out.AddNote() << "Platform: " << names.mPlatformName;
          out.AddNote() << "Comm: " << names.mCommName;
@@ -95,7 +98,8 @@ bool Network::InitializeLinkage(WsfSimulation& aSimulation)
       }
       else
       {
-         auto out = ut::log::warning() << "Unassigned address used as network member. Skipping address.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMMNET_UNASSIGNED_ADDR);
          out.AddNote() << "Network: " << GetType();
          out.AddNote() << "Address: " << address;
       }
@@ -118,7 +122,8 @@ bool Network::InitializeLinkage(WsfSimulation& aSimulation)
       }
       else
       {
-         auto out = ut::log::warning() << "Named Link Members could not be found.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMMNET_NAMED_LINK_MISSING);
          out.AddNote() << "Network: " << GetType();
          out.AddNote() << "Source Platform: " << namePair.first.mPlatformName;
          out.AddNote() << "Source Comm: " << namePair.first.mCommName;
@@ -139,7 +144,8 @@ bool Network::InitializeLinkage(WsfSimulation& aSimulation)
       }
       else
       {
-         auto out = ut::log::warning() << "Address Link Members could not be found.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMMNET_ADDR_LINK_MISSING);
          out.AddNote() << "Network: " << GetType();
          out.AddNote() << "Source Address: " << linkAddress.first;
          out.AddNote() << "Destination Address: " << linkAddress.second;

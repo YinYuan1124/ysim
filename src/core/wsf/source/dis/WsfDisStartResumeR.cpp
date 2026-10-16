@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "DisPduEnums.hpp"
 #include "DisTime.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisAcknowledgeR.hpp"
 #include "dis/WsfDisUtil.hpp"
@@ -131,6 +133,8 @@ void WsfDisStartResumeR::TimedOut()
 {
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
-      ut::log::warning() << "WsfDisStartResumeR: Unhandled virtual TimedOut() call.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cls", "WsfDisStartResumeR"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_TIMEDOUT_UNHANDLED, args);
    }
 }

@@ -356,7 +356,8 @@ unsigned int WsfEW_Effect::ConvertCoherencyIdToMask(WsfStringId aCoherencyId)
    }
    else
    {
-      auto out = ut::log::warning() << "WsfEW_Effect::ConvertCoherencyIdToMask: Undefined coherency type string.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EFF_UNDEF_COH_STR);
       out.AddNote() << "Type String: " << typeStr;
    }
    return coherencyMask;

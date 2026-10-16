@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -23,6 +23,8 @@
 #include "DisPduEnums.hpp"
 #include "DisTransactionEnums.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "dis/WsfDisDataQueryR.hpp"
 #include "dis/WsfDisRecordQueryR.hpp"
 #include "dis/WsfDisSetDataR.hpp"
@@ -174,7 +176,8 @@ bool WsfDisDataR::ProcessResponseTo(DisPdu* aInitiatorPduPtr)
                if (print)
                {
                   // Okay. This should print before 'out' stream.
-                  auto warn = ut::log::warning() << "WsfDisDataR received unknown data reply.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto warn = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DATAR_UNKNOWN_REPLY);
                   warn.AddNote() << "ID: " << id;
                }
             }
@@ -224,7 +227,8 @@ bool WsfDisDataR::ProcessResponseTo(DisPdu* aInitiatorPduPtr)
                if (print)
                {
                   // Okay. This should print before 'out' stream.
-                  auto warn = ut::log::warning() << "WsfDisDataR: Received unparsed variable.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto warn = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DATAR_UNPARSED_VARIABLE);
                   warn.AddNote() << "ID: " << id;
                }
             }
@@ -233,7 +237,8 @@ bool WsfDisDataR::ProcessResponseTo(DisPdu* aInitiatorPduPtr)
          if (WsfDisUtil::DebugEnabled(mInterfacePtr) && (supplied != parsed))
          {
             // Okay. This should print before 'out' stream.
-            ut::log::warning() << "WsfDisDataR: Cannot interpret all returned values.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_DATAR_CANT_INTERPRET);
          }
       }
    }
@@ -244,7 +249,8 @@ bool WsfDisDataR::ProcessResponseTo(DisPdu* aInitiatorPduPtr)
       if (WsfDisUtil::DebugEnabled(mInterfacePtr))
       {
          // Okay. This should print before 'out' stream.
-         ut::log::warning() << "WsfDisDataR: Does not know what type of initiating PDU was received.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_DATAR_UNKNOWN_INITIATOR);
       }
    }
 
@@ -253,6 +259,7 @@ bool WsfDisDataR::ProcessResponseTo(DisPdu* aInitiatorPduPtr)
 
 bool WsfDisDataR::ProcessTimeAdvanceReport()
 {
-   ut::log::warning() << "WsfDisDataR: Unhandled method ProcessTimeAdvanceReport().";
+   // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+   ut::msg::EmitWarning(ut::msg::MSG_W_DATAR_TIMEADV_REPORT);
    return true;
 }

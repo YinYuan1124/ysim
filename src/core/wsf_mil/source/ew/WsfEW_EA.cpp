@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfEW_Effect.hpp"
 #include "WsfEW_FalseTargetEffect.hpp"
 #include "WsfEW_XmtrComponent.hpp"
@@ -176,8 +178,8 @@ bool WsfEW_EA::SelectTechnique(unsigned int aIndex, WsfEW_Effect::SystemFunction
          {
             if (mDebug)
             {
-               auto out = ut::log::warning() << "Select Technique Failed. Could not apply the technique at index due "
-                                                "to an incompatible system type.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_SEL_APPLY_IDX);
                out.AddNote() << "Index: " << aIndex;
                out.AddNote() << "System Type: " << aSystemFunction;
             }
@@ -188,8 +190,8 @@ bool WsfEW_EA::SelectTechnique(unsigned int aIndex, WsfEW_Effect::SystemFunction
       {
          if (mDebug)
          {
-            auto out = ut::log::warning()
-                       << "Select Technique Failed. Could not find a valid technique at index for system type.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_SEL_NO_VALID_IDX);
             out.AddNote() << "Index: " << aIndex;
             out.AddNote() << "System Type: " << aSystemFunction;
          }
@@ -200,7 +202,8 @@ bool WsfEW_EA::SelectTechnique(unsigned int aIndex, WsfEW_Effect::SystemFunction
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Select Technique Failed. Index too large.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_SEL_IDX_TOO_LARGE);
          out.AddNote() << "Index: " << aIndex;
          out.AddNote() << "Max Index: " << mTechniques.size();
       }
@@ -245,9 +248,10 @@ bool WsfEW_EA::SelectTechnique(WsfEW_Types::TechniqueId aId, WsfEW_Effect::Syste
       {
          if (mDebug)
          {
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
             auto logWarning =
                ut::log::warning()
-               << "Select Technique Failed. Could not apply technique due to an incompatible system type.";
+               << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_SEL_APPLY_AN);
             logWarning.AddNote() << "System Type: " << aSystemFunction;
             logWarning.AddNote() << "Technique" << techIter->second->GetName();
          }
@@ -258,7 +262,8 @@ bool WsfEW_EA::SelectTechnique(WsfEW_Types::TechniqueId aId, WsfEW_Effect::Syste
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Select Technique Failed. Could not find technique for system type.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_SEL_NOT_FOUND_ST);
          out.AddNote() << "Technique: " << aId;
          out.AddNote() << "System Type: " << aSystemFunction;
       }
@@ -305,8 +310,8 @@ bool WsfEW_EA::DeselectTechnique(unsigned int aIndex, WsfEW_Effect::SystemFuncti
          {
             if (mDebug)
             {
-               auto out = ut::log::warning() << "Deselect Technique Failed. Could not apply the technique at index due "
-                                                "to an incompatible system type.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_APPLY_IDX);
                out.AddNote() << "Technique: " << techIter->second->GetName();
                out.AddNote() << "Index: " << aIndex;
                out.AddNote() << "System Type: " << aSystemFunction;
@@ -318,8 +323,8 @@ bool WsfEW_EA::DeselectTechnique(unsigned int aIndex, WsfEW_Effect::SystemFuncti
       {
          if (mDebug)
          {
-            auto out = ut::log::warning()
-                       << "Deselect Technique Failed. Could not find a valid technique at index for system type.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_NO_VALID_ST);
             out.AddNote() << "Index: " << aIndex;
             out.AddNote() << "System Type: " << aSystemFunction;
          }
@@ -330,7 +335,8 @@ bool WsfEW_EA::DeselectTechnique(unsigned int aIndex, WsfEW_Effect::SystemFuncti
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Deselect Technique Failed. Index too large.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_IDX_TOO_LARGE);
          out.AddNote() << "Index: " << aIndex;
          out.AddNote() << "Max Index: " << mTechniques.size();
       }
@@ -377,8 +383,8 @@ bool WsfEW_EA::DeselectTechnique(WsfEW_Types::TechniqueId aId, WsfEW_Effect::Sys
       {
          if (mDebug)
          {
-            auto out = ut::log::warning()
-                       << "Deselect Technique Failed. Could not apply technique due to an incompatible system type.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_APPLY_FAIL);
             out.AddNote() << "Technique: " << techIter->second->GetName();
             out.AddNote() << "Id: " << aId;
             out.AddNote() << "System Type: " << aSystemFunction;
@@ -390,7 +396,8 @@ bool WsfEW_EA::DeselectTechnique(WsfEW_Types::TechniqueId aId, WsfEW_Effect::Sys
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "Deselect Technique Failed. Could not find technique.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EW_DESEL_NOT_FOUND);
          out.AddNote() << "Technique: " << aId;
          out.AddNote() << "System Type: " << aSystemFunction;
       }
@@ -452,7 +459,8 @@ bool WsfEW_EA::SetDeltaGainTechnique(double      aSimTime,
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "WsfEW_EA::SetDeltaGainTechnique. Unable to set modulation technique.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EA_SETDELTAGAIN_FAIL);
          out.AddNote() << "Technique: " << aTechniqueId;
       }
       return false;

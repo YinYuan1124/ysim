@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtInput.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptTypes.hpp"
 #include "WsfApplication.hpp"
 #include "WsfApplicationExtension.hpp"
@@ -842,7 +844,8 @@ WsfPlatform* WsfExtInterface::CreateExternalPlatform(const std::string& aPlatfor
       platformPtr = platformTypes.Clone(mDefaultPlatformTypeId);
       if (platformPtr == nullptr)
       {
-         auto out = ut::log::warning() << "Unable to clone platform.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXT_CLONE_FAIL);
          out.AddNote() << "Type: " << aPlatformType;
       }
    }
@@ -963,7 +966,8 @@ void WsfExtInterface::SelectEntityId(WsfPlatform* aPlatformPtr, uint16_t& aEntit
       // This shouldn't occur... but just in case it does...
       if (mActiveEntityIds.test(entity))
       {
-         auto out = ut::log::warning() << "Preassigned entity ID already in use.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXT_ENTITYID_INUSE);
          out.AddNote() << "Platform: " << aPlatformPtr->GetName();
          out.AddNote() << "Entity ID: " << entity;
          out.AddNote() << "An available ID will be used instead.";

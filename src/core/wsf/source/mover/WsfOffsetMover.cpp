@@ -106,7 +106,8 @@ bool WsfOffsetMover::Initialize(double aSimTime)
    bool ok = WsfMover::Initialize(aSimTime);
    if (mAttachmentType == cAT_TETHER)
    {
-      auto out = ut::log::warning() << "'attachment_type tether' is still in development.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OFFSETMOVER_TETHER);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Mover: " << GetName();
       out.AddNote() << "Use at your own risk.";

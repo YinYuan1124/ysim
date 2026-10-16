@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -29,6 +29,8 @@
 #include "UtEllipsoidalEarth.hpp"
 #include "UtEntity.hpp"
 #include "UtInput.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtInputBlock.hpp"
 #include "UtInputBuffer.hpp"
 #include "UtLatPos.hpp"
@@ -1533,8 +1535,8 @@ bool WsfRoute::ProcessNavigationInput(UtInput& aInput)
       {
          if (command == "transform_route")
          {
-            auto out = ut::log::warning()
-                       << "transform_route has been deprecated and will be removed, use insert_route instead.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ROUTE_TRANSFORM_DEP);
             out.AddNote() << "Location: " << aInput.GetLocation();
          }
          std::string routeName;

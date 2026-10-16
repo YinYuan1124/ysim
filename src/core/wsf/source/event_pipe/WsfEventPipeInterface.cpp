@@ -3855,10 +3855,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptEventPipeClass, WsfEventPipeInterface, Record_1
 
    if (!sWarningReported)
    {
-      auto msg =
-         ut::log::warning() << "WsfEventPipe.Record with the sim_time argument has been deprecated and will be removed "
-                            << "in a future release.  Use WsfEventPipe.Record without the sim_time argument instead."
-                            << "This issue may occur multiple places in the scenario.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto msg = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EVENTPIPE_RECORD_DEP);
 
       auto note = msg.AddNote() << "Callstack:";
       UtScriptExecutor::PrintAllCallStacks(note, true);

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfAttributeContainer.hpp"
 #include "WsfException.hpp"
@@ -328,19 +330,25 @@ bool WsfLaserWeapon::ProcessInput(UtInput& aInput)
    else if ((command == "quantity") || (command == "maximum_quantity") || (command == "reload_increment") ||
             (command == "reload_inventory") || (command == "reload_threshold"))
    {
-      ut::log::warning() << "The " << command << " command is incompatible with WSF_LASER_WEAPON (ignored).";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}, {"weapontype", "WSF_LASER_WEAPON"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_WEAP_CMD_INCOMPAT, args);
       double dummy;
       aInput.ReadValue(dummy);
    }
    else if (command == "reload_time")
    {
-      ut::log::warning() << "The reload_time command is incompatible with WSF_LASER_WEAPON (ignored).";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", "reload_time"}, {"weapontype", "WSF_LASER_WEAPON"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_WEAP_CMD_INCOMPAT, args);
       WsfRandomVariable dummy;
       dummy.ProcessInput(aInput, UtInput::cTIME);
    }
    else if (command == "inhibit_while_reloading")
    {
-      ut::log::warning() << "The inhibit_while_reloading command is incompatible with WSF_LASER_WEAPON (ignored).";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", "inhibit_while_reloading"}, {"weapontype", "WSF_LASER_WEAPON"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_WEAP_CMD_INCOMPAT, args);
       aInput.ReadBool();
    }
    else

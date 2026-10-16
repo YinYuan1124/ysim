@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInputBlock.hpp"
 #include "UtInputString.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMatrix.hpp"
 #include "UtStringUtil.hpp"
 
@@ -163,7 +165,8 @@ bool WsfAttributeContainer::ProcessInput(UtInput& aInput)
       }
       else if (tag == "attribute") // deprecated
       {
-         auto out = ut::log::warning() << "WsfAttributeContainer: Input command 'attribute' is deprecated.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_ATTR_ATTRIBUTE_DEP, {});
          out.AddNote() << "Please remove, keeping only the type name.";
          out.Send();
          aInput.ReadCommand(tag); // Advance the input stream past "attribute"

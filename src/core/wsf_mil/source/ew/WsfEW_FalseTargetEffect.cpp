@@ -306,7 +306,8 @@ void WsfEW_FalseTargetEffect::UpdateJammerPulseDensity(WsfEM_Xmtr* aJammerXmtrPt
          }
          else
          {
-            auto out = ut::log::warning() << "WSF_FT_EFFECT: Pulsewidth not specified on radar.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_FT_NO_PULSEWIDTH);
             out.AddNote() << "Radar: " << aRadarXmtrPtr->GetArticulatedPart()->GetName();
          }
 

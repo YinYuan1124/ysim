@@ -1247,7 +1247,8 @@ void WsfSAR_Sensor::StripModeBegin(double aSimTime, SAR_Mode& aMode, Geometry& a
    double d_a_min = 0.8 * wavelength / beamwidth;
    if (aMode.mCurrentAzimuthResolution < d_a_min)
    {
-      auto out = ut::log::warning() << "Requested/computed resolution is less than approximate minimum.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SAR_MIN_RES);
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Sensor: " << GetName();
@@ -1633,7 +1634,8 @@ bool WsfSAR_Sensor::SAR_Mode::ProcessInput(UtInput& aInput)
    }
    else if (command == "angular_resolution") // DEPRECATED
    {
-      auto out = ut::log::warning() << "WSF_SAR_SENSOR: angular_resolution has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SAR_ANGRES_DEP);
       out.AddNote() << "Use the 'resolution' or 'dwell_time' commands.";
       aInput.ReadValueOfType(mAngularResolution, UtInput::cANGLE);
       aInput.ValueGreater(mAngularResolution, 0.0);

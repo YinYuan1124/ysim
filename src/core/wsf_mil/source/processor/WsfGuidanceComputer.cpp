@@ -246,7 +246,8 @@ bool WsfGuidanceComputer::Initialize(double aSimTime)
    mMoverPtr = dynamic_cast<WsfGuidedMoverBase*>(GetPlatform()->GetMover());
    if (mMoverPtr == nullptr)
    {
-      ut::log::warning() << "Mover is of the incorrect type. Turning guidance off.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_GUIDANCE_BAD_MOVER);
       SetInitiallyTurnedOn(false);
    }
    else

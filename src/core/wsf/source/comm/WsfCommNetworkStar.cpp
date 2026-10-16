@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfCommNetworkManager.hpp"
 #include "WsfSimulation.hpp"
 #include "script/WsfScriptContext.hpp"
@@ -79,7 +81,8 @@ bool NetworkStar::InitializeLinkageP(WsfSimulation& aSimulation)
    {
       //! The user may later set the hub, but for now, we can't initialize any links since we
       //! don't have a hub. Warn the user, but continue.
-      auto out = ut::log::warning() << "Star network does not have a hub.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_NETSTAR_NO_HUB);
       out.AddNote() << "Network: " << GetType();
       out.AddNote() << "This network will not have any initial connectivity.";
       return true;

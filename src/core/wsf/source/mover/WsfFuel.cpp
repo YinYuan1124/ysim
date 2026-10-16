@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfFuelObserver.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfRoute.hpp"
@@ -143,9 +145,8 @@ bool WsfFuel::Initialize(double aSimTime)
       mInitialQuantity = mMaximumQuantity;
       if (DebugEnabled())
       {
-         auto out =
-            ut::log::warning()
-            << "Initial fuel quantity was greater than maximum fuel quantity. Fuel was constrained to the maximum.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_FUEL_GT_MAX);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Fuel: " << GetName();
@@ -158,7 +159,8 @@ bool WsfFuel::Initialize(double aSimTime)
    SetQuantityRemaining(mInitialQuantity);
    if (DebugEnabled() && (mInitialQuantity <= 0.0))
    {
-      auto out = ut::log::warning() << "Initial fuel quantity is zero or less.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_FUEL_ZERO_INIT);
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Fuel: " << GetName();

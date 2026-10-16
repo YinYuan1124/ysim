@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -92,13 +92,14 @@ void ErrorList::ErrorDock::Update()
    mUi.errorListView->setModel(mModelPtr);
 
    int numErrors = mModelPtr->rowCount(QModelIndex());
+   // 二次开发（i18n）：停靠窗口标题 tr() 化（上下文 ErrorList::ErrorDock），计数参数化
    if (numErrors > 0)
    {
-      setWindowTitle("Error List (" + QVariant(numErrors).toString() + ")");
+      setWindowTitle(tr("Error List (%1)").arg(numErrors));
    }
    else
    {
-      setWindowTitle("Error List");
+      setWindowTitle(tr("Error List"));
    }
 }
 

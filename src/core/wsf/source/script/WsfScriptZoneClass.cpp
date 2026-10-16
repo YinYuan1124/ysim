@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptColor.hpp"
 #include "WsfDraw.hpp"
 #include "WsfGeoPoint.hpp"
@@ -457,7 +459,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptZoneClass, WsfZone, SetPolyPoints, 1, "void", "
    }
    else
    {
-      ut::log::warning() << "Cannot set points on zone.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SCRIPTZONE_NO_POINTS);
    }
 }
 

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -51,6 +51,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLatPos.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtPath.hpp"
@@ -1873,7 +1875,8 @@ int TerrainInterface::LoadCME_File(const char* aCfgFile)
             }
             else if (cmd[0] != '#')
             {
-               auto out = ut::log::warning() << "Invalid map configuration command.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TERRAIN_INVALID_MAP_CMD, {});
                out.AddNote() << "Command: " << cmd;
                out.AddNote() << "Command ignored.";
             }
@@ -2273,7 +2276,8 @@ void TerrainInterface::PerformQueries(WsfSimulation& aSimulation)
       }
       else
       {
-         auto out = ut::log::warning() << "Query type not recognized by terrain interface.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TERRAIN_QUERY_UNKNOWN, {});
          out.AddNote() << "Type: " << q.mType;
       }
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "WsfComponent.hpp"
 #include "WsfComponentFactory.hpp"
 #include "WsfDeferredInput.hpp"
@@ -106,7 +108,8 @@ bool WsfObjectTypeListBase::AddP(WsfStringId aId, std::unique_ptr<WsfObject> aDe
       {
          const std::string& derivedType(aId.GetString());
          std::string        baseType((*tmi).second->GetBaseType());
-         auto               out = ut::log::warning() << "Derived type redefined.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto               out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OTL_DERIVED_REDEFINED, {});
          out.AddNote() << "Base: " << baseType;
          out.AddNote() << "Derived: " << derivedType;
       }

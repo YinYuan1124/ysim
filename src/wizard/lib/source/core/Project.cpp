@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -1603,7 +1603,8 @@ bool wizard::Project::OpenFile(const std::string& aFilePath)
 
    if (sourcePtr && !isBinaryFile)
    {
-      QObject::connect(menu.addAction("Open in Text Editor"), &QAction::triggered, OpenInTextEditor(aFilePath));
+      // 二次开发（i18n）：右键菜单动作文本 tr() 化（上下文 wizard::Project）
+      QObject::connect(menu.addAction(tr("Open in Text Editor")), &QAction::triggered, OpenInTextEditor(aFilePath));
    }
    if (menu.actions().count() == 1)
    {
@@ -1615,9 +1616,10 @@ bool wizard::Project::OpenFile(const std::string& aFilePath)
       return (menu.exec(QCursor::pos()) != nullptr);
    }
 
+   // 二次开发（i18n）：未知文件类型提示 tr() 化
    QMessageBox::information(QApplication::activeWindow(),
-                            "Unknown file type",
-                            "This file is non-ascii and no tools are configured for this file type. Cannot open file.");
+                            tr("Unknown file type"),
+                            tr("This file is non-ascii and no tools are configured for this file type. Cannot open file."));
    return false;
 }
 

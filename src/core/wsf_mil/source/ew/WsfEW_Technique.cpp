@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfDeferredInput.hpp"
 #include "WsfEW_AgilityEffect.hpp"
 #include "WsfEW_EA.hpp"
@@ -361,7 +363,8 @@ bool WsfEW_Technique::SetDeltaGainEffect(double      aSimTime,
    {
       if (mDebug)
       {
-         auto out = ut::log::warning() << "WsfEW_Technique::SetDeltaGainEffect: Unable to set delta gain technique.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TECH_SETDELTAGAIN_FAIL);
          out.AddNote() << "Effect: " << aEffectId;
       }
       return false;

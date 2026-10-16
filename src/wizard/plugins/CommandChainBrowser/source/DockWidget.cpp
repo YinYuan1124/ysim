@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -265,12 +265,13 @@ void CommandChain::DockWidget::ContextEvent(const QModelIndex& aIndex, QPoint aP
    Item* itemPtr = FindItem(aIndex);
    if (itemPtr && itemPtr->mIsPlatform && mProjectPtr)
    {
+      // 二次开发（i18n）：命令链浏览器右键菜单文本 tr() 化（上下文 CommandChain::DockWidget）
       QMenu popup;
-      popup.addAction("Collapse All", [=]() { CollapseChildren(aIndex); });
-      popup.addAction("Expand All", [=]() { ExpandChildren(aIndex); });
+      popup.addAction(tr("Collapse All"), [=]() { CollapseChildren(aIndex); });
+      popup.addAction(tr("Expand All"), [=]() { ExpandChildren(aIndex); });
       popup.addSeparator();
-      popup.addAction("Platform Info...", [=]() { ShowPlatformInfo(itemPtr->mPlatform, aPos); });
-      popup.addAction("Add to new command chain", [=]() { AddToNewCommandChain(itemPtr->mName); });
+      popup.addAction(tr("Platform Info..."), [=]() { ShowPlatformInfo(itemPtr->mPlatform, aPos); });
+      popup.addAction(tr("Add to new command chain"), [=]() { AddToNewCommandChain(itemPtr->mName); });
       popup.exec(QCursor::pos());
    }
 }

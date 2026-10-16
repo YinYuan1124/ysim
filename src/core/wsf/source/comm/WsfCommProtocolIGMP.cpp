@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 
 #include "UtLog.hpp"
 #include "UtStringIdLiteral.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAttributeContainer.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommMessage.hpp"
@@ -112,7 +114,8 @@ bool ProtocolIGMP::Initialize(double aSimTime)
          ++protocolCount;
          if (protocolCount > 1)
          {
-            ut::log::warning() << "Only a single IGMP protocol allowed per comm.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_IGMP_ONLY_ONE);
             return false;
          }
       }

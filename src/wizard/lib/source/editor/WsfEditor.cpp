@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QCoreApplication>
 #include <QDragMoveEvent>
 #include <QMenu>
 #include <QMessageBox>
@@ -687,7 +688,10 @@ void wizard::WsfEditor::contextMenuEvent(QContextMenuEvent* e)
                   TextSource* txtFilePtr = GetProject()->GetSourceCache().FindSource(fileRefDataPtr->mFilePath);
                   if (txtFilePtr)
                   {
-                     QAction* action = popupMenu.addAction(("Go To File: " + fileName).c_str());
+                     // 二次开发（i18n）：WsfEditor/Editor 无 Q_OBJECT（tr() 会落 QPlainTextEdit 上下文），
+                     // 右键菜单文本统一改用显式上下文 QCoreApplication::translate("wizard::WsfEditor", ...)
+                     QAction* action = popupMenu.addAction(QCoreApplication::translate("wizard::WsfEditor", "Go To File: %1")
+                                                               .arg(QString::fromStdString(fileName)));
                      connect(action, &QAction::triggered, this, &WsfEditor::GoToInclude);
                      mClickedIncludePtr = txtFilePtr;
                   }
@@ -700,7 +704,8 @@ void wizard::WsfEditor::contextMenuEvent(QContextMenuEvent* e)
                   {
                      OpenFileAction fn;
                      fn.mFileName    = filePath.GetSystemPath();
-                     QAction* action = popupMenu.addAction(("Open: " + fileName).c_str());
+                     QAction* action = popupMenu.addAction(QCoreApplication::translate("wizard::WsfEditor", "Open: %1")
+                                                               .arg(QString::fromStdString(fileName)));
                      connect(action, &QAction::triggered, fn);
                   }
                }
@@ -718,7 +723,8 @@ void wizard::WsfEditor::contextMenuEvent(QContextMenuEvent* e)
          if (includeSource)
          {
             std::string fileName = includeSource->GetFilePath().GetFileName();
-            QAction*    action   = popupMenu.addAction(("Go To Include: " + fileName).c_str());
+            QAction*    action   = popupMenu.addAction(QCoreApplication::translate("wizard::WsfEditor", "Go To Include: %1")
+                                                          .arg(QString::fromStdString(fileName)));
             QObject::connect(action, &QAction::triggered, this, &WsfEditor::GoToInclude);
             mClickedIncludePtr = includeSource;
             foundFileReference = true;
@@ -732,7 +738,8 @@ void wizard::WsfEditor::contextMenuEvent(QContextMenuEvent* e)
             {
                mCreateFileFromIncludeName = mCreateFileFromIncludeName.substr(spaceLoc + 1);
                UtStringUtil::TrimWhiteSpace(mCreateFileFromIncludeName);
-               QAction* action = popupMenu.addAction(("Create File: " + mCreateFileFromIncludeName).c_str());
+               QAction* action = popupMenu.addAction(QCoreApplication::translate("wizard::WsfEditor", "Create File: %1")
+                                                        .arg(QString::fromStdString(mCreateFileFromIncludeName)));
                QObject::connect(action, &QAction::triggered, this, &WsfEditor::CreateFileFromInclude);
             }
          }
@@ -749,7 +756,7 @@ void wizard::WsfEditor::contextMenuEvent(QContextMenuEvent* e)
                                                                            UtTextDocumentRange(&source, range)));
             if (!docURL.isEmpty())
             {
-               QAction* action = popupMenu.addAction("Command Documentation...");
+               QAction* action = popupMenu.addAction(QCoreApplication::translate("wizard::WsfEditor", "Command Documentation..."));
                QObject::connect(action, &QAction::triggered, this, &WsfEditor::CommandDocumentationAction);
             }
          }
@@ -759,7 +766,8 @@ void wizard::WsfEditor::contextMenuEvent(QContextMenuEvent* e)
       WsfParseNode* nodePtr = parseResultsPtr->FindLastParseNode(range);
       if (nodePtr && (nodePtr->GetFlags() & WsfParseNode::cSCRIPT_MASK))
       {
-         QAction* notificationAction = popupMenu.addAction(QIcon::fromTheme("star"), "Script Info...");
+         QAction* notificationAction = popupMenu.addAction(QIcon::fromTheme("star"),
+                                                           QCoreApplication::translate("wizard::WsfEditor", "Script Info..."));
          QObject::connect(notificationAction, &QAction::triggered, this, &WsfEditor::NotificationAction);
       }
    }
@@ -1013,7 +1021,9 @@ void wizard::WsfEditor::GoToDefinition(bool aAllRefs)
          }
          else
          {
-            QMessageBox::information(this, tr("Find References"), tr("No reference found."));
+            QMessageBox::information(this,
+                                     QCoreApplication::translate("wizard::WsfEditor", "Find References"),
+                                     QCoreApplication::translate("wizard::WsfEditor", "No reference found."));
          }
       }
    }
@@ -1239,7 +1249,9 @@ void wizard::WsfEditor::CreateFileFromInclude()
       // Don't add the same path twice
       if (optionSet.find(fileName) == optionSet.end())
       {
-         popup.addAction("Create file: " + fileName + newDirMessage)->setData(QVariant::fromValue(fileName));
+         popup.addAction(QCoreApplication::translate("wizard::WsfEditor", "Create file: %1%2")
+                            .arg(fileName, newDirMessage))
+            ->setData(QVariant::fromValue(fileName));
          optionSet.insert(fileName);
       }
    }
@@ -1255,20 +1267,22 @@ void wizard::WsfEditor::CreateFileFromInclude()
          QString newDirMessage;
          if (fileDir.Stat() != UtPath::cDIRECTORY)
          {
-            newDirMessage = " (new directory)";
+            newDirMessage = QCoreApplication::translate("wizard::WsfEditor", " (new directory)");
          }
          QString fileName = QString::fromStdString(path.GetSystemPath());
          // Don't add the same path twice
          if (optionSet.find(fileName) == optionSet.end())
          {
-            popup.addAction("Create file: " + fileName + newDirMessage)->setData(QVariant::fromValue(fileName));
+            popup.addAction(QCoreApplication::translate("wizard::WsfEditor", "Create file: %1%2")
+                            .arg(fileName, newDirMessage))
+            ->setData(QVariant::fromValue(fileName));
             optionSet.insert(fileName);
          }
       }
    }
 
    // Pop up the menu
-   popup.setTitle(tr("Choose Location"));
+   popup.setTitle(QCoreApplication::translate("wizard::WsfEditor", "Choose Location"));
    QAction* chosenPtr = popup.exec(QCursor::pos());
    if (chosenPtr != nullptr)
    {

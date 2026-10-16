@@ -1430,8 +1430,9 @@ void WsfEW_SensorComponent::PerformFalseTargetDetections(double aSimTime, WsfSen
          {
             if (currentBlipPtr->GetStrength(radarIdKey) == WsfFalseTargetBlip::cUndetected)
             {
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
                auto out = ut::log::warning()
-                          << "DefaultSensorTracker::FalseTargetDetected has gotten an undetected blip.";
+                          << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DST_UNDETECTED_BLIP);
                out.AddNote()
                   << "Check the WsfFalseTargetScreener for issues in mTrackableBlipIds and mBloclkedBlipIds.";
                continue;

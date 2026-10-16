@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtDynamicLibrary.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtPath.hpp"
 #include "UtScanDir.hpp"
 #include "WsfApplication.hpp"
@@ -121,7 +123,8 @@ bool WsfPluginManager::LoadPluginInitialize(UtDynamicLibrary* aLibraryPtr, const
          }
          else
          {
-            auto out = ut::log::warning() << "Failed to load plugin.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PLUGIN_LOAD_FAIL, {});
             out.AddNote() << "Plugin: " << path.GetSystemPath();
             out.AddNote() << "Error: Unable to find WsfPluginSetup function.";
             return false;
@@ -130,7 +133,7 @@ bool WsfPluginManager::LoadPluginInitialize(UtDynamicLibrary* aLibraryPtr, const
       else
       {
          const bool versionError = GetVersion().mMajor != version.mMajor || GetVersion().mMinor != version.mMinor;
-         auto       out          = ut::log::warning() << "Failed to load plugin.";
+         auto       out          = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PLUGIN_LOAD_FAIL, {});
          out.AddNote() << "Plugin: " << path.GetSystemPath();
          auto note = out.AddNote() << "Error: " << (versionError ? "Version mismatch." : "Compiler mismatch.");
          note.AddNote() << "Version: " << version.mMajor << "." << version.mMinor;
@@ -140,7 +143,8 @@ bool WsfPluginManager::LoadPluginInitialize(UtDynamicLibrary* aLibraryPtr, const
    }
    else
    {
-      auto out = ut::log::warning() << "Failed to load plugin.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PLUGIN_LOAD_FAIL, {});
       out.AddNote() << "Plugin: " << path.GetSystemPath();
       out.AddNote() << "Error: Unable to find WsfPluginVersion symbol.";
       return false;

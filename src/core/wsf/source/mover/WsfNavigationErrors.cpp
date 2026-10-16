@@ -261,7 +261,8 @@ bool WsfNavigationErrors::Initialize2(double aSimTime)
       }
       if (!mTimeHistoryOfs.is_open())
       {
-         auto out = ut::log::warning() << "Unable to open navigation time history file for platform.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_NAVERR_FILE_OPEN);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << mPlatformPtr->GetName();
          out.AddNote() << "File: " << fileName;

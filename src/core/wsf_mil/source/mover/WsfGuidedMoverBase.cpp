@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -28,6 +28,8 @@
 #include "UtScriptData.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfExplicitWeapon.hpp"
 #include "WsfLaunchComputer.hpp"
 #include "WsfLocalTrack.hpp"
@@ -221,7 +223,8 @@ bool WsfGuidedMoverBase::Initialize2(double aSimTime) // override
       }
       else
       {
-         auto out = ut::log::warning() << "Unable to open time history file.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_GMB_NO_HISTFILE);
          out.AddNote() << "File: " << fileName;
       }
    }
@@ -540,7 +543,8 @@ void WsfGuidedMoverBase::AdvanceTimeInternal(double aSimTime, double aBegTime, d
             mBoostCompleteStageIndex = mStageIndex;
             mBoostComplete           = true;
             nextPhase                = cPHASE_FAIL;
-            auto out                 = ut::log::warning() << "Staging Message:";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out                 = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_GMB_STAGING_MSG);
             WriteStagingMessage(out, aSimTime, aEndTime, "separation failure", mStageIndex);
          }
       }
@@ -568,7 +572,8 @@ void WsfGuidedMoverBase::AdvanceTimeInternal(double aSimTime, double aBegTime, d
             mBoostCompleteStageIndex = mStageIndex;
             mBoostComplete           = true;
             nextPhase                = cPHASE_FAIL;
-            auto out                 = ut::log::warning() << "Staging Message:";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out                 = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_GMB_STAGING_MSG);
             WriteStagingMessage(out, aSimTime, aEndTime, "ignition failure", mStageIndex);
          }
       }

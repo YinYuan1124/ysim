@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 #include "UtInputBlock.hpp"
 #include "UtInputString.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtScriptRef.hpp"
 #include "WsfLocalTrack.hpp"
@@ -172,8 +174,8 @@ bool WsfTrackProcessor::InitializeMemberData(double aSimTime)
    if ((mReportInterval != 0.0) && (!mExternalLinks.HasLinks()))
    {
       // Issue a warning if the report interval was set with no external links.
-      auto out =
-         ut::log::warning() << "Track processor will not report tracks as it has no external communication links.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_TRACKPROC_NO_EXTLINKS);
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
       out.AddNote() << "Processor: " << GetName();
       mReportInterval = 0.0;

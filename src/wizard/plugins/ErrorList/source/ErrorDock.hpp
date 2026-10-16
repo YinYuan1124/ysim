@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,9 @@ namespace ErrorList
 {
 class ErrorDock : public QDockWidget
 {
+   // 二次开发（i18n）：补 Q_OBJECT 使 tr() 翻译上下文命中本类（ErrorList::ErrorDock）
+   Q_OBJECT
+
 public:
    ErrorDock(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
    ~ErrorDock() override = default;

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@
 #include "GenIConvertBigEndian.hpp"
 #include "GenOConvertBigEndian.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "dis/WsfDisUtil.hpp"
 
 WsfDisActionRequest::WsfDisActionRequest(WsfDisInterface* aInterfacePtr)
@@ -96,7 +98,8 @@ bool WsfDisActionRequest::ProcessJoinExercise(double aSimTime)
 
       if (ParseJoinExerciseRequest(appTimeToStart, maxAppRate, maxAppTimeStep, exerciseToJoinId))
       {
-         ut::log::warning() << "WsfDisActionRequest: Does not yet act upon a Join Exercise Request.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_AR_NO_JOIN_ACTION);
          success = true;
       }
    }

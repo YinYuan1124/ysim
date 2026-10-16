@@ -421,7 +421,8 @@ void WsfSimulation::DeletePlatform(double aSimTime, WsfPlatform* aPlatformPtr, b
 {
    if (aPlatformPtr == nullptr)
    {
-      ut::log::warning() << "WsfSimulation: Attempting to delete a null platform pointer.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SIM_DELETE_NULL_PLATFORM, {});
    }
    else if (PlatformExists(aPlatformPtr->GetIndex()))
    {
@@ -583,7 +584,8 @@ void WsfSimulation::Initialize()
       // If this message is displayed, it means we are adding a registered script variable AFTER simulation input was
       // processed. Generally, this should not be required, and effectively results in additional copies of all script
       // 'scope' definitions
-      ut::log::warning() << "The simulation has changed script definitions which may degrade performance.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SIM_SCRIPT_DEFS_CHANGED, {});
    }
 
    // Guard against re-initialization.
@@ -843,7 +845,7 @@ void WsfSimulation::Complete(double aSimTime)
 {
    if ((mState != cACTIVE) && (mState != cPENDING_COMPLETE))
    {
-      auto out = ut::log::warning() << "WsfSimulation: Simulation cannot be completed. It is in an expected state.";
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SIM_COMPLETE_BAD_STATE, {});
       out.AddNote() << "Current State: " << sStateString[mState];
       out.AddNote() << "Expected: ACTIVE or PENDING_COMPLETE";
    }
@@ -1131,7 +1133,7 @@ void WsfSimulation::RequestReset()
 {
    if (mState != cACTIVE)
    {
-      auto out = ut::log::warning() << "WsfSimulation: Simulation cannot be reset. It is in an unexpected state.";
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SIM_RESET_BAD_STATE, {});
       out.AddNote() << "Current State: " << sStateString[mState];
       out.AddNote() << "Expected: ACTIVE";
    }
@@ -1152,7 +1154,7 @@ void WsfSimulation::RequestTermination()
 {
    if (mState != cACTIVE)
    {
-      auto out = ut::log::warning() << "WsfSimulation: Simulation cannot be terminated. It is in an unexpected state.";
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SIM_TERMINATE_BAD_STATE, {});
       out.AddNote() << "Current State: " << sStateString[mState];
       out.AddNote() << "Expected: ACTIVE";
    }
@@ -1175,7 +1177,8 @@ bool WsfSimulation::AddInputPlatforms()
    {
       if (!globalContext.ValidateScript(scriptPtr, "bool", "WsfPlatform"))
       {
-         ut::log::warning() << "Definition of on_platform_injection has the wrong signature.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_SIM_ONPLATFORM_BAD_SIG, {});
          scriptPtr = nullptr;
       }
    }

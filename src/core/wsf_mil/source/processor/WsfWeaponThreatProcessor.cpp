@@ -1255,7 +1255,8 @@ void ThreatEvaluatorP::CreateThreatList(const WsfTrack&      aShooterTrack,
 
    if (!aShooterTrack.LocationValid())
    {
-      ut::log::warning() << "CreateThreatList: Track has no 'valid' location. Skipping.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_WTP_NO_VALID_LOC);
       return;
    }
 
@@ -1263,14 +1264,16 @@ void ThreatEvaluatorP::CreateThreatList(const WsfTrack&      aShooterTrack,
    // we don't know how fat it will hone down on ownship.
    if (!aShooterTrack.VelocityValid())
    {
-      ut::log::warning() << "CreateThreatList: Track has no 'valid' velocity. Skipping.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_WTP_NO_VALID_VEL);
       return;
    }
 
    const WsfProcessor* processor = aOwnship.GetComponent<WsfProcessor>(WsfStringId(mTrackClassifierName));
    if (processor == nullptr)
    {
-      ut::log::warning() << "CreateThreatList: No access to ClassifierProcessor.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_WTP_NO_CLASSIFIER);
       return;
    }
 

@@ -250,7 +250,8 @@ bool WsfWeaponFuse::Initialize(double aSimTime)
    if (mGrossUpdateInterval < mFineUpdateInterval)
    {
       ok       = false;
-      auto out = ut::log::warning() << "The 'gross_update_interval' must be greater than 'fine_update_interval'.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_FUSE_GROSS_LT_FINE);
       out.AddNote() << "Gross: " << mGrossUpdateInterval;
       out.AddNote() << "Fine: " << mFineUpdateInterval;
       out.AddNote() << "Using the set 'fine_update_interval' for both.";
@@ -437,7 +438,8 @@ bool WsfWeaponFuse::ProcessInput(UtInput& aInput)
    }
    else if (command == "disable_launcher_proximity_detonation")
    {
-      ut::log::warning() << "'disable_launch_proximity_detonation' has been deprecated.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_FUSE_DISABLE_DEP);
    }
    else if (command == "do_not_use_current_target")
    {

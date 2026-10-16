@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -28,6 +28,8 @@
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "UtSun.hpp"
@@ -171,8 +173,8 @@ bool WsfCompositeOpticalSignature::Initialize(double aSimTime, WsfPlatform* aPla
       {
          if (!interfacePtr->GetInputType().IsNull())
          {
-            auto out = ut::log::warning() << "The infrared signature will be provided by the optical signature model "
-                                             "and not the Infrared Signature.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_COMPOPT_IR_BY_OPT);
             out.AddNote() << "Platform: " << mPlatformPtr->GetName();
             out.AddNote() << "Infrared Signature: " << interfacePtr->GetInputType();
          }

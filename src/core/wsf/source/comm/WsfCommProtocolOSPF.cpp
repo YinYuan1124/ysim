@@ -214,7 +214,8 @@ void ProtocolOSPF::Setup()
             {
                if (commPtr->GetMulticastLevel() != Comm::MulticastConformanceLevel::cLEVEL_2)
                {
-                  auto out = ut::log::warning() << "OSPF usage requires level 2 multicast conformance.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OSPF_NEED_L2_MULTICAST);
                   out.AddNote() << "Comm: " << commPtr->GetFullName();
                   out.AddNote() << "OSPF may be non-functional.";
                }
@@ -259,7 +260,8 @@ bool ProtocolOSPF::Initialize(double aSimTime)
    auto multicastPtr = GetRouter()->GetComponents().GetComponent<ProtocolMulticast>();
    if (!multicastPtr)
    {
-      auto out = ut::log::warning() << "Multicast protocol is not present on router.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OSPF_NO_MULTICAST_PROTO);
       out.AddNote() << "Platform: " << GetRouter()->GetPlatform()->GetName();
       out.AddNote() << "Router: " << GetRouter()->GetName();
       out.AddNote() << "The OSPF protocol will not function correctly.";
@@ -1622,7 +1624,8 @@ void ProtocolOSPF::PlatformInitialized(double aSimTime, WsfPlatform* aPlatformPt
             {
                if (commPtr->GetMulticastLevel() != Comm::MulticastConformanceLevel::cLEVEL_2)
                {
-                  auto out = ut::log::warning() << "OSPF usage requires level 2 multicast conformance.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OSPF_NEED_L2_MULTICAST);
                   out.AddNote() << "Comm: " << commPtr->GetFullName();
                   out.AddNote() << "OSPF may be non-functional.";
                }
@@ -1892,7 +1895,8 @@ void OSPF_Area::ElectionDR(double aSimTime, const std::string aNetwork, const Ad
 
          if (!routerPtrDR)
          {
-            auto out = ut::log::warning() << "A designated router could not be elected for OSPF.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_OSPF_NO_DESIGNATED_RTR);
             out.AddNote() << "Network: " << aNetwork;
             out.AddNote() << "Area: " << GetAddress();
             out.AddNote() << "This area will not be able to route messages using OSPF and will fail communications "

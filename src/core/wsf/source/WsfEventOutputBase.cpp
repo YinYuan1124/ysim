@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "WsfBehaviorObserver.hpp"
 #include "WsfCommObserver.hpp"
 #include "WsfEventResults.hpp"
@@ -51,8 +53,8 @@ bool Data::ProcessInput(UtInput& aInput)
       }
       else if (eventName == "PLATFORM_KILLED")
       {
-         auto out = ut::log::warning() << "The PLATFORM_KILLED event has been deprecated and will be removed "
-                                       << "in a future release. Use PLATFORM_BROKEN instead.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EVENTOUT_DEPRECATED, {});
          out.AddNote() << aInput.GetLocation();
       }
       // NOTE: Unfortunately because of the way things were restructured in 1.8, it is impossible to know

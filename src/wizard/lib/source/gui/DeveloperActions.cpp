@@ -39,19 +39,21 @@ wizard::DeveloperActions::DeveloperActions(QObject* aParent)
    QMenu* dev = wkfEnv.GetMainWindow()->GetMenuByName("Developer");
    if (dev)
    {
+      // 二次开发（i18n）：Developer 菜单动作文本 tr() 化（上下文 wizard::DeveloperActions）
       QList<QAction*> actions;
-      actions << dev->addAction("Document Memory Usage", this, &DeveloperActions::MemoryUsage);
-      actions << dev->addAction("Object Mode", this, &DeveloperActions::ObjectMode);
-      actions << dev->addAction("Parse Tree Dump", this, &DeveloperActions::ParseTreeDump);
-      actions << dev->addAction("Proxy Dump", this, &DeveloperActions::ProxyDump);
-      actions << dev->addAction("Watch Proxy", this, &DeveloperActions::WatchProxy);
+      actions << dev->addAction(tr("Document Memory Usage"), this, &DeveloperActions::MemoryUsage);
+      actions << dev->addAction(tr("Object Mode"), this, &DeveloperActions::ObjectMode);
+      actions << dev->addAction(tr("Parse Tree Dump"), this, &DeveloperActions::ParseTreeDump);
+      actions << dev->addAction(tr("Proxy Dump"), this, &DeveloperActions::ProxyDump);
+      actions << dev->addAction(tr("Watch Proxy"), this, &DeveloperActions::WatchProxy);
 
-      mParserTimersMenu = ut::qt::make_qt_ptr<QMenu>("Parser/Proxy Timers", dev);
+      mParserTimersMenu = ut::qt::make_qt_ptr<QMenu>(tr("Parser/Proxy Timers"), dev);
       mParserTimersMenu->setIcon(QIcon::fromTheme("time"));
-      mGrammarTimer     = ut::qt::make_qt_ptr<QAction>("Grammar T: ");
-      mParseTimer       = ut::qt::make_qt_ptr<QAction>("Parse T: ");
-      mDeserializeTimer = ut::qt::make_qt_ptr<QAction>("Deserialize T: ");
-      mMergeGUI_Timer   = ut::qt::make_qt_ptr<QAction>("Merge/GUI T: ");
+      // 二次开发（i18n）：初始文本复用参数化模板条目（与 populate/clear 同源），避免新增 ts 条目
+      mGrammarTimer     = ut::qt::make_qt_ptr<QAction>(tr("Grammar T: %1").arg(QString()));
+      mParseTimer       = ut::qt::make_qt_ptr<QAction>(tr("Parse T: %1").arg(QString()));
+      mDeserializeTimer = ut::qt::make_qt_ptr<QAction>(tr("Deserialize T: %1").arg(QString()));
+      mMergeGUI_Timer   = ut::qt::make_qt_ptr<QAction>(tr("Merge/GUI T: %1").arg(QString()));
       mParserTimersMenu->addAction(mGrammarTimer);
       mParserTimersMenu->addAction(mParseTimer);
       mParserTimersMenu->addAction(mDeserializeTimer);

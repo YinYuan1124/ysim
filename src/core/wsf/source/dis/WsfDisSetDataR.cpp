@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -28,6 +28,8 @@
 #include "GenOConvertBigEndian.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfClockSource.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisDataR.hpp"
@@ -136,7 +138,8 @@ bool WsfDisSetDataR::PopulateResponse(WsfDisDataR* aReplyPduPtr) const
 
    if (WsfDisUtil::DebugEnabled(mInterfacePtr) && (requested != set))
    {
-      ut::log::warning() << "WsfDisSetDataR: Could not fully respond to data query.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SETDATAR_CANT_FULLY_RESPOND);
       requested = set;
    }
 
@@ -163,7 +166,9 @@ void WsfDisSetDataR::TimedOut()
 {
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
-      ut::log::warning() << "WsfDisSetDataR: Unhandled virtual TimedOut() call.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cls", "WsfDisSetDataR"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_TIMEDOUT_UNHANDLED, args);
    }
 }
 
@@ -320,7 +325,8 @@ bool WsfDisSetDataR::ProcessSetDataRequest()
       {
          if (WsfDisUtil::DebugEnabled(mInterfacePtr))
          {
-            auto out = ut::log::warning() << "WsfDisSetDataR: Unsupported fixed datum.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SETDATAR_BAD_FIXED_DATUM);
             out.AddNote() << "ID: " << id;
          }
       }
@@ -351,7 +357,8 @@ bool WsfDisSetDataR::ProcessSetDataRequest()
       {
          if (WsfDisUtil::DebugEnabled(mInterfacePtr))
          {
-            auto out = ut::log::warning() << "WsfDisSetDataR: Unsupported variable datum.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SETDATAR_BAD_VARIABLE_DATUM);
             out.AddNote() << "ID: " << id;
          }
       }

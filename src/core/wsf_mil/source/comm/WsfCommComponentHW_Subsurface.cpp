@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtStringIdLiteral.hpp"
@@ -396,7 +398,8 @@ bool ComponentHW_Subsurface::CanSendTo(double aSimTime, Comm* aRcvrPtr, Result& 
                   // oversight, so alert the user.
                   if (GetComm()->DebugEnabled())
                   {
-                     auto out = ut::log::warning() << "No power assigned to transmitter.";
+                     // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                     auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_HWSUB_NO_POWER);
                      out.AddNote() << "Comm Name: " << GetComm()->GetName();
                      out.AddNote() << "Platform: " << GetPlatform()->GetName();
                   }

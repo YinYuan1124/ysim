@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,6 +32,8 @@
 #include "UtEllipsoidalEarth.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
@@ -1592,7 +1594,8 @@ unsigned char WsfDisPlatform::SetPartIdToBeamIdP(unsigned int aUniqueId)
    }
    else
    {
-      auto out = ut::log::warning() << "Max beam count exceeded.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_DISPLAT_MAX_BEAMS);
       out.AddNote() << "Entity: " << GetEntityId();
    }
 

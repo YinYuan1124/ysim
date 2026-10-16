@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfApplication.hpp"
 #include "WsfArticulatedPart.hpp"
@@ -1591,7 +1593,8 @@ void WsfLOS_Manager::LOS_Thread::ProcessThreadLOSData(IdSetType& aIdSet)
 
          if ((p1 == mManagerPtr->GetStateData().end()) || (p2 == mManagerPtr->GetStateData().end()))
          {
-            ut::log::warning() << "LOS Manager: Inconsistent state data found for ID pair. Skipping.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_LOSM_INCONSISTENT_STATE, {});
             continue;
          }
 

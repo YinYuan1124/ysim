@@ -160,7 +160,8 @@ bool NetworkManager::PlatformsInitialized()
       {
          if (!userNetwork.empty() && (it->second != userNetwork))
          {
-            auto out = ut::log::warning() << "Comm has conflicting network assignment.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_NETMGR_CONFLICTING_NET);
             out.AddNote() << "Comm: " << commPtr->GetFullName();
             out.AddNote() << "Assigned Network: " << commPtr->GetNetwork();
             out.AddNote() << "Found in Network: " << it->second;
@@ -456,7 +457,8 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
             }
             else
             {
-               ut::log::warning() << "Failed to add connection to comm network manager.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               ut::msg::EmitWarning(ut::msg::MSG_W_NETMGR_ADDCONN_FAIL);
             }
          }
          else
@@ -477,7 +479,8 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
             }
             else
             {
-               ut::log::warning() << "Failed to add connection to comm network manager.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               ut::msg::EmitWarning(ut::msg::MSG_W_NETMGR_ADDCONN_FAIL);
             }
          }
       }
@@ -555,7 +558,8 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
          }
          else
          {
-            ut::log::warning() << "Failed to add connection to comm network manager.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_NETMGR_ADDCONN_FAIL);
          }
       }
       else
@@ -576,7 +580,8 @@ void NetworkManager::InitializeUserLinks(double aSimTime, Comm* aCommPtr)
          }
          else
          {
-            ut::log::warning() << "Failed to add connection to comm network manager.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            ut::msg::EmitWarning(ut::msg::MSG_W_NETMGR_ADDCONN_FAIL);
          }
       }
    } // for
@@ -779,12 +784,14 @@ Address NetworkManager::AddComm(double       aSimTime,
 
    if (!aCommPtr)
    {
-      ut::log::warning() << "A null referenced comm object cannot be managed by the network manager.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_NETMGR_NULL_COMM);
       return returnAddress;
    }
    if (IsCommManaged(aCommPtr))
    {
-      auto out = ut::log::warning() << "Comm is already managed by the network manager.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_NETMGR_ALREADY_MANAGED);
       out.AddNote() << "Comm: " << aCommPtr->GetFullName();
       return returnAddress;
    }
@@ -842,8 +849,8 @@ Address NetworkManager::AddComm(double       aSimTime,
       auto                     result      = AddNetwork(aSimTime, std::move(meshNetwork));
       if (!result)
       {
-         auto out = ut::log::warning() << "Comm cannot be managed by the network manager due to rejection of comm "
-                                          "object addition to the specified network.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_NETMGR_REJECT_ADD);
          out.AddNote() << "Network: " << aNetworkName;
          out.AddNote() << "Comm: " << aCommPtr->GetFullName();
          return returnAddress;

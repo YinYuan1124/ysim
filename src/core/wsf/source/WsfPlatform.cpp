@@ -604,9 +604,8 @@ bool WsfPlatform::ProcessInput(UtInput& aInput)
 
       if (command == "precession_nutation_update_interval")
       {
-         auto out =
-            ut::log::warning() << "The precession_nutation_update_interval input keyword has been deprecated "
-                               << "and will be removed in a future release. Use nutation_update_interval instead.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PLAT_PRECESSION_DEP, {});
          out.AddNote() << "Location: " << aInput.GetLocation();
       }
    }
@@ -997,7 +996,7 @@ void WsfPlatform::SetSide(WsfStringId aSide)
 {
    if (IsInitialized())
    {
-      auto out = ut::log::warning() << "Unable to change the side of a platform after it has been initialized.";
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_PLAT_SIDE_CHANGE_INIT, {});
       out.AddNote() << "Platform: " << GetName();
       out.AddNote() << "Current Side: " << GetSide();
       out.AddNote() << "Ignored Side: " << aSide;
@@ -1199,7 +1198,8 @@ bool WsfPlatform::SwapMover(double aSimTime, WsfMover*& aNewMoverPtr, WsfMover*&
 {
    if (IsExternallyControlled() || IsExternallyMoved())
    {
-      ut::log::warning() << "SwapMover() called on an external platform (DIS). Mover was not swapped.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_PLAT_SWAPMOVER_EXT, {});
       return false;
    }
 

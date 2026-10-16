@@ -207,7 +207,8 @@ bool WsfSectorScanSensorScheduler::ProcessInput(UtInput& aInput)
 
       if (!sector.Validate())
       {
-         ut::log::warning() << "Insufficient data in sector definition.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         ut::msg::EmitWarning(ut::msg::MSG_W_SECTORSCAN_INSUFFICIENT);
          throw(UtInput::EndOfData(aInput));
       }
       mSectors.push_back(sector);

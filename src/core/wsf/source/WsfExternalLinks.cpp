@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommNetworkManager.hpp"
 #include "WsfCommandChain.hpp"
@@ -108,7 +110,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
       }
       else if (aNotify)
       {
-         auto out = ut::log::warning() << "Unable to resolve external link.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_RESOLVE, {});
          out.AddNote() << "Address: " << address;
       }
    }
@@ -140,7 +143,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
       }
       else if (aNotify)
       {
-         auto out = ut::log::warning() << "Unable to find external link.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_FIND, {});
          out.AddNote() << "Group Name: " << groupName;
       }
    }
@@ -165,7 +169,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
                }
                else if (aNotify)
                {
-                  auto out = ut::log::warning() << "Unable to resolve external link.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_RESOLVE, {});
                   out.AddNote() << "Commander Recipient: " << chainRecipient.mRcvrName;
                }
             }
@@ -183,7 +188,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
                }
                else if (aNotify)
                {
-                  auto out = ut::log::warning() << "Unable to resolve external link.";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_RESOLVE, {});
                   out.AddNote() << "Subordinate Recipient: " << chainRecipient.mRcvrName;
                }
             }
@@ -201,7 +207,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
                }
                else if (aNotify)
                {
-                  auto out = ut::log::warning() << "Unable to resolve external link";
+                  // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_RESOLVE_PEER, {});
                   out.AddNote() << "Peer Recipient: " << chainRecipient.mRcvrName;
                }
             }
@@ -228,7 +235,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
          }
          else if (aNotify)
          {
-            auto out  = ut::log::warning() << "Unable to resolve external link.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_RESOLVE, {});
             auto out2 = out.AddNote() << "Subordinate Recipient: ";
             out2.AddNote() << "Platform: " << namePair.first;
             out2.AddNote() << "Comm: " << namePair.second;
@@ -236,7 +244,8 @@ ExternalLinks::AddressVec ExternalLinks::ExternalLink::GetRecipients(bool aNotif
       }
       else if (aNotify)
       {
-         auto out  = ut::log::warning() << "Unable to resolve external link.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+                  auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_RESOLVE, {});
          auto out2 = out.AddNote() << "Subordinate Recipient: ";
          out2.AddNote() << "Platform: " << namePair.first;
          out2.AddNote() << "Comm: " << namePair.second;
@@ -439,7 +448,8 @@ bool ExternalLinks::ProcessInput(UtInput& aInput)
 
          if ((!result) && mDebug)
          {
-            auto out = ut::log::warning() << "Could not add external link.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_ADD, {});
             out.AddNote() << "Command Chain Target: " << cmdChainTarget.mChainName;
             out.AddNote() << "Repeated targets are ignored. Ensure the same command is not repeated on the same object "
                              "or a derived instance.";
@@ -473,7 +483,8 @@ bool ExternalLinks::ProcessInput(UtInput& aInput)
          auto result = AddRecipient(xmtrTarget, commPair);
          if ((!result) && mDebug)
          {
-            auto out = ut::log::warning() << "Could not add external link.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_ADD, {});
             out.AddNote() << "Explicit Target: " << commPair.first << "." << commPair.second;
             out.AddNote() << "Repeated targets are ignored. Ensure the same command is not repeated on the same object "
                              "or a derived instance.";
@@ -497,7 +508,8 @@ bool ExternalLinks::ProcessInput(UtInput& aInput)
          auto result = AddRecipient(xmtrTarget, address);
          if ((!result) && mDebug)
          {
-            auto out = ut::log::warning() << "Could not add external link.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_ADD, {});
             out.AddNote() << "Address: " << address;
          }
       }
@@ -535,7 +547,8 @@ bool ExternalLinks::ProcessInput(UtInput& aInput)
 
          if ((!result) && mDebug)
          {
-            auto out = ut::log::warning() << "Could not add external link.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_ADD, {});
             out.AddNote() << "Command Chain Target: " << cmdChainTarget.mChainName;
             out.AddNote() << "Repeated targets are ignored. Ensure the same command is not repeated on the same object "
                              "or a derived instance.";
@@ -566,7 +579,8 @@ bool ExternalLinks::ProcessInput(UtInput& aInput)
 
       if ((!result) && mDebug)
       {
-         auto out = ut::log::warning() << "Could not add group external link.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_ADD_GROUP, {});
          out.AddNote() << "Group Name: " << groupName;
          out.AddNote() << "Repeated targets are ignored. Ensure the same command is not repeated on the same object or "
                           "a derived instance.";
@@ -631,7 +645,8 @@ void ExternalLinks::SendMessage(double aSimTime, const WsfMessage& aMessage)
          }
          else if (mDebug)
          {
-            auto out = ut::log::warning() << "External link message send aborted.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_SEND_ABORT, {});
             out.AddNote() << "Sender and recipient was the same address.";
             out.AddNote() << "Address: " << recipient;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();
@@ -680,7 +695,8 @@ void ExternalLinks::SendMessage(double aSimTime, const WsfMessage& aMessage, Wsf
          }
          else if (mDebug)
          {
-            auto out = ut::log::warning() << "External link message send aborted.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_EXTLINK_SEND_ABORT, {});
             out.AddNote() << "Sender and recipient was the same address.";
             out.AddNote() << "Address: " << recipient;
             out.AddNote() << "Platform: " << GetPlatform()->GetName();

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfApplication.hpp"
 #include "WsfScenario.hpp"
 #include "WsfSimulation.hpp"
@@ -304,8 +306,9 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "use_deprecated_cme_draw_data")
    {
-      ut::log::warning()
-         << command << " and the use of non-standard DIS has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_NONSTD_DEPRECATED, args);
       mUseDeprecatedCME_DrawData = aInput.ReadBool();
    }
    else if (command == "use_simple_accelerations")
@@ -347,7 +350,8 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "age_out_time")
    {
-      ut::log::warning() << "WsfDisInput: 'age_out_time' has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_AGEOUT_DEPRECATED);
    }
    else if (command == "send_periodic_pdus_while_paused")
    {
@@ -375,8 +379,9 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "suppress_non_standard_data")
    {
-      ut::log::warning()
-         << command << " and the use of non-standard DIS has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_NONSTD_DEPRECATED, args);
       mSuppressNonStandardData = aInput.ReadBool();
       if (mSuppressNonStandardData)
       {
@@ -397,8 +402,9 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "suppress_cme_detect_beam")
    {
-      ut::log::warning()
-         << command << " and the use of non-standard DIS has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_NONSTD_DEPRECATED, args);
       std::string value;
       try
       {
@@ -413,8 +419,9 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "suppress_cme_entity_data")
    {
-      ut::log::warning()
-         << command << " and the use of non-standard DIS has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_NONSTD_DEPRECATED, args);
       std::string value;
       try
       {
@@ -429,8 +436,9 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "suppress_cme_passive_sensor")
    {
-      ut::log::warning()
-         << command << " and the use of non-standard DIS has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_NONSTD_DEPRECATED, args);
       std::string value;
       try
       {
@@ -445,8 +453,9 @@ bool WsfDisInput::ProcessBlockInput(WsfScenario& aScenario, UtInput& aInput)
    }
    else if (command == "suppress_cme_draw_data")
    {
-      ut::log::warning()
-         << command << " and the use of non-standard DIS has been deprecated and will be removed in a future release.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"command", command}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_DISIN_NONSTD_DEPRECATED, args);
       std::string value;
       try
       {

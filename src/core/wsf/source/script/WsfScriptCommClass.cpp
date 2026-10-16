@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include "script/WsfScriptCommClass.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommAddress.hpp"
 #include "WsfCommComponentHW.hpp"
@@ -503,7 +505,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptCommClass, wsf::comm::Comm, SendMessage_2, 3, "
          return;
       }
    }
-   auto out = ut::log::warning() << "Unable to send message to comm.";
+   // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+   auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPTCOMM_NULL_GETTER);
    out.AddNote() << "Comm: " << platformNameId << "." << commName;
    out.AddNote() << "Platform or comm does not exist.";
 }

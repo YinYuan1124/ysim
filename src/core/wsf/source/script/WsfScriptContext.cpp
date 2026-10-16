@@ -789,7 +789,8 @@ bool WsfScriptContext::ProcessInput(UtInput& aInput)
    {
       // RAII block
       {
-         auto out = ut::log::warning() << "'at_time' has been deprecated.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCRIPT_ATTIME_DEP);
          out.AddNote() << "Please use 'execute at_time ... end_execute'";
       }
       TimedEvent timedEvent;

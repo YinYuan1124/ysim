@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
@@ -1372,8 +1374,8 @@ void WsfSensor::SetIsSlave(double aSimTime, bool aIsSlave)
       // ability to do this isn't currently required...
       if (IsTurnedOn())
       {
-         auto out =
-            ut::log::warning() << "Changing sensor slave status is not currently allowed while the sensor is on.";
+         // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+         auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SENSOR_SLAVE_WHEN_ON);
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << GetPlatform()->GetName();
          out.AddNote() << "Sensor: " << GetName();

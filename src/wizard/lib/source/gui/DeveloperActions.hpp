@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -28,6 +28,10 @@ class ProxyChange;
 
 class DeveloperActions : public QObject
 {
+   // 二次开发（i18n）：补 Q_OBJECT 使 tr() 翻译上下文命中本类
+   //（此前无此宏，tr() 落 QObject 上下文导致 ts 中 wizard::DeveloperActions 条目永不命中，本批一并复活）
+   Q_OBJECT
+
 public:
    DeveloperActions(QObject* aParent);
    ~DeveloperActions() override = default;

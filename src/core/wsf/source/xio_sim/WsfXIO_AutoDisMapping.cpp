@@ -466,7 +466,8 @@ bool WsfXIO_AutoDisMapping::TranslateTrackDropMessage(double                aSim
    {
       // This *SHOULD NOT* happen, but if it does its not a big deal. Just set the target index to zero
       // and go on. It is non-required truth information.
-      auto out = ut::log::warning() << "WSF_DROP_TRACK_MESSAGE target index no longer exists.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_XIOSIM_DROP_TRACK_NO_TARGET);
       out.AddNote() << "Target Index: " << dropMessagePtr->GetTargetIndex();
       out.AddNote() << "Track: " << dropMessagePtr->GetTrackId();
       targetIndex = 0;

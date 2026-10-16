@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "DisIO.hpp"
 #include "DisPduEnums.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfDisObserver.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisRecordR.hpp"
@@ -46,7 +48,9 @@ void WsfDisSetRecordR::TimedOut()
 {
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
-      ut::log::warning() << "WsfDisSetRecordR: Unhandled virtual TimedOut() call.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cls", "WsfDisSetRecordR"}};
+      ut::msg::EmitWarning(ut::msg::MSG_W_TIMEDOUT_UNHANDLED, args);
    }
 }
 
@@ -71,7 +75,8 @@ bool WsfDisSetRecordR::PopulateReply(WsfDisRecordR* aReplyPtr)
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
       // For now, our only response is to indicate we cannot respond.
-      ut::log::warning() << "WsfDisSetRecordR has not yet implemented PopulateReply() function.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SETR_POPULATE_NOT_IMPL);
       processed = true;
    }
    return processed;
@@ -120,7 +125,8 @@ bool WsfDisSetRecordR::ProcessSetRecordRequest()
    if (WsfDisUtil::DebugEnabled(mInterfacePtr))
    {
       // Our only action currently is to indicate we can't do this yet.
-      ut::log::warning() << "WsfDisSetRecordR does not yet process the data in any way.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_SETR_NOT_PROCESSING);
       success = true;
    }
    return success;

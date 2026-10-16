@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtStringUtil.hpp"
 #include "WsfComm.hpp"
@@ -146,7 +148,8 @@ void WsfJTIDS_SlotGroup::AddToNetwork()
    }
    else
    {
-      auto out = ut::log::warning() << "Slot group is trying to be added to the network twice.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_JTIDS_ADD_TWICE);
       out.AddNote() << "Name: " << GetFullName();
    }
 }
@@ -169,7 +172,8 @@ void WsfJTIDS_SlotGroup::AddToTransmitQueue(double aSimTime, QueueEntry* aEntryP
          delete aEntryPtr;
          if (DebugEnabled())
          {
-            auto out = ut::log::warning() << "Slot group merged.";
+            // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+            auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_JTIDS_MERGED);
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Name: " << GetFullName();
             out.AddNote() << "Serial Number: " << queuedPtr->mMessagePtr->SourceMessage()->GetSerialNumber();

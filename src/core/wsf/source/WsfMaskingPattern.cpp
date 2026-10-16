@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtAzElTableLoader.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "WsfArticulatedPart.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfStringId.hpp"
@@ -62,7 +64,8 @@ bool WsfMaskingPattern::Initialize()
    if (stateIndex >= mStates.size())
    {
       ok = false;
-      ut::log::warning() << "The state 'default' does not exist.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      ut::msg::EmitWarning(ut::msg::MSG_W_MASK_DEFAULT_STATE_MISSING, {});
    }
    return ok;
 }

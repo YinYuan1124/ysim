@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include "UtException.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog，双通道见该文件头注释）
+#include "UtMsgCatalog.hpp"
 #include "WsfPlatform.hpp"
 #include "WsfPlatformObserver.hpp"
 #include "WsfSignature.hpp"
@@ -168,7 +170,9 @@ bool WsfSignatureList::SetState(size_t aIndex, WsfStringId aState)
          else
          {
             { // RAII block
-               auto out = ut::log::warning() << "Undefined " << interfacePtr->GetClassName() << " state.";
+               // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+               const ut::msg::Args args{{"className", interfacePtr->GetClassName()}};
+               auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SIGLIST_STATE_UNDEF, args);
                out.AddNote() << "T = " << mPlatformPtr->GetSimTime();
                out.AddNote() << "Platform: " << mPlatformPtr->GetName();
                out.AddNote() << "Platform Type: " << mPlatformPtr->GetType();

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -33,6 +33,9 @@ class Item;
 
 class DockWidget : public QDockWidget
 {
+   // 二次开发（i18n）：补 Q_OBJECT 使 tr() 翻译上下文命中本类（CommandChain::DockWidget）
+   Q_OBJECT
+
 public:
    explicit DockWidget(QWidget* aParent);
    ~DockWidget() override = default;

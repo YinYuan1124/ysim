@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "WsfAntennaPattern.hpp"
 #include "WsfEM_Antenna.hpp"
@@ -248,8 +250,9 @@ bool WsfFalseTargetScreener::ProcessInput(UtInput& aInput)
       double FTRejectionRatio;
       aInput.ReadValue(FTRejectionRatio);
       mInitialRejectionRatios.insert(RR_MapPair(WsfFalseTarget::cRANDOM_SCAN_TO_SCAN, FTRejectionRatio));
-      auto out = ut::log::warning() << "WSF_FALSE_TARGET_SCREENER: 'random_scan_to_scan' has been deprecated, use "
-                                       "'initial_reject' or 'reject' depending on your needs.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cmd", "random_scan_to_scan"}};
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCREEN_SCAN_DEP, args);
       out.AddNote() << "See the WSF documentation for more information.";
    }
    else if (command == "consistent_scan_to_scan")
@@ -257,8 +260,9 @@ bool WsfFalseTargetScreener::ProcessInput(UtInput& aInput)
       double FTRejectionRatio;
       aInput.ReadValue(FTRejectionRatio);
       mInitialRejectionRatios.insert(RR_MapPair(WsfFalseTarget::cCONSISTENT_SCAN_TO_SCAN, FTRejectionRatio));
-      auto out = ut::log::warning() << "WSF_FALSE_TARGET_SCREENER: 'consistent_scan_to_scan' has been deprecated, use "
-                                       "'initial_reject' or 'reject' depending on your needs.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      const ut::msg::Args args{{"cmd", "consistent_scan_to_scan"}};
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_SCREEN_SCAN_DEP, args);
       out.AddNote() << "See the WSF documentation for more information.";
    }
    else if (command == "initial_reject")

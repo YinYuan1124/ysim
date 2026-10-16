@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtMeasurementUtil.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfAngleOfAttack.hpp"
 #include "WsfDraw.hpp"
 #include "WsfGeoPoint.hpp"
@@ -628,7 +630,8 @@ void WsfWaypointMover::HitWaypoint(double aSimTime)
    {
       // Pause the mover and issue a warning
       Pause(aSimTime, UtMath::cDOUBLE_MAX);
-      auto out = ut::log::warning() << "Platform cannot execute route while movement is paused.";
+      // 二次开发（i18n）：warning 级消息 ID 化（落盘英文+[W:ID]，界面中文）
+      auto out = ut::log::warning() << ut::msg::FormatWEnTagged(ut::msg::MSG_W_WPMOVER_PAUSED);
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << GetPlatform()->GetName();
    }
