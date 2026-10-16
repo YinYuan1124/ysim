@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -24,6 +24,8 @@
 #include "DisTime.hpp"
 #include "GenFileI.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfComm.hpp"
 #include "WsfMover.hpp"
 #include "WsfProcessor.hpp"
@@ -57,7 +59,8 @@ WsfDisPlaybackDevice::WsfDisPlaybackDevice(const std::string& aFileName, WsfDisI
    {
       delete mFilePtr;
       mFilePtr = nullptr;
-      auto out = ut::log::error() << "Could not open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_PLAYBACK_OPEN_FAIL, {});
       out.AddNote() << "File: " << aFileName;
       throw OpenError();
    }
@@ -66,7 +69,8 @@ WsfDisPlaybackDevice::WsfDisPlaybackDevice(const std::string& aFileName, WsfDisI
 
    if (sNextSiteNumber > cMAX_PLAYBACK_SITE)
    {
-      auto out = ut::log::error() << "Too many 'playback' files specified.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_PLAYBACK_TOO_MANY, {});
       out.AddNote() << "Provided: " << sNextSiteNumber - cMIN_PLAYBACK_SITE + 1;
       out.AddNote() << "Limit: " << cMAX_PLAYBACK_SITE - cMIN_PLAYBACK_SITE + 1;
       throw OpenError();

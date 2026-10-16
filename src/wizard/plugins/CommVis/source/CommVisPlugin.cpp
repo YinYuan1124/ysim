@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,7 +32,7 @@ WizCommVis::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
 
    if (toolsMenuPtr)
    {
-      auto dlgActionPtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("star"), "CommVis...", mainWindowPtr);
+      auto dlgActionPtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("star"), tr("CommVis..."), mainWindowPtr); // 二次开发（i18n）：Tools 菜单文本汉化
       connect(dlgActionPtr, &QAction::triggered, [this]() { Start(); });
       toolsMenuPtr->addAction(dlgActionPtr);
    }

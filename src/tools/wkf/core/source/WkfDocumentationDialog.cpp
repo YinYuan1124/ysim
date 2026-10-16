@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,7 +18,7 @@
 #include "WkfEnvironment.hpp"
 
 wkf::DocumentationDialog::DocumentationDialog(MainWindow* parent, Qt::WindowFlags f /* = Qt::WindowFlags() */)
-   : Dialog(parent, new QAction(QIcon::fromTheme("help"), "Documentation...", nullptr), "Help", f)
+   : Dialog(parent, new QAction(QIcon::fromTheme("help"), tr("Documentation..."), nullptr), "Help", f) // 二次开发（i18n）：菜单动作文本汉化
    , mIsPopulated(false)
 {
    mUi.setupUi(this);

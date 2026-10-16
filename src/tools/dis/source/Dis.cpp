@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "DisValidationUtils.hpp"
 #include "GenError.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 
 DisEnum8   Dis::mProtocolVersion(DisEnum::Pdu::Version::IEEE_1278_1_1995);
@@ -109,7 +111,8 @@ void Dis::Init()
       envVal = atoi(envStr);
       if ((envVal < 0) || (envVal > 6))
       {
-         auto out = ut::log::error() << "Invalid value for 'DIS_VERSION'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ENV_BAD_VERSION, {});
          out.AddNote() << "Value: " << envStr;
          ++errors;
       }
@@ -125,7 +128,8 @@ void Dis::Init()
       envVal = atoi(envStr);
       if ((envVal < 0) || (envVal > 255))
       {
-         auto out = ut::log::error() << "Invalid value for 'DIS_EXERCISE'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ENV_BAD_EXERCISE, {});
          out.AddNote() << "Value: " << envStr;
          ++errors;
       }
@@ -141,7 +145,8 @@ void Dis::Init()
       envVal = atoi(envStr);
       if ((envVal < 0) || (envVal > 0xFFFF))
       {
-         auto out = ut::log::error() << "Invalid value for 'DIS_SITE'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ENV_BAD_SITE, {});
          out.AddNote() << "Value: " << envStr;
          ++errors;
       }
@@ -157,7 +162,8 @@ void Dis::Init()
       envVal = atoi(envStr);
       if ((envVal < 0) || (envVal > 0xFFFF))
       {
-         auto out = ut::log::error() << "Invalid value for 'DIS_APPLICATION'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ENV_BAD_APPLICATION, {});
          out.AddNote() << "Value: " << envStr;
          ++errors;
       }
@@ -173,7 +179,8 @@ void Dis::Init()
       floatVal = static_cast<DisFloat32>(atof(envStr));
       if (floatVal < 0.0F)
       {
-         auto out = ut::log::error() << "Invalid value for 'DIS_HRT_BEAT_TIMER'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ENV_BAD_HBT, {});
          out.AddNote() << "Value: " << envStr;
          ++errors;
       }
@@ -189,7 +196,8 @@ void Dis::Init()
       floatVal = static_cast<DisFloat32>(atof(envStr));
       if (floatVal < 0.0F)
       {
-         auto out = ut::log::error() << "Invalid value for 'DIS_HRT_BEAT_MPLIER'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ENV_BAD_HBT_MPLIER, {});
          out.AddNote() << "Value: " << envStr;
          ++errors;
       }

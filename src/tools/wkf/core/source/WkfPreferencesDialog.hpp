@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,6 +26,8 @@ namespace wkf
 {
 class WKF_EXPORT PreferencesDialog : public Dialog
 {
+   // 二次开发（i18n）：补 Q_OBJECT 使 tr() 翻译上下文命中本类（菜单触发动作文本汉化）
+   Q_OBJECT
 public:
    PreferencesDialog(MainWindow* parent, Qt::WindowFlags f = Qt::WindowFlags());
 

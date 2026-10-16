@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfSensorScheduler.hpp"
 
 namespace
@@ -86,7 +88,8 @@ bool WsfSensorSchedulerTypes::LoadInstance(UtInput& aInput, std::unique_ptr<WsfS
             else
             {
                // The full block was required, and this command was not recognized.
-               auto out = ut::log::error() << "Missing block terminator.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SST_NO_END_SCHED, {});
                out.AddNote() << "Expected: end_scheduler";
                throw UtInput::UnknownCommand(aInput);
             }

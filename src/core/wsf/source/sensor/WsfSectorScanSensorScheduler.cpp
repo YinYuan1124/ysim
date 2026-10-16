@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtRandom.hpp"
 #include "WsfEM_Rcvr.hpp"
@@ -282,7 +284,8 @@ bool WsfSectorScanSensorScheduler::Sector::Initialize(WsfSensor& aSensor)
             mAzScanRate = aSensor.GetMaxAzSlewRate();
             if (mAzScanRate >= WsfArticulatedPart::cINFINITE_SLEW_RATE)
             {
-               ut::log::error() << "You must define an 'azimuth_rate' or the sensor's 'azimuth_slew_rate'.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SSSS_NO_AZ_RATE, {});
                ok = false;
             }
          }
@@ -308,7 +311,8 @@ bool WsfSectorScanSensorScheduler::Sector::Initialize(WsfSensor& aSensor)
             mElScanRate = aSensor.GetMaxElSlewRate();
             if (mElScanRate >= WsfArticulatedPart::cINFINITE_SLEW_RATE)
             {
-               ut::log::error() << "You must define an 'elevation_rate' or the sensor's 'elevation_slew_rate'.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SSSS_NO_EL_RATE, {});
                ok = false;
             }
          }
@@ -406,7 +410,8 @@ bool WsfSectorScanSensorScheduler::Initialize(double aSimTime, WsfSensor* aSenso
          mSensorUpdateInterval = aSensorPtr->GetUpdateInterval();
          if (mSensorUpdateInterval == 0.0)
          {
-            auto out = ut::log::error() << "'update_interval' is required for 'sector_scan' scheduler.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SSSS_NO_UPDATE_INT, {});
             out.AddNote() << "Platform: " << mSensorPtr->GetPlatform()->GetName();
             out.AddNote() << "Sensor: " << mSensorPtr->GetName();
             return false;

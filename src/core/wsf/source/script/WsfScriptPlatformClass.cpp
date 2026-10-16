@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,6 +26,8 @@
 #include "UtMath.hpp"
 #include "UtMeasurementUtil.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptVec3.hpp"
 #include "UtTypeInfo.hpp"
 #include "UtVec3.hpp"
@@ -1178,7 +1180,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnCommOn, 1, "boo
    }
    else
    {
-      auto out = ut::log::error() << "Could not find comm.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_COMM, {});
       out.AddNote() << "Comm: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1196,7 +1199,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnCommOff, 1, "bo
    }
    else
    {
-      auto out = ut::log::error() << "Could not find comm.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_COMM, {});
       out.AddNote() << "Comm: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1214,7 +1218,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnProcessorOn, 1,
    }
    else
    {
-      auto out = ut::log::error() << "Could not find processor.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_PROC, {});
       out.AddNote() << "Processor: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1232,7 +1237,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnProcessorOff, 1
    }
    else
    {
-      auto out = ut::log::error() << "Could not find processor.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_PROC, {});
       out.AddNote() << "Processor: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1250,7 +1256,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnMoverOn, 0, "bo
    }
    else
    {
-      auto out = ut::log::error() << "Could not find mover.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_MOVER, {});
       out.AddNote() << "Mover: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1268,7 +1275,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnMoverOff, 0, "b
    }
    else
    {
-      auto out = ut::log::error() << "Could not find mover.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_MOVER, {});
       out.AddNote() << "Mover: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1286,7 +1294,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnSensorOn, 1, "b
    }
    else
    {
-      auto out = ut::log::error() << "Could not find sensor.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_SENSOR, {});
       out.AddNote() << "Sensor: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1304,7 +1313,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnSensorOff, 1, "
    }
    else
    {
-      auto out = ut::log::error() << "Could not find sensor.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_SENSOR, {});
       out.AddNote() << "Sensor: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1322,7 +1332,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnRouterOn, 1, "b
    }
    else
    {
-      auto out = ut::log::error() << "Could not find router.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_ROUTER, {});
       out.AddNote() << "Router: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1340,7 +1351,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, TurnRouterOff, 1, "
    }
    else
    {
-      auto out = ut::log::error() << "Could not find router.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_PLAT_NO_ROUTER, {});
       out.AddNote() << "Router: " << aVarArgs[0].GetString();
    }
    aReturnVal.SetBool(ok);
@@ -1566,7 +1578,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, Execute_1, 1, "Obje
    double           simTime = TIME_NOW;
    if (!aObjectPtr->ExecuteScript(simTime, aVarArgs[0].GetString(), rv, args))
    {
-      auto out = ut::log::error() << "Could not execute script.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_EXEC_FAIL, {});
       out.AddNote() << "Script: " << aVarArgs[0].GetString();
    }
    aReturnVal = rv;
@@ -1581,7 +1594,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptPlatformClass, WsfPlatform, Execute_2, 2, "Obje
    double            simTime = TIME_NOW;
    if (!aObjectPtr->ExecuteScript(simTime, aVarArgs[0].GetString(), rv, *argsPtr))
    {
-      auto out = ut::log::error() << "Could not execute script.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_EXEC_FAIL, {});
       out.AddNote() << "Script: " << aVarArgs[0].GetString();
    }
    aReturnVal = rv;

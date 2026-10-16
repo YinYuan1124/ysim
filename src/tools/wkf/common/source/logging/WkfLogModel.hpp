@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 #include <QStyledItemDelegate>
 
 #include "UtLogMessage.hpp"
+// 二次开发（i18n）：SetChineseDisplay 跨 DLL（wizard_core）调用，须从 wkf_common 导出
+#include "wkf_common_export.h"
 
 namespace wkf
 {
@@ -23,6 +25,11 @@ namespace log
 {
 constexpr int cMSG_TYPE_ROLE     = Qt::UserRole;     // Stores a QStringList
 constexpr int cMSG_SEVERITY_ROLE = Qt::UserRole + 1; // Stores an int
+
+// 二次开发（i18n）：设置日志界面是否按中文显示消息行（默认 false 显示英文）。
+// 由应用启动时按语言偏好注入（如 wizard 的 Runner 在 zh_CN 时开启）；
+// wkf 层不读取任何全局语言配置，保持与具体应用解耦。
+WKF_COMMON_EXPORT void SetChineseDisplay(bool aEnabled) noexcept;
 
 //! The MasterModel contains data on every ut::log::Message received.
 //! The FilterModel (see below) sorts and filters these messages for the user.

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfEM_Clutter.hpp"
 #include "WsfEM_Xmtr.hpp"
 #include "WsfEnvironment.hpp"
@@ -99,7 +101,8 @@ bool WsfRadarMTI_AdjSignalProcessor::Initialize(double         aSimTime,
       // Verify that a data table is present
       if (!mResponseTable.IsDefined())
       {
-         ut::log::error() << "Must specify 'mti_data_table' and valid data for MTI type of 'data_table'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_ADJ_NO_TABLE, {});
          ok = false;
       }
    }
@@ -108,7 +111,8 @@ bool WsfRadarMTI_AdjSignalProcessor::Initialize(double         aSimTime,
       WsfRadarSensor::RadarMode* radarModePtr = dynamic_cast<WsfRadarSensor::RadarMode*>(aModePtr);
       if (radarModePtr == nullptr)
       {
-         ut::log::error() << "Sensor Mode must be of type WsfRadarSensor:RadarMode.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_ADJ_BAD_MODE, {});
          return false;
       }
 
@@ -123,14 +127,16 @@ bool WsfRadarMTI_AdjSignalProcessor::Initialize(double         aSimTime,
       // Ensure a PRF was specified.
       if (beamPtr->mXmtrPtr->GetPulseRepetitionFrequency() <= 0.0)
       {
-         ut::log::error() << "Must specify 'pulse_repetition_frequency' with 'mti_processor'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_ADJ_NO_PRF, {});
          return false;
       }
 
       // Ensure the maximum MTI range was specified
       if (mMTI_MaxRange <= 0.0)
       {
-         ut::log::error() << "Must specify 'maximum_range' in 'mti_processor'";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_ADJ_NO_MAX_RANGE, {});
          return false;
       }
 
@@ -145,7 +151,8 @@ bool WsfRadarMTI_AdjSignalProcessor::Initialize(double         aSimTime,
       }
       else if ((mMTI_InterpulsePeriod_1 == 0.0) || (mMTI_InterpulsePeriod_2 == 0.0))
       {
-         ut::log::error() << "Must specify both 'interpulse_period_1 and 2' in 'mti_processor'";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_ADJ_NO_IPP, {});
          return false;
       }
 

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -31,6 +31,8 @@
 #include "GenIConvertBigEndian.hpp"
 #include "GenOConvertBigEndian.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfSimulation.hpp"
 #include "dis/WsfDisUtil.hpp"
 
@@ -137,7 +139,8 @@ bool WsfDisActionResponseR::ProcessResponseTo(DisPdu* aInitiatorPduPtr)
       {
          if (WsfDisUtil::DebugEnabled(mInterfacePtr))
          {
-            auto out = ut::log::error() << "WsfDisActionRequestR: Initializing was not a Join Exercise Request.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_ACTION_RESPR_NOT_JOIN, {});
             out.AddNote() << "Received response was ignored.";
          }
       }

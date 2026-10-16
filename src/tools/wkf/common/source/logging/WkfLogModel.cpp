@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,17 @@
 // ****************************************************************************
 
 #include "WkfLogModel.hpp"
+
+// 二次开发（i18n）：日志界面中文显示依赖消息目录的反提取翻译接口
+#include "UtMsgCatalog.hpp"
+
+// 二次开发（i18n）：日志界面中文显示开关（默认英文；由应用启动时注入）
+static bool sChineseDisplay = false;
+
+void wkf::log::SetChineseDisplay(bool aEnabled) noexcept
+{
+   sChineseDisplay = aEnabled;
+}
 
 static bool Overlap(const QStringList& aFirst, const QStringList& aSecond) noexcept
 {
@@ -166,7 +177,19 @@ QStandardItem* wkf::log::MasterModel::MakeItem(const ut::log::Message& aMessage)
    }
    item->setData(types, cMSG_TYPE_ROLE);
    item->setData(Severity(aMessage.mTypes), cMSG_SEVERITY_ROLE);
-   item->setText(QString::fromStdString(aMessage.mData));
+   // 二次开发（i18n）：日志界面显示通道 —— 开启中文时把带 [E:ID]/[W:ID] 前缀的
+   // 消息行翻译为中文译文（参数由目录模板自动反提取）；未带前缀、翻译失败
+   // 或非中文模式时显示英文原文。日志落盘/控制台输出不受影响（永远英文+ID）。
+   QString displayText = QString::fromStdString(aMessage.mData);
+   if (sChineseDisplay)
+   {
+      const std::string zh = ut::msg::TranslateTaggedToZh(aMessage.mData);
+      if (!zh.empty())
+      {
+         displayText = QString::fromStdString(zh);
+      }
+   }
+   item->setText(displayText);
    item->setSizeHint(QSize(0, 24));
 
    // Set the displayed icon.

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "GenI.hpp"
 #include "GenO.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 #ifdef _WIN32
 #ifndef _WIN32_WINNT
@@ -96,12 +98,14 @@ std::ostream& DisRadioId::Pack(std::ostream& aOs, bool aToNet) const
       aOs.write(reinterpret_cast<const char*>(tmp), 4 * sizeof(DisUint16));
       if (aOs.fail() && Dis::ShowError(Dis::cIO_ERRORS))
       {
-         ut::log::error() << "DisRadioId::Pack stream failed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_RADIOID_PACK_FAIL, {});
       }
    }
    else if (Dis::ShowError(Dis::cIO_ERRORS))
    {
-      ut::log::error() << "DisRadioId::Pack was sent a stream that was not good.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_RADIOID_PACK_NOT_GOOD, {});
    }
    return aOs;
 }
@@ -118,12 +122,14 @@ std::istream& DisRadioId::UnPack(std::istream& aIs, bool aToHost)
       mRadio       = aToHost ? ntohs(tmp[3]) : tmp[3];
       if (aIs.fail() && Dis::ShowError(Dis::cIO_ERRORS))
       {
-         ut::log::error() << "DisRadioId::UnPack stream failed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_RADIOID_UNPACK_FAIL, {});
       }
    }
    else if (Dis::ShowError(Dis::cIO_ERRORS))
    {
-      ut::log::error() << "DisRadioId::UnPack was sent a stream that was not good.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_RADIOID_UNPACK_NOT_GOOD, {});
    }
    return aIs;
 }

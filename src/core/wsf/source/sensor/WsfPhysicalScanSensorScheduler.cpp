@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtRandom.hpp"
 #include "WsfPlatform.hpp"
@@ -84,7 +86,8 @@ bool WsfPhysicalScanSensorScheduler::Initialize(double aSimTime, WsfSensor* aSen
 {
    if (aSensorPtr->GetModeList() == nullptr)
    {
-      ut::log::error() << "A mode list is required for " << mTypeName << ".";
+      // 二次开发（i18n）：错误消息 ID 化 —— mTypeName 运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PSSS_NO_MODE_LIST, {{"type", mTypeName}});
       assert(aSensorPtr->GetModeList() != nullptr);
       return false;
    }
@@ -100,7 +103,8 @@ bool WsfPhysicalScanSensorScheduler::Initialize(double aSimTime, WsfSensor* aSen
    mSensorUpdateInterval = aSensorPtr->GetUpdateInterval();
    if (mSensorUpdateInterval == 0.0)
    {
-      auto out = ut::log::error() << "An 'update_interval' is required for " << mTypeName << " scheduler.";
+      // 二次开发（i18n）：错误消息 ID 化 —— mTypeName 运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PSSS_NO_UPDATE_INT, {{"type", mTypeName}});
       out.AddNote() << "Sensor: " << mSensorPtr->GetName();
       return false;
    }
@@ -120,7 +124,8 @@ bool WsfPhysicalScanSensorScheduler::Initialize(double aSimTime, WsfSensor* aSen
       double modeFrameTime = modePtr->GetFrameTime();
       if (modeFrameTime <= 0.0)
       {
-         auto out = ut::log::error() << "Unspecified 'frame_time'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PSSS_NO_FRAME_TIME, {});
          out.AddNote() << "Sensor: " << mSensorPtr->GetName();
          out.AddNote() << "Mode: " << modePtr->GetName();
          ok = false;

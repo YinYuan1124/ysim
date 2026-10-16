@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringUtil.hpp"
 #include "WsfEM_Rcvr.hpp"
 #include "WsfEM_Xmtr.hpp"
@@ -41,13 +43,15 @@ bool WsfPassiveDetector::Initialize()
       {
          if (dti->second.empty())
          {
-            ut::log::error() << "Continuous detection threshold not defined.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_CONT_THRESH, {});
             ok &= false;
          }
       }
       else
       {
-         ut::log::error() << "Continuous detection threshold not defined.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_CONT_THRESH, {});
          ok &= false;
       }
 
@@ -56,13 +60,15 @@ bool WsfPassiveDetector::Initialize()
       {
          if (dti->second.empty())
          {
-            ut::log::error() << "Pulsed detection threshold not defined.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_PULSED_THRESH, {});
             ok &= false;
          }
       }
       else
       {
-         ut::log::error() << "Pulsed detection threshold not defined.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_PULSED_THRESH, {});
          ok &= false;
       }
    }
@@ -73,13 +79,15 @@ bool WsfPassiveDetector::Initialize()
       {
          if (dsi->second.empty())
          {
-            ut::log::error() << "Continuous sensitivity not defined.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_CONT_SENS, {});
             ok &= false;
          }
       }
       else
       {
-         ut::log::error() << "Continuous sensitivity not defined.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_CONT_SENS, {});
          ok &= false;
       }
 
@@ -88,13 +96,15 @@ bool WsfPassiveDetector::Initialize()
       {
          if (dsi->second.empty())
          {
-            ut::log::error() << "Pulse sensitivity not defined.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_PULSE_SENS, {});
             ok &= false;
          }
       }
       else
       {
-         ut::log::error() << "Pulsed sensitivity not defined.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_PULSED_SENS, {});
          ok &= false;
       }
    }
@@ -102,7 +112,8 @@ bool WsfPassiveDetector::Initialize()
    // Ensure one last time that the detection or sensitivity threshold tables are defined (i.e. not empty).
    if (mDetectionThresholdTable.empty() && mDetectionSensitivityTable.empty())
    {
-      ut::log::error() << "Must define 'detection_threshold' or 'detection_sensitivity'.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PD_NO_THRESH_OR_SENS, {});
       ok &= false;
    }
    return ok;

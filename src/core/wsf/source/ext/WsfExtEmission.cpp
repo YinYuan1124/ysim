@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInput.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfArticulatedPart.hpp"
 #include "WsfAttributeContainer.hpp"
 #include "WsfEM_Antenna.hpp"
@@ -470,7 +472,8 @@ WsfSensor* WsfExtEmission::AddSensor(double       aSimTime,
             if (!newSensorPtr->Initialize(aSimTime))
             {
                { // RAII block
-                  auto out = ut::log::error() << "Initialization failed for external sensor.";
+                  // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+                  auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EXT_SENSOR_INIT_FAIL, {});
                   out.AddNote() << "Sensor: " << aPlatformPtr->GetName() << "." << newSensorPtr->GetName();
                }
 

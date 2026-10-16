@@ -167,7 +167,8 @@ bool WsfMTI_TableManager::ReadCsv(const std::string& aFileName, MTI_AdjustmentTa
    }
    catch (std::exception&)
    {
-      auto out = ut::log::error() << "MTI_Table::ReadCsv: Caught exception!!!";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_READCSV_EXC, {});
       out.AddNote() << "Row: " << row;
       throw;
    }
@@ -193,7 +194,8 @@ WsfMTI_TableManager::MTI_AdjustmentTable* WsfMTI_TableManager::ReadCsvCompound(c
    std::ifstream ifs(aFileName);
    if (!ifs.is_open() || ifs.fail())
    {
-      auto out = ut::log::error() << "MTI_Table::ReadCsvCompound: Unable to open MTI table file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_COMPOUND_OPEN, {});
       out.AddNote() << "File: " << aFileName;
       throw UtException("MTI_Table::ReadCsvCompound: Unable to open MTI table file: " + aFileName);
    }
@@ -234,7 +236,8 @@ WsfMTI_TableManager::MTI_AdjustmentTable* WsfMTI_TableManager::ReadCsvCompound(c
             }
             catch (std::exception& e)
             {
-               auto out = ut::log::error() << "Exception thrown in MTI_Table::ReadCsvCompound. Error parsing table.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_COMPOUND_PARSE, {});
                out.AddNote() << "Type: " << ut::TypeNameOf(e);
                out.AddNote() << "What: " << e.what();
                throw;
@@ -297,7 +300,8 @@ WsfMTI_TableManager::MTI_AdjustmentTable* WsfMTI_TableManager::ReadCsvCompound(c
          }
          else
          {
-            auto out = ut::log::error() << "MTI_TABLE::ReadCsvCompound: Failed reading row.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_COMPOUND_ROW, {});
             out.AddNote() << "Row: " << row;
             out.AddNote() << "Values in Row: " << i;
             throw UtException("MTI_TABLE::ReadCsvCompound reading row failed!");
@@ -314,7 +318,8 @@ WsfMTI_TableManager::MTI_AdjustmentTable* WsfMTI_TableManager::ReadCsvCompound(c
    }
    catch (std::exception& e)
    {
-      auto out = ut::log::error() << "Exception thrown in MTI_TABLE::ReadCsvCompound.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_COMPOUND_EXC, {});
       out.AddNote() << "Type: " << ut::TypeNameOf(e);
       out.AddNote() << "What: " << e.what();
       out.AddNote() << "Row: " << row;
@@ -358,7 +363,8 @@ void WsfMTI_TableManager::WriteCsv(const std::string& aFileName, MTI_AdjustmentT
 
    if (!ofs.is_open())
    {
-      auto out = ut::log::error() << "MTI_TABLE::WriteCsv: Unable to open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_WRITECSV_OPEN, {});
       out.AddNote() << "File: " << aFileName;
       throw UtException("MTI_TABLE::WriteCsv: Unable to open file: " + aFileName);
    }
@@ -408,7 +414,8 @@ void WsfMTI_TableManager::WriteBinary(const std::string& aFileName, MTI_Adjustme
 
    if (!ofs.is_open())
    {
-      auto out = ut::log::error() << "MTI_TABLE::WriteBinary: Unable to open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_WRITEBIN_OPEN, {});
       out.AddNote() << "File: " << aFileName;
       throw UtException("MTI_TABLE::WriteBinary: Unable to open file: " + aFileName);
    }
@@ -428,7 +435,8 @@ void WsfMTI_TableManager::WriteBinary(const std::string& aFileName, MTI_Adjustme
       ofs.write((char*)&speedAxis[i], sizeof(double));
       if (!ofs)
       {
-         ut::log::error() << "MTI_TABLE::WriteBinary: Writing data speedAxis.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_WRITEBIN_SPEED, {});
          throw UtException("MTI_TABLE::WriteBinary: Writing data speedAxis");
       }
    }
@@ -437,7 +445,8 @@ void WsfMTI_TableManager::WriteBinary(const std::string& aFileName, MTI_Adjustme
       ofs.write((char*)&adjustmentAxis[i], sizeof(double));
       if (!ofs)
       {
-         ut::log::error() << "MTI_TABLE::WriteBinary: Writing data adjustmentAxis.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_WRITEBIN_ADJ, {});
          throw UtException("MTI_TABLE::WriteBinary: Writing data adjustmentAxis");
       }
    }
@@ -451,7 +460,8 @@ bool WsfMTI_TableManager::ReadBinary(const std::string& aFileName, MTI_Adjustmen
    ifs.open(aFileName, std::ios::in | std::ios::binary);
    if (!ifs.is_open())
    {
-      auto out = ut::log::error() << "MTI_TABLE::ReadBinary: Unable to open file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_READBIN_OPEN, {});
       out.AddNote() << "File: " << aFileName;
       throw UtException("MTI_TABLE::ReadBinary: Unable to open file: " + aFileName);
       return false;
@@ -474,7 +484,8 @@ bool WsfMTI_TableManager::ReadBinary(const std::string& aFileName, MTI_Adjustmen
       ifs.read((char*)&speedAxis[i], sizeof(double));
       if (!ifs)
       {
-         ut::log::error() << "MTI_TABLE::ReadBinary: Reading data speedAxis.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_READBIN_SPEED, {});
          ifs.close();
          throw UtException("MTI_TABLE::ReadBinary: Reading data speedAxis");
          return false;
@@ -486,7 +497,8 @@ bool WsfMTI_TableManager::ReadBinary(const std::string& aFileName, MTI_Adjustmen
       ifs.read((char*)&adjustmentAxis[i], sizeof(double));
       if (!ifs)
       {
-         ut::log::error() << "MTI_TABLE::ReadBinary: Reading data adjustmentAxis.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_READBIN_ADJ, {});
          ifs.close();
          throw UtException("MTI_TABLE::ReadBinary: Reading data adjustmentAxis");
          return false;
@@ -617,7 +629,8 @@ double WsfMTI_TableManager::MTI_AdjustmentTableCompound::ComputeAdjustmentFactor
    }
    else
    {
-      auto out = ut::log::error() << "MTI_AdjustmentTableCompound: No MTI adjustment table was found for frequency.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MTI_TABLE_NO_FREQ, {});
       out.AddNote() << "Frequency: " << aFrequencyHz;
       return 1.0;
    }

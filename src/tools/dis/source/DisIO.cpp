@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -60,6 +60,8 @@
 #include "UtEllipsoidalEarth.hpp"
 #include "UtEntity.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 
 std::ostream& operator<<(std::ostream& aOut, const DisEntityId& aId)
@@ -209,12 +211,14 @@ std::istream& operator>>(std::istream& aIn, DisRadioId& aId)
       aId.Set(id[0], id[1], id[2], id[3]);
       if (aIn.fail() && Dis::ShowError(Dis::cIO_ERRORS))
       {
-         ut::log::error() << "DisIO::operator>>(istream&, DisRadioId&) stream failed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DISIO_RADIOID_READ_FAIL, {});
       }
    }
    else if (Dis::ShowError(Dis::cIO_ERRORS))
    {
-      ut::log::error() << "DisIO::operator>>(istream&, DisRadioId&) stream not good.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DISIO_RADIOID_READ_NOT_GOOD, {});
    }
    return aIn;
 }

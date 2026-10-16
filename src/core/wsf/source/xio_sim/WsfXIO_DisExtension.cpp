@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "xio_sim/WsfXIO_DisExtension.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "xio/WsfXIO_Interface.hpp"
 #include "xio_sim/WsfXIO_AutoDisMapping.hpp"
 #include "xio_sim/WsfXIO_DisService.hpp"
@@ -45,7 +47,8 @@ bool WsfXIO_DisExtension::Initialize()
       mAutoDisMappingPtr = new WsfXIO_AutoDisMapping(mXIO_Simulation, this);
       if (!mAutoDisMappingPtr->Initialize())
       {
-         ut::log::error() << "auto_dis_mapping: Initialization failed.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_XIO_AUTO_DIS_MAP_INIT_FAIL, {});
          ok = false;
       }
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtLog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtVec3.hpp"
 #include "WsfDefaultSensorScheduler.hpp"
 #include "WsfDefaultSensorTracker.hpp"
@@ -103,7 +105,8 @@ bool WsfCompositeSensor::Initialize(double aSimTime)
 
    if (mOperatingMode == cOM_UNDEFINED)
    {
-      ut::log::error() << "'operating_mode' has not been defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_NO_OPERATING_MODE, {});
       return false;
    }
 
@@ -111,7 +114,8 @@ bool WsfCompositeSensor::Initialize(double aSimTime)
 
    if (mSensorNames.empty())
    {
-      ut::log::error() << "No constituent sensors defined.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_NO_CONSTITUENTS, {});
       return false;
    }
 
@@ -122,12 +126,14 @@ bool WsfCompositeSensor::Initialize(double aSimTime)
       WsfSensor*  sensorPtr = GetPlatform()->GetComponent<WsfSensor>(nameId);
       if (sensorPtr == this)
       {
-         auto out = ut::log::error() << "Constituent sensor cannot be the same as the composite sensor.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_SELF_CONSTITUENT, {});
          out.AddNote() << "Sensor: " << nameId;
       }
       else if (sensorPtr == nullptr)
       {
-         auto out = ut::log::error() << "Constituent sensor was not defined";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_CONSTITUENT_UNDEF, {});
          out.AddNote() << "Sensor: " << nameId;
          ok = false;
       }
@@ -161,7 +167,8 @@ bool WsfCompositeSensor::Initialize(double aSimTime)
       {
          if (mSensorPtrs[i]->GetModeList() == nullptr)
          {
-            auto out = ut::log::error() << "Constituent sensor must have a mode list.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_CONSTITUENT_NO_MODES, {});
             out.AddNote() << "Sensor: " << mSensorPtrs[i]->GetName();
             ok = false;
          }
@@ -218,7 +225,8 @@ bool WsfCompositeSensor::Initialize(double aSimTime)
       auto trackerPtr   = mSensorPtrs[0]->SwapTracker(nullptr);
       if ((schedulerPtr == nullptr) || (trackerPtr == nullptr))
       {
-         auto out = ut::log::error() << "The constituent sensor must have a scheduler and a tracker.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_CONSTITUENT_NO_SCHED, {});
          out.AddNote() << "Sensor: " << mSensorPtrs[0]->GetName();
          ok = false;
       }
@@ -269,7 +277,8 @@ bool WsfCompositeSensor::Initialize(double aSimTime)
       {
          if (!mSensorPtrs[i]->GetInternalLinks().AddRecipient(this))
          {
-            auto out = ut::log::error() << "Failed to add internal link for sensor.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_CS_INTERNAL_LINK_FAIL, {});
             out.AddNote() << "Sensor: " << mSensorPtrs[i]->GetName();
             ok = false;
          }

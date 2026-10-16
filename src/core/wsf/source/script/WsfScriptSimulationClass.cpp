@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtRandom.hpp"
@@ -311,7 +313,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptSimulationClass, WsfSimulation, Execute_1, 1, "
 
    if (!globalContext.ExecuteScript(simTime, aVarArgs[0].GetString(), rv, UtScriptDataList()))
    {
-      auto out = ut::log::error() << "Could not execute script.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_EXEC_FAIL, {});
       out.AddNote() << "Script: " << aVarArgs[0].GetString();
    }
    aReturnVal = rv;
@@ -327,7 +330,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptSimulationClass, WsfSimulation, Execute_2, 2, "
    UtScriptDataList* argsPtr = (UtScriptDataList*)aVarArgs[1].GetPointer()->GetAppObject();
    if (!globalContext.ExecuteScript(simTime, aVarArgs[0].GetString(), rv, *argsPtr))
    {
-      auto out = ut::log::error() << "Could not execute script.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_EXEC_FAIL, {});
       out.AddNote() << "Script: " << aVarArgs[0].GetString();
    }
    aReturnVal = rv;

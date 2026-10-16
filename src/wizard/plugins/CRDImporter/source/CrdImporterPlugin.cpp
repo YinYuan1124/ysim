@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,7 +27,7 @@ CrdImporter::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
 {
    wkf::MainWindow* mainWindowPtr = wkfEnv.GetMainWindow();
    QMenu*           toolsMenu     = mainWindowPtr->GetMenuByName("Tools");
-   QMenu*           importersMenu = new QMenu("Importers", toolsMenu);
+   QMenu*           importersMenu = new QMenu(tr("Importers"), toolsMenu); // 二次开发（i18n）：Tools 菜单文本汉化
    if (toolsMenu)
    {
       QMenu* iMenu = toolsMenu->findChild<QMenu*>("Importers");
@@ -44,7 +44,7 @@ CrdImporter::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    // TODO: Get an icon to represent the plugin on the tools menu
    if (importersMenu)
    {
-      wkf::Action* startAction = new wkf::Action(QIcon::fromTheme("crd_importer"), "CRD Importer ...", mainWindowPtr);
+      wkf::Action* startAction = new wkf::Action(QIcon::fromTheme("crd_importer"), tr("CRD Importer ..."), mainWindowPtr); // 二次开发（i18n）
       connect(startAction, &QAction::triggered, [this]() { mDialogPtr->show(); });
 
       importersMenu->addAction(startAction);

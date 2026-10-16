@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -39,6 +39,8 @@
 #include "UtInput.hpp"
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSleep.hpp"
 #include "UtStringUtil.hpp"
 #include "WsfAntennaPattern.hpp"
@@ -407,7 +409,8 @@ bool WsfDisInterface::ActivateConnection(double aSimTime)
    }
    catch (std::exception&)
    {
-      ut::log::error() << "Unable to open dis_interface device.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_IFACE_OPEN_DEVICE_FAIL, {});
       ok = false;
    }
 
@@ -1536,7 +1539,8 @@ bool WsfDisInterface::PrepareExtension()
    }
    catch (std::exception&)
    {
-      ut::log::error() << "Unable to open dis_interface device.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_IFACE_OPEN_DEVICE_FAIL, {});
    }
 
    // Assign values for various DIS parameters if not defined by the user.
@@ -2880,7 +2884,8 @@ void WsfDisInterface::UpdatePlatformFromArticulationRecords(double          aSim
                   }
                   else
                   {
-                     auto out = ut::log::error() << "Unable to set appearance script variable.";
+                     // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+                     auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_IFACE_SET_APPEAR_VAR_FAIL, {});
                      out.AddNote() << "Platform: " << aPlatformPtr->GetName();
                      out.AddNote() << "Variable: " << articulation.mVariableId;
                   }
@@ -2897,7 +2902,8 @@ void WsfDisInterface::UpdatePlatformFromArticulationRecords(double          aSim
       {
          if (!context.ExecuteScript(aSimTime, scriptId))
          {
-            auto out = ut::log::error() << "Unable to execute appearance update.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_IFACE_EXEC_APPEAR_FAIL, {});
             out.AddNote() << "Platform: " << aPlatformPtr->GetName();
             out.AddNote() << "Script: " << scriptId;
          }

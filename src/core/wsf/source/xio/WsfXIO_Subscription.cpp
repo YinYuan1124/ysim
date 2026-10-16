@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "xio/WsfXIO_Subscription.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "xio/WsfXIO_Connection.hpp"
 #include "xio/WsfXIO_PacketRegistry.hpp"
 
@@ -36,7 +38,8 @@ WsfXIO_Subscription::WsfXIO_Subscription(WsfXIO_RequestDataPkt& aRequest)
       mDataConnectionPtr = mConnectionPtr->GetLinkedConnection();
       if (mDataConnectionPtr == nullptr)
       {
-         ut::log::error() << "No linked connection available.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_XIO_NO_LINKED_CONN, {});
          mDataConnectionPtr = mConnectionPtr;
       }
    }

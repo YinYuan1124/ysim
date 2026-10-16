@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -34,15 +34,14 @@ SpaceTools::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    , mSatelliteInserterPtr{ut::make_unique<SpaceTools::SatelliteInserter>()}
 
 {
-   mConstellationMakerActionPtr =
-      new wkf::Action(QIcon::fromTheme("satellite"), "Constellation Maker", wkfEnv.GetMainWindow());
+   mConstellationMakerActionPtr = new wkf::Action(QIcon::fromTheme("satellite"), tr("Constellation Maker"), wkfEnv.GetMainWindow()); // 二次开发（i18n）
    mConstellationMakerActionPtr->setEnabled(false);
    connect(mConstellationMakerActionPtr,
            &QAction::triggered,
            mConstellationMakerPtr.get(),
            &ConstellationMaker::ShowDialogFromMenu);
 
-   mSatelliteActionPtr = new wkf::Action(QIcon::fromTheme("satellite"), "Satellite Inserter", wkfEnv.GetMainWindow());
+   mSatelliteActionPtr = new wkf::Action(QIcon::fromTheme("satellite"), tr("Satellite Inserter"), wkfEnv.GetMainWindow()); // 二次开发（i18n）：Tools 菜单文本汉化
    mSatelliteActionPtr->setEnabled(false);
    connect(mSatelliteActionPtr, &QAction::triggered, mSatelliteInserterPtr.get(), &SatelliteInserter::ShowDialog);
 

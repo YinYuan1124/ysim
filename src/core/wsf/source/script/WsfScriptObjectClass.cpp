@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInputString.hpp"
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfObject.hpp"
 #include "WsfScenario.hpp"
 #include "script/WsfScriptDefs.hpp"
@@ -119,7 +121,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptObjectClass, WsfObject, ProcessInput, 1, "bool"
       }
       catch (std::exception& e)
       {
-         auto out = ut::log::error() << "Exception thrown while processing script.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_OBJ_CLASS_EXCEPTION, {});
          out.AddNote() << "Script: " << inputString;
          out.AddNote() << "Type: " << ut::TypeNameOf(e);
          out.AddNote() << "What: " << e.what();

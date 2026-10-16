@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,6 +26,8 @@
 #include "DisTime.hpp"
 #include "GenI.hpp"
 #include "GenO.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "math.h"
 
@@ -364,7 +366,8 @@ void DisPdu::ReadExtraData(GenI& aGenI, DisUint16 aLengthToRead)
    {
       if (Dis::ShowError(Dis::cIO_ERRORS))
       {
-         auto out = ut::log::error() << "Mismatched size reading data.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_PDU_SIZE_MISMATCH, {});
          out.AddNote() << "Interface Name: " << aGenI.GetName();
          out.AddNote() << "PDU Type:" << static_cast<unsigned int>(mPduType);
          aGenI.SetInputStatus(GenBuf::MismatchedSize);

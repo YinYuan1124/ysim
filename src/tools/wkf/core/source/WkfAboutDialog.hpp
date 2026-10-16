@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@ class MainWindow;
 
 class WKF_EXPORT AboutDialog : public Dialog
 {
+   // 二次开发（i18n）：补 Q_OBJECT 使 tr() 翻译上下文命中本类（菜单触发动作文本汉化）
+   Q_OBJECT
 public:
    AboutDialog(MainWindow* parent, Qt::WindowFlags f = Qt::WindowFlags());
    ~AboutDialog() override;

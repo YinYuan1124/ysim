@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,6 +26,8 @@
 #include "GenI.hpp"
 #include "GenO.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 DisSignal::DisSignal()
    : DisPdu()
@@ -129,7 +131,8 @@ void DisSignal::Copy(const DisSignal& aSrc)
       }
       else if (Dis::ShowError(Dis::cIO_ERRORS))
       {
-         ut::log::error() << "DisSignal::Copy was passed a signal pdu with a invalid data pointer.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_SIG_COPY_BAD_PTR, {});
          assert(aSrc.mDataPtr != nullptr);
       }
    }
@@ -423,7 +426,8 @@ unsigned int DisSignal::IsValid()
    DisUint32 total_bits = GetLength() * 8;
    if (total_bits % 32 > 0)
    {
-      auto out = ut::log::error() << "DisSignal::IsValid(): PDU does not have a length on a 32-bit boundary.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_SIG_NO_32BIT_BOUNDARY, {});
       out.AddNote() << "PDU Sent From: " << GetEntityId() << ":" << GetRadioId();
 
       return 0;
@@ -431,7 +435,8 @@ unsigned int DisSignal::IsValid()
 
    if (((mEncodingScheme >> 14) & 0x0003) == 3 && mDataLength != 96)
    {
-      auto out = ut::log::error() << "Data Length field must be 96 if the Encoding Class is Database index.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_SIG_DB_LEN_NOT_96, {});
       out.AddNote() << "Encoding: " << std::hex << mEncodingScheme;
       out.AddNote() << "PDU Sent From: " << GetEntityId() << ":" << GetRadioId();
       return 0;
@@ -440,7 +445,8 @@ unsigned int DisSignal::IsValid()
    DisUint32 data_bits = 256 + mDataLength;
    if ((data_bits > total_bits) || ((total_bits - data_bits) > 31))
    {
-      auto out = ut::log::error() << "Data Length field does not match the number of bits specified in the PDU Header.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_SIG_LEN_BITS_MISMATCH, {});
       out.AddNote() << "Data Length: " << mDataLength;
       out.AddNote() << "Specified Bits: " << total_bits;
       out.AddNote() << "Total PDU Size: 256 + Data Length + (0-31 padding) bits = " << data_bits << " bits";

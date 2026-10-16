@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -34,7 +34,7 @@ void ScenarioImporter::ImporterMainWindow::closeEvent(QCloseEvent* event)
 ScenarioImporter::Plugin::Plugin(const QString& aPluginName,
                                  const size_t   aUniqueId)
    : wizard::Plugin(aPluginName, aUniqueId)
-   , mActionPtr(new wkf::Action("Scenario Importer...", wkfEnv.GetMainWindow()))
+   , mActionPtr(new wkf::Action(tr("Scenario Importer..."), wkfEnv.GetMainWindow())) // 二次开发（i18n）：Tools 菜单文本汉化
 {
    QMenu* toolsMenu = wkfEnv.GetMainWindow()->GetMenuByName("Tools");
    // Add the action to the application action set

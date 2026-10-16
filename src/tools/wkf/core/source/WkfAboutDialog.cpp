@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -24,7 +24,7 @@
 #include "WkfPlugin.hpp"
 
 wkf::AboutDialog::AboutDialog(MainWindow* parent, Qt::WindowFlags f /* = Qt::WindowFlags() */)
-   : Dialog(parent, new QAction(QIcon::fromTheme("about"), "About...", nullptr), "Help")
+   : Dialog(parent, new QAction(QIcon::fromTheme("about"), tr("About..."), nullptr), "Help") // 二次开发（i18n）：菜单动作文本汉化
    , mArtworkDialog(nullptr)
    , mLicenseDialog(nullptr)
    , mSystemInfoDialog(nullptr)

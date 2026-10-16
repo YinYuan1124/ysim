@@ -1740,5 +1740,400 @@
 </source>
         <translation>多个命令共用的快捷键：</translation>
     </message>
+</context><context>
+    <name>WkfMainWindowUi</name>
+    <message>
+        <source>File</source>
+        <translation>文件(&amp;F)</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>编辑(&amp;E)</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation>查看(&amp;V)</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>选项(&amp;O)</translation>
+    </message>
+    <message>
+        <source>Tools</source>
+        <translation>工具(&amp;T)</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>帮助(&amp;H)</translation>
+    </message>
+    <message>
+        <source>Project</source>
+        <translation>工程(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Run</source>
+        <translation>运行(&amp;R)</translation>
+    </message>
+    <message>
+        <source>Editors</source>
+        <translation>编辑器</translation>
+    </message>
+    <message>
+        <source>Toolbars</source>
+        <translation>工具栏</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::ActionManager</name>
+    <message>
+        <source>Go To Definition</source>
+        <translation>转到定义</translation>
+    </message>
+    <message>
+        <source>Find References</source>
+        <translation>查找引用</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation>撤销</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation>重做</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation>剪切</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>粘贴</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation>全选</translation>
+    </message>
+    <message>
+        <source>Find...</source>
+        <translation>查找...</translation>
+    </message>
+    <message>
+        <source>Find Next</source>
+        <translation>查找下一个</translation>
+    </message>
+    <message>
+        <source>Find Previous</source>
+        <translation>查找上一个</translation>
+    </message>
+    <message>
+        <source>Find In Files...</source>
+        <translation>在文件中查找...</translation>
+    </message>
+    <message>
+        <source>Replace...</source>
+        <translation>替换...</translation>
+    </message>
+    <message>
+        <source>Go To line...</source>
+        <translation>转到行...</translation>
+    </message>
+    <message>
+        <source>Auto-Complete</source>
+        <translation>自动补全</translation>
+    </message>
+    <message>
+        <source>Comment Selection</source>
+        <translation>注释选中行</translation>
+    </message>
+    <message>
+        <source>Uncomment Selection</source>
+        <translation>取消注释选中行</translation>
+    </message>
+    <message>
+        <source>Toggle Selection Comment</source>
+        <translation>切换选中行注释</translation>
+    </message>
+    <message>
+        <source>Format Selection</source>
+        <translation>格式化选中代码</translation>
+    </message>
+    <message>
+        <source>Move Forward Between Tabs</source>
+        <translation>切换到下一个标签页</translation>
+    </message>
+    <message>
+        <source>Move Backward Between Tabs</source>
+        <translation>切换到上一个标签页</translation>
+    </message>
+    <message>
+        <source>Close Current Tab</source>
+        <translation>关闭当前标签页</translation>
+    </message>
+    <message>
+        <source>Delete Current Line</source>
+        <translation>删除当前行</translation>
+    </message>
+    <message>
+        <source>New Project...</source>
+        <translation>新建工程...</translation>
+    </message>
+    <message>
+        <source>New File...</source>
+        <translation>新建文件...</translation>
+    </message>
+    <message>
+        <source>Open File...</source>
+        <translation>打开文件...</translation>
+    </message>
+    <message>
+        <source>Close Project</source>
+        <translation>关闭工程</translation>
+    </message>
+    <message>
+        <source>Save Project</source>
+        <translation>保存工程</translation>
+    </message>
+    <message>
+        <source>Export Project...</source>
+        <translation>导出工程...</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation>保存文件</translation>
+    </message>
+    <message>
+        <source>Save File As...</source>
+        <translation>文件另存为...</translation>
+    </message>
+    <message>
+        <source>Save All</source>
+        <translation>全部保存</translation>
+    </message>
+    <message>
+        <source>&amp;Print File...</source>
+        <translation>打印文件(&amp;P)...</translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation>全部关闭</translation>
+    </message>
+    <message>
+        <source>Close All But Startup</source>
+        <translation>除启动文件外全部关闭</translation>
+    </message>
+    <message>
+        <source>Close All But Included</source>
+        <translation>除被包含文件外全部关闭</translation>
+    </message>
+    <message>
+        <source>Close Inactive</source>
+        <translation>关闭非活动标签页</translation>
+    </message>
+    <message>
+        <source>Add Directory to Project...</source>
+        <translation>添加目录到工程...</translation>
+    </message>
+    <message>
+        <source>Change History...</source>
+        <translation>更改历史...</translation>
+    </message>
+    <message>
+        <source>Reparse</source>
+        <translation>重新解析</translation>
+    </message>
+    <message>
+        <source>Settings...</source>
+        <translation>设置...</translation>
+    </message>
+    <message>
+        <source>Command Documentation</source>
+        <translation>命令文档</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>编辑</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>文件</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::PreferencesDialog</name>
+    <message>
+        <source>Preferences...</source>
+        <translation>首选项...</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::PluginManagerDialog</name>
+    <message>
+        <source>Plugin Manager...</source>
+        <translation>插件管理器...</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::AboutDialog</name>
+    <message>
+        <source>About...</source>
+        <translation>关于...</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::DocumentationDialog</name>
+    <message>
+        <source>Documentation...</source>
+        <translation>文档...</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationManager::Plugin</name>
+    <message>
+        <source>Run</source>
+        <translation>运行</translation>
+    </message>
+    <message>
+        <source>Run Debug</source>
+        <translation>调试运行</translation>
+    </message>
+    <message>
+        <source>Continue Realtime</source>
+        <translation>实时继续</translation>
+    </message>
+    <message>
+        <source>Continue Non-Realtime</source>
+        <translation>非实时继续</translation>
+    </message>
+    <message>
+        <source>Break All</source>
+        <translation>全部中断</translation>
+    </message>
+    <message>
+        <source>Stop Debugging</source>
+        <translation>停止调试</translation>
+    </message>
+    <message>
+        <source>Restart Run</source>
+        <translation>重新运行</translation>
+    </message>
+    <message>
+        <source>Step Into</source>
+        <translation>单步进入</translation>
+    </message>
+    <message>
+        <source>Step Over</source>
+        <translation>单步跳过</translation>
+    </message>
+    <message>
+        <source>Step Out</source>
+        <translation>单步跳出</translation>
+    </message>
+    <message>
+        <source>Toggle Breakpoint</source>
+        <translation>切换断点</translation>
+    </message>
+    <message>
+        <source>Delete All Breakpoints</source>
+        <translation>删除所有断点</translation>
+    </message>
+    <message>
+        <source>Disable All Breakpoints</source>
+        <translation>禁用所有断点</translation>
+    </message>
+    <message>
+        <source>Debugger Settings...</source>
+        <translation>调试器设置...</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationManager::WsfScriptDebuggerWatchControl</name>
+    <message>
+        <source>Script Watches</source>
+        <translation>脚本监视</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationManager::WsfScriptDebuggerCallstackControl</name>
+    <message>
+        <source>Script Callstack</source>
+        <translation>脚本调用栈</translation>
+    </message>
+</context>
+<context>
+    <name>OutputDock</name>
+    <message>
+        <source>Output</source>
+        <translation>输出</translation>
+    </message>
+</context>
+<context>
+    <name>ScriptBreakpointControlUi</name>
+    <message>
+        <source>Script Breakpoints</source>
+        <translation>脚本断点</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::Plugin</name>
+    <message>
+        <source>Importers</source>
+        <translation>导入器</translation>
+    </message>
+    <message>
+        <source>ACO Importer ...</source>
+        <translation>ACO 导入器...</translation>
+    </message>
+    <message>
+        <source>ATO Importer ...</source>
+        <translation>ATO 导入器...</translation>
+    </message>
+    <message>
+        <source>CRD Importer ...</source>
+        <translation>CRD 导入器...</translation>
+    </message>
+    <message>
+        <source>CommVis...</source>
+        <translation>CommVis 通信可视化...</translation>
+    </message>
+    <message>
+        <source>Engage tool</source>
+        <translation>Engage 交战工具</translation>
+    </message>
+    <message>
+        <source>Event Output Editor...</source>
+        <translation>事件输出编辑器...</translation>
+    </message>
+    <message>
+        <source>Map Utilities</source>
+        <translation>地图工具</translation>
+    </message>
+    <message>
+        <source>OSM Converter...</source>
+        <translation>OSM 转换器...</translation>
+    </message>
+    <message>
+        <source>Scenario Importer...</source>
+        <translation>想定导入器...</translation>
+    </message>
+    <message>
+        <source>Configure SIMDIS...</source>
+        <translation>配置 SIMDIS...</translation>
+    </message>
+    <message>
+        <source>Constellation Maker</source>
+        <translation>星座生成器</translation>
+    </message>
+    <message>
+        <source>Satellite Inserter</source>
+        <translation>卫星插入器</translation>
+    </message>
+    <message>
+        <source>Table Plotter...</source>
+        <translation>表格绘图器...</translation>
+    </message>
 </context>
 </TS>

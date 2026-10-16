@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -23,7 +23,7 @@ SimulationManager::WsfScriptDebuggerCallstackControl::WsfScriptDebuggerCallstack
 {
    mDebuggerPtr = nullptr;
    setObjectName("ScriptCallstackControl");
-   setWindowTitle("Script Callstack");
+   setWindowTitle(tr("Script Callstack")); // 二次开发（i18n）：停靠窗标题汉化（View 菜单显示）
    setWidget(new QWidget(this));
    widget()->setLayout(new QVBoxLayout(widget()));
    mViewPtr = new QTreeView(widget());

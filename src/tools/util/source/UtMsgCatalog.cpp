@@ -11,6 +11,9 @@
 
 #include "UtMsgCatalog.hpp"
 
+// 二次开发（i18n）：TranslateTaggedToZh 的模板切分使用 vector
+#include <vector>
+
 #include <cstdio>
 
 #include "UtLog.hpp"
@@ -45,6 +48,164 @@ const ut::msg::Entry cCatalog[] = {
     "WsfEventPipe 错误: message_id 值 {value} 被重复使用。",
     "同一 message_id_or 命名空间下出现了重复的消息编号",
     "检查 Notes 中的 message_id_or 与 message id，为冲突消息分配新编号"},
+
+   // ---- 想定解析/脚本段（0x0001xxxx）script 域（第十九批）----
+   // 定时回调方法执行失败
+   {ut::msg::MSG_SCRIPT_CB_EXEC_FAIL,
+    "Cannot execute callback method.",
+    "无法执行回调方法。",
+    "脚本回调方法执行出错（脚本异常或脚本不存在）",
+    "查看 Notes 中的回调与平台信息，检查回调脚本定义"},
+   // 脚本解析失败
+   {ut::msg::MSG_SCRIPT_CTX_PARSE_FAIL,
+    "Failed to parse script.",
+    "脚本解析失败。",
+    "脚本源码存在语法错误",
+    "查看 Note 中 UtInput 的异常信息，修正脚本语法"},
+   // WsfScriptContext::Initialize 调用约定不满足
+   {ut::msg::MSG_SCRIPT_CTX_INVALID_INIT,
+    "Invalid call to WsfScriptContext::Initialize().",
+    "WsfScriptContext::Initialize() 调用无效。",
+    "调用时平台指针为空，或定义了部件类名但部件指针为空",
+    "检查脚本上下文初始化调用链，保证平台/部件指针有效"},
+   // 脚本上下文初始化失败
+   {ut::msg::MSG_SCRIPT_CTX_INIT_FAIL,
+    "Failed to initialize the script context.",
+    "脚本上下文初始化失败。",
+    "底层 UtScriptContext::Initialize 返回失败",
+    "检查脚本环境配置"},
+   // 脚本签名与期望原型不符
+   {ut::msg::MSG_SCRIPT_CTX_BAD_SIGNATURE,
+    "Unexpected script signature.",
+    "脚本签名不符。",
+    "脚本形参/返回类型与调用方期望的原型不一致",
+    "对照 Notes 中的期望与实际签名，修正脚本函数定义"},
+   // AddTimedEvents 内部错误
+   {ut::msg::MSG_SCRIPT_CTX_TIMED_EVENTS_ERR,
+    "Internal error in WsfScriptContext::AddTimedEvents.",
+    "WsfScriptContext::AddTimedEvents 内部错误。",
+    "定时事件回调的重复方式既非固定间隔也非随机间隔",
+    "联系开发方排查内部事件类型配置"},
+   // 脚本错误输出头（后附脚本名与行号）
+   {ut::msg::MSG_SCRIPT_ERROR_HEADER,
+    "Error in script.",
+    "脚本出错。",
+    "脚本执行/校验过程检测到错误，详细信息见 Notes",
+    "按 Notes 中的脚本名与行号定位问题脚本"},
+   // 脚本处理中抛出 C++ 异常
+   {ut::msg::MSG_SCRIPT_OBJ_CLASS_EXCEPTION,
+    "Exception thrown while processing script.",
+    "处理脚本时抛出异常。",
+    "脚本对象构造/方法执行过程中抛出标准异常",
+    "查看 Notes 中异常类型与信息，检查脚本输入"},
+   // 回调名未知
+   {ut::msg::MSG_SCRIPT_OBS_UNKNOWN_CB,
+    "Unknown callback name.",
+    "未知回调名。",
+    "回调启用/禁用命令引用的事件回调不存在",
+    "核对 Note 中回调名拼写，确认对应回调命令已定义"},
+   // 回调找不到脚本
+   {ut::msg::MSG_SCRIPT_OBS_NO_SCRIPT,
+    "Unable to find script for callback.",
+    "无法找到回调对应的脚本。",
+    "回调命令指定的脚本名在脚本上下文中不存在",
+    "核对 Note 中脚本名，确认脚本已在上下文中定义"},
+   // 消息处理器无法解析脚本名
+   {ut::msg::MSG_SCRIPT_MSGH_NO_SCRIPT,
+    "WsfScriptMessageHandler unable to resolve script name.",
+    "WsfScriptMessageHandler 无法解析脚本名。",
+    "消息处理器指定的脚本名在脚本上下文中找不到",
+    "核对 Note 中脚本名，确认脚本已定义且无拼写错误"},
+   // 脚本方法找不到 comm 设备
+   {ut::msg::MSG_SCRIPT_PLAT_NO_COMM,
+    "Could not find comm.",
+    "找不到 comm 设备。",
+    "TurnPartOn/Off 类脚本方法指定的通信设备在平台上不存在",
+    "核对 Note 中设备名与平台组件列表"},
+   // 脚本方法找不到 processor
+   {ut::msg::MSG_SCRIPT_PLAT_NO_PROC,
+    "Could not find processor.",
+    "找不到 processor。",
+    "TurnPartOn/Off 类脚本方法指定的处理器在平台上不存在",
+    "核对 Note 中处理器名与平台组件列表"},
+   // 脚本方法找不到 mover
+   {ut::msg::MSG_SCRIPT_PLAT_NO_MOVER,
+    "Could not find mover.",
+    "找不到 mover。",
+    "TurnPartOn/Off 类脚本方法指定的运动体在平台上不存在",
+    "核对 Note 中运动体名与平台组件列表"},
+   // 脚本方法找不到 sensor
+   {ut::msg::MSG_SCRIPT_PLAT_NO_SENSOR,
+    "Could not find sensor.",
+    "找不到 sensor。",
+    "TurnPartOn/Off 类脚本方法指定的传感器在平台上不存在",
+    "核对 Note 中传感器名与平台组件列表"},
+   // 脚本方法找不到 router
+   {ut::msg::MSG_SCRIPT_PLAT_NO_ROUTER,
+    "Could not find router.",
+    "找不到 router。",
+    "TurnPartOn/Off 类脚本方法指定的路由器在平台上不存在",
+    "核对 Note 中路由器名与平台组件列表"},
+   // 脚本执行失败
+   {ut::msg::MSG_SCRIPT_EXEC_FAIL,
+    "Could not execute script.",
+    "无法执行脚本。",
+    "ExecuteScript 返回失败（脚本不存在或执行出错）",
+    "核对 Note 中脚本名，检查脚本定义与执行错误信息"},
+   // 航路点索引越界
+   {ut::msg::MSG_SCRIPT_ROUTE_IDX_RANGE,
+    "Index out of range.",
+    "索引越界。",
+    "WsfRoute.Insert/Remove 指定的航路点索引超出当前航路长度",
+    "对照 Notes 中索引与长度，修正脚本中的索引值"},
+   // WsfScriptStateMachineProcessor::Initialize 调用无效
+   {ut::msg::MSG_SCRIPT_SMP_INVALID_INIT,
+    "Invalid call to WsfScriptStateMachineProcessor::Initialize().",
+    "WsfScriptStateMachineProcessor::Initialize() 调用无效。",
+    "初始化时状态机脚本变量指针为空",
+    "检查状态机处理器的脚本上下文初始化流程"},
+   // 状态机入口状态索引无效
+   {ut::msg::MSG_SCRIPT_SM_BAD_ENTRY_IDX,
+    "WsfScriptStateMachine: Invalid entry state index.",
+    "WsfScriptStateMachine: 入口状态索引无效。",
+    "当前状态索引超出状态列表范围",
+    "对照 Notes 中索引与上限，检查状态机状态配置"},
+   // 状态机转移状态索引无效
+   {ut::msg::MSG_SCRIPT_SM_BAD_TRANS_IDX,
+    "WsfScriptStateMachine: Invalid transition state index.",
+    "WsfScriptStateMachine: 转移状态索引无效。",
+    "next_state 解析出的状态索引超出状态列表范围",
+    "对照 Notes 中索引与上限，检查 next_state 定义"},
+   // 状态机无任何状态
+   {ut::msg::MSG_SCRIPT_SM_EMPTY,
+    "WsfScriptStateMachine: Empty state machine.",
+    "WsfScriptStateMachine: 空状态机。",
+    "状态机未定义任何状态",
+    "在状态机定义中至少添加一个 state"},
+   // 状态机状态初始化失败
+   {ut::msg::MSG_SCRIPT_SM_STATE_INIT_FAIL,
+    "WsfScriptStateMachine: Unable to initialize states.",
+    "WsfScriptStateMachine: 无法初始化状态。",
+    "某个状态的 Initialize 返回失败，详情见 Notes",
+    "按 Notes 中的状态名定位初始化失败的状态"},
+   // next_state 转移初始化失败
+   {ut::msg::MSG_SCRIPT_SM_NEXT_STATE_INIT,
+    "WsfScriptStateMachine: Unable to initialize 'next_state'.",
+    "WsfScriptStateMachine: 无法初始化 'next_state'。",
+    "状态转移对象初始化失败",
+    "检查 Notes 中当前状态与目标状态的转移定义"},
+   // next_state 不存在
+   {ut::msg::MSG_SCRIPT_SM_NO_NEXT_STATE,
+    "WsfScriptStateMachine: 'next_state' does not exist.",
+    "WsfScriptStateMachine: 'next_state' 不存在。",
+    "转移定义引用的 next_state 未在状态机中定义",
+    "核对 Notes 中目标状态名，补充对应 state 定义"},
+   // 状态机找不到脚本
+   {ut::msg::MSG_SCRIPT_SM_NO_SCRIPT,
+    "Unable to find script.",
+    "无法找到脚本。",
+    "状态机的 entry/exit 脚本名在上下文中找不到",
+    "核对 Note 中脚本名，确认脚本已定义"},
 
    // ---- 平台/运动段（0x0002xxxx）----
    // 添加平台时传入空指针（调用方构造失败后未判空）
@@ -803,6 +964,302 @@ const ut::msg::Entry cCatalog[] = {
     "total_mass、empty_mass 与 fuel_mass 不一致。",
     "total_mass 不等于 empty_mass + fuel_mass",
     "修正质量参数满足 total = empty + fuel"},
+   // 导航误差最终报告引出句（析构时 GPS 非激活）
+   {ut::msg::MSG_NAV_ERROR_INS_REPORT,
+    "WsfNavigationError() Report:",
+    "导航误差报告：",
+    "平台销毁时 GPS 处于非激活状态，输出最终 INS 位置误差报告",
+    "状态报告，无需修复"},
+   // 目标点附近找不到有效点
+   {ut::msg::MSG_PF_FIND_CLOSEST_FAIL,
+    "FindClosestValidPoint() could not find a valid point near target.",
+    "FindClosestValidPoint() 未能在目标点附近找到有效点。",
+    "目标点周边网格节点均不可用（受限区域）",
+    "检查目标点是否落在受限区域或导航网格之外"},
+   // 路径制导未挂接运动体
+   {ut::msg::MSG_PG_NOT_ATTACHED,
+    "WsfPathGuidance has not been attached to a mover.",
+    "WsfPathGuidance 尚未挂接到运动体。",
+    "初始化时运动体指针为空",
+    "检查 mover 的路径制导挂接流程"},
+   // 路线网络 InsertArea 失败
+   {ut::msg::MSG_RN_INSERT_AREA_FAIL,
+    "Failure in WsfRouteNetwork: InsertArea().",
+    "WsfRouteNetwork 路线段插入失败（InsertArea）。",
+    "路线段插入空间索引树失败",
+    "检查路线段几何是否退化（零长度线段）"},
+
+   // ---- 平台/运动段（0x0002xxxx）traffic 交通域（第十九批）----
+   // 机场引用了未定义的 aircraft_type
+   {ut::msg::MSG_AIR_BAD_AC_TYPE,
+    "Invalid 'aircraft_type'.",
+    "无效的 'aircraft_type'。",
+    "机场定义引用的飞机类型未在 platform_type 中定义",
+    "核对 Note 中飞机类型名，补充对应平台类型定义"},
+   // 机场目的机场未定义
+   {ut::msg::MSG_AIR_UNDEF_DEST,
+    "Undefined airbase destination.",
+    "机场目的机场未定义。",
+    "机场目的地列表引用的机场不存在",
+    "核对 Note 中目的机场名，确保先定义该机场"},
+   // 无法添加机场平台
+   {ut::msg::MSG_AIR_NO_ADD_PLATFORM,
+    "Unable to add airbase platform.",
+    "无法添加机场平台。",
+    "机场对应平台加入仿真失败（平台重名等）",
+    "查看 Note 中平台名，检查是否有同名平台"},
+   // 找不到本地可用飞机类型
+   {ut::msg::MSG_AIR_NO_LOCAL_AC,
+    "Could not find a local aircraft type to use.",
+    "找不到可用的本地飞机类型。",
+    "机场未配置任何可在本地起降的飞机类型",
+    "在机场定义中补充 aircraft_type 配置"},
+   // 无飞机类型可降目的机场
+   {ut::msg::MSG_AIR_NO_LAND_AC,
+    "No aircraft type may land at destination.",
+    "没有飞机类型可以降落到目的机场。",
+    "出发机场的飞机类型均不满足目的机场的降落要求",
+    "核对 Note 中目的机场，调整机场的飞机类型配置"},
+   // 找不到平台对应航班
+   {ut::msg::MSG_AIR_NO_FLIGHT,
+    "Unable to locate flight for platform.",
+    "无法找到平台对应的航班。",
+    "航班到达/起飞事件处理时平台不在航班列表中",
+    "查看 Notes 中的时间与平台名，检查航班删除逻辑"},
+   // 无法创建指定类型飞机
+   {ut::msg::MSG_AIR_NO_CREATE_AC,
+    "Unable to create aircraft of type.",
+    "无法创建指定类型的飞机。",
+    "按 aircraft_type 克隆平台类型失败",
+    "核对 Note 中飞机类型名，确保 platform_type 已定义"},
+   // 飞机运动体须为 WSF_AIR_MOVER
+   {ut::msg::MSG_AIR_BAD_MOVER_TYPE,
+    "Aircraft mover must be a WSF_AIR_MOVER.",
+    "飞机运动体必须为 WSF_AIR_MOVER。",
+    "机场交通要求飞机平台使用 WSF_AIR_MOVER",
+    "按 Notes 中类型信息修正平台类型的 mover 定义"},
+   // 无法将平台加入仿真
+   {ut::msg::MSG_AIR_NO_ADD_SIM,
+    "Unable to add platform to simulation.",
+    "无法将平台加入仿真。",
+    "航班创建的飞机平台加入仿真失败",
+    "查看 Note 中平台名，检查是否有同名平台"},
+   // 备降找不到合适机场
+   {ut::msg::MSG_AIR_DIVERT_NO_AIRBASE,
+    "Diverting flight. Could not find a suitable alternative airbase.",
+    "航班备降：找不到合适的备降机场。",
+    "目的机场不可用时未找到满足降落条件的备降机场",
+    "查看 Notes 中航班状态与目的机场，扩展可降落的机场配置"},
+   // 无效路线网络
+   {ut::msg::MSG_TRT_INVALID_NET,
+    "Invalid route network.",
+    "无效路线网络。",
+    "交通扩展引用的 route_network 未在想定中定义",
+    "核对 Note 中网络名，补充对应 route_network 定义"},
+   // 路线网络初始化失败
+   {ut::msg::MSG_TRT_NET_INIT_FAIL,
+    "Unable to initialize route network.",
+    "无法初始化路线网络。",
+    "路线网络对象 Initialize 返回失败",
+    "查看该网络的初始化错误信息，检查网络定义"},
+   // sea_traffic 无法生成实体
+   {ut::msg::MSG_SEA_NO_ENTITY,
+    "sea_traffic: Could not generate entity, so no more departure events will be scheduled.",
+    "sea_traffic: 无法生成实体，不再安排后续离港事件。",
+    "按配置生成海上实体失败（平台类型克隆失败等）",
+    "检查 sea_traffic 的平台类型与港口配置"},
+   // sea_traffic 运动体为空
+   {ut::msg::MSG_SEA_NULL_MOVER,
+    "sea_traffic: Cannot set the mover's path because the mover is null.",
+    "sea_traffic: 运动体为空，无法设置路径。",
+    "生成的平台没有配置 mover",
+    "查看 Note 中平台名，为该平台类型补充 mover 定义"},
+   // sea_traffic 平台加入仿真失败
+   {ut::msg::MSG_SEA_ADD_PLATFORM_FAIL,
+    "sea_traffic: There was a problem adding the platform to the simulation.",
+    "sea_traffic: 平台加入仿真时出现问题。",
+    "AddPlatform 返回失败（平台重名等）",
+    "查看 Note 中平台名，检查是否有同名平台"},
+   // sea_traffic 无效平台类型
+   {ut::msg::MSG_SEA_BAD_PLATFORM_TYPE,
+    "sea_traffic: Invalid platform type.",
+    "sea_traffic: 无效的平台类型。",
+    "按 vehicle 定义的平台类型未定义",
+    "核对 Note 中类型名，补充对应 platform_type"},
+   // sea_traffic 输出文件打开失败
+   {ut::msg::MSG_SEA_OUTPUT_OPEN,
+    "sea_traffic: Unable to open output file.",
+    "sea_traffic: 无法打开输出文件。",
+    "生成 sea_traffic.sed 场景导出文件失败（目录无写权限或被占用）",
+    "检查工作目录写权限与文件占用"},
+   // sea_traffic 航线不存在
+   {ut::msg::MSG_SEA_NO_LANE,
+    "sea_traffic: Lane does not exist.",
+    "sea_traffic: 航线不存在。",
+    "配置引用的 sea_lane 未定义",
+    "核对 Note 中航线名，补充对应航线定义"},
+   // sea_traffic 航线权重和不为 1
+   {ut::msg::MSG_SEA_LANE_WEIGHTS,
+    "sea_traffic: The sum of the lane weights must be 1.0.",
+    "sea_traffic: 各航线权重之和必须为 1.0。",
+    "出港航线权重之和偏离 1.0 超过容差",
+    "按 Note 中当前总和调整各航线 weight"},
+   // sea_traffic 港口权重数不符
+   {ut::msg::MSG_SEA_PORT_WEIGHTS,
+    "sea_traffic: The number of port weights does not match the number of outgoing lanes.",
+    "sea_traffic: 港口权重数量与出港航线数量不一致。",
+    "目的港口权重列表长度与出港航线列表长度不一致",
+    "对照配置补齐或删除多余的 port weight 条目"},
+   // sea_traffic 区域权重和不为 1
+   {ut::msg::MSG_SEA_REGION_WEIGHTS,
+    "sea_traffic: The sum of the local traffic region weights must be 1.0.",
+    "sea_traffic: 各本地交通区域权重之和必须为 1.0。",
+    "本地交通区域权重之和偏离 1.0 超过容差",
+    "按 Note 中当前总和调整各区域 weight"},
+   // sea_traffic 航线须两个港口
+   {ut::msg::MSG_SEA_TWO_PORTS,
+    "sea_traffic: Must specify two ports to properly define a lane.",
+    "sea_traffic: 定义航线必须指定两个港口。",
+    "航线两端港口数不足两个",
+    "按 Note 中当前港口数，补齐航线两端的 port 定义"},
+   // sea_traffic 港口不存在
+   {ut::msg::MSG_SEA_NO_PORT,
+    "sea_traffic: Port does not exist.",
+    "sea_traffic: 港口不存在。",
+    "航线引用的港口未定义",
+    "核对 Note 中港口名，补充对应港口定义"},
+   // sea_traffic 未指定创建比例
+   {ut::msg::MSG_SEA_NO_FRACTION,
+    "sea_traffic: Must specify the fraction of {type}s to create.",
+    "sea_traffic: 必须指定要创建的 {type} 的比例。",
+    "船舶类型的 fraction 未指定或小于等于零",
+    "在该类型定义中补充大于零的 fraction 值"},
+   // sea_traffic 无效待机航线
+   {ut::msg::MSG_SEA_BAD_LOITER_ROUTE,
+    "sea_traffic: Invalid loiter route.",
+    "sea_traffic: 无效的待机航线。",
+    "loiter_route 引用的 route 未定义",
+    "核对 Note 中航线名，补充对应 route 定义"},
+   // osm_traffic 变量类型不符
+   {ut::msg::MSG_OSM_BAD_VAR_TYPE,
+    "osm_traffic: Unexpected variable type.",
+    "osm_traffic: 变量类型不符。",
+    "脚本变量实际类型与声明/期望类型不一致",
+    "对照 Note 中变量名与期望类型，修改变量声明或赋值"},
+   // osm_traffic 网络未定义
+   {ut::msg::MSG_OSM_UNDEF_NET,
+    "osm_traffic: Undefined network.",
+    "osm_traffic: 网络未定义。",
+    "osm_traffic 引用的 route network 未定义",
+    "核对 Note 中网络名，补充对应网络定义"},
+   // osm_traffic 网络有出口无入口
+   {ut::msg::MSG_OSM_NET_NO_ENTRANCE,
+    "osm_traffic: Network contains exits, but no acceptable entrances. Vehicles cannot be respawned after leaving the network.",
+    "osm_traffic: 网络包含出口但没有可用入口，车辆驶离网络后无法重新生成。",
+    "网络的生成节点均不满足入口条件",
+    "检查网络节点/路段定义，保证至少有一个可生成车辆的入口"},
+   // osm_traffic 初始化失败
+   {ut::msg::MSG_OSM_INIT_FAIL,
+    "osm_traffic: Unable to initialize.",
+    "osm_traffic: 无法初始化。",
+    "网络有效性检查未通过（见前置错误信息）",
+    "查看本错误之前的日志，修正对应的网络配置问题"},
+   // osm_traffic 无效平台类型
+   {ut::msg::MSG_OSM_BAD_PLATFORM_TYPE,
+    "osm_traffic: Invalid platform type.",
+    "osm_traffic: 无效的平台类型。",
+    "克隆车辆平台类型失败（未定义或克隆异常）",
+    "核对 Note 中类型名，补充对应 platform_type"},
+   // osm_traffic 车辆类型不存在
+   {ut::msg::MSG_OSM_NO_VEHICLE_TYPE,
+    "osm_traffic: Vehicle type does not exist.",
+    "osm_traffic: 车辆类型不存在。",
+    "网络定义的车辆 platform_type 未在想定中定义",
+    "核对 Notes 中类型名，补充对应 platform_type"},
+   // osm_traffic fraction 和不为 1
+   {ut::msg::MSG_OSM_BAD_FRACTION,
+    "osm_traffic: The sum of all the vehicle 'fraction' values must be 1.0.",
+    "osm_traffic: 所有车辆 'fraction' 值之和必须为 1.0。",
+    "车辆比例之和不为 1.0",
+    "按 Note 中当前总和调整各车辆类型 fraction"},
+   // osm_traffic 车队车辆类型不存在
+   {ut::msg::MSG_OSM_NO_CONVOY_TYPE,
+    "osm_traffic: Convoy vehicle type does not exist.",
+    "osm_traffic: 车队车辆类型不存在。",
+    "车队定义的车辆 platform_type 未定义",
+    "核对 Notes 中类型名，补充对应 platform_type"},
+   // osm_traffic 运动体为空
+   {ut::msg::MSG_OSM_NULL_MOVER,
+    "osm_traffic: Cannot set the mover's path because the mover is null.",
+    "osm_traffic: 运动体为空，无法设置路径。",
+    "生成的平台没有配置 mover",
+    "查看 Note 中平台名，为该平台类型补充 mover 定义"},
+   // 所属平台缺有效运动体
+   {ut::msg::MSG_OSM_NO_MOVER,
+    "Owner Platform doesn't have a valid mover in XWsfOSM_Traffic::VehiclePathEndedHandler()",
+    "所属平台在 XWsfOSM_Traffic::VehiclePathEndedHandler() 中没有有效运动体。",
+    "车辆路径结束回调时平台 mover 为空",
+    "检查该平台类型的 mover 配置"},
+   // road_traffic 网络未定义
+   {ut::msg::MSG_ROAD_UNDEF_NET,
+    "road_traffic: Undefined network.",
+    "road_traffic: 网络未定义。",
+    "road_traffic 引用的 route network 未定义",
+    "核对 Note 中网络名，补充对应网络定义"},
+   // road_traffic 车队运动体类型无效
+   {ut::msg::MSG_ROAD_BAD_MOVER,
+    "road_traffic: Could not initialize convoy vehicle because an invalid mover type was used.",
+    "road_traffic: 使用了无效的运动体类型，无法初始化车队车辆。",
+    "车队车辆平台未使用 WSF_ROAD_MOVER 或 WSF_GROUND_MOVER",
+    "按 Note 提示改用 WSF_ROAD_MOVER 或 WSF_GROUND_MOVER"},
+   // road_traffic 初始化失败
+   {ut::msg::MSG_ROAD_INIT_FAIL,
+    "road_traffic: Unable to initialize.",
+    "road_traffic: 无法初始化。",
+    "网络/车辆配置校验未通过（见前置错误信息）",
+    "查看本错误之前的日志，修正对应的配置问题"},
+   // road_traffic 无效平台类型
+   {ut::msg::MSG_ROAD_BAD_PLATFORM_TYPE,
+    "road_traffic: Invalid platform type.",
+    "road_traffic: 无效的平台类型。",
+    "克隆车辆平台类型失败（未定义或克隆异常）",
+    "核对 Note 中类型名，补充对应 platform_type"},
+   // road_traffic 运动体为空
+   {ut::msg::MSG_ROAD_NULL_MOVER,
+    "road_traffic: Cannot set the mover's path because the mover is null.",
+    "road_traffic: 运动体为空，无法设置路径。",
+    "生成的平台没有配置 mover",
+    "查看 Note 中平台名，为该平台类型补充 mover 定义"},
+   // road_traffic 静止车辆随机航点失败
+   {ut::msg::MSG_ROAD_NO_RANDOM_WPT,
+    "road_traffic: Unable to create a random waypoint for a stationary vehicle.",
+    "road_traffic: 无法为静止车辆创建随机航点。",
+    "静止车辆在路网中找不到可用的随机航点",
+    "查看 Note 中车辆名，检查路网节点/车道定义"},
+   // road_traffic 随机路径生成失败
+   {ut::msg::MSG_ROAD_NO_RANDOM_PATH,
+    "road_traffic: Unable to create a random path.",
+    "road_traffic: 无法创建随机路径。",
+    "车辆随机路径生成失败（路网连通性问题）",
+    "查看 Note 中车辆名，检查路网连通性"},
+   // road_traffic 无法创建新车辆
+   {ut::msg::MSG_ROAD_NO_NEW_VEHICLE,
+    "road_traffic: Could not create new vehicle.",
+    "road_traffic: 无法创建新车辆。",
+    "生成替代车辆时失败（平台类型克隆失败等）",
+    "检查车辆平台类型定义与网络配置"},
+   // road_traffic 车辆类型不存在
+   {ut::msg::MSG_ROAD_NO_VEHICLE_TYPE,
+    "road_traffic: Vehicle type does not exist.",
+    "road_traffic: 车辆类型不存在。",
+    "网络定义的车辆 platform_type 未定义",
+    "核对 Notes 中类型名，补充对应 platform_type"},
+   // road_traffic 车队车辆类型不存在
+   {ut::msg::MSG_ROAD_NO_CONVOY_TYPE,
+    "road_traffic: Convoy vehicle type does not exist.",
+    "road_traffic: 车队车辆类型不存在。",
+    "车队定义的车辆 platform_type 未定义",
+    "核对 Notes 中类型名，补充对应 platform_type"},
 
    // ---- 传感器段（0x0003xxxx）----
    // MTI 调整表文件打开失败（WsfMTI_TableManager::ReadCsv）
@@ -1100,6 +1557,308 @@ const ut::msg::Entry cCatalog[] = {
     "MTI 修正表已存在，不允许重复指定。",
     "同一波束内重复定义 MTI adjustment table",
     "移除重复的 MTI adjustment table 定义"},
+   // 外部传感器初始化失败
+   {ut::msg::MSG_EXT_SENSOR_INIT_FAIL,
+    "Initialization failed for external sensor.",
+    "外部传感器初始化失败。",
+    "外部辐射源对应传感器初始化失败",
+    "检查传感器类型定义与初始化输入"},
+
+   // ---- 传感器段（0x0003xxxx）sensor 域（第十九批）----
+   // 组合传感器缺 operating_mode
+   {ut::msg::MSG_CS_NO_OPERATING_MODE,
+    "'operating_mode' has not been defined.",
+    "未定义 'operating_mode'。",
+    "组合传感器未指定工作模式",
+    "在组合传感器定义中补充 operating_mode 命令"},
+   // 组合传感器未定义成员传感器
+   {ut::msg::MSG_CS_NO_CONSTITUENTS,
+    "No constituent sensors defined.",
+    "未定义成员传感器。",
+    "组合传感器未包含任何成员传感器",
+    "在定义中补充构成组合传感器的成员传感器名"},
+   // 成员传感器与组合传感器同名
+   {ut::msg::MSG_CS_SELF_CONSTITUENT,
+    "Constituent sensor cannot be the same as the composite sensor.",
+    "成员传感器不能是组合传感器自身。",
+    "成员列表中引用了组合传感器本身",
+    "核对 Note 中传感器名，移除自引用条目"},
+   // 成员传感器未定义
+   {ut::msg::MSG_CS_CONSTITUENT_UNDEF,
+    "Constituent sensor was not defined",
+    "成员传感器未定义。",
+    "成员列表引用的传感器在平台上不存在",
+    "核对 Note 中传感器名，确保成员传感器已在平台定义"},
+   // 成员传感器须有模式列表
+   {ut::msg::MSG_CS_CONSTITUENT_NO_MODES,
+    "Constituent sensor must have a mode list.",
+    "成员传感器必须拥有模式列表。",
+    "参与模式共享的成员传感器未定义模式列表",
+    "核对 Note 中传感器名，为其补充模式定义"},
+   // 成员传感器须有调度器与跟踪器
+   {ut::msg::MSG_CS_CONSTITUENT_NO_SCHED,
+    "The constituent sensor must have a scheduler and a tracker.",
+    "成员传感器必须拥有调度器与跟踪器。",
+    "首个成员传感器缺少 scheduler 或 tracker",
+    "核对 Note 中传感器名，补齐其调度器/跟踪器配置"},
+   // 成员传感器内部链路添加失败
+   {ut::msg::MSG_CS_INTERNAL_LINK_FAIL,
+    "Failed to add internal link for sensor.",
+    "成员传感器内部链路添加失败。",
+    "向组合传感器添加内部链路接收者时失败（通常为重复添加）",
+    "核对 Note 中传感器名，检查是否重复加入组合"},
+   // MarcumSwerling case 无效
+   {ut::msg::MSG_MS_BAD_CASE,
+    "MarcumSwerling: Invalid case.",
+    "MarcumSwerling: 无效的 case。",
+    "MarcumSwerling 检测模型 case 取值超出 0-4 范围",
+    "按 Notes 中期望值修正 case 取值"},
+   // MarcumSwerling 脉冲积分数无效
+   {ut::msg::MSG_MS_BAD_NUM_PULSES,
+    "MarcumSwerling:: Invalid number of pulses integrated.",
+    "MarcumSwerling: 无效的脉冲积分数。",
+    "脉冲积分数小于等于零",
+    "按 Notes 中期望值修正脉冲积分数"},
+   // MarcumSwerling 虚警概率无效
+   {ut::msg::MSG_MS_BAD_PFA,
+    "MarcumSwerling: Invalid probability of false alarm.",
+    "MarcumSwerling: 无效的虚警概率。",
+    "虚警概率不在 (0,1) 开区间内",
+    "按 Notes 中期望值修正虚警概率"},
+   // 连续波检测阈值未定义
+   {ut::msg::MSG_PD_NO_CONT_THRESH,
+    "Continuous detection threshold not defined.",
+    "未定义连续波检测阈值。",
+    "无源探测器连续波信号的检测阈值表缺失或为空",
+    "补充 continuous 信号的 detection_threshold 定义"},
+   // 脉冲检测阈值未定义
+   {ut::msg::MSG_PD_NO_PULSED_THRESH,
+    "Pulsed detection threshold not defined.",
+    "未定义脉冲检测阈值。",
+    "无源探测器脉冲信号的检测阈值表缺失或为空",
+    "补充 pulsed 信号的 detection_threshold 定义"},
+   // 连续波灵敏度未定义
+   {ut::msg::MSG_PD_NO_CONT_SENS,
+    "Continuous sensitivity not defined.",
+    "未定义连续波灵敏度。",
+    "无源探测器连续波信号的灵敏度表缺失或为空",
+    "补充 continuous 信号的 detection_sensitivity 定义"},
+   // 脉冲灵敏度未定义
+   {ut::msg::MSG_PD_NO_PULSED_SENS,
+    "Pulsed sensitivity not defined.",
+    "未定义脉冲灵敏度。",
+    "无源探测器脉冲信号的灵敏度表缺失或为空",
+    "补充 pulsed 信号的 detection_sensitivity 定义"},
+   // 须定义检测阈值或灵敏度
+   {ut::msg::MSG_PD_NO_THRESH_OR_SENS,
+    "Must define 'detection_threshold' or 'detection_sensitivity'.",
+    "必须定义 'detection_threshold' 或 'detection_sensitivity'。",
+    "无源探测器既未定义检测阈值也未定义灵敏度",
+    "按信号类型补充 detection_threshold 或 detection_sensitivity"},
+   // data_table 型 MTI 缺数据表
+   {ut::msg::MSG_MTI_ADJ_NO_TABLE,
+    "Must specify 'mti_data_table' and valid data for MTI type of 'data_table'.",
+    "MTI 类型为 'data_table' 时必须指定 'mti_data_table' 及有效数据。",
+    "data_table 型 MTI 处理器未提供修正数据表",
+    "补充 mti_data_table 命令及有效的表数据"},
+   // MTI 处理器要求雷达模式
+   {ut::msg::MSG_MTI_ADJ_BAD_MODE,
+    "Sensor Mode must be of type WsfRadarSensor:RadarMode.",
+    "传感器模式必须为 WsfRadarSensor:RadarMode 类型。",
+    "MTI 处理器被用于非雷达模式",
+    "将 mti_processor 移到雷达传感器模式定义中"},
+   // MTI 处理器缺 PRF
+   {ut::msg::MSG_MTI_ADJ_NO_PRF,
+    "Must specify 'pulse_repetition_frequency' with 'mti_processor'.",
+    "使用 'mti_processor' 时必须指定 'pulse_repetition_frequency'。",
+    "mti_processor 对应波束的发射机未指定 PRF",
+    "为该波束的 transmitter 补充 pulse_repetition_frequency"},
+   // MTI 处理器缺最大距离
+   {ut::msg::MSG_MTI_ADJ_NO_MAX_RANGE,
+    "Must specify 'maximum_range' in 'mti_processor'",
+    "必须在 'mti_processor' 中指定 'maximum_range'。",
+    "MTI 处理器未指定最大探测距离",
+    "在 mti_processor 块内补充 maximum_range"},
+   // MTI 处理器脉间周期须成对
+   {ut::msg::MSG_MTI_ADJ_NO_IPP,
+    "Must specify both 'interpulse_period_1 and 2' in 'mti_processor'",
+    "必须在 'mti_processor' 中同时指定 'interpulse_period_1 和 2'。",
+    "双延迟对消器需要两个脉间周期，仅指定了其中一个",
+    "在 mti_processor 块内成对补充 interpulse_period_1/2（或只指定 PRF）"},
+   // 默认跟踪器要求模式列表
+   {ut::msg::MSG_DST_NO_MODE_LIST,
+    "A mode list is required for WsfDefaultSensorTracker.",
+    "WsfDefaultSensorTracker 需要模式列表。",
+    "使用默认跟踪器的传感器未定义模式列表",
+    "为传感器补充至少一个模式定义"},
+   // MTI 表 CSV 读取异常
+   {ut::msg::MSG_MTI_TABLE_READCSV_EXC,
+    "MTI_Table::ReadCsv: Caught exception!!!",
+    "MTI_Table::ReadCsv: 捕获到异常。",
+    "CSV 表读取过程中抛出标准异常",
+    "按 Note 中行号检查 CSV 数据格式"},
+   // 复合 MTI 表文件打开失败
+   {ut::msg::MSG_MTI_TABLE_COMPOUND_OPEN,
+    "MTI_Table::ReadCsvCompound: Unable to open MTI table file.",
+    "MTI_Table::ReadCsvCompound: 无法打开 MTI 表文件。",
+    "复合 MTI 修正表文件无法打开",
+    "核对 Note 中文件路径，确认文件存在且可读"},
+   // 复合 MTI 表解析异常
+   {ut::msg::MSG_MTI_TABLE_COMPOUND_PARSE,
+    "Exception thrown in MTI_Table::ReadCsvCompound. Error parsing table.",
+    "MTI_Table::ReadCsvCompound 中抛出异常：表解析出错。",
+    "复合表单元格解析失败",
+    "查看 Notes 中异常信息，检查表数据格式"},
+   // 复合 MTI 表行读取失败
+   {ut::msg::MSG_MTI_TABLE_COMPOUND_ROW,
+    "MTI_TABLE::ReadCsvCompound: Failed reading row.",
+    "MTI_TABLE::ReadCsvCompound: 行读取失败。",
+    "行内数值列数与轴定义不符",
+    "按 Notes 中行号与列数检查该行数据"},
+   // 复合 MTI 表读取异常
+   {ut::msg::MSG_MTI_TABLE_COMPOUND_EXC,
+    "Exception thrown in MTI_TABLE::ReadCsvCompound.",
+    "MTI_TABLE::ReadCsvCompound 中抛出异常。",
+    "复合表读取过程中抛出标准异常",
+    "按 Note 中行号与异常信息检查 CSV 数据"},
+   // MTI 表 CSV 写打开失败
+   {ut::msg::MSG_MTI_TABLE_WRITECSV_OPEN,
+    "MTI_TABLE::WriteCsv: Unable to open file.",
+    "MTI_TABLE::WriteCsv: 无法打开文件。",
+    "MTI 表 CSV 输出文件无法打开",
+    "核对 Note 中文件路径与目录写权限"},
+   // MTI 表二进制写打开失败
+   {ut::msg::MSG_MTI_TABLE_WRITEBIN_OPEN,
+    "MTI_TABLE::WriteBinary: Unable to open file.",
+    "MTI_TABLE::WriteBinary: 无法打开文件。",
+    "MTI 表二进制输出文件无法打开",
+    "核对 Note 中文件路径与目录写权限"},
+   // MTI 表二进制写 speedAxis 失败
+   {ut::msg::MSG_MTI_TABLE_WRITEBIN_SPEED,
+    "MTI_TABLE::WriteBinary: Writing data speedAxis.",
+    "MTI_TABLE::WriteBinary: 写入 speedAxis 数据失败。",
+    "二进制写出速度轴数据时流写入失败",
+    "检查磁盘空间与文件是否被占用"},
+   // MTI 表二进制写 adjustmentAxis 失败
+   {ut::msg::MSG_MTI_TABLE_WRITEBIN_ADJ,
+    "MTI_TABLE::WriteBinary: Writing data adjustmentAxis.",
+    "MTI_TABLE::WriteBinary: 写入 adjustmentAxis 数据失败。",
+    "二进制写出修正量轴数据时流写入失败",
+    "检查磁盘空间与文件是否被占用"},
+   // MTI 表二进制读打开失败
+   {ut::msg::MSG_MTI_TABLE_READBIN_OPEN,
+    "MTI_TABLE::ReadBinary: Unable to open file.",
+    "MTI_TABLE::ReadBinary: 无法打开文件。",
+    "MTI 表二进制输入文件无法打开",
+    "核对 Note 中文件路径，确认文件存在且可读"},
+   // MTI 表二进制读 speedAxis 失败
+   {ut::msg::MSG_MTI_TABLE_READBIN_SPEED,
+    "MTI_TABLE::ReadBinary: Reading data speedAxis.",
+    "MTI_TABLE::ReadBinary: 读取 speedAxis 数据失败。",
+    "二进制读取速度轴数据时流读取失败",
+    "确认文件为 WriteBinary 生成的有效格式"},
+   // MTI 表二进制读 adjustmentAxis 失败
+   {ut::msg::MSG_MTI_TABLE_READBIN_ADJ,
+    "MTI_TABLE::ReadBinary: Reading data adjustmentAxis.",
+    "MTI_TABLE::ReadBinary: 读取 adjustmentAxis 数据失败。",
+    "二进制读取修正量轴数据时流读取失败",
+    "确认文件为 WriteBinary 生成的有效格式"},
+   // 找不到频率对应的修正表
+   {ut::msg::MSG_MTI_TABLE_NO_FREQ,
+    "MTI_AdjustmentTableCompound: No MTI adjustment table was found for frequency.",
+    "MTI_AdjustmentTableCompound: 找不到该频率对应的 MTI 修正表。",
+    "复合表中没有覆盖指定频率的修正表",
+    "核对 Note 中频率值，扩展修正表的频率覆盖范围"},
+   // 默认调度器要求模式列表
+   {ut::msg::MSG_DSS_NO_MODE_LIST,
+    "A mode list is required for WsfDefaultSensorScheduler.",
+    "WsfDefaultSensorScheduler 需要模式列表。",
+    "使用默认调度器的传感器未定义模式列表",
+    "为传感器补充至少一个模式定义"},
+   // 默认调度器缺 frame_time
+   {ut::msg::MSG_DSS_NO_FRAME_TIME,
+    "WsfDefaultSensorScheduler: 'frame_time' not specified.",
+    "WsfDefaultSensorScheduler: 未指定 'frame_time'。",
+    "某个模式未指定帧时间",
+    "按 Notes 中传感器与模式名补充 frame_time"},
+   // 请求的传感器模式无效
+   {ut::msg::MSG_DSS_BAD_MODE_REQ,
+    "Invalid mode requested for sensor.",
+    "请求的传感器模式无效。",
+    "请求的模式名在传感器模式列表中不存在",
+    "按 Notes 中传感器与请求的模式名核对模式定义"},
+   // 物理扫描调度器要求模式列表
+   {ut::msg::MSG_PSSS_NO_MODE_LIST,
+    "A mode list is required for {type}.",
+    "{type} 需要模式列表。",
+    "使用物理扫描调度器的传感器未定义模式列表",
+    "为传感器补充至少一个模式定义"},
+   // 物理扫描调度器缺 update_interval
+   {ut::msg::MSG_PSSS_NO_UPDATE_INT,
+    "An 'update_interval' is required for {type} scheduler.",
+    "{type} 调度器需要 'update_interval'。",
+    "传感器未指定更新间隔",
+    "核对 Note 中传感器名，补充 update_interval"},
+   // 物理扫描调度器缺 frame_time
+   {ut::msg::MSG_PSSS_NO_FRAME_TIME,
+    "Unspecified 'frame_time'.",
+    "未指定 'frame_time'。",
+    "某个模式未指定帧时间",
+    "按 Notes 中传感器与模式名补充 frame_time"},
+   // 误差模型仅适用雷达传感器
+   {ut::msg::MSG_RSEM_NOT_RADAR,
+    "Unable to use 'error_model' on sensor types that are note WSF_RADAR_SENSORs.",
+    "无法在非 WSF_RADAR_SENSOR 类型传感器上使用 'error_model'。",
+    "雷达误差模型被用于非雷达传感器",
+    "核对 Note 中模型名，将 error_model 移到雷达传感器定义中"},
+   // 扇区扫描缺方位扫描率
+   {ut::msg::MSG_SSSS_NO_AZ_RATE,
+    "You must define an 'azimuth_rate' or the sensor's 'azimuth_slew_rate'.",
+    "必须定义 'azimuth_rate' 或传感器的 'azimuth_slew_rate'。",
+    "扇区扫描模式缺方位扫描率且传感器未定义方位转动速率",
+    "补充 azimuth_rate 或传感器的 azimuth_slew_rate"},
+   // 扇区扫描缺俯仰扫描率
+   {ut::msg::MSG_SSSS_NO_EL_RATE,
+    "You must define an 'elevation_rate' or the sensor's 'elevation_slew_rate'.",
+    "必须定义 'elevation_rate' 或传感器的 'elevation_slew_rate'。",
+    "扇区扫描模式缺俯仰扫描率且传感器未定义俯仰转动速率",
+    "补充 elevation_rate 或传感器的 elevation_slew_rate"},
+   // 扇区扫描调度器缺 update_interval
+   {ut::msg::MSG_SSSS_NO_UPDATE_INT,
+    "'update_interval' is required for 'sector_scan' scheduler.",
+    "'sector_scan' 调度器需要 'update_interval'。",
+    "扇区扫描传感器未指定更新间隔",
+    "按 Notes 中平台与传感器名补充 update_interval"},
+   // 调度器块缺结束命令
+   {ut::msg::MSG_SST_NO_END_SCHED,
+    "Missing block terminator.",
+    "缺少块结束命令。",
+    "scheduler 块未以 end_scheduler 结束",
+    "按 Note 提示补充 end_scheduler 结束命令"},
+   // 信号处理器初始化失败
+   {ut::msg::MSG_SSP_INIT_FAIL,
+    "Initialization failed for 'signal_processor'.",
+    "'signal_processor' 初始化失败。",
+    "某个信号处理器初始化返回失败",
+    "按 Note 中类型名查看该处理器的具体初始化错误"},
+   // 旋转调度器要求模式列表
+   {ut::msg::MSG_SPIN_NO_MODE_LIST,
+    "A mode list is required for WsfSpinSensorScheduler",
+    "WsfSpinSensorScheduler 需要模式列表。",
+    "使用旋转扫描调度器的传感器未定义模式列表",
+    "为传感器补充至少一个模式定义"},
+   // 旋转调度器缺 frame_time
+   {ut::msg::MSG_SPIN_NO_FRAME_TIME,
+    "Sensor {sensor}, mode {mode}: frame_time not specified",
+    "传感器 {sensor}，模式 {mode}: 未指定 frame_time。",
+    "某个模式未指定帧时间",
+    "为该模式补充 frame_time 定义"},
+   // 无源探测器脉冲灵敏度未定义（原文无 d 变体）
+   {ut::msg::MSG_PD_NO_PULSE_SENS,
+    "Pulse sensitivity not defined.",
+    "未定义脉冲灵敏度。",
+    "无源探测器脉冲信号的灵敏度表缺失或为空",
+    "补充 pulsed 信号的 detection_sensitivity 定义"},
 
    // ---- 交战/武器段（0x0004xxxx）----
    // 平台武器引用的 weapon_effects 类型未定义（WsfWeapon::Initialize）
@@ -1711,6 +2470,200 @@ const ut::msg::Entry cCatalog[] = {
     "网络类型不允许为该路由器接口创建链路",
     "确认网络类型支持接口链路创建，或改用允许的网络类型"},
 
+   // ---- 通信段（0x0005xxxx）DIS 协议库（第十六批）----
+   // DIS_VERSION 环境变量值非法
+   {ut::msg::MSG_DIS_ENV_BAD_VERSION,
+    "Invalid value for 'DIS_VERSION'.",
+    "DIS_VERSION 环境变量值非法（详见附注 Value）。",
+    "DIS 协议版本号超出范围（0-6）",
+    "设置为 0-6 之间的协议版本号"},
+   // DIS_EXERCISE 环境变量值非法
+   {ut::msg::MSG_DIS_ENV_BAD_EXERCISE,
+    "Invalid value for 'DIS_EXERCISE'.",
+    "DIS_EXERCISE 环境变量值非法（详见附注 Value）。",
+    "演习号超出范围（0-255）",
+    "设置为 0-255 之间的演习号"},
+   // DIS_SITE 环境变量值非法
+   {ut::msg::MSG_DIS_ENV_BAD_SITE,
+    "Invalid value for 'DIS_SITE'.",
+    "DIS_SITE 环境变量值非法（详见附注 Value）。",
+    "站点号超出范围（0-65535）",
+    "设置为 0-65535 之间的站点号"},
+   // DIS_APPLICATION 环境变量值非法
+   {ut::msg::MSG_DIS_ENV_BAD_APPLICATION,
+    "Invalid value for 'DIS_APPLICATION'.",
+    "DIS_APPLICATION 环境变量值非法（详见附注 Value）。",
+    "应用号超出范围（0-65535）",
+    "设置为 0-65535 之间的应用号"},
+   // DIS_HRT_BEAT_TIMER 环境变量值非法
+   {ut::msg::MSG_DIS_ENV_BAD_HBT,
+    "Invalid value for 'DIS_HRT_BEAT_TIMER'.",
+    "DIS_HRT_BEAT_TIMER 环境变量值非法（详见附注 Value）。",
+    "心跳定时器为负数",
+    "设置为非负的心跳秒数"},
+   // DIS_HRT_BEAT_MPLIER 环境变量值非法
+   {ut::msg::MSG_DIS_ENV_BAD_HBT_MPLIER,
+    "Invalid value for 'DIS_HRT_BEAT_MPLIER'.",
+    "DIS_HRT_BEAT_MPLIER 环境变量值非法（详见附注 Value）。",
+    "心跳倍率为负数",
+    "设置为非负的心跳倍率"},
+   // PDU 类型读取失败
+   {ut::msg::MSG_DIS_PDU_TYPE_READ_FAIL,
+    "Error reading DisPdu type of PDU.",
+    "读取 PDU 的 DisPdu 类型时出错（详见附注 Position）。",
+    "接收缓冲区中的 PDU 数据损坏或格式非法",
+    "检查发送方 DIS 实现的 PDU 编码"},
+   // PDU 数据尺寸不匹配
+   {ut::msg::MSG_DIS_PDU_SIZE_MISMATCH,
+    "Mismatched size reading data.",
+    "读取数据时尺寸不匹配（详见附注 Interface Name/PDU Type）。",
+    "PDU 实际长度与声明的数据长度不一致",
+    "检查发送方 PDU 长度字段的编码"},
+   // 信号 PDU 长度非 32 位边界
+   {ut::msg::MSG_DIS_SIG_NO_32BIT_BOUNDARY,
+    "DisSignal::IsValid(): PDU does not have a length on a 32-bit boundary.",
+    "信号 PDU 校验失败：PDU 长度未落在 32 位边界上（详见附注 PDU Sent From）。",
+    "PDU 总位数不是 32 的整数倍",
+    "检查发送方信号 PDU 的长度填充"},
+   // 数据库索引编码类长度须为 96
+   {ut::msg::MSG_DIS_SIG_DB_LEN_NOT_96,
+    "Data Length field must be 96 if the Encoding Class is Database index.",
+    "编码类为数据库索引时，数据长度字段必须为 96（详见附注 Encoding/PDU Sent From）。",
+    "数据库索引编码类的 Data Length 不为 96 位",
+    "按 DIS 标准将数据库索引编码的长度置 96"},
+   // 信号 PDU 数据长度与头部位数不符
+   {ut::msg::MSG_DIS_SIG_LEN_BITS_MISMATCH,
+    "Data Length field does not match the number of bits specified in the PDU Header.",
+    "数据长度字段与 PDU 头中声明的位数不匹配（详见附注 Data Length/Specified Bits/Total PDU Size）。",
+    "Data Length 与 PDU Header 长度字段不一致",
+    "检查发送方信号 PDU 的长度字段编码"},
+   // DisRadioId 流提取失败
+   {ut::msg::MSG_DISIO_RADIOID_READ_FAIL,
+    "DisIO::operator>>(istream&, DisRadioId&) stream failed.",
+    "DisRadioId 的流提取操作失败（stream failed）。",
+    "流中数据不足以完成电台标识的提取",
+    "检查输入流中的电台标识数据完整性"},
+   // DisRadioId 流提取前流状态异常
+   {ut::msg::MSG_DISIO_RADIOID_READ_NOT_GOOD,
+    "DisIO::operator>>(istream&, DisRadioId&) stream not good.",
+    "DisRadioId 的流提取操作前流状态已异常（stream not good）。",
+    "提取前输入流已处于异常状态",
+    "检查上游流操作是否已置位错误标志"},
+   // DisRadioId Pack 流写入失败
+   {ut::msg::MSG_DIS_RADIOID_PACK_FAIL,
+    "DisRadioId::Pack stream failed.",
+    "DisRadioId 序列化打包（Pack）时流写入失败。",
+    "流写入过程中出错",
+    "检查输出流（网络/文件）状态与容量"},
+   // DisRadioId Pack 输入流状态异常
+   {ut::msg::MSG_DIS_RADIOID_PACK_NOT_GOOD,
+    "DisRadioId::Pack was sent a stream that was not good.",
+    "DisRadioId 序列化打包（Pack）收到的流状态异常（not good）。",
+    "打包前输出流已处于异常状态",
+    "检查上游流操作是否已置位错误标志"},
+   // DisRadioId UnPack 流读取失败
+   {ut::msg::MSG_DIS_RADIOID_UNPACK_FAIL,
+    "DisRadioId::UnPack stream failed.",
+    "DisRadioId 反序列化解包（UnPack）时流读取失败。",
+    "流读取过程中出错",
+    "检查输入流（网络/文件）中的数据完整性"},
+   // DisRadioId UnPack 输入流状态异常
+   {ut::msg::MSG_DIS_RADIOID_UNPACK_NOT_GOOD,
+    "DisRadioId::UnPack was sent a stream that was not good.",
+    "DisRadioId 反序列化解包（UnPack）收到的流状态异常（not good）。",
+    "解包前输入流已处于异常状态",
+    "检查上游流操作是否已置位错误标志"},
+   // 信号 PDU 拷贝收到无效数据指针
+   {ut::msg::MSG_DIS_SIG_COPY_BAD_PTR,
+    "DisSignal::Copy was passed a signal pdu with a invalid data pointer.",
+    "信号 PDU 拷贝（Copy）收到了无效的数据指针。",
+    "拷贝源对象的数据指针为空",
+    "检查源信号 PDU 的构造与数据填充逻辑"},
+   // 上一个良好的 PDU 头（诊断转储引出句）
+   {ut::msg::MSG_DIS_FACTORY_LAST_GOOD_HEADER,
+    "Last good PDU Header was:",
+    "上一个良好的 PDU 头为（详见十六进制转储附注）。",
+    "接收缓冲区中出现损坏 PDU，输出上一正常 PDU 头以供对比",
+    "对照转储内容检查发送方 PDU 编码"},
+   // 接收缓冲区首个 PDU 即出错
+   {ut::msg::MSG_DIS_FACTORY_FIRST_PDU,
+    "This was the first PDU in the receive buffer.",
+    "这是接收缓冲区中的第一个 PDU（无上一正常 PDU 可对照）。",
+    "缓冲区首个 PDU 即解析失败",
+    "检查发送方 DIS 实现的 PDU 编码与字节序设置"},
+   // DIS 动作响应非加入演习请求（WsfDisActionResponse）
+   {ut::msg::MSG_DIS_ACTION_RESP_NOT_JOIN,
+    "WsfDisActionRequest: Initializing was not a Join Exercise Request.",
+    "WsfDisActionRequest：初始化请求并非加入演习请求。",
+    "收到非 JOIN_EXERCISE 类型的动作响应",
+    "无需修复，该响应已被忽略"},
+   // DIS 可靠动作响应非加入演习请求（WsfDisActionResponseR）
+   {ut::msg::MSG_DIS_ACTION_RESPR_NOT_JOIN,
+    "WsfDisActionRequestR: Initializing was not a Join Exercise Request.",
+    "WsfDisActionRequestR：初始化请求并非加入演习请求。",
+    "收到非 JOIN_EXERCISE 类型的可靠动作响应",
+    "无需修复，该响应已被忽略"},
+   // DIS 接口设备打开失败（WsfDisInterface 两处共用）
+   {ut::msg::MSG_DIS_IFACE_OPEN_DEVICE_FAIL,
+    "Unable to open dis_interface device.",
+    "无法打开 dis_interface 设备。",
+    "DIS 网络设备创建或初始化抛出异常",
+    "检查设备配置与网络权限"},
+   // 无法设置外观脚本变量
+   {ut::msg::MSG_DIS_IFACE_SET_APPEAR_VAR_FAIL,
+    "Unable to set appearance script variable.",
+    "无法设置外观脚本变量。",
+    "关节参数对应的脚本变量不存在",
+    "检查 appearance 脚本变量定义"},
+   // 无法执行外观更新脚本
+   {ut::msg::MSG_DIS_IFACE_EXEC_APPEAR_FAIL,
+    "Unable to execute appearance update.",
+    "无法执行外观更新脚本。",
+    "外观更新脚本执行失败",
+    "检查脚本内容与签名"},
+   // DIS 回放文件打开失败
+   {ut::msg::MSG_DIS_PLAYBACK_OPEN_FAIL,
+    "Could not open file.",
+    "无法打开回放文件。",
+    "DIS 回放文件不存在或不可读",
+    "检查 playback 文件路径"},
+   // DIS 回放文件指定过多
+   {ut::msg::MSG_DIS_PLAYBACK_TOO_MANY,
+    "Too many 'playback' files specified.",
+    "指定的 'playback' 回放文件过多。",
+    "回放站点编号超出上限",
+    "减少回放文件数量"},
+   // event_pipe 输出文件打开失败
+   {ut::msg::MSG_EVENTPIPE_OPEN_FAIL,
+    "Unable to open event_pipe file.",
+    "无法打开 event_pipe 事件管道文件。",
+    "输出文件路径无效或不可写",
+    "检查 event_pipe 输出文件路径"},
+   // XIO 无可用关联连接
+   {ut::msg::MSG_XIO_NO_LINKED_CONN,
+    "No linked connection available.",
+    "无可用的关联连接。",
+    "不可靠订阅请求时关联数据连接缺失",
+    "检查 XIO 连接配置"},
+   // XIO 消息无翻译器
+   {ut::msg::MSG_XIO_MSG_NO_TRANSLATOR,
+    "XIO: Message has no translator.",
+    "XIO：消息没有对应的翻译器。",
+    "消息类型未注册翻译器",
+    "检查 XIO 消息翻译器注册"},
+   // XIO 自动 DIS 映射初始化失败
+   {ut::msg::MSG_XIO_AUTO_DIS_MAP_INIT_FAIL,
+    "auto_dis_mapping: Initialization failed.",
+    "auto_dis_mapping：自动 DIS 映射初始化失败。",
+    "自动 DIS 映射对象初始化失败",
+    "检查 auto_dis_mapping 配置"},
+   // 无法通过 XIO 发送 WsfMessage
+   {ut::msg::MSG_XIO_CANNOT_TX_MSG,
+    "Cannot transmit WsfMessage over XIO.",
+    "无法通过 XIO 发送 WsfMessage 消息。",
+    "消息类型不在 XIO 可翻译列表中",
+    "注册对应消息的翻译器"},
+
    // ---- 工具/UI 段（0x0006xxxx）----
    // 目录初始化失败：dir=逻辑目录名（Bin/Data/Root），path=实际路径
    {ut::msg::MSG_WIZARD_INVALID_DIR,
@@ -1895,6 +2848,112 @@ std::string GetFixZh(uint32_t aId)
 {
    const Entry* entry = FindEntry(aId);
    return (entry != nullptr && entry->mFixZh != nullptr) ? std::string(entry->mFixZh) : std::string();
+}
+
+// 二次开发（i18n）：模板切分 —— 把模板按 {key} 占位符切为
+// 交替序列 literals[0], keys[0], literals[1], keys[1], ..., literals[N]
+// （literals 数量恒比 keys 多一）。解析失败（孤立的 '{'/'}'）返回 false。
+static bool SplitTemplate(const std::string&          aTemplate,
+                          std::vector<std::string>&   aLiterals,
+                          std::vector<std::string>&   aKeys)
+{
+   size_t pos = 0;
+   while (true)
+   {
+      const size_t open = aTemplate.find('{', pos);
+      if (open == std::string::npos)
+      {
+         aLiterals.push_back(aTemplate.substr(pos));
+         return true;
+      }
+      const size_t close = aTemplate.find('}', open + 1);
+      if (close == std::string::npos)
+      {
+         return false;
+      }
+      aLiterals.push_back(aTemplate.substr(pos, open - pos));
+      aKeys.push_back(aTemplate.substr(open + 1, close - open - 1));
+      pos = close + 1;
+   }
+}
+
+std::string TranslateTaggedToZh(const std::string& aText)
+{
+   // 解析 "[E:XXXXXXXX] " / "[W:XXXXXXXX] " 前缀（长度 13）
+   if (aText.size() < 13 || aText[0] != '[' ||
+       (aText[1] != 'E' && aText[1] != 'W') || aText[2] != ':' || aText[11] != ']' || aText[12] != ' ')
+   {
+      return {};
+   }
+   uint32_t id = 0;
+   for (int i = 0; i < 8; ++i)
+   {
+      const char c = aText[3 + i];
+      id <<= 4;
+      if (c >= '0' && c <= '9')
+      {
+         id |= static_cast<uint32_t>(c - '0');
+      }
+      else if (c >= 'A' && c <= 'F')
+      {
+         id |= static_cast<uint32_t>(c - 'A' + 10);
+      }
+      else if (c >= 'a' && c <= 'f')
+      {
+         id |= static_cast<uint32_t>(c - 'a' + 10);
+      }
+      else
+      {
+         return {};
+      }
+   }
+   const std::string enText = aText.substr(13);
+
+   const Entry* entry = FindEntry(id);
+   if (entry == nullptr || entry->mEn == nullptr || entry->mZh == nullptr)
+   {
+      return {};
+   }
+
+   // 二次开发（i18n）：反提取 —— 用英文模板定位各参数在英文填充文本中的值。
+   // 顺序消费模型：key 前的字面量必须紧贴当前位置，key 的值延伸到
+   // 下一字面量首次出现处。任何一步失配即返回空串（调用方回退英文原文）。
+   std::vector<std::string> literals;
+   std::vector<std::string> keys;
+   if (!SplitTemplate(std::string(entry->mEn), literals, keys))
+   {
+      return {};
+   }
+   Args args;
+   size_t textPos = 0;
+   for (size_t i = 0; i < keys.size(); ++i)
+   {
+      const std::string& lit = literals[i];
+      if (enText.compare(textPos, lit.size(), lit) != 0)
+      {
+         return {};
+      }
+      textPos += lit.size();
+      const std::string& nextLit = literals[i + 1];
+      // 二次开发（i18n）：占位符位于模板末尾（尾字面量为空串）时，
+      // 参数值延伸到英文文本末尾（find("") 会返回当前位置导致截断，须特判）
+      const size_t valueEnd = nextLit.empty() ? enText.size() : enText.find(nextLit, textPos);
+      if (valueEnd == std::string::npos)
+      {
+         return {};
+      }
+      args[keys[i]] = enText.substr(textPos, valueEnd - textPos);
+      textPos = valueEnd;
+   }
+   const std::string& tail = literals.back();
+   if (enText.compare(textPos, tail.size(), tail) != 0 ||
+       textPos + tail.size() != enText.size())
+   {
+      return {};
+   }
+
+   // 反提取成功：填充中文模板（占位符缺失时保留 {key} 原样，可排错）
+   return Substitute(entry->mZh, args);
 }
 } // namespace msg
 } // namespace ut

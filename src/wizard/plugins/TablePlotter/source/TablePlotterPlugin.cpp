@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,7 +32,7 @@ TablePlotter::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    wkf::MainWindow* mainWindowPtr = wkfEnv.GetMainWindow();
    QMenu*           toolsMenuPtr  = mainWindowPtr->GetMenuByName("Tools");
 
-   wkf::Action* mStartAction = new wkf::Action(QIcon::fromTheme("table_plotter"), "Table Plotter...", mainWindowPtr);
+   wkf::Action* mStartAction = new wkf::Action(QIcon::fromTheme("table_plotter"), tr("Table Plotter..."), mainWindowPtr); // 二次开发（i18n）：Tools 菜单文本汉化
    connect(mStartAction, &QAction::triggered, [this]() { Start(); });
    toolsMenuPtr->addAction(mStartAction);
 

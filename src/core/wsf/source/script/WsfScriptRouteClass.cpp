@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include <memory>
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptClassDefine.hpp"
@@ -226,7 +228,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptRouteClass, WsfRoute, Insert_1, 2, "void", "int
    }
    else
    {
-      auto out = ut::log::error() << "Index out of range.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_ROUTE_IDX_RANGE, {});
       out.AddNote() << "Script: WsfRoute.Insert()";
       out.AddNote() << "Index: " << wptIndex;
       out.AddNote() << "Size: " << aObjectPtr->GetSize();
@@ -244,7 +247,8 @@ UT_DEFINE_SCRIPT_METHOD(WsfScriptRouteClass, WsfRoute, Remove_1, 1, "void", "int
    }
    else
    {
-      auto out = ut::log::error() << "Index out of range.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_ROUTE_IDX_RANGE, {});
       out.AddNote() << "Script: WsfRoute.Remove()";
       out.AddNote() << "Index: " << wptIndex;
       out.AddNote() << "Size: " << aObjectPtr->GetSize();

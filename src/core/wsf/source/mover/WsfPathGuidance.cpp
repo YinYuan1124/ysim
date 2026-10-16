@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 
 #include "UtLog.hpp"
 #include "UtMath.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
 #include "WsfMover.hpp"
@@ -108,7 +110,8 @@ bool WsfPathGuidance::Initialize(double /*aSimTime*/)
    mInitialized = (mMoverPtr != nullptr);
    if (mMoverPtr == nullptr)
    {
-      ut::log::error() << "WsfPathGuidance has not been attached to a mover.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PG_NOT_ATTACHED, {});
    }
    return mInitialized;
 }

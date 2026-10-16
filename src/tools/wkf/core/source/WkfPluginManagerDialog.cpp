@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,7 +19,7 @@
 #include "WkfPluginManager.hpp"
 
 wkf::PluginManagerDialog::PluginManagerDialog(MainWindow* parent, Qt::WindowFlags f /* = Qt::WindowFlags() */)
-   : Dialog(parent, new Action(QIcon::fromTheme("plugin_disconnected"), "Plugin Manager...", nullptr), "Options", f)
+   : Dialog(parent, new Action(QIcon::fromTheme("plugin_disconnected"), tr("Plugin Manager..."), nullptr), "Options", f) // 二次开发（i18n）：菜单动作文本汉化
    , mPluginManagerPtr(wkfEnv.GetPluginManager())
 {
    mUi.setupUi(this);

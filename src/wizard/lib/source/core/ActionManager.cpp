@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -82,82 +82,83 @@ void wizard::ActionManager::BuildUpEditMenu()
 {
    QMenu* editMenu = wkfEnv.GetMainWindow()->FindOrCreateMenu("Edit", "View");
 
+   // 二次开发（i18n）：主菜单动作文本 tr() 化（上下文 wizard::ActionManager）
    mGoToDefinition = new wkf::Action(QIcon::fromTheme("find_definition"),
-                                     QString("Go To Definition"),
+                                     tr("Go To Definition"),
                                      wkfEnv.GetMainWindow(),
                                      QKeySequence("Alt+G"));
    QObject::connect(mGoToDefinition, &QAction::triggered, [this]() { GoToDefinition(); });
    mFindReferences = new wkf::Action(QIcon::fromTheme("find_references"),
-                                     QString("Find References"),
+                                     tr("Find References"),
                                      wkfEnv.GetMainWindow(),
                                      QKeySequence("Ctrl+Alt+G"));
    QObject::connect(mFindReferences, &QAction::triggered, [this]() { FindReferences(); });
 
-   mUndo = new wkf::Action(QIcon::fromTheme("undo"), "Undo", qApp, QKeySequence("Ctrl+Z"), Qt::ApplicationShortcut);
+   mUndo = new wkf::Action(QIcon::fromTheme("undo"), tr("Undo"), qApp, QKeySequence("Ctrl+Z"), Qt::ApplicationShortcut);
    QObject::connect(mUndo, &QAction::triggered, [this]() { Undo(); });
-   mRedo = new wkf::Action(QIcon::fromTheme("redo"), "Redo", qApp, QKeySequence("Ctrl+Shift+Z"), Qt::ApplicationShortcut);
+   mRedo = new wkf::Action(QIcon::fromTheme("redo"), tr("Redo"), qApp, QKeySequence("Ctrl+Shift+Z"), Qt::ApplicationShortcut);
    QObject::connect(mRedo, &QAction::triggered, [this]() { Redo(); });
 
-   mCut = new wkf::Action(QIcon::fromTheme("scissors"), QString("Cut"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+X"));
+   mCut = new wkf::Action(QIcon::fromTheme("scissors"), tr("Cut"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+X"));
    QObject::connect(mCut, &QAction::triggered, [this]() { Cut(); });
-   mCopy = new wkf::Action(QIcon::fromTheme("copy"), QString("Copy"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+C"));
+   mCopy = new wkf::Action(QIcon::fromTheme("copy"), tr("Copy"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+C"));
    QObject::connect(mCopy, &QAction::triggered, [this]() { Copy(); });
-   mPaste = new wkf::Action(QIcon::fromTheme("paste"), QString("Paste"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+V"));
+   mPaste = new wkf::Action(QIcon::fromTheme("paste"), tr("Paste"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+V"));
    QObject::connect(mPaste, &QAction::triggered, [this]() { Paste(); });
-   mSelectAll = new wkf::Action(QString("Select All"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+A"));
+   mSelectAll = new wkf::Action(tr("Select All"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+A"));
    QObject::connect(mSelectAll, &QAction::triggered, [this]() { SelectAll(); });
 
    mFind =
-      new wkf::Action(QIcon::fromTheme("find_text"), QString("Find..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+F"));
+      new wkf::Action(QIcon::fromTheme("find_text"), tr("Find..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+F"));
    QObject::connect(mFind, &QAction::triggered, [this]() { Find(); });
-   mFindNext = new wkf::Action(QString("Find Next"), wkfEnv.GetMainWindow(), QKeySequence("F3"));
+   mFindNext = new wkf::Action(tr("Find Next"), wkfEnv.GetMainWindow(), QKeySequence("F3"));
    QObject::connect(mFindNext, &QAction::triggered, [this]() { FindNext(); });
-   mFindPrevious = new wkf::Action(QString("Find Previous"), wkfEnv.GetMainWindow(), QKeySequence("Shift+F3"));
+   mFindPrevious = new wkf::Action(tr("Find Previous"), wkfEnv.GetMainWindow(), QKeySequence("Shift+F3"));
    QObject::connect(mFindPrevious, &QAction::triggered, [this]() { FindPrevious(); });
    mFindInFiles = new wkf::Action(QIcon::fromTheme("find_in_files"),
-                                  QString("Find In Files..."),
+                                  tr("Find In Files..."),
                                   wkfEnv.GetMainWindow(),
                                   QKeySequence("Ctrl+Shift+F"));
    QObject::connect(mFindInFiles, &QAction::triggered, [this]() { FindInFiles(); });
-   mReplace = new wkf::Action(QString("Replace..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+H"));
+   mReplace = new wkf::Action(tr("Replace..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+H"));
    QObject::connect(mReplace, &QAction::triggered, [this]() { Replace(); });
 
-   mGoToLine = new wkf::Action(QString("Go To line..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+G"));
+   mGoToLine = new wkf::Action(tr("Go To line..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+G"));
    QObject::connect(mGoToLine, &QAction::triggered, [this]() { GoToLine(); });
 
    mAutoComplete =
-      new wkf::Action(QIcon::fromTheme("autocomplete"), "Auto-Complete", wkfEnv.GetMainWindow(), QKeySequence("Ctrl+Space"));
+      new wkf::Action(QIcon::fromTheme("autocomplete"), tr("Auto-Complete"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+Space"));
    QObject::connect(mAutoComplete, &QAction::triggered, [this]() { Autocomplete(); });
    mCommentSelection =
-      new wkf::Action(QString("Comment Selection"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+K,Ctrl+C"));
+      new wkf::Action(tr("Comment Selection"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+K,Ctrl+C"));
    QObject::connect(mCommentSelection, &QAction::triggered, [this]() { CommentSelection(); });
    mUncommentSelection =
-      new wkf::Action(QString("Uncomment Selection"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+K,Ctrl+U"));
+      new wkf::Action(tr("Uncomment Selection"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+K,Ctrl+U"));
    QObject::connect(mUncommentSelection, &QAction::triggered, [this]() { UncommentSelection(); });
 
-   mToggleComment = new wkf::Action(QString("Toggle Selection Comment"), wkfEnv.GetMainWindow(), QKeySequence("#"));
+   mToggleComment = new wkf::Action(tr("Toggle Selection Comment"), wkfEnv.GetMainWindow(), QKeySequence("#"));
    QObject::connect(mToggleComment, &QAction::triggered, [this]() { CommentToggle(); });
 
    mFormatSelection = new wkf::Action(QIcon::fromTheme("format_text"),
-                                      "Format Selection",
+                                      tr("Format Selection"),
                                       wkfEnv.GetMainWindow(),
                                       QKeySequence("Ctrl+K,Ctrl+F"));
    QObject::connect(mFormatSelection, &QAction::triggered, [this]() { FormatSelection(); });
 
    mTabForward = new wkf::Action(QIcon::fromTheme("right"),
-                                 QString("Move Forward Between Tabs"),
+                                 tr("Move Forward Between Tabs"),
                                  wkfEnv.GetMainWindow(),
                                  QKeySequence("Ctrl+Tab"));
    QObject::connect(mTabForward, &QAction::triggered, [this]() { MoveTabForward(); });
    mTabBackward = new wkf::Action(QIcon::fromTheme("left"),
-                                  QString("Move Backward Between Tabs"),
+                                  tr("Move Backward Between Tabs"),
                                   wkfEnv.GetMainWindow(),
                                   QKeySequence("Ctrl+Shift+Tab"));
    QObject::connect(mTabBackward, &QAction::triggered, [this]() { MoveTabBackward(); });
-   mCloseCurrent = new wkf::Action(QString("Close Current Tab"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+W"));
+   mCloseCurrent = new wkf::Action(tr("Close Current Tab"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+W"));
    QObject::connect(mCloseCurrent, &QAction::triggered, [this]() { CloseCurrentTab(); });
 
-   mDelCurrentLine = new wkf::Action(QString("Delete Current Line"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+Shift+K"));
+   mDelCurrentLine = new wkf::Action(tr("Delete Current Line"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+Shift+K"));
    QObject::connect(mDelCurrentLine, &QAction::triggered, [this]() { DeleteCurrentLine(); });
 
    mWsfRequiredActions += mGoToDefinition;
@@ -186,7 +187,7 @@ void wizard::ActionManager::BuildUpEditMenu()
    mWsfRequiredActions += mDelCurrentLine;
 
    wkf::MainWindow* mainWindowPtr = wkfEnv.GetMainWindow();
-   QToolBar*        editToolbar   = new QToolBar("Edit", mainWindowPtr);
+   QToolBar*        editToolbar   = new QToolBar(tr("Edit"), mainWindowPtr); // 二次开发（i18n）：工具栏标题汉化（View→Toolbars 显示）
    editToolbar->setIconSize(QSize(16, 16));
    editToolbar->setObjectName("Edit");
    editToolbar->addAction(mCut);
@@ -235,27 +236,27 @@ void wizard::ActionManager::BuildUpFileMenu()
 {
    QMenu*          fileMenu   = wkfEnv.GetMainWindow()->FindOrCreateMenu("File");
    QList<QAction*> actions    = fileMenu->actions();
-   wkf::Action*    newProject = new wkf::Action(QString("New Project..."), wkfEnv.GetMainWindow());
+   wkf::Action*    newProject = new wkf::Action(tr("New Project..."), wkfEnv.GetMainWindow());
    QObject::connect(newProject, &QAction::triggered, [this]() { NewProject(); });
-   mNewFile = new wkf::Action(QString("New File..."), wkfEnv.GetMainWindow());
+   mNewFile = new wkf::Action(tr("New File..."), wkfEnv.GetMainWindow());
    QObject::connect(mNewFile, &QAction::triggered, [this]() { NewFile(); });
-   wkf::Action* openFile = new wkf::Action(QString("Open File..."), wkfEnv.GetMainWindow());
+   wkf::Action* openFile = new wkf::Action(tr("Open File..."), wkfEnv.GetMainWindow());
    QObject::connect(openFile, &QAction::triggered, [this]() { OpenFile(); });
-   mCloseProject = new wkf::Action(QString("Close Project"), wkfEnv.GetMainWindow());
+   mCloseProject = new wkf::Action(tr("Close Project"), wkfEnv.GetMainWindow());
    QObject::connect(mCloseProject, &QAction::triggered, [this]() { CloseProject(); });
-   mSaveProject = new wkf::Action(QString("Save Project"), wkfEnv.GetMainWindow());
+   mSaveProject = new wkf::Action(tr("Save Project"), wkfEnv.GetMainWindow());
    QObject::connect(mSaveProject, &QAction::triggered, [this]() { SaveProject(); });
-   mExportProject = new wkf::Action(QString("Export Project..."), wkfEnv.GetMainWindow());
+   mExportProject = new wkf::Action(tr("Export Project..."), wkfEnv.GetMainWindow());
    QObject::connect(mExportProject, &QAction::triggered, [this]() { ExportProject(); });
 
    mFileSave =
-      new wkf::Action(QIcon::fromTheme("disk"), QString("Save File"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+S"));
+      new wkf::Action(QIcon::fromTheme("disk"), tr("Save File"), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+S"));
    QObject::connect(mFileSave, &QAction::triggered, [this]() { SaveCurrent(); });
-   mFileSaveAs = new wkf::Action(QString("Save File As..."), wkfEnv.GetMainWindow());
+   mFileSaveAs = new wkf::Action(tr("Save File As..."), wkfEnv.GetMainWindow());
    QObject::connect(mFileSaveAs, &QAction::triggered, [this]() { SaveCurrentAs(); });
-   mFileSaveAll = new wkf::Action(QIcon::fromTheme("disks"), "Save All", wkfEnv.GetMainWindow(), QKeySequence());
+   mFileSaveAll = new wkf::Action(QIcon::fromTheme("disks"), tr("Save All"), wkfEnv.GetMainWindow(), QKeySequence());
    QObject::connect(mFileSaveAll, &QAction::triggered, [this]() { SaveAll(); });
-   mFilePrint = new wkf::Action(QString("&Print File..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+P"));
+   mFilePrint = new wkf::Action(tr("&Print File..."), wkfEnv.GetMainWindow(), QKeySequence("Ctrl+P"));
    QObject::connect(mFilePrint, &QAction::triggered, [this]() { PrintCurrentFile(); });
    if (actions.empty())
    {
@@ -304,7 +305,7 @@ void wizard::ActionManager::BuildUpFileMenu()
    mProjectRequiredActions += mExportProject;
 
    wkf::MainWindow* mainWindowPtr = wkfEnv.GetMainWindow();
-   QToolBar*        fileToolbar   = new QToolBar("File", mainWindowPtr);
+   QToolBar*        fileToolbar   = new QToolBar(tr("File"), mainWindowPtr); // 二次开发（i18n）：工具栏标题汉化（View→Toolbars 显示）
    fileToolbar->setObjectName("File");
    fileToolbar->setIconSize(QSize(16, 16));
    fileToolbar->addAction(mFileSave);
@@ -328,13 +329,13 @@ void wizard::ActionManager::BuildUpViewMenu()
 {
    QMenu* sub = wkfEnv.GetMainWindow()->FindOrCreateViewSubMenu("Editors");
 
-   mCloseAll = new wkf::Action(QString("Close All"), sub);
+   mCloseAll = new wkf::Action(tr("Close All"), sub);
    QObject::connect(mCloseAll, &QAction::triggered, [this]() { CloseAll(); });
-   mCloseNonStartup = new wkf::Action(QString("Close All But Startup"), sub);
+   mCloseNonStartup = new wkf::Action(tr("Close All But Startup"), sub);
    QObject::connect(mCloseNonStartup, &QAction::triggered, [this]() { CloseAllButStartup(); });
-   mCloseNonIncluded = new wkf::Action(QString("Close All But Included"), sub);
+   mCloseNonIncluded = new wkf::Action(tr("Close All But Included"), sub);
    QObject::connect(mCloseNonIncluded, &QAction::triggered, [this]() { CloseAllButIncluded(); });
-   mCloseInactive = new wkf::Action(QString("Close Inactive"), sub);
+   mCloseInactive = new wkf::Action(tr("Close Inactive"), sub);
    QObject::connect(mCloseInactive, &QAction::triggered, [this]() { CloseInactive(); });
 
    AddActions(sub, {mCloseAll, mCloseNonStartup, mCloseNonIncluded, mCloseInactive}, cFRONT, true);
@@ -346,13 +347,13 @@ void wizard::ActionManager::BuildUpViewMenu()
 void wizard::ActionManager::BuildUpProjectMenu()
 {
    QMenu* viewMenu = wkfEnv.GetMainWindow()->FindOrCreateMenu("Project");
-   mAddDirectory   = new wkf::Action(QString("Add Directory to Project..."), wkfEnv.GetMainWindow());
+   mAddDirectory   = new wkf::Action(tr("Add Directory to Project..."), wkfEnv.GetMainWindow());
    QObject::connect(mAddDirectory, &QAction::triggered, [this]() { AddDirectory(); });
-   mChangeHistory = new wkf::Action(QIcon::fromTheme("archive"), "Change History...", wkfEnv.GetMainWindow());
+   mChangeHistory = new wkf::Action(QIcon::fromTheme("archive"), tr("Change History..."), wkfEnv.GetMainWindow());
    QObject::connect(mChangeHistory, &QAction::triggered, [this]() { ChangeHistory(); });
-   mReparse = new wkf::Action(QIcon::fromTheme("repeat"), "Reparse", wkfEnv.GetMainWindow());
+   mReparse = new wkf::Action(QIcon::fromTheme("repeat"), tr("Reparse"), wkfEnv.GetMainWindow());
    QObject::connect(mReparse, &QAction::triggered, [this]() { Reparse(); });
-   mProjectSettings = new wkf::Action(QString("Settings..."), wkfEnv.GetMainWindow());
+   mProjectSettings = new wkf::Action(tr("Settings..."), wkfEnv.GetMainWindow());
    QObject::connect(mProjectSettings, &QAction::triggered, [this]() { ProjectSettings(); });
 
    AddActions(viewMenu, {mAddDirectory, mChangeHistory, mReparse, mProjectSettings}, cFRONT, true);
@@ -370,7 +371,7 @@ void wizard::ActionManager::BuildUpHelpMenu()
    QMenu* helpMenu = wkfEnv.GetMainWindow()->FindOrCreateMenu("Help");
 
    mHelpCommandDocumentation =
-      new wkf::Action(QString("Command Documentation"), wkfEnv.GetMainWindow(), QKeySequence("F1"));
+      new wkf::Action(tr("Command Documentation"), wkfEnv.GetMainWindow(), QKeySequence("F1"));
    QObject::connect(mHelpCommandDocumentation, &QAction::triggered, [this]() { ShowCommandDocumentation(); });
    AddActions(helpMenu, {mHelpCommandDocumentation}, cBACK, false);
 

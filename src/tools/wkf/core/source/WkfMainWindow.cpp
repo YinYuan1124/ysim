@@ -12,6 +12,7 @@
 
 #include <functional>
 
+#include <QCoreApplication>
 #include <QTimer>
 #include <QToolBar>
 
@@ -126,7 +127,11 @@ QMenu* wkf::MainWindow::FindOrCreateMenu(const QString& aNewMenuName, const QStr
    QMenu* menu = wkfEnv.GetMainWindow()->GetMenuByName(aNewMenuName);
    if (!menu)
    {
-      menu = new QMenu(aNewMenuName, menuBar());
+      // 二次开发（i18n）：菜单标题走翻译（与 .ui 菜单同用 WkfMainWindowUi 上下文），
+      // 查找键走 objectName（英文原样），保证插件生态 GetMenuByName 定位不受翻译影响。
+      // 无译文的菜单名自动回退英文原名，插件自建菜单行为不变。
+      menu = new QMenu(QCoreApplication::translate("WkfMainWindowUi", aNewMenuName.toUtf8().constData()), menuBar());
+      menu->setObjectName(aNewMenuName);
 
       // If the user specified a menu to insert this one before, do so (as long as it exists)
       QMenu* insertPriorToMenu = GetMenuByName(aInsertPriorTo);
@@ -258,11 +263,14 @@ QMenu* wkf::MainWindow::FindOrCreateViewSubMenu(const QString& aMenuName)
       // Find where to insert the requested menu
       for (auto* it : viewMenu->actions())
       {
+         // 二次开发（i18n）：子菜单标题翻译后按标题排序会受语言影响，
+         // 改按 objectName（英文查找键）排序，插入位置不随语言漂移。
          // If we reached the end of the sub-menus, insert this sub-menu
-         // Otherwise, check alphabetical order to determine if we should insert it
-         if (!it->menu() || aMenuName < it->text())
+         // Otherwise, check alphabetical order to determine if we should insert
+         if (!it->menu() || aMenuName < it->menu()->objectName())
          {
-            auto* menu = new QMenu(aMenuName, viewMenu);
+            // 二次开发（i18n）：标题走翻译（WkfMainWindowUi 上下文），查找键走 objectName
+            auto* menu = new QMenu(QCoreApplication::translate("WkfMainWindowUi", aMenuName.toUtf8().constData()), viewMenu);
             menu->setObjectName(aMenuName);
             viewMenu->insertMenu(it, menu);
             return menu;
@@ -270,7 +278,8 @@ QMenu* wkf::MainWindow::FindOrCreateViewSubMenu(const QString& aMenuName)
       }
 
       // If we have reached the end of the list, go ahead and Add the requested menu
-      auto* menu = viewMenu->addMenu(aMenuName);
+      // 二次开发（i18n）：同上 —— 标题翻译、查找键 objectName
+      auto* menu = viewMenu->addMenu(QCoreApplication::translate("WkfMainWindowUi", aMenuName.toUtf8().constData()));
       menu->setObjectName(aMenuName);
       return menu;
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,7 +32,7 @@
 #include "WkfUnitsWidget.hpp"
 
 wkf::PreferencesDialog::PreferencesDialog(MainWindow* parent, Qt::WindowFlags f /* = Qt::WindowFlags() */)
-   : Dialog(parent, new Action(QIcon::fromTheme("wrench"), "Preferences...", nullptr), "Options", f)
+   : Dialog(parent, new Action(QIcon::fromTheme("wrench"), tr("Preferences..."), nullptr), "Options", f) // 二次开发（i18n）：菜单动作文本汉化
 {
    mUI.setupUi(this);
    mTriggerActionPtr->setShortcut(QKeySequence(QKeySequence::Preferences));

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,8 @@
 #include <string>
 
 #include "UtInput.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptMethod.hpp"
 #include "UtScriptTypes.hpp"
 #include "WsfPlatform.hpp"
@@ -237,7 +239,8 @@ bool WsfScriptCallback::Execute(double aSimTime, WsfPlatform* aPlatformPtr)
                                       true);
          if (!ok)
          {
-            auto out = ut::log::error() << "Cannot execute callback method.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CB_EXEC_FAIL, {});
             out.AddNote() << "T = " << aSimTime;
             out.AddNote() << "Platform: " << aPlatformPtr->GetName();
             if (!script.mProcId.Empty())

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfApplication.hpp"
 #include "WsfCallback.hpp"
 #include "WsfComm.hpp"
@@ -639,7 +641,8 @@ bool WsfScriptObserver::EnableOrDisable(bool aEnable, const std::string& aEventN
    }
    else
    {
-      auto out = ut::log::error() << "Unknown callback name.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_OBS_UNKNOWN_CB, {});
       out.AddNote() << "Callback: " << aEventName;
       ok = false;
    }
@@ -669,7 +672,8 @@ bool WsfScriptObserver::EnableOrDisable(bool               aEnable,
       UtScript* scriptPtr = GetSimulation().GetScriptContext().FindScript(scriptName);
       if (scriptPtr == nullptr)
       {
-         auto out = ut::log::error() << "Unable to find script for callback.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_OBS_NO_SCRIPT, {});
          out.AddNote() << "Script: " << aScriptName;
          out.AddNote() << "Callback: " << aEventName;
       }

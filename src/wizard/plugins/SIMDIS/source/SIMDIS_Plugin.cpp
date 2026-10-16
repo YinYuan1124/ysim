@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -64,7 +64,7 @@ wizard::SIMDIS::Plugin::Plugin(const QString& aPluginName,
    QMenu* toolsMenuPtr = wkfEnv.GetMainWindow()->GetMenuByName("Tools");
    if (toolsMenuPtr)
    {
-      connect(toolsMenuPtr->addAction("Configure SIMDIS..."), &QAction::triggered, this, &Plugin::ConfigureSIMDIS);
+      connect(toolsMenuPtr->addAction(tr("Configure SIMDIS...")), &QAction::triggered, this, &Plugin::ConfigureSIMDIS); // 二次开发（i18n）：Tools 菜单文本汉化
    }
 
    // sign up for editor right clicks

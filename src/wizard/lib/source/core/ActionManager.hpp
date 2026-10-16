@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -41,6 +41,8 @@ class TextSource;
 
 class VI_EXPORT ActionManager : public QObject
 {
+   // 二次开发（i18n）：补 Q_OBJECT 使 tr() 翻译上下文命中本类（主菜单动作文本汉化）
+   Q_OBJECT
 public:
    ActionManager();
    ~ActionManager() override;

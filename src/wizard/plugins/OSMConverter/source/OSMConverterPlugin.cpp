@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -26,7 +26,7 @@ OSMConverter::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    QMenu*           toolsMenuPtr  = mainWindowPtr->GetMenuByName("Tools");
 
    // TODO: Get an icon to represent the plugin on the tools menu
-   wkf::Action* startAction = new wkf::Action(QIcon::fromTheme("osm_converter"), "OSM Converter...", mainWindowPtr);
+   wkf::Action* startAction = new wkf::Action(QIcon::fromTheme("osm_converter"), tr("OSM Converter..."), mainWindowPtr); // 二次开发（i18n）：Tools 菜单文本汉化
    connect(startAction, &QAction::triggered, [this]() { mDialog->show(); });
    toolsMenuPtr->addAction(startAction);
 }

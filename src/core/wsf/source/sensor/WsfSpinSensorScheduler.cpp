@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtRandom.hpp"
 #include "UtVec3.hpp"
@@ -98,7 +100,8 @@ bool WsfSpinSensorScheduler::Initialize(double aSimTime, WsfSensor* aSensorPtr, 
 {
    if (aSensorPtr->GetModeList() == nullptr)
    {
-      ut::log::error() << "A mode list is required for WsfSpinSensorScheduler";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SPIN_NO_MODE_LIST, {});
       return false;
    }
 
@@ -142,8 +145,10 @@ bool WsfSpinSensorScheduler::Initialize(double aSimTime, WsfSensor* aSensorPtr, 
    {
       if (modePtr->GetFrameTime() <= 0.0)
       {
-         ut::log::error() << "Sensor " << mSensorPtr->GetName() << ", mode " << modePtr->GetName()
-                          << ": frame_time not specified";
+         // 二次开发（i18n）：错误消息 ID 化 —— 传感器/模式名运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(
+            ut::msg::MSG_SPIN_NO_FRAME_TIME,
+            {{"sensor", mSensorPtr->GetName()}, {"mode", modePtr->GetName()}});
          ok = false;
       }
    }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -71,7 +71,7 @@ Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    QMenu*           toolsMenuPtr  = mainWindowPtr->GetMenuByName("Tools");
 
    // create map utilities menu (sub-menu of "Tools")
-   QMenu* mapUtilsMenuPtr = ut::qt::make_qt_ptr<QMenu>("Map Utilities", toolsMenuPtr);
+   QMenu* mapUtilsMenuPtr = ut::qt::make_qt_ptr<QMenu>(tr("Map Utilities"), toolsMenuPtr); // 二次开发（i18n）：Tools 菜单文本汉化
    mapUtilsMenuPtr->setIcon(QIcon::fromTheme("globe"));
    // build the map utilities menu
    BuildMapUtilitiesMenu(mapUtilsMenuPtr);

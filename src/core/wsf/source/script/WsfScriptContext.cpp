@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInputBlock.hpp"
 #include "UtInputString.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtScriptContext.hpp"
 #include "UtScriptEnvironment.hpp"
@@ -369,7 +371,8 @@ bool WsfScriptContext::ExecuteScript(double                  aSimTime,
    }
    catch (UtInput::ExceptionBase& e)
    {
-      auto out = ut::log::error() << "Failed to parse script.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_PARSE_FAIL, {});
       out.AddNote() << e.GetMessage();
    }
    if (scriptPtr != nullptr)
@@ -410,7 +413,8 @@ bool WsfScriptContext::Initialize(double aSimTime, WsfPlatform* aPlatformPtr, Ws
 
    if ((aPlatformPtr == nullptr) || ((!mPartClassName.IsNull()) && (aPartPtr == nullptr)))
    {
-      ut::log::error() << "Invalid call to WsfScriptContext::Initialize().";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_INVALID_INIT, {});
       return false;
    }
 
@@ -443,7 +447,8 @@ bool WsfScriptContext::Initialize(double aSimTime, WsfPlatform* aPlatformPtr, Ws
 
    if (!mContextPtr->Initialize())
    {
-      ut::log::error() << "Failed to initialize the script context.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_INIT_FAIL, {});
       return false;
    }
 
@@ -516,7 +521,8 @@ bool WsfScriptContext::Initialize(double aSimTime, WsfScriptContext& aParentCont
 {
    if (aObjectPtr == nullptr)
    {
-      ut::log::error() << "Invalid call to WsfScriptContext::Initialize().";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_INVALID_INIT, {});
       return false;
    }
    mSimulationPtr = aParentContext.GetSimulation();
@@ -524,7 +530,8 @@ bool WsfScriptContext::Initialize(double aSimTime, WsfScriptContext& aParentCont
 
    if (!mContextPtr->Initialize())
    {
-      ut::log::error() << "Failed to initialize the script context.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_INIT_FAIL, {});
       return false;
    }
 
@@ -591,7 +598,8 @@ bool WsfScriptContext::InitializeGlobalContext(WsfSimulation& aSimulation)
 {
    if (!mContextPtr->Initialize())
    {
-      ut::log::error() << "Failed to initialize the script context.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_INIT_FAIL, {});
       return false;
    }
    mSimulationPtr = &aSimulation;
@@ -1005,7 +1013,8 @@ bool WsfScriptContext::ValidateScript(UtScript*          aScriptPtr,
          if (expectedProtoPtr != aScriptPtr->mPrototype)
          {
             WriteErrorHeader(aScriptPtr);
-            auto out = ut::log::error() << "Unexpected script signature.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_BAD_SIGNATURE, {});
             out.AddNote() << "Expected: " << GetEnvironment()->GetPrototypeDescription(expectedProtoPtr);
             out.AddNote() << "Received: " << GetEnvironment()->GetPrototypeDescription(aScriptPtr->mPrototype);
             valid = false;
@@ -1068,7 +1077,8 @@ bool WsfScriptContext::AddTimedEvents(double aSimTime)
       }
       else
       {
-         ut::log::error() << "Internal error in WsfScriptContext::AddTimedEvents.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_CTX_TIMED_EVENTS_ERR, {});
          ok = false;
          continue;
       }
@@ -1188,7 +1198,8 @@ void WsfScriptContext::PostCompile(UtInput& aInput, UtScript* aRawScriptPtr)
 // private
 void WsfScriptContext::WriteErrorHeader(UtScript* aScriptPtr) const
 {
-   auto out = ut::log::error() << "Error in script.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+   auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_ERROR_HEADER, {});
 
    if (aScriptPtr != nullptr)
    {

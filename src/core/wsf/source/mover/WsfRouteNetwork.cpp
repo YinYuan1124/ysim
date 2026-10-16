@@ -1074,7 +1074,8 @@ void WsfRouteNetwork::BuildQuadtree()
          if (!mTreePtr->InsertArea(datumPtr))
          {
             // This should not fail, but if it does it will cause many problems.
-            ut::log::error() << "Failure in WsfRouteNetwork: InsertArea().";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_RN_INSERT_AREA_FAIL, {});
          }
       }
    }

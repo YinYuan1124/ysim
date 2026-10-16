@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,6 +27,8 @@
 #include "UtLonPos.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtProcessorTime.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
@@ -150,7 +152,8 @@ bool XWsfRoadTraffic::Initialize()
       }
       else
       {
-         auto out = ut::log::error() << "road_traffic: Undefined network.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_UNDEF_NET, {});
          out.AddNote() << "Network: " << networkName;
          ok = false;
       }
@@ -207,8 +210,8 @@ bool XWsfRoadTraffic::Initialize()
                      }
                      else
                      {
-                        auto out = ut::log::error() << "road_traffic: Could not initialize convoy vehicle because an "
-                                                       "invalid mover type was used.";
+                        // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+                        auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_BAD_MOVER, {});
                         out.AddNote() << "Make sure to use either a WSF_ROAD_MOVER or WSF_GROUND_MOVER.";
                         ok = false;
                         break;
@@ -248,7 +251,8 @@ bool XWsfRoadTraffic::Initialize()
 
    if (!ok)
    {
-      ut::log::error() << "road_traffic: Unable to initialize.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_INIT_FAIL, {});
       throw WsfSimulation::InitializeError();
    }
 
@@ -476,7 +480,8 @@ int XWsfRoadTraffic::AllocateVehicle(WsfStringId aVehicleTypeId)
    if (mData.mTraffic[vehicleNumber].mRoadPlatform == nullptr)
    {
       { // RAII block
-         auto out = ut::log::error() << "road_traffic: Invalid platform type.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_BAD_PLATFORM_TYPE, {});
          out.AddNote() << "Type: " << vehicleType;
       }
       assert(mData.mTraffic[vehicleNumber].mRoadPlatform != nullptr);
@@ -644,7 +649,8 @@ double XWsfRoadTraffic::CreateRandomPathForVehicle(const RoadTrafficNetworkInput
       }
       else
       {
-         auto out = ut::log::error() << "road_traffic: Cannot set the mover's path because the mover is null.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_NULL_MOVER, {});
          out.AddNote() << "Platform: " << mData.mTraffic[aVehicleNumber].mRoadPlatform->GetName();
 
          routeDist = -1.0;
@@ -896,7 +902,8 @@ bool XWsfRoadTraffic::CreateVehicle(const RoadTrafficNetworkInput& aNetworkInput
       else
       {
          { // RAII block
-            auto out = ut::log::error() << "road_traffic: Unable to create a random waypoint for a stationary vehicle.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_NO_RANDOM_WPT, {});
             out.AddNote() << "Vehicle: " << mData.mTraffic[nv].mRoadPlatform->GetName();
          }
          DeletePlatformFromSimulation(aCreateTime, nv);
@@ -917,7 +924,8 @@ bool XWsfRoadTraffic::CreateVehicle(const RoadTrafficNetworkInput& aNetworkInput
       if (routeDist < 0.0)
       {
          { // RAII block
-            auto out = ut::log::error() << "road_traffic: Unable to create a random path.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_NO_RANDOM_PATH, {});
             out.AddNote() << "Vehicle: " << mData.mTraffic[nv].mRoadPlatform->GetName();
          }
          DeletePlatformFromSimulation(aCreateTime, nv);
@@ -1357,7 +1365,8 @@ void XWsfRoadTraffic::AdvanceTime(double aSimTime)
                   }
                   else
                   {
-                     ut::log::error() << "road_traffic: Could not create new vehicle.";
+                     // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+                     ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_NO_NEW_VEHICLE, {});
                   }
                }
                mData.mNextUpdateTime = std::min(mData.mTraffic[vehicleNumber].mDeadTime, mData.mNextUpdateTime);
@@ -1390,7 +1399,8 @@ bool XWsfRoadTraffic::ValidateVehicleTypes(RoadTrafficNetworkInput& aNetwork)
       std::string typeName(aNetwork.mVehicleInput[i].mTypeId);
       if (GetScenario().FindType("platform_type", typeName) == nullptr)
       {
-         auto out = ut::log::error() << "road_traffic: Vehicle type does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_NO_VEHICLE_TYPE, {});
          out.AddNote() << "Network: " << aNetwork.mNetworkId;
          out.AddNote() << "Vehicle Type: " << typeName;
          ok = false;
@@ -1409,7 +1419,8 @@ bool XWsfRoadTraffic::ValidateVehicleTypes(RoadTrafficNetworkInput& aNetwork)
             std::string typeName(aNetwork.mConvoyInput[convoyId].mVehicleInput[vehInputId].mTypeId);
             if (GetScenario().FindType("platform_type", typeName) == nullptr)
             {
-               auto out = ut::log::error() << "road_traffic: Convoy vehicle type does not exist.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_ROAD_NO_CONVOY_TYPE, {});
                out.AddNote() << "Network: " << aNetwork.mNetworkId;
                out.AddNote() << "Vehicle Type: " << typeName;
                ok = false;

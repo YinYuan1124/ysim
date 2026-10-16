@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,6 +19,8 @@
 #include "UtException.hpp"
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMath.hpp"
 #include "UtMatrix.hpp"
 #include "UtRandom.hpp"
@@ -196,7 +198,8 @@ bool WsfDefaultSensorTracker::Initialize(double aSimTime, WsfSensor* aSensorPtr,
 {
    if (aSensorPtr->GetModeList() == nullptr)
    {
-      ut::log::error() << "A mode list is required for WsfDefaultSensorTracker.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DST_NO_MODE_LIST, {});
       assert(aSensorPtr->GetModeList() != nullptr);
       return false;
    }

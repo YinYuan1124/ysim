@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,6 +21,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtScriptContext.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "WsfMessage.hpp"
@@ -78,7 +80,8 @@ bool WsfScriptMessageHandler::Initialize(double aSimTime, WsfPlatform* aPlatform
       mScriptPtrs[i] = mContextPtr->FindScript(mScriptNames[i]);
       if (mScriptPtrs[i] == nullptr)
       {
-         auto out = ut::log::error() << "WsfScriptMessageHandler unable to resolve script name.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_MSGH_NO_SCRIPT, {});
          out.AddNote() << "Script: " << mScriptNames[i];
          ok = false;
       }

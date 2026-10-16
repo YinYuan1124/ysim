@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -65,51 +65,52 @@ SimulationManager::Plugin::Plugin(const QString& aPluginName, const size_t aUniq
 
    mUtCallbacks += wizSignals->DebugSessionActive.Connect(&Plugin::DebugSessionState, this);
 
-   mRunAction = new wkf::Action(QIcon::fromTheme("run"), QString("Run"), this, QKeySequence("F5"));
+   // 二次开发（i18n）：Run 菜单动作文本 tr() 化（上下文 SimulationManager::Plugin）
+   mRunAction = new wkf::Action(QIcon::fromTheme("run"), tr("Run"), this, QKeySequence("F5"));
    mRunAction->setEnabled(false);
-   mDebugAction = new wkf::Action(QIcon::fromTheme("run_debug"), QString("Run Debug"), this, QKeySequence("Ctrl+F5"));
+   mDebugAction = new wkf::Action(QIcon::fromTheme("run_debug"), tr("Run Debug"), this, QKeySequence("Ctrl+F5"));
    mDebugAction->setEnabled(false);
 
    mContinueRealtimeAction =
-      new wkf::Action(QIcon::fromTheme("play"), QString("Continue Realtime"), this, QKeySequence("Ctrl+F5"));
+      new wkf::Action(QIcon::fromTheme("play"), tr("Continue Realtime"), this, QKeySequence("Ctrl+F5"));
    mContinueRealtimeAction->setEnabled(false);
    mContinueRealtimeAction->setVisible(false);
    mContinueNonRealtimeAction =
-      new wkf::Action(QIcon::fromTheme("fast_forward"), QString("Continue Non-Realtime"), this, QKeySequence("F5"));
+      new wkf::Action(QIcon::fromTheme("fast_forward"), tr("Continue Non-Realtime"), this, QKeySequence("F5"));
    mContinueNonRealtimeAction->setEnabled(false);
    mContinueNonRealtimeAction->setVisible(false);
    mSeparator1 = mRunToolbar->addSeparator();
    mSeparator1->setVisible(false);
 
-   mPauseAction = new wkf::Action(QIcon::fromTheme("pause"), QString("Break All"), this, QKeySequence("Pause"));
+   mPauseAction = new wkf::Action(QIcon::fromTheme("pause"), tr("Break All"), this, QKeySequence("Pause"));
    mPauseAction->setEnabled(false);
    mPauseAction->setVisible(false);
-   mStopAction = new wkf::Action(QIcon::fromTheme("stop"), QString("Stop Debugging"), this, QKeySequence("Shift+F5"));
+   mStopAction = new wkf::Action(QIcon::fromTheme("stop"), tr("Stop Debugging"), this, QKeySequence("Shift+F5"));
    mStopAction->setEnabled(false);
    mStopAction->setVisible(false);
    mRestartAction =
-      new wkf::Action(QIcon::fromTheme("restart"), QString("Restart Run"), this, QKeySequence("Ctrl+Shift+F5"));
+      new wkf::Action(QIcon::fromTheme("restart"), tr("Restart Run"), this, QKeySequence("Ctrl+Shift+F5"));
    mRestartAction->setEnabled(false);
    mRestartAction->setVisible(false);
    mSeparator2 = mRunToolbar->addSeparator();
    mSeparator2->setVisible(false);
 
-   mStepIntoAction = new wkf::Action(QIcon::fromTheme("step_into"), QString("Step Into"), this, QKeySequence("F11"));
+   mStepIntoAction = new wkf::Action(QIcon::fromTheme("step_into"), tr("Step Into"), this, QKeySequence("F11"));
    mStepIntoAction->setEnabled(false);
    mStepIntoAction->setVisible(false);
-   mStepOverAction = new wkf::Action(QIcon::fromTheme("step_over"), QString("Step Over"), this, QKeySequence("F10"));
+   mStepOverAction = new wkf::Action(QIcon::fromTheme("step_over"), tr("Step Over"), this, QKeySequence("F10"));
    mStepOverAction->setEnabled(false);
    mStepOverAction->setVisible(false);
-   mStepOutAction = new wkf::Action(QIcon::fromTheme("step_out"), QString("Step Out"), this, QKeySequence("Shift+F11"));
+   mStepOutAction = new wkf::Action(QIcon::fromTheme("step_out"), tr("Step Out"), this, QKeySequence("Shift+F11"));
    mStepOutAction->setEnabled(false);
    mStepOutAction->setVisible(false);
 
    mToggleBreakpointAction =
-      new wkf::Action(QIcon::fromTheme("stop_sign"), QString("Toggle Breakpoint"), this, QKeySequence("F9"));
-   mDeleteAllBreakpointsAction = new wkf::Action(QString("Delete All Breakpoints"), this, QKeySequence("Ctrl+Shift+F9"));
-   mDisableAllBreakpointsAction = new wkf::Action(QString("Disable All Breakpoints"), this, Qt::WindowShortcut);
+      new wkf::Action(QIcon::fromTheme("stop_sign"), tr("Toggle Breakpoint"), this, QKeySequence("F9"));
+   mDeleteAllBreakpointsAction = new wkf::Action(tr("Delete All Breakpoints"), this, QKeySequence("Ctrl+Shift+F9"));
+   mDisableAllBreakpointsAction = new wkf::Action(tr("Disable All Breakpoints"), this, Qt::WindowShortcut);
 
-   mDebugSettings = new wkf::Action(QString("Debugger Settings..."), this, Qt::WindowShortcut);
+   mDebugSettings = new wkf::Action(tr("Debugger Settings..."), this, Qt::WindowShortcut);
 
    connect(mRunAction, &QAction::triggered, [this]() { Run(false); });
    connect(mDebugAction, &QAction::triggered, [this]() { Run(true); });

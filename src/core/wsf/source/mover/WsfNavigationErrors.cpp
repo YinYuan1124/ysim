@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -28,6 +28,8 @@
 #include "UtMat3.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringUtil.hpp"
 #include "UtVec3.hpp"
 #include "WsfComponentFactory.hpp"
@@ -204,7 +206,8 @@ WsfNavigationErrors::~WsfNavigationErrors()
       if ((mGPS_Status == cGPS_INACTIVE) && mShowStatusChanges)
       {
          auto locErrorRSCS = GetLocationErrorRSCS();
-         auto out          = ut::log::error() << "WsfNavigationError() Report:";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out          = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_NAV_ERROR_INS_REPORT, {});
          out.AddNote() << "T = " << mLastUpdateTime;
          out.AddNote() << "Platform: " << mPlatformPtr->GetName();
          out.AddNote() << "Final INS location error: [ " << locErrorRSCS[0] << ' ' << locErrorRSCS[1] << ' '

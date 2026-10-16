@@ -67,6 +67,34 @@ namespace msg
    constexpr uint32_t MSG_EVENTPIPE_OR_DUP       = 0x00010002; ///< event_pipe message_id_or 重复
    constexpr uint32_t MSG_EVENTPIPE_MSGID_DUP    = 0x00010003; ///< event_pipe message_id 重复
 
+   // ---- 想定解析/脚本段（0x0001xxxx）script 域（第十九批）----
+   constexpr uint32_t MSG_SCRIPT_CB_EXEC_FAIL         = 0x00010004; ///< 无法执行回调方法
+   constexpr uint32_t MSG_SCRIPT_CTX_PARSE_FAIL       = 0x00010005; ///< 脚本解析失败
+   constexpr uint32_t MSG_SCRIPT_CTX_INVALID_INIT     = 0x00010006; ///< WsfScriptContext::Initialize 无效调用（3 处共用）
+   constexpr uint32_t MSG_SCRIPT_CTX_INIT_FAIL        = 0x00010007; ///< 脚本上下文初始化失败（3 处共用）
+   constexpr uint32_t MSG_SCRIPT_CTX_BAD_SIGNATURE    = 0x00010008; ///< 脚本签名不符
+   constexpr uint32_t MSG_SCRIPT_CTX_TIMED_EVENTS_ERR = 0x00010009; ///< AddTimedEvents 内部错误
+   constexpr uint32_t MSG_SCRIPT_ERROR_HEADER         = 0x0001000A; ///< 脚本出错（错误头）
+   constexpr uint32_t MSG_SCRIPT_OBJ_CLASS_EXCEPTION   = 0x0001000B; ///< 脚本处理中抛出异常
+   constexpr uint32_t MSG_SCRIPT_OBS_UNKNOWN_CB       = 0x0001000C; ///< 未知回调名
+   constexpr uint32_t MSG_SCRIPT_OBS_NO_SCRIPT        = 0x0001000D; ///< 回调找不到脚本
+   constexpr uint32_t MSG_SCRIPT_MSGH_NO_SCRIPT       = 0x0001000E; ///< 消息处理器无法解析脚本名
+   constexpr uint32_t MSG_SCRIPT_PLAT_NO_COMM         = 0x0001000F; ///< 找不到 comm 设备（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_PLAT_NO_PROC         = 0x00010010; ///< 找不到 processor（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_PLAT_NO_MOVER        = 0x00010011; ///< 找不到 mover（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_PLAT_NO_SENSOR       = 0x00010012; ///< 找不到 sensor（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_PLAT_NO_ROUTER        = 0x00010013; ///< 找不到 router（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_EXEC_FAIL             = 0x00010014; ///< 无法执行脚本（6 处共用）
+   constexpr uint32_t MSG_SCRIPT_ROUTE_IDX_RANGE       = 0x00010015; ///< 航路点索引越界（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_SMP_INVALID_INIT     = 0x00010016; ///< WsfScriptStateMachineProcessor::Initialize 无效调用
+   constexpr uint32_t MSG_SCRIPT_SM_BAD_ENTRY_IDX      = 0x00010017; ///< 状态机入口状态索引无效（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_SM_BAD_TRANS_IDX     = 0x00010018; ///< 状态机转移状态索引无效（2 处共用）
+   constexpr uint32_t MSG_SCRIPT_SM_EMPTY             = 0x00010019; ///< 空状态机
+   constexpr uint32_t MSG_SCRIPT_SM_STATE_INIT_FAIL   = 0x0001001A; ///< 状态机状态初始化失败
+   constexpr uint32_t MSG_SCRIPT_SM_NEXT_STATE_INIT   = 0x0001001B; ///< next_state 初始化失败
+   constexpr uint32_t MSG_SCRIPT_SM_NO_NEXT_STATE     = 0x0001001C; ///< next_state 不存在
+   constexpr uint32_t MSG_SCRIPT_SM_NO_SCRIPT          = 0x0001001D; ///< 状态机找不到脚本
+
    // ---- 平台/运动段（0x0002xxxx）已分配的消息 ID ----
    constexpr uint32_t MSG_PLATFORM_NULL_PTR      = 0x00020001; ///< 添加空平台指针
    constexpr uint32_t MSG_PLATFORM_ADDED_TWICE   = 0x00020002; ///< 重复添加同一平台
@@ -200,6 +228,59 @@ namespace msg
    constexpr uint32_t MSG_TBM_THRUST_AND_SI          = 0x0002007C; ///< thrust 与 specific_impulse 不能同时指定
    constexpr uint32_t MSG_TBM_MASS_NOT_CONSISTENT    = 0x0002007D; ///< total/empty/fuel_mass 不一致
 
+   // ---- 平台/运动段（0x0002xxxx）mover 域散点补遗（第十八批）----
+   constexpr uint32_t MSG_NAV_ERROR_INS_REPORT   = 0x0002007E; ///< 导航误差最终报告引出句
+   constexpr uint32_t MSG_PF_FIND_CLOSEST_FAIL   = 0x0002007F; ///< 目标点附近找不到有效点
+   constexpr uint32_t MSG_PG_NOT_ATTACHED        = 0x00020080; ///< 路径制导未挂接运动体
+   constexpr uint32_t MSG_RN_INSERT_AREA_FAIL   = 0x00020081; ///< 路线网络 InsertArea 失败
+
+   // ---- 平台/运动段（0x0002xxxx）traffic 交通域（第十九批）----
+   constexpr uint32_t MSG_AIR_BAD_AC_TYPE          = 0x00020082; ///< 机场引用未定义的 aircraft_type
+   constexpr uint32_t MSG_AIR_UNDEF_DEST           = 0x00020083; ///< 机场目的机场未定义
+   constexpr uint32_t MSG_AIR_NO_ADD_PLATFORM      = 0x00020084; ///< 无法添加机场平台
+   constexpr uint32_t MSG_AIR_NO_LOCAL_AC          = 0x00020085; ///< 找不到可用本地飞机类型
+   constexpr uint32_t MSG_AIR_NO_LAND_AC           = 0x00020086; ///< 无飞机类型可降目的机场
+   constexpr uint32_t MSG_AIR_NO_FLIGHT            = 0x00020087; ///< 找不到平台对应航班
+   constexpr uint32_t MSG_AIR_NO_CREATE_AC         = 0x00020088; ///< 无法创建指定类型飞机
+   constexpr uint32_t MSG_AIR_BAD_MOVER_TYPE       = 0x00020089; ///< 飞机运动体须为 WSF_AIR_MOVER
+   constexpr uint32_t MSG_AIR_NO_ADD_SIM           = 0x0002008A; ///< 无法将平台加入仿真
+   constexpr uint32_t MSG_AIR_DIVERT_NO_AIRBASE   = 0x0002008B; ///< 备降时找不到合适备降机场
+   constexpr uint32_t MSG_TRT_INVALID_NET          = 0x0002008C; ///< 无效路线网络
+   constexpr uint32_t MSG_TRT_NET_INIT_FAIL        = 0x0002008D; ///< 路线网络初始化失败
+   constexpr uint32_t MSG_SEA_NO_ENTITY            = 0x0002008E; ///< sea_traffic 无法生成实体
+   constexpr uint32_t MSG_SEA_NULL_MOVER           = 0x0002008F; ///< sea_traffic 运动体为空无法设路径
+   constexpr uint32_t MSG_SEA_ADD_PLATFORM_FAIL    = 0x00020090; ///< sea_traffic 平台加入仿真失败
+   constexpr uint32_t MSG_SEA_BAD_PLATFORM_TYPE    = 0x00020091; ///< sea_traffic 无效平台类型
+   constexpr uint32_t MSG_SEA_OUTPUT_OPEN          = 0x00020092; ///< sea_traffic 输出文件打开失败
+   constexpr uint32_t MSG_SEA_NO_LANE              = 0x00020093; ///< sea_traffic 航线不存在
+   constexpr uint32_t MSG_SEA_LANE_WEIGHTS         = 0x00020094; ///< sea_traffic 航线权重和须为 1.0
+   constexpr uint32_t MSG_SEA_PORT_WEIGHTS         = 0x00020095; ///< sea_traffic 港口权重数与航线数不符
+   constexpr uint32_t MSG_SEA_REGION_WEIGHTS       = 0x00020096; ///< sea_traffic 本地交通区域权重和须为 1.0
+   constexpr uint32_t MSG_SEA_TWO_PORTS            = 0x00020097; ///< sea_traffic 航线须指定两个港口
+   constexpr uint32_t MSG_SEA_NO_PORT             = 0x00020098; ///< sea_traffic 港口不存在（2 处共用）
+   constexpr uint32_t MSG_SEA_NO_FRACTION          = 0x00020099; ///< sea_traffic 未指定创建比例（参数化）
+   constexpr uint32_t MSG_SEA_BAD_LOITER_ROUTE     = 0x0002009A; ///< sea_traffic 无效待机航线
+   constexpr uint32_t MSG_OSM_BAD_VAR_TYPE         = 0x0002009B; ///< osm_traffic 变量类型不符
+   constexpr uint32_t MSG_OSM_UNDEF_NET            = 0x0002009C; ///< osm_traffic 网络未定义
+   constexpr uint32_t MSG_OSM_NET_NO_ENTRANCE      = 0x0002009D; ///< osm_traffic 网络有出口无入口
+   constexpr uint32_t MSG_OSM_INIT_FAIL            = 0x0002009E; ///< osm_traffic 初始化失败
+   constexpr uint32_t MSG_OSM_BAD_PLATFORM_TYPE    = 0x0002009F; ///< osm_traffic 无效平台类型
+   constexpr uint32_t MSG_OSM_NO_VEHICLE_TYPE      = 0x000200A0; ///< osm_traffic 车辆类型不存在
+   constexpr uint32_t MSG_OSM_BAD_FRACTION         = 0x000200A1; ///< osm_traffic 车辆 fraction 和须为 1.0
+   constexpr uint32_t MSG_OSM_NO_CONVOY_TYPE       = 0x000200A2; ///< osm_traffic 车队车辆类型不存在
+   constexpr uint32_t MSG_OSM_NULL_MOVER           = 0x000200A3; ///< osm_traffic 运动体为空无法设路径
+   constexpr uint32_t MSG_OSM_NO_MOVER              = 0x000200A4; ///< 所属平台缺有效运动体
+   constexpr uint32_t MSG_ROAD_UNDEF_NET           = 0x000200A5; ///< road_traffic 网络未定义
+   constexpr uint32_t MSG_ROAD_BAD_MOVER           = 0x000200A6; ///< road_traffic 车队运动体类型无效
+   constexpr uint32_t MSG_ROAD_INIT_FAIL           = 0x000200A7; ///< road_traffic 初始化失败
+   constexpr uint32_t MSG_ROAD_BAD_PLATFORM_TYPE    = 0x000200A8; ///< road_traffic 无效平台类型
+   constexpr uint32_t MSG_ROAD_NULL_MOVER          = 0x000200A9; ///< road_traffic 运动体为空无法设路径
+   constexpr uint32_t MSG_ROAD_NO_RANDOM_WPT       = 0x000200AA; ///< road_traffic 静止车辆随机航点生成失败
+   constexpr uint32_t MSG_ROAD_NO_RANDOM_PATH      = 0x000200AB; ///< road_traffic 随机路径生成失败
+   constexpr uint32_t MSG_ROAD_NO_NEW_VEHICLE      = 0x000200AC; ///< road_traffic 无法创建新车辆
+   constexpr uint32_t MSG_ROAD_NO_VEHICLE_TYPE     = 0x000200AD; ///< road_traffic 车辆类型不存在
+   constexpr uint32_t MSG_ROAD_NO_CONVOY_TYPE      = 0x000200AE; ///< road_traffic 车队车辆类型不存在
+
    // ---- 传感器段（0x0003xxxx）已分配的消息 ID ----
    constexpr uint32_t MSG_SENSOR_MTI_OPEN_FAIL      = 0x00030001; ///< MTI 表文件打开失败
    constexpr uint32_t MSG_SENSOR_MTI_NOT_ASCENDING  = 0x00030002; ///< MTI 表数值非单调递增
@@ -250,6 +331,60 @@ namespace msg
    constexpr uint32_t MSG_OTH_MTI_NO_MAX_RANGE     = 0x0003002F; ///< OTH mti_processor 缺 maximum_range
    constexpr uint32_t MSG_OTH_MTI_NO_IPP          = 0x00030030; ///< OTH mti_processor 脉间周期须成对
    constexpr uint32_t MSG_OTH_MTI_DUP_TABLE        = 0x00030031; ///< OTH MTI 修正表重复指定
+
+   // ---- 传感器段（0x0003xxxx）ext 域（第十八批）----
+   constexpr uint32_t MSG_EXT_SENSOR_INIT_FAIL    = 0x00030032; ///< 外部传感器初始化失败
+
+   // ---- 传感器段（0x0003xxxx）sensor 域（第十九批）----
+   constexpr uint32_t MSG_CS_NO_OPERATING_MODE     = 0x00030033; ///< 组合传感器缺 operating_mode
+   constexpr uint32_t MSG_CS_NO_CONSTITUENTS       = 0x00030034; ///< 组合传感器未定义成员传感器
+   constexpr uint32_t MSG_CS_SELF_CONSTITUENT      = 0x00030035; ///< 成员传感器与组合传感器同名
+   constexpr uint32_t MSG_CS_CONSTITUENT_UNDEF     = 0x00030036; ///< 成员传感器未定义
+   constexpr uint32_t MSG_CS_CONSTITUENT_NO_MODES  = 0x00030037; ///< 成员传感器须有模式列表
+   constexpr uint32_t MSG_CS_CONSTITUENT_NO_SCHED  = 0x00030038; ///< 成员传感器须有调度器与跟踪器
+   constexpr uint32_t MSG_CS_INTERNAL_LINK_FAIL     = 0x00030039; ///< 成员传感器内部链路添加失败
+   constexpr uint32_t MSG_MS_BAD_CASE              = 0x0003003A; ///< MarcumSwerling case 无效
+   constexpr uint32_t MSG_MS_BAD_NUM_PULSES        = 0x0003003B; ///< MarcumSwerling 脉冲积分数无效
+   constexpr uint32_t MSG_MS_BAD_PFA               = 0x0003003C; ///< MarcumSwerling 虚警概率无效
+   constexpr uint32_t MSG_PD_NO_CONT_THRESH        = 0x0003003D; ///< 连续波检测阈值未定义（2 处共用）
+   constexpr uint32_t MSG_PD_NO_PULSED_THRESH      = 0x0003003E; ///< 脉冲检测阈值未定义（2 处共用）
+   constexpr uint32_t MSG_PD_NO_CONT_SENS          = 0x0003003F; ///< 连续波灵敏度未定义（2 处共用）
+   constexpr uint32_t MSG_PD_NO_PULSED_SENS        = 0x00030040; ///< 脉冲灵敏度未定义
+   constexpr uint32_t MSG_PD_NO_PULSE_SENS         = 0x00030063; ///< 脉冲灵敏度未定义（无 d 变体原文）（2 处共用）
+   constexpr uint32_t MSG_PD_NO_THRESH_OR_SENS     = 0x00030041; ///< 须定义检测阈值或灵敏度
+   constexpr uint32_t MSG_MTI_ADJ_NO_TABLE         = 0x00030042; ///< data_table 型 MTI 缺 mti_data_table
+   constexpr uint32_t MSG_MTI_ADJ_BAD_MODE         = 0x00030043; ///< MTI 处理器要求雷达模式
+   constexpr uint32_t MSG_MTI_ADJ_NO_PRF           = 0x00030044; ///< MTI 处理器缺 PRF
+   constexpr uint32_t MSG_MTI_ADJ_NO_MAX_RANGE     = 0x00030045; ///< MTI 处理器缺 maximum_range
+   constexpr uint32_t MSG_MTI_ADJ_NO_IPP           = 0x00030046; ///< MTI 处理器脉间周期须成对
+   constexpr uint32_t MSG_DST_NO_MODE_LIST         = 0x00030047; ///< 默认跟踪器要求模式列表
+   constexpr uint32_t MSG_MTI_TABLE_READCSV_EXC    = 0x00030048; ///< MTI 表 CSV 读取抛出异常
+   constexpr uint32_t MSG_MTI_TABLE_COMPOUND_OPEN  = 0x00030049; ///< 复合 MTI 表文件打开失败
+   constexpr uint32_t MSG_MTI_TABLE_COMPOUND_PARSE = 0x0003004A; ///< 复合 MTI 表解析抛出异常
+   constexpr uint32_t MSG_MTI_TABLE_COMPOUND_ROW   = 0x0003004B; ///< 复合 MTI 表行读取失败
+   constexpr uint32_t MSG_MTI_TABLE_COMPOUND_EXC   = 0x0003004C; ///< 复合 MTI 表读取抛出异常
+   constexpr uint32_t MSG_MTI_TABLE_WRITECSV_OPEN  = 0x0003004D; ///< MTI 表 CSV 写打开失败
+   constexpr uint32_t MSG_MTI_TABLE_WRITEBIN_OPEN  = 0x0003004E; ///< MTI 表二进制写打开失败
+   constexpr uint32_t MSG_MTI_TABLE_WRITEBIN_SPEED = 0x0003004F; ///< MTI 表二进制写 speedAxis 失败
+   constexpr uint32_t MSG_MTI_TABLE_WRITEBIN_ADJ   = 0x00030050; ///< MTI 表二进制写 adjustmentAxis 失败
+   constexpr uint32_t MSG_MTI_TABLE_READBIN_OPEN   = 0x00030051; ///< MTI 表二进制读打开失败
+   constexpr uint32_t MSG_MTI_TABLE_READBIN_SPEED  = 0x00030052; ///< MTI 表二进制读 speedAxis 失败
+   constexpr uint32_t MSG_MTI_TABLE_READBIN_ADJ    = 0x00030053; ///< MTI 表二进制读 adjustmentAxis 失败
+   constexpr uint32_t MSG_MTI_TABLE_NO_FREQ        = 0x00030054; ///< 找不到频率对应的 MTI 修正表
+   constexpr uint32_t MSG_DSS_NO_MODE_LIST         = 0x00030055; ///< 默认调度器要求模式列表
+   constexpr uint32_t MSG_DSS_NO_FRAME_TIME        = 0x00030056; ///< 默认调度器缺 frame_time
+   constexpr uint32_t MSG_DSS_BAD_MODE_REQ         = 0x00030057; ///< 请求的传感器模式无效
+   constexpr uint32_t MSG_PSSS_NO_MODE_LIST        = 0x00030058; ///< 物理扫描调度器要求模式列表（参数化）
+   constexpr uint32_t MSG_PSSS_NO_UPDATE_INT       = 0x00030059; ///< 物理扫描调度器缺 update_interval（参数化）
+   constexpr uint32_t MSG_PSSS_NO_FRAME_TIME       = 0x0003005A; ///< 物理扫描调度器缺 frame_time
+   constexpr uint32_t MSG_RSEM_NOT_RADAR           = 0x0003005B; ///< 误差模型仅适用雷达传感器
+   constexpr uint32_t MSG_SSSS_NO_AZ_RATE          = 0x0003005C; ///< 扇区扫描缺方位扫描率
+   constexpr uint32_t MSG_SSSS_NO_EL_RATE          = 0x0003005D; ///< 扇区扫描缺俯仰扫描率
+   constexpr uint32_t MSG_SSSS_NO_UPDATE_INT       = 0x0003005E; ///< 扇区扫描调度器缺 update_interval
+   constexpr uint32_t MSG_SST_NO_END_SCHED         = 0x0003005F; ///< 调度器块缺结束命令
+   constexpr uint32_t MSG_SSP_INIT_FAIL           = 0x00030060; ///< 信号处理器初始化失败
+   constexpr uint32_t MSG_SPIN_NO_MODE_LIST       = 0x00030061; ///< 旋转调度器要求模式列表
+   constexpr uint32_t MSG_SPIN_NO_FRAME_TIME      = 0x00030062; ///< 旋转调度器缺 frame_time（参数化）
 
    // ---- 交战/武器段（0x0004xxxx）已分配的消息 ID ----
    constexpr uint32_t MSG_WEAPON_EFFECTS_UNDEFINED     = 0x00040001; ///< 平台武器的 weapon_effects 未定义
@@ -360,6 +495,44 @@ namespace msg
    constexpr uint32_t MSG_COMM_ROUTER_SEND_NO_SOURCE  = 0x00050014; ///< 路由器发送源地址为空
    constexpr uint32_t MSG_COMM_ROUTER_AUTO_LINK_FAIL = 0x00050015; ///< comm 接口自动链路创建失败
 
+   // ---- 通信段（0x0005xxxx）DIS 协议库（第十六批）----
+   constexpr uint32_t MSG_DIS_ENV_BAD_VERSION      = 0x00050016; ///< DIS_VERSION 环境变量值非法
+   constexpr uint32_t MSG_DIS_ENV_BAD_EXERCISE     = 0x00050017; ///< DIS_EXERCISE 环境变量值非法
+   constexpr uint32_t MSG_DIS_ENV_BAD_SITE         = 0x00050018; ///< DIS_SITE 环境变量值非法
+   constexpr uint32_t MSG_DIS_ENV_BAD_APPLICATION  = 0x00050019; ///< DIS_APPLICATION 环境变量值非法
+   constexpr uint32_t MSG_DIS_ENV_BAD_HBT          = 0x0005001A; ///< DIS_HRT_BEAT_TIMER 环境变量值非法
+   constexpr uint32_t MSG_DIS_ENV_BAD_HBT_MPLIER   = 0x0005001B; ///< DIS_HRT_BEAT_MPLIER 环境变量值非法
+   constexpr uint32_t MSG_DIS_PDU_TYPE_READ_FAIL   = 0x0005001C; ///< PDU 类型读取失败
+   constexpr uint32_t MSG_DIS_PDU_SIZE_MISMATCH    = 0x0005001D; ///< PDU 数据尺寸不匹配
+   constexpr uint32_t MSG_DIS_SIG_NO_32BIT_BOUNDARY = 0x0005001E; ///< 信号 PDU 长度非 32 位边界
+   constexpr uint32_t MSG_DIS_SIG_DB_LEN_NOT_96    = 0x0005001F; ///< 数据库索引编码类长度须为 96
+   constexpr uint32_t MSG_DIS_SIG_LEN_BITS_MISMATCH = 0x00050020; ///< 信号 PDU 数据长度与头部位数不符
+
+   // ---- 通信段（0x0005xxxx）DIS 协议库（第十七批：流 IO 防御与 PDU 诊断链）----
+   constexpr uint32_t MSG_DISIO_RADIOID_READ_FAIL     = 0x00050021; ///< DisRadioId 流提取失败
+   constexpr uint32_t MSG_DISIO_RADIOID_READ_NOT_GOOD  = 0x00050022; ///< DisRadioId 流提取前流状态异常
+   constexpr uint32_t MSG_DIS_RADIOID_PACK_FAIL        = 0x00050023; ///< DisRadioId Pack 流写入失败
+   constexpr uint32_t MSG_DIS_RADIOID_PACK_NOT_GOOD     = 0x00050024; ///< DisRadioId Pack 输入流状态异常
+   constexpr uint32_t MSG_DIS_RADIOID_UNPACK_FAIL      = 0x00050025; ///< DisRadioId UnPack 流读取失败
+   constexpr uint32_t MSG_DIS_RADIOID_UNPACK_NOT_GOOD  = 0x00050026; ///< DisRadioId UnPack 输入流状态异常
+   constexpr uint32_t MSG_DIS_SIG_COPY_BAD_PTR         = 0x00050027; ///< 信号 PDU 拷贝收到无效数据指针
+   constexpr uint32_t MSG_DIS_FACTORY_LAST_GOOD_HEADER = 0x00050028; ///< 上一个良好的 PDU 头（诊断转储引出句）
+   constexpr uint32_t MSG_DIS_FACTORY_FIRST_PDU       = 0x00050029; ///< 接收缓冲区首个 PDU 即出错
+
+   // ---- 通信段（0x0005xxxx）wsf dis 接口/event_pipe/xio（第十八批）----
+   constexpr uint32_t MSG_DIS_ACTION_RESP_NOT_JOIN      = 0x0005002A; ///< DIS 动作响应非加入演习请求
+   constexpr uint32_t MSG_DIS_ACTION_RESPR_NOT_JOIN     = 0x0005002B; ///< DIS 可靠动作响应非加入演习请求
+   constexpr uint32_t MSG_DIS_IFACE_OPEN_DEVICE_FAIL    = 0x0005002C; ///< DIS 接口设备打开失败（两处共用）
+   constexpr uint32_t MSG_DIS_IFACE_SET_APPEAR_VAR_FAIL = 0x0005002D; ///< 无法设置外观脚本变量
+   constexpr uint32_t MSG_DIS_IFACE_EXEC_APPEAR_FAIL    = 0x0005002E; ///< 无法执行外观更新脚本
+   constexpr uint32_t MSG_DIS_PLAYBACK_OPEN_FAIL        = 0x0005002F; ///< DIS 回放文件打开失败
+   constexpr uint32_t MSG_DIS_PLAYBACK_TOO_MANY         = 0x00050030; ///< DIS 回放文件指定过多
+   constexpr uint32_t MSG_EVENTPIPE_OPEN_FAIL           = 0x00050031; ///< event_pipe 输出文件打开失败
+   constexpr uint32_t MSG_XIO_NO_LINKED_CONN            = 0x00050032; ///< XIO 无可用关联连接
+   constexpr uint32_t MSG_XIO_MSG_NO_TRANSLATOR         = 0x00050033; ///< XIO 消息无翻译器
+   constexpr uint32_t MSG_XIO_AUTO_DIS_MAP_INIT_FAIL    = 0x00050034; ///< XIO 自动 DIS 映射初始化失败
+   constexpr uint32_t MSG_XIO_CANNOT_TX_MSG             = 0x00050035; ///< 无法通过 XIO 发送 WsfMessage
+
    // ---- 工具/UI 段（0x0006xxxx）已分配的消息 ID ----
    // 目录初始化失败：目录不存在或不可写（wizard 启动环境检查）
    constexpr uint32_t MSG_WIZARD_INVALID_DIR = 0x00060001;
@@ -425,6 +598,12 @@ namespace msg
 
    /// 获取条目的中文修复建议（无则返回空串）
    UT_EXPORT std::string GetFixZh(uint32_t aId);
+
+   /// L1 消费端翻译：输入带 "[E:ID] "/"[W:ID] " 前缀的日志文本行，
+   /// 按 ID 查目录，以英文模板从文本中反提取参数值，再填充中文模板返回。
+   /// 任何失败（无前缀 / ID 未注册 / 文本与模板不匹配）返回空串，调用方回退显示原文。
+   /// 仅供界面显示通道使用；日志落盘/控制台输出保持原文英文+ID 不变。
+   UT_EXPORT std::string TranslateTaggedToZh(const std::string& aText);
 } // namespace msg
 } // namespace ut
 

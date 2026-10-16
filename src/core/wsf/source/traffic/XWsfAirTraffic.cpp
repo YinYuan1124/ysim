@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -23,6 +23,8 @@
 #include "UtLog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
 #include "UtVec3.hpp"
@@ -120,7 +122,8 @@ bool XWsfAirTraffic::Initialize()
       {
          if (!DoesAircraftTypeExist(airbasePtr->mAircrafts[i].mAircraftTypeId))
          {
-            auto out = ut::log::error() << "Invalid 'aircraft_type'.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_BAD_AC_TYPE, {});
             out.AddNote() << "Airbase: " << airbasePtr->mNameId;
             out.AddNote() << "Aircraft Type: " << airbasePtr->mAircrafts[i].mAircraftTypeId;
             initializeOk = false;
@@ -132,7 +135,8 @@ bool XWsfAirTraffic::Initialize()
       {
          if (!DoesAirbaseExist(airbasePtr->mDestinations[i].mAirbaseNameId))
          {
-            auto out = ut::log::error() << "Undefined airbase destination.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_UNDEF_DEST, {});
             out.AddNote() << "Airbase: " << airbasePtr->mNameId;
             out.AddNote() << "Destination: " << airbasePtr->mDestinations[i].mAirbaseNameId;
             initializeOk = false;
@@ -178,7 +182,8 @@ bool XWsfAirTraffic::Initialize()
       moverPtr->SetRoute(GetSimulation().GetSimTime(), route);
       if (!GetSimulation().AddPlatform(platformPtr))
       {
-         auto out = ut::log::error() << "Unable to add airbase platform.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_NO_ADD_PLATFORM, {});
          out.AddNote() << "Platform: " << platformPtr->GetName();
          delete platformPtr;
          initializeOk = false;
@@ -244,7 +249,8 @@ double XWsfAirTraffic::ProcessEvent(double aSimTime)
             // Pick an aircraft.
             if (!GetRandomLocalAircraft(*airbasePtr, aircraft))
             {
-               ut::log::error() << "Could not find a local aircraft type to use.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_NO_LOCAL_AC, {});
                continue;
             }
          }
@@ -262,7 +268,8 @@ double XWsfAirTraffic::ProcessEvent(double aSimTime)
             // Pick an aircraft.
             if (!GetRandomAircraft(*airbasePtr, *destAirbasePtr, aircraft))
             {
-               auto out = ut::log::error() << "No aircraft type may land at destination.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_NO_LAND_AC, {});
                out.AddNote() << "Destination: " << destination.mAirbaseNameId;
                continue;
             }
@@ -417,7 +424,8 @@ void XWsfAirTraffic::UpdateFlightStatus(double aSimTime, WsfPlatform* aPlatformP
 
    if (flightIter == mFlights.end())
    {
-      auto out = ut::log::error() << "Unable to locate flight for platform.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_NO_FLIGHT, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Platform: " << aPlatformPtr->GetName();
       return;
@@ -494,7 +502,8 @@ void XWsfAirTraffic::AddToSimulation(const Aircraft&    aAircraft,
    WsfPlatform* platformPtr  = (WsfPlatform*)GetScenario().CloneType("platform_type", platformType);
    if (platformPtr == nullptr)
    {
-      auto out = ut::log::error() << "Unable to create aircraft of type.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_NO_CREATE_AC, {});
       out.AddNote() << "Aircraft Type: " << platformType;
       return;
    }
@@ -502,7 +511,8 @@ void XWsfAirTraffic::AddToSimulation(const Aircraft&    aAircraft,
    WsfMover* moverPtr = platformPtr->GetMover();
    if (moverPtr == nullptr || !moverPtr->IsA_TypeOf("WSF_AIR_MOVER"))
    {
-      auto out = ut::log::error() << "Aircraft mover must be a WSF_AIR_MOVER.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_BAD_MOVER_TYPE, {});
       out.AddNote() << "Aircraft Type: " << platformType;
       out.AddNote() << "Mover Type: " << (moverPtr ? moverPtr->GetType() : "(None)");
       return;
@@ -606,7 +616,8 @@ void XWsfAirTraffic::AddToSimulation(const Aircraft&    aAircraft,
    }
    else
    {
-      auto out = ut::log::error() << "Unable to add platform to simulation.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_NO_ADD_SIM, {});
       out.AddNote() << "Platform: " << platformPtr->GetName();
       delete platformPtr;
    }
@@ -789,7 +800,8 @@ void XWsfAirTraffic::DivertFlight(double aSimTime, Flight& aFlight)
 
    if (bestAirbaseId == nullptr)
    {
-      auto out = ut::log::error() << "Diverting flight. Could not find a suitable alternative airbase.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_AIR_DIVERT_NO_AIRBASE, {});
       out.AddNote() << "T = " << aSimTime;
       out.AddNote() << "Flight: " << platformPtr->GetName();
       out.AddNote() << "Status:" << aFlight.mStatus;

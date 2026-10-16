@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,6 +16,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "WsfEM_Util.hpp"
 #include "WsfEM_Xmtr.hpp"
@@ -172,7 +174,8 @@ bool WsfDefaultSensorScheduler::Initialize(double aSimTime, WsfSensor* aSensorPt
 {
    if (aSensorPtr->GetModeList() == nullptr)
    {
-      ut::log::error() << "A mode list is required for WsfDefaultSensorScheduler.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DSS_NO_MODE_LIST, {});
       assert(aSensorPtr->GetModeList() != nullptr);
       return false;
    }
@@ -188,7 +191,8 @@ bool WsfDefaultSensorScheduler::Initialize(double aSimTime, WsfSensor* aSensorPt
    {
       if (modePtr->GetFrameTime() <= 0.0)
       {
-         auto out = ut::log::error() << "WsfDefaultSensorScheduler: 'frame_time' not specified.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DSS_NO_FRAME_TIME, {});
          out.AddNote() << "Sensor: " << mSensorPtr->GetName();
          out.AddNote() << "Mode: " << modePtr->GetName();
          ok = false;
@@ -569,7 +573,8 @@ bool WsfDefaultSensorScheduler::StartTracking(double aSimTime, const WsfTrack& a
       modeIndex = mSensorPtr->GetModeList()->GetModeByName(aModeNameId);
       if (modeIndex >= mSensorPtr->GetModeList()->GetModeCount())
       {
-         auto out = ut::log::error() << "Invalid mode requested for sensor.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DSS_BAD_MODE_REQ, {});
          out.AddNote() << "T = " << aSimTime;
          out.AddNote() << "Platform: " << mSensorPtr->GetPlatform()->GetName();
          out.AddNote() << "Sensor: " << mSensorPtr->GetName();

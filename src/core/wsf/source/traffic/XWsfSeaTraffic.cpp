@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,8 @@
 #include "UtLog.hpp"
 #include "UtLonPos.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtRandom.hpp"
 #include "UtSphericalEarth.hpp"
 #include "WsfApplication.hpp"
@@ -248,7 +250,8 @@ void XWsfSeaTraffic::HandleDeparture(WsfStringId aPortId, double aSimTime)
    }
    else
    {
-      ut::log::error() << "sea_traffic: Could not generate entity, so no more departure events will be scheduled.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_NO_ENTITY, {});
    }
 }
 
@@ -663,7 +666,8 @@ bool XWsfSeaTraffic::GenerateEntity(Vehicle& aVehicle, WsfRoute& aRoute, double 
       if (moverPtr == nullptr)
       {
          { // RAII block
-            auto out = ut::log::error() << "sea_traffic: Cannot set the mover's path because the mover is null.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_NULL_MOVER, {});
             out.AddNote() << "Platform: " << platformPtr->GetName();
          }
          delete platformPtr;
@@ -676,7 +680,8 @@ bool XWsfSeaTraffic::GenerateEntity(Vehicle& aVehicle, WsfRoute& aRoute, double 
       if (!GetSimulation().AddPlatform(aSimTime, platformPtr))
       {
          { // RAII block
-            auto out = ut::log::error() << "sea_traffic: There was a problem adding the platform to the simulation.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_ADD_PLATFORM_FAIL, {});
             out.AddNote() << "Platform: " << platformPtr->GetName();
          }
          delete platformPtr;
@@ -685,7 +690,8 @@ bool XWsfSeaTraffic::GenerateEntity(Vehicle& aVehicle, WsfRoute& aRoute, double 
    }
    else
    {
-      auto out = ut::log::error() << "sea_traffic: Invalid platform type.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_BAD_PLATFORM_TYPE, {});
       out.AddNote() << "Type: " << type;
       return false;
    }
@@ -1113,7 +1119,8 @@ void XWsfSeaTraffic::WriteScenarioEditorFile()
    std::ofstream ofs(outFileName.c_str());
    if (!ofs)
    {
-      auto out = ut::log::error() << "sea_traffic: Unable to open output file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_OUTPUT_OPEN, {});
       out.AddNote() << "File: " << outFileName;
       return;
    }
@@ -1280,7 +1287,8 @@ bool XWsfSeaTraffic::SeaPort::Initialize(XWsfSeaTraffic& aSeaTraffic)
    {
       if (!aSeaTraffic.DoesLaneExist(*laneIdIter))
       {
-         auto out = ut::log::error() << "sea_traffic: Lane does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_NO_LANE, {});
          out.AddNote() << "Lane: " << *laneIdIter;
          return false;
       }
@@ -1329,14 +1337,16 @@ bool XWsfSeaTraffic::SeaPort::Initialize(XWsfSeaTraffic& aSeaTraffic)
 
    if ((cumulativeFraction != 0.0) && (fabs(1.0 - cumulativeFraction) > cEPSILON))
    {
-      auto out = ut::log::error() << "sea_traffic: The sum of the lane weights must be 1.0.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_LANE_WEIGHTS, {});
       out.AddNote() << "Current Sum: " << cumulativeFraction;
       return false;
    }
 
    if (mDstPortWeights.size() != mSeaLaneIds.size())
    {
-      ut::log::error() << "sea_traffic: The number of port weights does not match the number of outgoing lanes.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_PORT_WEIGHTS, {});
       return false;
    }
 
@@ -1355,7 +1365,8 @@ bool XWsfSeaTraffic::SeaPort::Initialize(XWsfSeaTraffic& aSeaTraffic)
 
    if ((cumulativeFraction != 0.0) && (fabs(1.0 - cumulativeFraction) > cEPSILON))
    {
-      auto out = ut::log::error() << "sea_traffic: The sum of the local traffic region weights must be 1.0.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_REGION_WEIGHTS, {});
       out.AddNote() << "Current Sum: " << cumulativeFraction;
       return false;
    }
@@ -1441,7 +1452,8 @@ bool XWsfSeaTraffic::SeaLane::Initialize(XWsfSeaTraffic& aSeaTraffic)
    // Make sure two ports were specified
    if (mPortCount != 2)
    {
-      auto out = ut::log::error() << "sea_traffic: Must specify two ports to properly define a lane.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_TWO_PORTS, {});
       out.AddNote() << "Ports Specified: " << mPortCount;
       return false;
    }
@@ -1449,14 +1461,16 @@ bool XWsfSeaTraffic::SeaLane::Initialize(XWsfSeaTraffic& aSeaTraffic)
    // Make sure both ports are valid
    if (!aSeaTraffic.DoesPortExist(mPortId[0]))
    {
-      auto out = ut::log::error() << "sea_traffic: Port does not exist.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_NO_PORT, {});
       out.AddNote() << "Port: " << mPortId[0];
       return false;
    }
 
    if (!aSeaTraffic.DoesPortExist(mPortId[1]))
    {
-      auto out = ut::log::error() << "sea_traffic: Port does not exist.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_NO_PORT, {});
       out.AddNote() << "Port: " << mPortId[1];
       return false;
    }
@@ -1533,7 +1547,8 @@ bool XWsfSeaTraffic::Vehicle::Initialize(XWsfSeaTraffic& aSeaTraffic)
    // Make sure a fraction was specified.
    if (mFraction <= 0.0)
    {
-      ut::log::error() << "sea_traffic: Must specify the fraction of " << mTypeId << "s to create.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 类型名运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_NO_FRACTION, {{"type", mTypeId.GetString()}});
       return false;
    }
 
@@ -1555,7 +1570,8 @@ bool XWsfSeaTraffic::Vehicle::Initialize(XWsfSeaTraffic& aSeaTraffic)
    {
       if (WsfRouteTypes::Get(aSeaTraffic.GetScenario()).Find(*iter) == nullptr)
       {
-         auto out = ut::log::error() << "sea_traffic: Invalid loiter route.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SEA_BAD_LOITER_ROUTE, {});
          out.AddNote() << "Route: " << *iter;
          return false;
       }

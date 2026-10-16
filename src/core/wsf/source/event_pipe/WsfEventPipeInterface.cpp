@@ -454,7 +454,8 @@ void WsfEventPipeInterface::AddedToSimulation()
    OpenOutput();
    if (mFileStreamPtr == nullptr)
    {
-      auto out = ut::log::error() << "Unable to open event_pipe file.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_EVENTPIPE_OPEN_FAIL, {});
       out.AddNote() << "File: " << mOutputFileName;
       return;
    }

@@ -28,6 +28,9 @@
 #include "StartupDialog.hpp"
 #include "Undo.hpp"
 #include "WkfEnvironment.hpp"
+// 二次开发（i18n）：日志界面中文显示开关注入（wkf 日志模型）。
+// wkf_common 的 PUBLIC include 目录是 common/source/，logging 头须带子目录前缀
+#include "logging/WkfLogModel.hpp"
 #include "WkfMainWindow.hpp"
 #include "WkfVtkEnvironment.hpp"
 
@@ -84,6 +87,10 @@ void wizard::Runner::run()
                                     << ", i18nDir=" << i18nDir.toStdString()
                                     << ", wizard_zh_CN.qm loaded=" << (appLoaded ? "true" : "false")
                                     << ", qtbase_zh_CN.qm loaded=" << (qtLoaded ? "true" : "false");
+
+      // 二次开发（i18n）：开启日志界面中文显示通道 —— wkf 日志面板把
+      // "[E:ID]/[W:ID]" 前缀的消息行按消息目录翻译为中文（落盘日志保持英文）。
+      wkf::log::SetChineseDisplay(true);
    }
    else
    {

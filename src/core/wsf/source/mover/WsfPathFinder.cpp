@@ -1013,7 +1013,8 @@ WsfGeoPoint* WsfPathFinder::FindClosestValidPoint(double aSimTime, const WsfGeoP
       }
       else
       {
-         auto out = ut::log::error() << "FindClosestValidPoint() could not find a valid point near target.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_PF_FIND_CLOSEST_FAIL, {});
          out.AddNote() << "Target (WCS): " << aGeoPointWCS[0] << ":" << aGeoPointWCS[1];
       }
    }

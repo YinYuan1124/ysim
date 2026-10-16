@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,7 +32,7 @@ AcoImporter::Plugin::Plugin(const QString& aPluginName, const size_t aId)
 
    // toolbar code
    QMenu* toolsMenu     = mainWindowPtr->GetMenuByName("Tools");
-   QMenu* importersMenu = new QMenu("Importers", toolsMenu);
+   QMenu* importersMenu = new QMenu(tr("Importers"), toolsMenu); // 二次开发（i18n）：Tools 菜单文本汉化
    if (toolsMenu)
    {
       QMenu* iMenu = toolsMenu->findChild<QMenu*>("Importers");
@@ -49,8 +49,8 @@ AcoImporter::Plugin::Plugin(const QString& aPluginName, const size_t aId)
 
    if (importersMenu)
    {
-      wkf::Action* dlgActionAcoPtr = new wkf::Action("ACO Importer ...", mainWindowPtr);
-      wkf::Action* dlgActionAtoPtr = new wkf::Action("ATO Importer ...", mainWindowPtr);
+      wkf::Action* dlgActionAcoPtr = new wkf::Action(tr("ACO Importer ..."), mainWindowPtr); // 二次开发（i18n）
+      wkf::Action* dlgActionAtoPtr = new wkf::Action(tr("ATO Importer ..."), mainWindowPtr); // 二次开发（i18n）
 
       connect(dlgActionAcoPtr,
               &QAction::triggered,

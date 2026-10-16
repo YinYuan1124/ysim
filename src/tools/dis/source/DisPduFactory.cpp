@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 #include <iostream>
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 
 //  This class inherits from GenIFactory
 
@@ -297,7 +299,8 @@ DisPdu* DisPduFactory::Create(GenI& aGenI)
             long errorPos = aGenI.GetGetOffset(GenBuf::FromBeg) - startPos;
 
             { // RAII block
-               auto out = ut::log::error() << "Error reading DisPdu type of PDU.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数（附注保持英文）
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_PDU_TYPE_READ_FAIL, {});
                out.AddNote() << "Position: " << errorPos << "bytes from start";
 
                // Give class a chance to write out any more info
@@ -346,7 +349,8 @@ void DisPduFactory::LogError(long aStartPos)
 {
    if (aStartPos != 0)
    {
-      auto out = ut::log::error() << "Last good PDU Header was:";
+      // 二次开发（i18n）：错误消息 ID 化 —— 引出句，保留 auto out = 供后续十六进制转储追加
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_FACTORY_LAST_GOOD_HEADER, {});
       mLastGoodDisPdu.HandleReadError(out);
       if (mLastGoodDisEntityIdValid)
       {
@@ -355,6 +359,7 @@ void DisPduFactory::LogError(long aStartPos)
    }
    else
    {
-      ut::log::error() << "This was the first PDU in the receive buffer.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_DIS_FACTORY_FIRST_PDU, {});
    }
 }

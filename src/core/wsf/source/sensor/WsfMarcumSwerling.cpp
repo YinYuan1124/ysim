@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfEM_Rcvr.hpp"
 #include "WsfSensorBeam.hpp"
 #include "WsfSensorMode.hpp"
@@ -217,7 +219,8 @@ void MarcumSwerling::SetCase(int aCase)
 {
    if ((aCase < 0) || (aCase > 4))
    {
-      auto out = ut::log::error() << "MarcumSwerling: Invalid case.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MS_BAD_CASE, {});
       out.AddNote() << "Actual: " << aCase;
       out.AddNote() << "Expected: 0, 1, 2, 3 or 4";
       return;
@@ -236,7 +239,8 @@ void MarcumSwerling::SetNumberOfPulsesIntegrated(int aNumberOfPulsesIntegrated)
 {
    if (aNumberOfPulsesIntegrated <= 0)
    {
-      auto out = ut::log::error() << "MarcumSwerling:: Invalid number of pulses integrated.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MS_BAD_NUM_PULSES, {});
       out.AddNote() << "Actual: " << aNumberOfPulsesIntegrated;
       out.AddNote() << "Expected: N > 0.";
       return;
@@ -249,7 +253,8 @@ void MarcumSwerling::SetProbabilityOfFalseAlarm(double aProbabilityOfFalseAlarm)
 {
    if ((aProbabilityOfFalseAlarm <= 0.0) || (aProbabilityOfFalseAlarm >= 1.0))
    {
-      auto out = ut::log::error() << "MarcumSwerling: Invalid probability of false alarm.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_MS_BAD_PFA, {});
       out.AddNote() << "Actual: " << aProbabilityOfFalseAlarm;
       out.AddNote() << "Expected: 0.0 < P < 1.0";
       return;

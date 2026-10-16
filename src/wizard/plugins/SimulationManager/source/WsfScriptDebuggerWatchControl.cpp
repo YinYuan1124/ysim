@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -85,7 +85,7 @@ SimulationManager::WsfScriptDebuggerWatchControl::WsfScriptDebuggerWatchControl(
 {
    mDebuggerPtr = nullptr;
    setObjectName("ScriptWatchControl");
-   setWindowTitle("Script Watches");
+   setWindowTitle(tr("Script Watches")); // 二次开发（i18n）：停靠窗标题汉化（View 菜单显示）
    setWidget(new QWidget(this));
    mUi.setupUi(widget());
    mUi.view->setUniformRowHeights(true); // this is needed to avoid a crash/bug in Qt

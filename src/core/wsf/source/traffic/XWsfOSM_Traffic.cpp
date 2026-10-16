@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtLog.hpp"
 #include "UtMath.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfApplication.hpp"
 #include "WsfApplicationExtension.hpp"
 #include "WsfMoverObserver.hpp"
@@ -84,7 +86,8 @@ bool CheckAttributeValidity(const WsfAttributeContainer& aContainer,
       std::string variableType = (aType == "unitary") ? "double" : aType;
       if (variableType.empty() || attribute.GetType() != variableType)
       {
-         auto out = ut::log::error() << "osm_traffic: Unexpected variable type.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_BAD_VAR_TYPE, {});
          out.AddNote() << "Variable: " << aVarName;
          if (!aErrorArg.empty())
          {
@@ -229,7 +232,8 @@ bool XWsfOSM_Traffic::Initialize()
       }
       else
       {
-         auto out = ut::log::error() << "osm_traffic: Undefined network.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_UNDEF_NET, {});
          out.AddNote() << "Network: " << networkName;
 
          ok = false;
@@ -241,8 +245,8 @@ bool XWsfOSM_Traffic::Initialize()
          BuildWeightedGraph(netIndex, netInput);
          if (!CheckNetworkValidity(netIndex))
          {
-            auto out = ut::log::error() << "osm_traffic: Network contains exits, but no acceptable entrances. Vehicles "
-                                           "cannot be respawned after leaving the network.";
+            // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+            auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_NET_NO_ENTRANCE, {});
             out.AddNote() << "Network: " << networkName;
             ok = false;
          }
@@ -276,7 +280,8 @@ bool XWsfOSM_Traffic::Initialize()
 
    if (!ok)
    {
-      ut::log::error() << "osm_traffic: Unable to initialize.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_INIT_FAIL, {});
    }
    return ok;
 }
@@ -375,7 +380,8 @@ int XWsfOSM_Traffic::AllocateVehicle(WsfStringId aVehicleTypeId)
    if (mTraffic[vehicleNumber].mRoadPlatform == nullptr)
    {
       { // RAII block
-         auto out = ut::log::error() << "osm_traffic: Invalid platform type.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_BAD_PLATFORM_TYPE, {});
          out.AddNote() << "Type: " << vehicleType;
       }
       assert(mTraffic[vehicleNumber].mRoadPlatform != nullptr);
@@ -1059,7 +1065,8 @@ bool XWsfOSM_Traffic::ValidateVehicleTypes(RoadTrafficNetworkInput& aNetwork)
       std::string typeName(aNetwork.mVehicleInput[i].mTypeId);
       if (GetScenario().FindType("platform_type", typeName) == nullptr)
       {
-         auto out = ut::log::error() << "osm_traffic: Vehicle type does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_NO_VEHICLE_TYPE, {});
          out.AddNote() << "Network: " << aNetwork.mNetworkId;
          out.AddNote() << "Vehicle Type: " << typeName;
          ok = false;
@@ -1068,7 +1075,8 @@ bool XWsfOSM_Traffic::ValidateVehicleTypes(RoadTrafficNetworkInput& aNetwork)
    }
    if (totalFraction != 1.0)
    {
-      auto out = ut::log::error() << "osm_traffic: The sum of all the vehicle 'fraction' values must be 1.0.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_BAD_FRACTION, {});
       out.AddNote() << "Current Sum: " << totalFraction;
       ok = false;
    }
@@ -1083,7 +1091,8 @@ bool XWsfOSM_Traffic::ValidateVehicleTypes(RoadTrafficNetworkInput& aNetwork)
             std::string typeName(aNetwork.mConvoyInput[convoyId].mVehicleInput[vehInputId].mTypeId);
             if (GetScenario().FindType("platform_type", typeName) == nullptr)
             {
-               auto out = ut::log::error() << "osm_traffic: Convoy vehicle type does not exist.";
+               // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+               auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_NO_CONVOY_TYPE, {});
                out.AddNote() << "Network: " << aNetwork.mNetworkId;
                out.AddNote() << "Vehicle Type: " << typeName;
                ok = false;
@@ -1666,7 +1675,8 @@ void XWsfOSM_Traffic::CreateInitialPathForVehicle(const RoadTrafficNetworkInput&
    }
    else
    {
-      auto out = ut::log::error() << "osm_traffic: Cannot set the mover's path because the mover is null.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_NULL_MOVER, {});
       out.AddNote() << "Platform: " << mTraffic[aVehicleNumber].mRoadPlatform->GetName();
    }
 }
@@ -1751,7 +1761,8 @@ void XWsfOSM_Traffic::VehiclePathEndedHandler(double aSimTime, WsfMover* aMover)
 
       if (!testMover)
       {
-         ut::log::error() << "Owner Platform doesn't have a valid mover in XWsfOSM_Traffic::VehiclePathEndedHandler()";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_OSM_NO_MOVER, {});
          return;
       }
 

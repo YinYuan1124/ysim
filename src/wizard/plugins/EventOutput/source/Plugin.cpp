@@ -39,7 +39,7 @@ Plugin::Plugin(QString aPluginName, size_t aUniqueId)
    auto toolsMenuPtr  = (mainWindowPtr != nullptr) ? mainWindowPtr->GetMenuByName("Tools") : nullptr;
 
    // create the "event_output Editor" menu action
-   mToolsActionPtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("checklist"), "Event Output Editor...", nullptr);
+   mToolsActionPtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("checklist"), tr("Event Output Editor..."), nullptr); // 二次开发（i18n）：Tools 菜单文本汉化
    mContextActionPtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("checklist"), "Event Output Editor...", nullptr);
 
    // do the necessary connections

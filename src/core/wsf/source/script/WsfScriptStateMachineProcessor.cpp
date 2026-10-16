@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -13,6 +13,8 @@
 
 #include "UtInput.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfPlatform.hpp"
 #include "script/WsfScriptContext.hpp"
 #include "script/WsfScriptMessageHandler.hpp"
@@ -56,7 +58,8 @@ bool WsfScriptStateMachineProcessor::Initialize(double aSimTime)
 
    if (mStateMachineVarPtr == nullptr)
    {
-      ut::log::error() << "Invalid call to WsfScriptStateMachineProcessor::Initialize().";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SMP_INVALID_INIT, {});
       return false;
    }
    mStateMachineVarPtr->GetPointer()->SetAppObject(static_cast<void*>(&mStateMachine), GetPlatform()->GetReferenceCount());

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,7 +22,7 @@ Engage::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    : wizard::Plugin(aPluginName, aUniqueId)
    , mDialogPtr(nullptr)
 {
-   mStartAction = new wkf::Action("Engage tool", wkfEnv.GetMainWindow());
+   mStartAction = new wkf::Action(tr("Engage tool"), wkfEnv.GetMainWindow()); // 二次开发（i18n）：Tools 菜单文本汉化
    connect(mStartAction, &QAction::triggered, [this]() { Start(); });
 
    QMenu* tmenu = wkfEnv.GetMainWindow()->GetMenuByName("Tools");

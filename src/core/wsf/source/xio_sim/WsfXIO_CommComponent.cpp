@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "WsfXIO_CommComponent.hpp"
 
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringIdLiteral.hpp"
 #include "WsfComm.hpp"
 #include "WsfCommMessage.hpp"
@@ -104,7 +106,8 @@ bool CommComponent::Receive(double aSimTime, wsf::comm::Comm* aXmtrPtr, wsf::com
    }
    else
    {
-      auto out = ut::log::error() << "Cannot transmit WsfMessage over XIO.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_XIO_CANNOT_TX_MSG, {});
       out.AddNote() << "Message: " << aMessage.SourceMessage()->GetType();
    }
    return false;

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,6 +20,8 @@
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
 #include "UtMemory.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "WsfRouteNetworkTypes.hpp"
 #include "WsfStringId.hpp"
 // virtual
@@ -33,14 +35,16 @@ bool XWsfRouteNetwork::Initialize(const WsfScenario& aScenario)
       netPtr->mRouteNetworkPtr = WsfRouteNetworkTypes::Get(aScenario).Find(netPtr->mNetworkId);
       if (netPtr->mRouteNetworkPtr == nullptr)
       {
-         auto out = ut::log::error() << "Invalid route network.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TRT_INVALID_NET, {});
          out.AddNote() << "Network: " << netPtr->mNetworkId;
          return false;
       }
 
       if (!netPtr->mRouteNetworkPtr->Initialize())
       {
-         auto out = ut::log::error() << "Unable to initialize route network.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_TRT_NET_INIT_FAIL, {});
          out.AddNote() << "Network: " << netPtr->mNetworkId;
          return false;
       }

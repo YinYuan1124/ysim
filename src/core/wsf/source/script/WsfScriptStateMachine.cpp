@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,8 @@
 #include "UtInput.hpp"
 #include "UtInputBlock.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtMemory.hpp"
 #include "UtScriptBasicTypes.hpp"
 #include "UtScriptContext.hpp"
@@ -116,7 +118,8 @@ int WsfScriptStateMachine::Evaluate(int aCurrentStateIndex)
       statePtr = GetState(aCurrentStateIndex);
       if (statePtr == nullptr)
       {
-         auto out = ut::log::error() << "WsfScriptStateMachine: Invalid entry state index.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_BAD_ENTRY_IDX, {});
          out.AddNote() << "Index: " << aCurrentStateIndex;
          out.AddNote() << "Limit: " << mStateList.size();
          return 0; // Restart in the initial state...
@@ -134,7 +137,8 @@ int WsfScriptStateMachine::Evaluate(int aCurrentStateIndex)
       State* nextStatePtr = GetState(nextStateIndex);
       if (nextStatePtr == nullptr)
       {
-         auto out = ut::log::error() << "WsfScriptStateMachine: Invalid transition state index.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_BAD_TRANS_IDX, {});
          out.AddNote() << "Index: " << nextStateIndex;
          out.AddNote() << "Limit: " << mStateList.size();
          break;
@@ -215,7 +219,8 @@ int WsfScriptStateMachine::EvaluateState(int aCurrentStateIndex, bool aDoNewStat
    statePtr = GetState(aCurrentStateIndex);
    if (statePtr == nullptr)
    {
-      auto out = ut::log::error() << "WsfScriptStateMachine: Invalid entry state index.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_BAD_ENTRY_IDX, {});
       out.AddNote() << "Index: " << aCurrentStateIndex;
       out.AddNote() << "Limit: " << mStateList.size();
       return 0; // Restart in the initial state...
@@ -231,7 +236,8 @@ int WsfScriptStateMachine::EvaluateState(int aCurrentStateIndex, bool aDoNewStat
       State* nextStatePtr = GetState(nextStateIndex);
       if (nextStatePtr == nullptr)
       {
-         auto out = ut::log::error() << "WsfScriptStateMachine: Invalid transition state index.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_BAD_TRANS_IDX, {});
          out.AddNote() << "Index: " << nextStateIndex;
          out.AddNote() << "Limit: " << mStateList.size();
          return statePtr->GetStateIndex(); // Stay in the current state
@@ -401,13 +407,15 @@ bool WsfScriptStateMachine::Initialize(double aSimTime)
 {
    if (mStateList.empty())
    {
-      ut::log::error() << "WsfScriptStateMachine: Empty state machine.";
+      // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+      ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_EMPTY, {});
       return false;
    }
 
    bool ok = true;
 
-   auto out = ut::log::error() << "WsfScriptStateMachine: Unable to initialize states.";
+   // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+   auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_STATE_INIT_FAIL, {});
    for (const auto& statePtr : mStateList)
    {
       if (!statePtr->Initialize(aSimTime, *this, *mContextPtr))
@@ -707,7 +715,8 @@ bool WsfScriptStateMachine::State::Initialize(double                 aSimTime,
       if (!transitionPtr->Initialize(aSimTime, aParentContext))
       {
          ok       = false;
-         auto out = ut::log::error() << "WsfScriptStateMachine: Unable to initialize 'next_state'.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_NEXT_STATE_INIT, {});
          out.AddNote() << "Current State: " << mStateName;
          out.AddNote() << "Next State: " << transitionPtr->GetNextStateName();
       }
@@ -721,7 +730,8 @@ bool WsfScriptStateMachine::State::Initialize(double                 aSimTime,
       else
       {
          ok       = false;
-         auto out = ut::log::error() << "WsfScriptStateMachine: 'next_state' does not exist.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_NO_NEXT_STATE, {});
          out.AddNote() << "Current State: " << mStateName;
          out.AddNote() << "Next State: " << transitionPtr->GetNextStateName();
       }
@@ -983,7 +993,8 @@ bool WsfScriptStateMachine::Transition::Initialize(double aSimTime, WsfScriptCon
       if (mScriptPtr == nullptr)
       {
          ok       = false;
-         auto out = ut::log::error() << "Unable to find script.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_SCRIPT_SM_NO_SCRIPT, {});
          out.AddNote() << "Script: " << mScriptName;
       }
    }

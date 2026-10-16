@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 
 #include "DisIO.hpp"
 #include "UtLog.hpp"
+// 二次开发（i18n）：报错消息走消息目录（UtMsgCatalog）
+#include "UtMsgCatalog.hpp"
 #include "UtStringUtil.hpp"
 #include "WsfAssociationMessage.hpp"
 #include "WsfCommMessage.hpp"
@@ -703,7 +705,8 @@ void WsfXIO_AutoDisMapping::HandleDisMessage(WsfXIO_DisMessagePkt& aPkt)
       }
       else
       {
-         auto out = ut::log::error() << "XIO: Message has no translator.";
+         // 二次开发（i18n）：错误消息 ID 化 —— 无运行时参数
+         auto out = ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_XIO_MSG_NO_TRANSLATOR, {});
          out.AddNote() << "Message: " << aPkt.mMessagePtr->GetType();
       }
    }
