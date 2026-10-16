@@ -26,7 +26,7 @@ ErrorList::ErrorDock::ErrorDock(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= 0
    setWidget(new QWidget(this));
    mUi.setupUi(widget());
 
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(tr("Error List")); // 二次开发（i18n）
 
    mUi.errorListView->setItemDelegateForColumn(1, new UtQtTextDelegate(mUi.errorListView));
 

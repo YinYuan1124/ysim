@@ -182,7 +182,7 @@ SimulationManager::ScriptBreakpointControl::ScriptBreakpointControl(QWidget* aPa
    mToggleLocked = false;
    setWidget(ut::qt::make_qt_ptr<QWidget>(this));
    mUi.setupUi(widget());
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(tr("Breakpoints")); // 二次开发（i18n）
 
    mUi.toggleAll->setIcon(QIcon::fromTheme("stop_sign"));
    mUi.editCondition->setIcon(QIcon::fromTheme("conditional_debug"));

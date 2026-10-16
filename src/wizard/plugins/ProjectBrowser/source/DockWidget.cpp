@@ -168,7 +168,7 @@ ProjectBrowser::DockWidget::DockWidget(QWidget* parent /*= 0*/, Qt::WindowFlags 
    // Make view more compact
    mUi.fileView->setIndentation(10);
    mUi.fileViewFiltered->setIndentation(10);
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(tr("Project Browser")); // 二次开发（i18n）
 
    mUi.filterText->setAutoCompletion(false);
    mUi.filterText->installEventFilter(new SearchInputEventFilter(this));

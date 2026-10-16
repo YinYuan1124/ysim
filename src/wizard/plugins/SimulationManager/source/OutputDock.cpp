@@ -11,6 +11,7 @@
 
 #include "OutputDock.hpp"
 
+#include <QCoreApplication>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QMenu>
@@ -33,7 +34,7 @@ SimulationManager::OutputDock::OutputDock(QWidget* parent /*= 0*/, Qt::WindowFla
    setObjectName("OutputDock");
    setWidget(new QWidget(this));
    mUi.setupUi(widget());
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(QCoreApplication::translate("SimulationManager::OutputDock", "Output")); // 二次开发（i18n）
 
    mUi.outputText->setOpenLinks(false);
    mUi.outputText->setUndoRedoEnabled(false);

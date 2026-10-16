@@ -60,6 +60,7 @@ ModelImport::DockWidget::DockWidget(QWidget* aParent /*= 0*/, Qt::WindowFlags aW
 {
    setObjectName("Model Import Beta");
    mUI.setupUi(this);
+   setWindowTitle(tr("Model Import")); // 二次开发（i18n）
 
    mUI.treeWidget->sortItems(0, Qt::SortOrder::AscendingOrder);
 

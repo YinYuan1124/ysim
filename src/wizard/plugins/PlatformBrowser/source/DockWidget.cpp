@@ -45,7 +45,7 @@ PlatformBrowser::DockWidget::DockWidget(QWidget* parent /*= 0*/, Qt::WindowFlags
    mUi.platformView->setTextElideMode(Qt::ElideRight);
    // Make view more compact
    mUi.platformView->setIndentation(10);
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(tr("Platform Browser")); // 二次开发（i18n）
 
    mUi.filterText->setAutoCompletion(false);
 
@@ -116,7 +116,7 @@ void PlatformBrowser::DockWidget::RebuildTitle()
    {
       int numPlatforms = (int)mPlatformModelPtr->GetRootItem()->GetNumChildren();
 
-      setWindowTitle(QString("Platform Browser (") + QString::number(numPlatforms) + ")");
+      setWindowTitle(tr("Platform Browser (%1)").arg(numPlatforms)); // 二次开发（i18n）
    }
 }
 

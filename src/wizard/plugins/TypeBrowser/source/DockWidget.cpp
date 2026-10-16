@@ -174,7 +174,7 @@ TypeBrowser::DockWidget::DockWidget(QWidget* parent /*= 0*/, Qt::WindowFlags f /
    // Make view more compact
    mUi.typeView->setIndentation(10);
    mUi.typeViewFiltered->setIndentation(10);
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(tr("Type Browser")); // 二次开发（i18n）
 
    mUi.filterText->setAutoCompletion(false);
    mUi.filterText->installEventFilter(new SearchInputEventFilter(this));

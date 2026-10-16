@@ -45,7 +45,7 @@ CommandChain::DockWidget::DockWidget(QWidget* aParent)
    mUi.commandChainView->mParentPtr = this;
 
    // Make view more compact
-   setWindowTitle(widget()->windowTitle());
+   setWindowTitle(tr("Command Chain Browser")); // 二次开发（i18n）
 
    mUi.filterTeam->setContentsMargins(8, 2, 2, 2);
    mUi.filterTeam->addItem(cALL_SIDES);

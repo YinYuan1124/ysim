@@ -10,6 +10,7 @@
 // ****************************************************************************
 
 // Qt Includes
+#include <QCoreApplication>
 #include <QDebug>
 #include <QString>
 #include <QStringList>
@@ -401,6 +402,7 @@ void DockWidget::SetUpTaskTable() noexcept
 void DockWidget::SetUpDockWidget() noexcept
 {
    mUi.setupUi(this);
+   setWindowTitle(QCoreApplication::translate("TaskList::DockWidget", "Task List")); // 二次开发（i18n）
 
    // Ported from wkf::DockWidget's constructor
    //{
