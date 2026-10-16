@@ -2700,4 +2700,39 @@ Choose Unlist to remove from your recent list or OK to create.</source>
         <translation>断点</translation>
     </message>
 </context>
+<context>
+    <name>wkf::AstrolabeDockWidgetBase</name>
+    <message>
+        <source>Astrolabe</source>
+        <translation>星象仪</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::RouteBrowserDockWidget</name>
+    <message>
+        <source>Route Browser</source>
+        <translation>航线浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::ZoneBrowserDockWidget</name>
+    <message>
+        <source>Zone Browser</source>
+        <translation>区域浏览器</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::VisibilityDockWidget</name>
+    <message>
+        <source>Visibility</source>
+        <translation>可见性</translation>
+    </message>
+</context>
+<context>
+    <name>CoverageOverlay::CoverageOverlayDockWidget</name>
+    <message>
+        <source>Coverage Overlays</source>
+        <translation>覆盖叠加</translation>
+    </message>
+</context>
 </TS>
