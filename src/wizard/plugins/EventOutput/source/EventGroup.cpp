@@ -52,10 +52,10 @@ Item::Item(const QString& aLabel,
    mUi.mTrue->setText(cTRUE_VALUE);
 
    // set up the tooltips because they are important...
-   mUi.mCommand->setToolTip("The name of the event command (" + mUi.mCommand->text() + ')');
-   mUi.mDefault->setToolTip("Do not write the event command out to the block.");
-   mUi.mFalse->setToolTip("Write 'disable " + mUi.mCommand->text() + "' out to the block.");
-   mUi.mTrue->setToolTip("Write 'enable " + mUi.mCommand->text() + "' out to the block.");
+   mUi.mCommand->setToolTip(tr("The name of the event command (%1)").arg(mUi.mCommand->text())); // 二次开发（i18n）：参数化
+   mUi.mDefault->setToolTip(tr("Do not write the event command out to the block.")); // 二次开发（i18n）
+   mUi.mFalse->setToolTip(tr("Write 'disable %1' out to the block.").arg(mUi.mCommand->text())); // 二次开发（i18n）：参数化
+   mUi.mTrue->setToolTip(tr("Write 'enable %1' out to the block.").arg(mUi.mCommand->text())); // 二次开发（i18n）：参数化
 
    // do the necessary connections
    connect(mUi.mDefault, &QAbstractButton::clicked, this, &Item::OnDefault);

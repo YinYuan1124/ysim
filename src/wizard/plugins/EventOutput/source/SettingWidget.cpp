@@ -49,8 +49,8 @@ Item::Item(Data aSetting, QWidget* aParent /* = nullptr */)
    , mValueWidget(DetermineValueWidget())
 {
    // set up tooltips because they are important...
-   mAddToBlock->setToolTip("Do not write the setting command out to the block.");
-   mCommand->setToolTip("The name of the setting command (" + mCommand->text() + ')');
+   mAddToBlock->setToolTip(tr("Do not write the setting command out to the block.")); // 二次开发（i18n）
+   mCommand->setToolTip(tr("The name of the setting command (%1)").arg(mCommand->text())); // 二次开发（i18n）：参数化
    // make sure that a context menu appears
    mCommand->setContextMenuPolicy(Qt::CustomContextMenu);
    // the value widget is disabled on default
@@ -68,10 +68,10 @@ Item::Item(Data aSetting, QWidget* aParent /* = nullptr */)
               {
               case Qt::Checked:
                  mValueWidget->Enable();
-                 mAddToBlock->setToolTip("Write the setting command out to the block.");
+                 mAddToBlock->setToolTip(tr("Write the setting command out to the block.")); // 二次开发（i18n）
                  break;
               case Qt::Unchecked:
-                 mAddToBlock->setToolTip("Do not write the setting command out to the block.");
+                 mAddToBlock->setToolTip(tr("Do not write the setting command out to the block.")); // 二次开发（i18n）
                  mValueWidget->Disable();
                  break;
               default:

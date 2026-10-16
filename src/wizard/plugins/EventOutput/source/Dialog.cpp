@@ -283,7 +283,7 @@ void Dialog::OnAcquireCommandInputType(setting::ValueWidget::Type& aInputType, c
 void Dialog::DisableCSV_EventOutput()
 {
    // set up the tooltip because it is important
-   mUi.mCSV->setToolTip("Do not edit the csv_event_output block in the current file.");
+   mUi.mCSV->setToolTip(tr("Do not edit the csv_event_output block in the current file.")); // 二次开发（i18n）
    // disable the tabs
    if (!mUi.mCSV->isChecked() && !mUi.mEVT->isChecked() && mDummyTabInWidget == -1)
    {
@@ -300,7 +300,7 @@ void Dialog::DisableCSV_EventOutput()
 void Dialog::EnableCSV_EventOutput()
 {
    // set up the tooltip because it is important
-   mUi.mCSV->setToolTip("Edit the csv_event_output block in the current file.");
+   mUi.mCSV->setToolTip(tr("Edit the csv_event_output block in the current file.")); // 二次开发（i18n）
    // enable the tabs
    if ((mUi.mCSV->isChecked() || mUi.mEVT->isChecked()) && mDummyTabInWidget == 0)
    {
@@ -317,7 +317,7 @@ void Dialog::EnableCSV_EventOutput()
 void Dialog::DisableEVT_EventOutput()
 {
    // set up the tooltip because it is important
-   mUi.mEVT->setToolTip("Do not edit the event_output block in the current file.");
+   mUi.mEVT->setToolTip(tr("Do not edit the event_output block in the current file.")); // 二次开发（i18n）
    // disable the tabs
    if (!mUi.mCSV->isChecked() && !mUi.mEVT->isChecked() && mDummyTabInWidget == -1)
    {
@@ -334,7 +334,7 @@ void Dialog::DisableEVT_EventOutput()
 void Dialog::EnableEVT_EventOutput()
 {
    // set up the tooltip because it is important
-   mUi.mEVT->setToolTip("Edit the event_output block in the current file.");
+   mUi.mEVT->setToolTip(tr("Edit the event_output block in the current file.")); // 二次开发（i18n）
    // enable the tabs
    if ((mUi.mCSV->isChecked() || mUi.mEVT->isChecked()) && mDummyTabInWidget == 0)
    {

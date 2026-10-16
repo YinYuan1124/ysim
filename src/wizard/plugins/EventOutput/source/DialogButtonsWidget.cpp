@@ -24,7 +24,7 @@ DialogButtonsWidget::DialogButtonsWidget(QWidget* aParent /* = nullptr */)
                       aParent)
 {
    // change the name of the Reset button to Restore Defaults
-   button(QDialogButtonBox::Reset)->setText("Restore Defaults");
+   button(QDialogButtonBox::Reset)->setText(tr("Restore Defaults")); // 二次开发（i18n）
 
    // do the necessary connections
    connect(this,
