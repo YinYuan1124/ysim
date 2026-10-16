@@ -2608,4 +2608,36 @@ Choose Unlist to remove from your recent list or OK to create.</source>
         <translation>（无最近配置）</translation>
     </message>
 </context>
+<context>
+    <name>wkf::log::PluginBase</name>
+    <message>
+        <source>Interactive Output</source>
+        <translation>交互输出</translation>
+    </message>
+    <message>
+        <source>Console Output</source>
+        <translation>控制台输出</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::PlatformDataDockWidget</name>
+    <message>
+        <source>Platform Details</source>
+        <translation>平台详情</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::PlatformOptionsDockWidget</name>
+    <message>
+        <source>Platform Options</source>
+        <translation>平台选项</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::DockWidget</name>
+    <message>
+        <source>Map Display</source>
+        <translation>地图显示</translation>
+    </message>
+</context>
 </TS>
