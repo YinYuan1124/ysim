@@ -25,7 +25,7 @@
 #include "WkfUnitTypes.hpp"
 
 wkf::PlatformDataDockWidget::PlatformDataDockWidget(QWidget* parent /*= 0*/, Qt::WindowFlags f /*= 0*/)
-   : PlatformContextDockWidget("Platform Details", &Plugin::GetPlatformData, parent, f)
+   : PlatformContextDockWidget(tr("Platform Details"), &Plugin::GetPlatformData, parent, f) // 二次开发（i18n）
    , mPopupWidget(new QListWidget(nullptr))
    , mPopupFrame(new QFrame(nullptr, Qt::ToolTip))
    , mPreviousPluginItemSelected(nullptr)

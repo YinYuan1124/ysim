@@ -163,7 +163,7 @@ void wkf::log::PluginBase::CreateInteractiveWidget()
       mInteractiveWidget->setWidget(
          ut::qt::make_qt_ptr<wkf::log::InteractiveWidget>(mModel, ut::log::Message::PresetDebug()));
       mInteractiveWidget->setObjectName("LogInteractiveOutput");
-      mInteractiveWidget->setWindowTitle("Interactive Output");
+      mInteractiveWidget->setWindowTitle(tr("Interactive Output")); // 二次开发（i18n）
 
       auto mainWindow = wkfEnv.GetMainWindow();
       if (mainWindow)

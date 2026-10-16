@@ -67,7 +67,7 @@ Map::DockWidget::DockWidget(QMainWindow* parent, Qt::WindowFlags flags)
    , mContextMenuActive(false)
    , mActiveMap("")
 {
-   setWindowTitle("Map Display");
+   setWindowTitle(tr("Map Display")); // 二次开发（i18n）
    wkfEnv.GetMainWindow()->AddDockWidgetToViewMenu(this);
 
    wkf::VtkEnvironment::InitializeOSG_Path();

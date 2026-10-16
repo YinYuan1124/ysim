@@ -19,7 +19,7 @@
 
 wkf::PlatformOptionsDockWidget::PlatformOptionsDockWidget(QWidget*        aParent /* = nullptr */,
                                                           Qt::WindowFlags aFlags /* = Qt::WindowFlags() */)
-   : PlatformContextDockWidget("Platform Options", &Plugin::GetPlatformOptions, aParent, aFlags)
+   : PlatformContextDockWidget(tr("Platform Options"), &Plugin::GetPlatformOptions, aParent, aFlags) // 二次开发（i18n）
 {
    setObjectName("PlatformOptionsDockWidget");
    mUi.treeWidget->SetDragEnabled(false);
