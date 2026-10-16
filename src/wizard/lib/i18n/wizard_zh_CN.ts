@@ -2374,4 +2374,238 @@ Choose Unlist to remove from your recent list or OK to create.</source>
         <translation>错误列表</translation>
     </message>
 </context>
+<context>
+    <name>wizard::EventOutput::Dialog</name>
+    <message>
+        <source>Do not edit the csv_event_output block in the current file.</source>
+        <translation>不在当前文件中编辑 csv_event_output 块。</translation>
+    </message>
+    <message>
+        <source>Edit the csv_event_output block in the current file.</source>
+        <translation>在当前文件中编辑 csv_event_output 块。</translation>
+    </message>
+    <message>
+        <source>Do not edit the event_output block in the current file.</source>
+        <translation>不在当前文件中编辑 event_output 块。</translation>
+    </message>
+    <message>
+        <source>Edit the event_output block in the current file.</source>
+        <translation>在当前文件中编辑 event_output 块。</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::EventOutput::EventGroup::Item</name>
+    <message>
+        <source>The name of the event command (%1)</source>
+        <translation>事件命令名称（%1）</translation>
+    </message>
+    <message>
+        <source>Do not write the event command out to the block.</source>
+        <translation>不将事件命令写入块。</translation>
+    </message>
+    <message>
+        <source>Write 'disable %1' out to the block.</source>
+        <translation>将 'disable %1' 写入块。</translation>
+    </message>
+    <message>
+        <source>Write 'enable %1' out to the block.</source>
+        <translation>将 'enable %1' 写入块。</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::EventOutput::SettingWidget::Item</name>
+    <message>
+        <source>Do not write the setting command out to the block.</source>
+        <translation>不将设置命令写入块。</translation>
+    </message>
+    <message>
+        <source>The name of the setting command (%1)</source>
+        <translation>设置命令名称（%1）</translation>
+    </message>
+    <message>
+        <source>Write the setting command out to the block.</source>
+        <translation>将设置命令写入块。</translation>
+    </message>
+</context>
+<context>
+    <name>wizard::EventOutput::DialogButtonsWidget</name>
+    <message>
+        <source>Restore Defaults</source>
+        <translation>恢复默认</translation>
+    </message>
+</context>
+<context>
+    <name>MapUtils::RotateScenarioDialog</name>
+    <message>
+        <source>Rotate Scenario</source>
+        <translation>旋转场景</translation>
+    </message>
+    <message>
+        <source>Rotate Selection</source>
+        <translation>旋转选中对象</translation>
+    </message>
+    <message>
+        <source>Invalid Format</source>
+        <translation>格式错误</translation>
+    </message>
+</context>
+<context>
+    <name>MapUtils::TranslateScenarioDialog</name>
+    <message>
+        <source>Invalid Format</source>
+        <translation>格式错误</translation>
+    </message>
+    <message>
+        <source>Latitudinal Coordinate:</source>
+        <translation>纬度坐标：</translation>
+    </message>
+    <message>
+        <source>Longitudinal Coordinate:</source>
+        <translation>经度坐标：</translation>
+    </message>
+    <message>
+        <source>Latitudinal Distance:</source>
+        <translation>纬度距离：</translation>
+    </message>
+    <message>
+        <source>Longitudinal Distance:</source>
+        <translation>经度距离：</translation>
+    </message>
+</context>
+<context>
+    <name>Engage::Dialog</name>
+    <message>
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>编辑</translation>
+    </message>
+</context>
+<context>
+    <name>WizCommVis::CommVisViewLinksDialog</name>
+    <message>
+        <source>Delete Link</source>
+        <translation>删除链路</translation>
+    </message>
+</context>
+<context>
+    <name>WizCommVis::CommVisDialog</name>
+    <message>
+        <source>Add %1</source>
+        <translation>添加 %1</translation>
+    </message>
+</context>
+<context>
+    <name>DemoBrowser::DemoBrowserDialog</name>
+    <message>
+        <source>Open Documentation</source>
+        <translation>打开文档</translation>
+    </message>
+    <message>
+        <source>Open Project</source>
+        <translation>打开工程</translation>
+    </message>
+    <message>
+        <source>Copy Project</source>
+        <translation>复制工程</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Filename:&lt;/b&gt;</source>
+        <translation>&lt;b&gt;文件名：&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Content:&lt;/b&gt;</source>
+        <translation>&lt;b&gt;内容：&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Line:&lt;/b&gt;</source>
+        <translation>&lt;b&gt;行：&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>AcoImporter::Dialog</name>
+    <message>
+        <source>Please select an output directory</source>
+        <translation>请选择输出目录</translation>
+    </message>
+    <message>
+        <source>Please select input file(s)</source>
+        <translation>请选择输入文件</translation>
+    </message>
+    <message>
+        <source>ACO Importer</source>
+        <translation>ACO 导入器</translation>
+    </message>
+    <message>
+        <source>ATO Importer</source>
+        <translation>ATO 导入器</translation>
+    </message>
+</context>
+<context>
+    <name>CrdImporter::Dialog</name>
+    <message>
+        <source>Please select input .CRD file(s)</source>
+        <translation>请选择输入 .CRD 文件</translation>
+    </message>
+    <message>
+        <source>Please select an output directory</source>
+        <translation>请选择输出目录</translation>
+    </message>
+</context>
+<context>
+    <name>SPLAT::TargetPlatformTypeDialog</name>
+    <message>
+        <source>Target Platform Type</source>
+        <translation>目标平台类型</translation>
+    </message>
+</context>
+<context>
+    <name>wkf::ConfigurationObject</name>
+    <message>
+        <source>Save Configuration...</source>
+        <translation>保存配置...</translation>
+    </message>
+    <message>
+        <source>Load Configuration...</source>
+        <translation>加载配置...</translation>
+    </message>
+    <message>
+        <source>Import Configuration Options...</source>
+        <translation>导入配置选项...</translation>
+    </message>
+    <message>
+        <source>Recent Configurations</source>
+        <translation>最近配置</translation>
+    </message>
+    <message>
+        <source>Clear Platform Options</source>
+        <translation>清除平台选项</translation>
+    </message>
+    <message>
+        <source>Load Configuration</source>
+        <translation>加载配置</translation>
+    </message>
+    <message>
+        <source>Import From Configuration</source>
+        <translation>从配置导入</translation>
+    </message>
+    <message>
+        <source>Save Configuration</source>
+        <translation>保存配置</translation>
+    </message>
+    <message>
+        <source>Check All</source>
+        <translation>全选</translation>
+    </message>
+    <message>
+        <source>Uncheck All</source>
+        <translation>全不选</translation>
+    </message>
+    <message>
+        <source>(no recent configurations)</source>
+        <translation>（无最近配置）</translation>
+    </message>
+</context>
 </TS>

@@ -48,16 +48,16 @@ void wkf::ConfigurationObject::Initialize()
    QMenu* fileMenu = wkfEnv.GetMainWindow()->GetMenuByName("File");
    if (fileMenu != nullptr)
    {
-      Action* saveAction = new Action(QIcon::fromTheme("save_settings"), "Save Configuration...", wkfEnv.GetMainWindow());
+      Action* saveAction = new Action(QIcon::fromTheme("save_settings"), tr("Save Configuration..."), wkfEnv.GetMainWindow()); // 二次开发（i18n）
       connect(saveAction, &QAction::triggered, this, &ConfigurationObject::SaveActionHandler);
 
-      Action* loadAction = new Action(QIcon::fromTheme("load_settings"), "Load Configuration...", wkfEnv.GetMainWindow());
+      Action* loadAction = new Action(QIcon::fromTheme("load_settings"), tr("Load Configuration..."), wkfEnv.GetMainWindow()); // 二次开发（i18n）
       connect(loadAction, &QAction::triggered, this, &ConfigurationObject::LoadActionHandler);
 
-      Action* importAction = new Action("Import Configuration Options...", wkfEnv.GetMainWindow());
+      Action* importAction = new Action(tr("Import Configuration Options..."), wkfEnv.GetMainWindow()); // 二次开发（i18n）
       connect(importAction, &QAction::triggered, this, &ConfigurationObject::ImportActionHandler);
 
-      mLoadRecentMenu = new QMenu("Recent Configurations", fileMenu);
+      mLoadRecentMenu = new QMenu(tr("Recent Configurations"), fileMenu); // 二次开发（i18n）
       PopulateMenu(mLoadRecentMenu);
 
       QList<QAction*> actions = fileMenu->actions();
@@ -68,7 +68,7 @@ void wkf::ConfigurationObject::Initialize()
       fileMenu->insertMenu(actions.back(), mLoadRecentMenu);
       fileMenu->insertSeparator(actions.back());
 
-      Action* clearPlatformSettings = new Action("Clear Platform Options", wkfEnv.GetMainWindow());
+      Action* clearPlatformSettings = new Action(tr("Clear Platform Options"), wkfEnv.GetMainWindow()); // 二次开发（i18n）
       connect(clearPlatformSettings, &QAction::triggered, this, &ConfigurationObject::ClearPlatformSettingsHandler);
       fileMenu->insertAction(actions.back(), clearPlatformSettings);
       fileMenu->insertSeparator(actions.back());
@@ -79,7 +79,7 @@ void wkf::ConfigurationObject::LoadActionHandler()
 {
    CheckForConfigDirectory();
    QString filePath =
-      wkf::getOpenFileName(nullptr, "Load Configuration", Environment::GetInstance().GetConfigurationsDir(), "(*.ini)");
+      wkf::getOpenFileName(nullptr, tr("Load Configuration"), Environment::GetInstance().GetConfigurationsDir(), "(*.ini)"); // 二次开发（i18n）
 
    if (filePath != "")
    {
@@ -100,7 +100,7 @@ void wkf::ConfigurationObject::ImportActionHandler()
 {
    CheckForConfigDirectory();
    QString filePath =
-      wkf::getOpenFileName(nullptr, "Import From Configuration", Environment::GetInstance().GetConfigurationsDir(), "(*.ini)");
+      wkf::getOpenFileName(nullptr, tr("Import From Configuration"), Environment::GetInstance().GetConfigurationsDir(), "(*.ini)"); // 二次开发（i18n）
 
    if (!filePath.isEmpty())
    {
@@ -113,8 +113,8 @@ void wkf::ConfigurationObject::ImportActionHandler()
 
          QDialog selector;
          selector.setLayout(new QVBoxLayout(&selector));
-         QPushButton* checkAll   = new QPushButton("Check All", &selector);
-         QPushButton* uncheckAll = new QPushButton("Uncheck All", &selector);
+         QPushButton* checkAll   = new QPushButton(tr("Check All"), &selector); // 二次开发（i18n）
+         QPushButton* uncheckAll = new QPushButton(tr("Uncheck All"), &selector); // 二次开发（i18n）
          selector.layout()->addWidget(checkAll);
          selector.layout()->addWidget(uncheckAll);
          QListWidget* lw = new QListWidget(&selector);
@@ -181,7 +181,7 @@ void wkf::ConfigurationObject::SaveActionHandler()
 {
    CheckForConfigDirectory();
    QString filePath = wkf::getSaveFileName(nullptr,
-                                           "Save Configuration",
+                                           tr("Save Configuration"), // 二次开发（i18n）
                                            Environment::GetInstance().GetConfigurationsDir() + "//NewConfig.ini",
                                            "(*.ini)");
    if (filePath != "")
@@ -375,7 +375,7 @@ void wkf::ConfigurationObject::PopulateMenu(QMenu* aMenu)
    }
    if (aMenu->isEmpty())
    {
-      auto* action = aMenu->addAction("(no recent configurations)");
+      auto* action = aMenu->addAction(tr("(no recent configurations)")); // 二次开发（i18n）
       action->setEnabled(false);
    }
 }
