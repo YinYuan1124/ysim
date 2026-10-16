@@ -2735,4 +2735,33 @@ Choose Unlist to remove from your recent list or OK to create.</source>
         <translation>覆盖叠加</translation>
     </message>
 </context>
+<context>
+    <name>Map::CursorStatusDockWidget</name>
+    <message>
+        <source>Cursor Info</source>
+        <translation>光标信息</translation>
+    </message>
+</context>
+<context>
+    <name>Annotation::POI_VisibilityWidget</name>
+    <message>
+        <source>Point of Interest Visibility</source>
+        <translation>兴趣点可见性</translation>
+    </message>
+    <message>
+        <source>Toggle Point of Interest Visibility</source>
+        <translation>切换兴趣点可见性</translation>
+    </message>
+    <message>
+        <source>Toggle Bullseye Visibility</source>
+        <translation>切换靶心可见性</translation>
+    </message>
+</context>
+<context>
+    <name>SimulationManager::Plugin</name>
+    <message>
+        <source>Script Tools</source>
+        <translation>脚本工具</translation>
+    </message>
+</context>
 </TS>
