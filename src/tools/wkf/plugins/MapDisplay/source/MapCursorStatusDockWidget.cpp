@@ -36,6 +36,7 @@ Map::CursorStatusDockWidget::CursorStatusDockWidget(const vespa::VaViewer& aView
    , mPluginUniqueId(aPluginUniqueId)
 {
    mUI.setupUi(this);
+   setWindowTitle(tr("Cursor Info")); // 二次开发（i18n）
 
    mLatitudeItemPtr  = new QTreeWidgetItem(mUI.treeWidget, {"Latitude", ""});
    mLongitudeItemPtr = new QTreeWidgetItem(mUI.treeWidget, {"Longitude", ""});

@@ -164,17 +164,17 @@ SimulationManager::Plugin::Plugin(const QString& aPluginName, const size_t aUniq
    mProgressBarAction->setVisible(false);
 
    mBreakpointControlPtr = new ScriptBreakpointControl(wkfEnv.GetMainWindow());
-   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mBreakpointControlPtr, "Script Tools");
+   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mBreakpointControlPtr, tr("Script Tools")); // 二次开发（i18n）
    wkfEnv.GetMainWindow()->tabifyDockWidget(mOutputPanel, mBreakpointControlPtr);
    mBreakpointControlPtr->setVisible(false);
 
    mDebugWatchControlPtr = new WsfScriptDebuggerWatchControl(wkfEnv.GetMainWindow());
-   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugWatchControlPtr, "Script Tools");
+   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugWatchControlPtr, tr("Script Tools")); // 二次开发（i18n）
    wkfEnv.GetMainWindow()->tabifyDockWidget(mOutputPanel, mDebugWatchControlPtr);
    mDebugWatchControlPtr->setVisible(false);
 
    mDebugCallstackControlPtr = new WsfScriptDebuggerCallstackControl(wkfEnv.GetMainWindow());
-   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugCallstackControlPtr, "Script Tools");
+   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugCallstackControlPtr, tr("Script Tools")); // 二次开发（i18n）
    wkfEnv.GetMainWindow()->tabifyDockWidget(mOutputPanel, mDebugCallstackControlPtr);
    mDebugCallstackControlPtr->setVisible(false);
 

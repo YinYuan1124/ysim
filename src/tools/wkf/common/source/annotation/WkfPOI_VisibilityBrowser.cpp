@@ -28,6 +28,7 @@ Annotation::POI_VisibilityWidget::POI_VisibilityWidget(QWidget*        aParent /
    : QDockWidget(aParent, aFlags)
 {
    mUI.setupUi(this);
+   setWindowTitle(tr("Point of Interest Visibility")); // 二次开发（i18n）
 
    // Force the buttons to actually be the same size, since layouts and size policy manipulation doesn't appear to do it
    QFontMetrics fm(QApplication::font());
@@ -37,11 +38,11 @@ Annotation::POI_VisibilityWidget::POI_VisibilityWidget(QWidget*        aParent /
    mUI.mShowPOI_Button->setFixedWidth(cWIDTH_STRING);
    mUI.mHidePOI_Button->setFixedWidth(cWIDTH_STRING);
 
-   mTogglePOI_Action = ut::qt::make_qt_ptr<wkf::Action>(QString("Toggle Point of Interest Visibility"),
+   mTogglePOI_Action = ut::qt::make_qt_ptr<wkf::Action>(tr("Toggle Point of Interest Visibility"), // 二次开发（i18n）
                                                         this,
                                                         QKeySequence("CTRL+T, CTRL+P"));
    mToggleBullseyeAction =
-      ut::qt::make_qt_ptr<wkf::Action>(QString("Toggle Bullseye Visibility"), this, QKeySequence("CTRL+T, CTRL+B"));
+      ut::qt::make_qt_ptr<wkf::Action>(tr("Toggle Bullseye Visibility"), this, QKeySequence("CTRL+T, CTRL+B")); // 二次开发（i18n）
 
    connect(mTogglePOI_Action, &QAction::triggered, this, [this]() { SetPOI_Visibility(!mPOI_Visible); });
    connect(mToggleBullseyeAction, &QAction::triggered, this, [this]() { SetBullseyeVisibility(!mBullseyeVisible); });

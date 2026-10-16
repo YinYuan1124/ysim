@@ -25,6 +25,7 @@ namespace Map
 {
 class CursorStatusDockWidget : public QDockWidget
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 上下文命中本类
 public:
    CursorStatusDockWidget(const vespa::VaViewer& aViewer,
                           size_t                 aPluginUniqueId,
