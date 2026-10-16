@@ -247,7 +247,7 @@ void AcoImporter::Dialog::BrowsePushButtonClicked()
 
    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
    fileDialog.setNameFilter("*.*");
-   fileDialog.setWindowTitle("Please select an output directory");
+   fileDialog.setWindowTitle(tr("Please select an output directory") // 二次开发（i18n）);
 
    if (fileDialog.exec() == QFileDialog::Accepted)
    {
@@ -508,7 +508,7 @@ void AcoImporter::Dialog::AddPushButtonClicked()
    }
    QStringList inputFiles =
       QFileDialog::getOpenFileNames(this,
-                                    "Please select input file(s)",
+                                    tr("Please select input file(s)") // 二次开发（i18n）,
                                     mOpenFileLocationForFileDialog,
                                     "Common Route Definition files (*.txt *.xml);;All Files (*.*)");
 
@@ -556,7 +556,7 @@ void AcoImporter::Dialog::AddPushButtonClicked()
 void AcoImporter::Dialog::RegisterAcoRequirements()
 {
    mType = "ACO";
-   setWindowTitle({"ACO Importer"});
+   setWindowTitle({tr("ACO Importer") // 二次开发（i18n）});
    auto sFact = usmtf::SetFactory::GetFactory();
    auto mFact = usmtf::MessageFactory::GetFactory();
    sFact->RegisterEntity("ACMID", usmtf::SetFactory::Construct<usmtf::Acmid>);
@@ -602,7 +602,7 @@ void AcoImporter::Dialog::UnregisterAcoRequirements()
 void AcoImporter::Dialog::RegisterAtoRequirements()
 {
    mType = "ATO";
-   setWindowTitle({"ATO Importer"});
+   setWindowTitle({tr("ATO Importer") // 二次开发（i18n）});
    auto sFact = usmtf::SetFactory::GetFactory();
    auto mFact = usmtf::MessageFactory::GetFactory();
    sFact->RegisterEntity("MSNACFT", usmtf::SetFactory::Construct<usmtf::AircraftMission>);

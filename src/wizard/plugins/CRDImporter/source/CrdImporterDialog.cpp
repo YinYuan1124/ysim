@@ -167,7 +167,7 @@ void CrdImporter::Dialog::AddPushButtonClicked()
    }
    QStringList inputFiles =
       QFileDialog::getOpenFileNames(this,
-                                    "Please select input .CRD file(s)",
+                                    tr("Please select input .CRD file(s)") // 二次开发（i18n）,
                                     mOpenFileLocationForFileDialog,
                                     "Common Route Definition files (*.crd *.xml);;All Files (*.*)");
 
@@ -328,7 +328,7 @@ void CrdImporter::Dialog::BrowsePushButtonClicked()
 
    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
    fileDialog.setNameFilter("*.*");
-   fileDialog.setWindowTitle("Please select an output directory");
+   fileDialog.setWindowTitle(tr("Please select an output directory") // 二次开发（i18n）);
 
    if (fileDialog.exec() == QFileDialog::Accepted)
    {

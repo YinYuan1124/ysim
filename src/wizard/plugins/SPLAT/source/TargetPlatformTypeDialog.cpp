@@ -25,7 +25,7 @@ SPLAT::TargetPlatformTypeDialog::TargetPlatformTypeDialog(QWidget* aParent)
    , mAcousticValidator(new SignatureValidator)
    , mSignaturesEnabled(true)
 {
-   setWindowTitle("Target Platform Type");
+   setWindowTitle(tr("Target Platform Type")); // 二次开发（i18n）
    mUi.setupUi(this);
 
    mUi.mPlatformTypeEdit->setValidator(mTargetTypeValidator);
