@@ -69,7 +69,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
    // set up the dialog window
-   setWindowTitle("Rotate Scenario");
+   setWindowTitle(tr("Rotate Scenario")); // 二次开发（i18n）
 
    mUi.setupUi(this);
 
@@ -92,7 +92,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mAngleManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mAngleLineEditStatusLabel->setText("Invalid Format"); });
+           [=]() { mUi.mAngleLineEditStatusLabel->setText(tr("Invalid Format")); }); // 二次开发（i18n）
    connect(&mAngleManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -218,13 +218,13 @@ void Dialog::ModeChanged(const int aState)
       }
       else if (menuState == Menu::cROTATE_SCENARIO)
       {
-         setWindowTitle("Rotate Scenario");
+         setWindowTitle(tr("Rotate Scenario")); // 二次开发（i18n）
          mPreviousMode  = Menu::cROTATE_SCENARIO;
          mSelectionOnly = false;
       }
       else if (menuState == Menu::cROTATE_SELECTION)
       {
-         setWindowTitle("Rotate Selection");
+         setWindowTitle(tr("Rotate Selection")); // 二次开发（i18n）
          mPreviousMode  = Menu::cROTATE_SELECTION;
          mSelectionOnly = true;
       }

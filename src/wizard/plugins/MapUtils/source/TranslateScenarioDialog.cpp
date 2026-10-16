@@ -103,7 +103,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mLatitudeManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLatitudeLineEditStatusLabel->setText("Invalid Format"); });
+           [=]() { mUi.mLatitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
    connect(&mLatitudeManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -111,7 +111,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mLongitudeManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLongitudeLineEditStatusLabel->setText("Invalid Format"); });
+           [=]() { mUi.mLongitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
    connect(&mLongitudeManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -119,7 +119,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mVerticalManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLatitudeLineEditStatusLabel->setText("Invalid Format"); });
+           [=]() { mUi.mLatitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
    connect(&mVerticalManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -127,7 +127,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mHorizontalManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLongitudeLineEditStatusLabel->setText("Invalid Format"); });
+           [=]() { mUi.mLongitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
    connect(&mHorizontalManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -454,13 +454,13 @@ void Dialog::InitializeLabels()
    mUi.mLongitudeLineEditStatusLabel->setText("");
    if (!mRelative)
    {
-      mUi.mLatitudeLineEditLabel->setText("Latitudinal Coordinate:");
-      mUi.mLongitudeLineEditLabel->setText("Longitudinal Coordinate:");
+      mUi.mLatitudeLineEditLabel->setText(tr("Latitudinal Coordinate:") // 二次开发（i18n）);
+      mUi.mLongitudeLineEditLabel->setText(tr("Longitudinal Coordinate:") // 二次开发（i18n）);
    }
    else
    {
-      mUi.mLatitudeLineEditLabel->setText("Latitudinal Distance:");
-      mUi.mLongitudeLineEditLabel->setText("Longitudinal Distance:");
+      mUi.mLatitudeLineEditLabel->setText(tr("Latitudinal Distance:") // 二次开发（i18n）);
+      mUi.mLongitudeLineEditLabel->setText(tr("Longitudinal Distance:") // 二次开发（i18n）);
    }
 }
 
