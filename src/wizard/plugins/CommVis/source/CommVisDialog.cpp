@@ -193,7 +193,7 @@ void WizCommVis::CommVisDialog::AddSidePanelButton(const QString& aButtonName)
    panelButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
    panelButton->setAutoRaise(true);
    panelButton->setArrowType(Qt::NoArrow);
-   panelButton->setText("Add " + aButtonName);
+   panelButton->setText(tr("Add %1").arg(aButtonName)); // 二次开发（i18n）：参数化
 
    mUi.mSidePanelLayout->addWidget(panelButton);
 
