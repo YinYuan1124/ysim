@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -247,7 +247,7 @@ void AcoImporter::Dialog::BrowsePushButtonClicked()
 
    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
    fileDialog.setNameFilter("*.*");
-   fileDialog.setWindowTitle(tr("Please select an output directory") // 二次开发（i18n）);
+   fileDialog.setWindowTitle(tr("Please select an output directory")); // 二次开发（i18n）：对话框标题 tr() 化
 
    if (fileDialog.exec() == QFileDialog::Accepted)
    {
@@ -508,7 +508,7 @@ void AcoImporter::Dialog::AddPushButtonClicked()
    }
    QStringList inputFiles =
       QFileDialog::getOpenFileNames(this,
-                                    tr("Please select input file(s)") // 二次开发（i18n）,
+                                    tr("Please select input file(s)"), // 二次开发（i18n）：对话框标题 tr() 化
                                     mOpenFileLocationForFileDialog,
                                     "Common Route Definition files (*.txt *.xml);;All Files (*.*)");
 
@@ -556,7 +556,7 @@ void AcoImporter::Dialog::AddPushButtonClicked()
 void AcoImporter::Dialog::RegisterAcoRequirements()
 {
    mType = "ACO";
-   setWindowTitle({tr("ACO Importer") // 二次开发（i18n）});
+   setWindowTitle({tr("ACO Importer")}); // 二次开发（i18n）：窗口标题 tr() 化
    auto sFact = usmtf::SetFactory::GetFactory();
    auto mFact = usmtf::MessageFactory::GetFactory();
    sFact->RegisterEntity("ACMID", usmtf::SetFactory::Construct<usmtf::Acmid>);
@@ -602,7 +602,7 @@ void AcoImporter::Dialog::UnregisterAcoRequirements()
 void AcoImporter::Dialog::RegisterAtoRequirements()
 {
    mType = "ATO";
-   setWindowTitle({tr("ATO Importer") // 二次开发（i18n）});
+   setWindowTitle({tr("ATO Importer")}); // 二次开发（i18n）：窗口标题 tr() 化
    auto sFact = usmtf::SetFactory::GetFactory();
    auto mFact = usmtf::MessageFactory::GetFactory();
    sFact->RegisterEntity("MSNACFT", usmtf::SetFactory::Construct<usmtf::AircraftMission>);

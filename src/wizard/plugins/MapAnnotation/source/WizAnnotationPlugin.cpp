@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -551,20 +551,21 @@ void WizAnnotation::Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer
 {
    if (aViewerPtr == vaEnv.GetStandardViewer() && mEnableFeatures)
    {
+      // 二次开发（i18n）：子菜单标题 tr() 化；objectName 保持英文原样，供各插件 findChild 查找键使用（查找通道与显示通道分离）
       auto addMenu = aMenu->findChild<QMenu*>("Add at Location");
       if (!addMenu)
       {
-         addMenu = aMenu->addMenu("Add at Location");
+         addMenu = aMenu->addMenu(tr("Add at Location"));
          addMenu->setObjectName("Add at Location");
          UtQtTranslucentMenu(*addMenu);
       }
 
       vespa::VaPosition p = vaEnv.GetCurrentCursorPosition();
-      auto bullseye       = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("bullseye"), QString("Bullseye"), addMenu);
+      auto bullseye       = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("bullseye"), tr("Bullseye"), addMenu);
       addMenu->addAction(bullseye);
-      auto pointOfInterest = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("poi"), QString("Point of Interest"), addMenu);
+      auto pointOfInterest = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("poi"), tr("Point of Interest"), addMenu);
       addMenu->addAction(pointOfInterest);
-      auto rangeRing = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("rangering"), QString("Range Ring"), addMenu);
+      auto rangeRing = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("rangering"), tr("Range Ring"), addMenu);
       addMenu->addAction(rangeRing);
 
       connect(rangeRing, &QAction::triggered, this, [=]() { mDisplayInterface->AddRangeRing(p.GetLat(), p.GetLon()); });

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,6 +22,7 @@ namespace wkf
 {
 class PlatformOptionsDockWidget : public PlatformContextDockWidget
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 落到本类上下文
 public:
    PlatformOptionsDockWidget(QWidget* aParent = nullptr, Qt::WindowFlags aFlags = Qt::WindowFlags());
 

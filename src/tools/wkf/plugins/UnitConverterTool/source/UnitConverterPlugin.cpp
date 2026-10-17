@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -30,7 +30,7 @@ UnitConverter::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId
    QMenu* toolsMenuPtr = mainWindowPtr->GetMenuByName("Tools");
    if (toolsMenuPtr)
    {
-      wkf::Action* unitActionPtr = new wkf::Action(QIcon::fromTheme("switch"), "Unit Converter Tool...", mainWindowPtr);
+      wkf::Action* unitActionPtr = new wkf::Action(QIcon::fromTheme("switch"), tr("Unit Converter Tool..."), mainWindowPtr); // 二次开发（i18n）：Tools 菜单文本汉化
       connect(unitActionPtr, &QAction::triggered, mDialog.data(), &QDialog::show);
       toolsMenuPtr->addAction(unitActionPtr);
    }

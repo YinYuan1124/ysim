@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,7 @@
 // ****************************************************************************
 #include "RvPlottingWidget.hpp"
 
+#include <QCoreApplication> // 二次开发（i18n）：显式上下文翻译所需
 #include <QDoubleSpinBox>
 #include <QLabel>
 #include <QList>
@@ -252,7 +253,7 @@ bool rv::PlottingWidget::BuildContextMenu(QMenu& aMenu, const QPoint& pos)
       aMenu.addActions(mPlotWidgetPtr->GetDefaultContextMenuActions());
 
       QAction* setSampleRateAction = new QAction(&aMenu);
-      setSampleRateAction->setText("Set Sample Rate");
+      setSampleRateAction->setText(QCoreApplication::translate("rv::PlottingWidget", "Set Sample Rate")); // 二次开发（i18n）：菜单项接入翻译通道
       connect(setSampleRateAction, &QAction::triggered, this, &rv::PlottingWidget::SetSampleRateAction);
 
       aMenu.addAction(setSampleRateAction);
@@ -326,10 +327,10 @@ void rv::PlottingWidget::SetSampleRateAction()
    QDialog* sampleDialog = new QDialog(this);
 
    QLabel* sampleRateLabel = new QLabel(sampleDialog);
-   sampleRateLabel->setText("Sample Rate(sec): ");
+   sampleRateLabel->setText(QCoreApplication::translate("rv::PlottingWidget", "Sample Rate(sec): ")); // 二次开发（i18n）：标签文本接入翻译通道
    QDoubleSpinBox* sampleRateSpinBox = new QDoubleSpinBox(sampleDialog);
    sampleRateSpinBox->setValue(mPlotUpdaterPtr->GetSampleRate());
-   QPushButton* sampleRateOKButton = new QPushButton("Ok", sampleDialog);
+   QPushButton* sampleRateOKButton = new QPushButton(QCoreApplication::translate("rv::PlottingWidget", "Ok"), sampleDialog); // 二次开发（i18n）：按钮文本接入翻译通道
 
    QGridLayout* gridLayout = new QGridLayout;
    gridLayout->addWidget(sampleRateLabel, 0, 0);

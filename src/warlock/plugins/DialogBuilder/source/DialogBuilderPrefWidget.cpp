@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -38,10 +38,11 @@ void WkDialogBuilder::PrefWidget::RestoreDefaults()
 
    if (!mDialogMap.empty())
    {
+      // 二次开发（i18n）：确认框标题与文本 tr() 化（对话框名为用户数据不译）
       int button = QMessageBox::warning(
          this,
-         "Preferences",
-         "Dialog Builder\n\nAre you sure you want to delete all created dialogs by restoring defaults?",
+         tr("Preferences"),
+         tr("Dialog Builder\n\nAre you sure you want to delete all created dialogs by restoring defaults?"),
          QMessageBox::Yes,
          QMessageBox::No);
       if (button == QMessageBox::No)

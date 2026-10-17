@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -85,8 +85,9 @@ void RvProjector::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnt
                                      (maxel - minel <= UtMath::cPI * 0.75))
                                  {
                                     // this is one we can handle
+                                    // 二次开发（i18n）：实体右键菜单文本 tr() 化
                                     QAction* projectorAction =
-                                       new QAction(QString("Add Projector to %1 : %2").arg(name, sensorName), aMenu);
+                                       new QAction(tr("Add Projector to %1 : %2").arg(name, sensorName), aMenu);
                                     aMenu->addAction(projectorAction);
                                     connect(projectorAction,
                                             &QAction::triggered,
@@ -108,7 +109,7 @@ void RvProjector::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnt
       {
          for (auto&& projector : sensorList->second)
          {
-            QAction* remAction = new QAction(QString("Remove Projector from %1 : %2").arg(name, projector.first), aMenu);
+            QAction* remAction = new QAction(tr("Remove Projector from %1 : %2").arg(name, projector.first), aMenu);
             aMenu->addAction(remAction);
             connect(remAction, &QAction::triggered, this, [=]() { RemoveProjector(name, projector.first); });
          }

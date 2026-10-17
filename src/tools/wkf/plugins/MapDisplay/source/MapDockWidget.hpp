@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -47,6 +47,7 @@ namespace Map
 {
 class DockWidget : public wkf::DockWidget
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 落到本类上下文
 public:
    DockWidget(QMainWindow* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags());
    ~DockWidget() override = default;

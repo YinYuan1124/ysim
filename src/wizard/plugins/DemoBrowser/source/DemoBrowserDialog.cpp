@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -84,17 +84,18 @@ void DemoBrowser::DemoBrowserDialog::Regenerate()
    delete mUI.mDemoScrollArea->takeWidget();
    mUI.mDemoScrollArea->setWidget(mDemoCollapsible);
    mUI.mDemoScrollAreaWidgetContents = mUI.mDemoScrollArea->widget();
-   mUI.mToolBox->setItemText(0, QString("Demos (0)"));
+   // 二次开发（i18n）：工具箱标签文本改走 tr() 翻译通道，否则界面汉化不生效
+   mUI.mToolBox->setItemText(0, tr("Demos (0)"));
 
    delete mUI.mScenariosScrollArea->takeWidget();
    mUI.mScenariosScrollArea->setWidget(mScenarioCollapsible);
    mUI.mScenariosScrollAreaWidgetContents = mUI.mScenariosScrollArea->widget();
-   mUI.mToolBox->setItemText(1, QString("Scenarios (0)"));
+   mUI.mToolBox->setItemText(1, tr("Scenarios (0)"));
 
    delete mUI.mTrainingScrollArea->takeWidget();
    mUI.mTrainingScrollArea->setWidget(mTrainingCollapsible);
    mUI.mTrainingScrollAreaWidgetContents = mUI.mTrainingScrollArea->widget();
-   mUI.mToolBox->setItemText(2, QString("Training (0)"));
+   mUI.mToolBox->setItemText(2, tr("Training (0)"));
 
    // Recreate the entries
    QList<QString> groups = demoPageGroup.keys();
@@ -106,7 +107,7 @@ void DemoBrowser::DemoBrowserDialog::Regenerate()
       mUI.mDemoScrollAreaWidgetContents->layout()->setContentsMargins(0, 0, 0, 0);
       mUI.mDemoScrollAreaWidgetContents->layout()->setAlignment(Qt::AlignTop);
       GroupPages(mDemoCollapsible, demoPageGroup.value(groupName));
-      mUI.mToolBox->setItemText(0, QString("Demos (") + QString::number(items.size()) + ")");
+      mUI.mToolBox->setItemText(0, tr("Demos (%1)").arg(items.size()));
    }
 
    groups = scenariosPageGroup.keys();
@@ -119,7 +120,7 @@ void DemoBrowser::DemoBrowserDialog::Regenerate()
       mUI.mScenariosScrollAreaWidgetContents->layout()->setContentsMargins(0, 0, 0, 0);
       mUI.mScenariosScrollAreaWidgetContents->layout()->setAlignment(Qt::AlignTop);
       GroupPages(mScenarioCollapsible, scenariosPageGroup.value(groupName));
-      mUI.mToolBox->setItemText(1, QString("Scenarios (") + QString::number(items.size()) + ")");
+      mUI.mToolBox->setItemText(1, tr("Scenarios (%1)").arg(items.size()));
    }
 
    groups = trainingPageGroup.keys();
@@ -132,7 +133,7 @@ void DemoBrowser::DemoBrowserDialog::Regenerate()
       mUI.mTrainingScrollAreaWidgetContents->layout()->setContentsMargins(0, 0, 0, 0);
       mUI.mTrainingScrollAreaWidgetContents->layout()->setAlignment(Qt::AlignTop);
       GroupPages(mTrainingCollapsible, trainingPageGroup.value(groupName));
-      mUI.mToolBox->setItemText(2, QString("Training (") + QString::number(items.size()) + ")");
+      mUI.mToolBox->setItemText(2, tr("Training (%1)").arg(items.size()));
    }
 
    mUI.mDemoScrollArea->show();
@@ -196,7 +197,7 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
       QHBoxLayout* buttonlo    = new QHBoxLayout(buttonGroup);
       buttonGroup->setLayout(buttonlo);
       buttonlo->addItem(new QSpacerItem(20, 20, QSizePolicy::Expanding));
-      QPushButton* openDoc = new QPushButton(tr("Open Documentation") // 二次开发（i18n）, buttonGroup);
+      QPushButton* openDoc = new QPushButton(tr("Open Documentation"), buttonGroup); // 二次开发（i18n）：按钮文本 tr() 化
 
       buttonlo->addWidget(openDoc);
       QUrl openDocumentationUrl;
@@ -204,7 +205,7 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
       openDocumentationUrl.setHost("documentation");
       openDocumentationUrl.setPath("/docs/" + it.GetAttribute("name") + ".html");
       connect(openDoc, &QPushButton::clicked, [=]() { wizEnv.OpenUrl(openDocumentationUrl); });
-      QPushButton* openProj = new QPushButton(tr("Open Project") // 二次开发（i18n）, buttonGroup);
+      QPushButton* openProj = new QPushButton(tr("Open Project"), buttonGroup); // 二次开发（i18n）：按钮文本 tr() 化
       buttonlo->addWidget(openProj);
 
       QUrl projectUrl;
@@ -224,7 +225,7 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
       openProjectUrl.setQuery(openProjectUrlQuery);
       connect(openProj, &QPushButton::clicked, [=]() { wizEnv.OpenUrl(openProjectUrl); });
 
-      QPushButton* copyProj = new QPushButton(tr("Copy Project") // 二次开发（i18n）, buttonGroup);
+      QPushButton* copyProj = new QPushButton(tr("Copy Project"), buttonGroup); // 二次开发（i18n）：按钮文本 tr() 化
       buttonlo->addWidget(copyProj);
       buttonlo->setContentsMargins(0, 0, 0, 0);
       connect(copyProj, &QPushButton::clicked, [=]() { wizEnv.OpenUrl(copyProjectUrl); });
@@ -242,36 +243,36 @@ void DemoBrowser::DemoBrowserDialog::GroupPages(QGroupBox* aGroup, const QList<I
 
       QLabel* classificationLabel = new QLabel(it.GetDisplayAttribute("classification", search), group);
       classificationLabel->setWordWrap(true);
-      taglo->addRow("<b>Classification:</b>", classificationLabel);
+      taglo->addRow(tr("<b>Classification:</b>"), classificationLabel); // 二次开发（i18n）：字段标签 tr() 化
 
       QLabel* dateLabel = new QLabel(it.GetDisplayAttribute("date", search), group);
       dateLabel->setWordWrap(true);
-      taglo->addRow("<b>Date:</b>", dateLabel);
+      taglo->addRow(tr("<b>Date:</b>"), dateLabel); // 二次开发（i18n）：字段标签 tr() 化
 
       QLabel* pathLabel = new QLabel(it.GetDisplayAttribute("path", search), group);
       pathLabel->setWordWrap(true);
-      taglo->addRow("<b>Path:</b>", pathLabel);
+      taglo->addRow(tr("<b>Path:</b>"), pathLabel); // 二次开发（i18n）：字段标签 tr() 化
 
       QLabel* summaryLabel = new QLabel(it.GetDisplayAttribute("summary", search), group);
       summaryLabel->setWordWrap(true);
-      taglo->addRow("<b>Summary:</b>", summaryLabel);
+      taglo->addRow(tr("<b>Summary:</b>"), summaryLabel); // 二次开发（i18n）：字段标签 tr() 化
 
       QLabel* tagsLabel = new QLabel(it.GetDisplayAttribute("tags", search), group);
       tagsLabel->setWordWrap(true);
-      taglo->addRow("<b>Tags:</b>", tagsLabel);
+      taglo->addRow(tr("<b>Tags:</b>"), tagsLabel); // 二次开发（i18n）：字段标签 tr() 化
 
       const QList<QMap<QString, QString>>& matchedFiles = it.GetMatchedFiles();
       if (!matchedFiles.isEmpty())
       {
-         CollapsibleGroup* matchedFilesG = new CollapsibleGroup(group, "Matched Files");
+         CollapsibleGroup* matchedFilesG = new CollapsibleGroup(group, tr("Matched Files")); // 二次开发（i18n）：匹配文件分组标题 tr() 化
          group->AddContentWidget(matchedFilesG);
          QWidget*     contents = new QWidget(matchedFilesG);
          QGridLayout* grid     = new QGridLayout(contents);
          contents->setLayout(grid);
          matchedFilesG->AddContentWidget(contents);
-         grid->addWidget(new QLabel(tr("<b>Filename:</b>") // 二次开发（i18n）, contents), 0, 0);
-         grid->addWidget(new QLabel(tr("<b>Content:</b>") // 二次开发（i18n）, contents), 0, 1);
-         grid->addWidget(new QLabel(tr("<b>Line:</b>") // 二次开发（i18n）, contents), 0, 2);
+         grid->addWidget(new QLabel(tr("<b>Filename:</b>"), contents), 0, 0); // 二次开发（i18n）：标签文本 tr() 化
+         grid->addWidget(new QLabel(tr("<b>Content:</b>"), contents), 0, 1); // 二次开发（i18n）：标签文本 tr() 化
+         grid->addWidget(new QLabel(tr("<b>Line:</b>"), contents), 0, 2); // 二次开发（i18n）：标签文本 tr() 化
          int row = 1;
          for (auto&& it : matchedFiles)
          {

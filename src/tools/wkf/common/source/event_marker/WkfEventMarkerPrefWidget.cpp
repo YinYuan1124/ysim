@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -29,11 +29,12 @@ const QString cIMAGE      = "Image";
 wkf::EventMarkerPrefWidget::EventMarkerPrefWidget()
    : wkf::PrefWidgetT<wkf::EventMarkerPrefObject>()
 {
-   setWindowTitle("Event Markers");
+   // 二次开发（i18n）：首选项页面标题与控件文本 tr() 化
+   setWindowTitle(tr("Event Markers"));
 
    QFormLayout* form = new QFormLayout(this);
    setLayout(form);
-   auto* label     = new QLabel("Preferences on this page are shared among all AFSIM applications", this);
+   auto* label     = new QLabel(tr("Preferences on this page are shared among all AFSIM applications"), this);
    QFont labelFont = label->font();
    labelFont.setBold(true);
    label->setFont(labelFont);
@@ -41,13 +42,14 @@ wkf::EventMarkerPrefWidget::EventMarkerPrefWidget()
 
    mTimeout = new QSpinBox(this);
    mTimeout->setRange(1, 99999);
-   form->addRow("Timeout (sec):", mTimeout);
+   // 二次开发（i18n）：表单标签与树项显示文本 tr() 化（mItemMap 键与 objectName 拼接键保持原样）
+   form->addRow(tr("Timeout (sec):"), mTimeout);
 
    mMarkerScale = new QSlider(Qt::Horizontal, this);
    mMarkerScale->setMinimum(30);
    mMarkerScale->setMaximum(300);
    mMarkerScale->setValue(100);
-   form->addRow("Marker Scale: ", mMarkerScale);
+   form->addRow(tr("Marker Scale: "), mMarkerScale);
 
    mTreeWidget = new QTreeWidget(this);
    mTreeWidget->setHeaderHidden(true);
@@ -57,16 +59,16 @@ wkf::EventMarkerPrefWidget::EventMarkerPrefWidget()
    mTreeWidget->setSizePolicy(policy);
    form->addRow(mTreeWidget);
 
-   mItemMap["REMOVED"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList("Platform Removed"));
+   mItemMap["REMOVED"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList(tr("Platform Removed")));
    PopulateOptions(mItemMap["REMOVED"]);
 
-   mItemMap["DAMAGED"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList("Platform Damaged"));
+   mItemMap["DAMAGED"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList(tr("Platform Damaged")));
    PopulateOptions(mItemMap["DAMAGED"]);
 
-   mItemMap["WEAPON_HIT"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList("Weapon Hit"));
+   mItemMap["WEAPON_HIT"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList(tr("Weapon Hit")));
    PopulateOptions(mItemMap["WEAPON_HIT"]);
 
-   mItemMap["WEAPON_MISSED"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList("Weapon Missed"));
+   mItemMap["WEAPON_MISSED"] = new QTreeWidgetItem(mTreeWidget->invisibleRootItem(), QStringList(tr("Weapon Missed")));
    PopulateOptions(mItemMap["WEAPON_MISSED"]);
 
    connect(mPrefObjectPtr.get(),
@@ -82,6 +84,7 @@ wkf::EventMarkerPrefWidget::EventMarkerPrefWidget()
 
 void wkf::EventMarkerPrefWidget::PopulateOptions(QTreeWidgetItem* aItem)
 {
+   // 二次开发（i18n）：单选钮显示文本 tr() 化（objectName 查找键仍用常量拼接不受影响）
    SetColor(aItem, Qt::red);
    aItem->setCheckState(0, Qt::Unchecked);
 
@@ -89,11 +92,11 @@ void wkf::EventMarkerPrefWidget::PopulateOptions(QTreeWidgetItem* aItem)
    QFrame*          groupFrame = new QFrame(mTreeWidget);
    groupFrame->setObjectName(aItem->text(0));
 
-   QRadioButton* radioDot = new QRadioButton(cDOTMARKER);
+   QRadioButton* radioDot = new QRadioButton(tr("Dot Marker"));
    radioDot->setObjectName(aItem->text(0) + cDOTMARKER);
-   QRadioButton* radioX = new QRadioButton(cXMARKER);
+   QRadioButton* radioX = new QRadioButton(tr("X Marker"));
    radioX->setObjectName(aItem->text(0) + cXMARKER);
-   QRadioButton* radioCustom = new QRadioButton(cCUSTOMICON);
+   QRadioButton* radioCustom = new QRadioButton(tr("Custom Icon"));
    radioCustom->setObjectName(aItem->text(0) + cCUSTOMICON);
    ImageSelectionWidget* imageSelector = new ImageSelectionWidget();
    imageSelector->setObjectName(aItem->text(0) + cIMAGE);

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -47,8 +47,9 @@ void SatelliteTether::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* 
       if (platform->GetSpatialDomain() == wkf::SPATIAL_DOMAIN_SPACE)
       {
          QString  name = aEntityPtr->GetName().c_str();
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
          QAction* tetherAction =
-            ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("satellite"), QString("Satellite-Tether to %1").arg(name), aMenu);
+            ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("satellite"), tr("Satellite-Tether to %1").arg(name), aMenu);
          aMenu->addAction(tetherAction);
          connect(tetherAction, &QAction::triggered, this, [=]() { ConnectToPlatform(name); });
       }

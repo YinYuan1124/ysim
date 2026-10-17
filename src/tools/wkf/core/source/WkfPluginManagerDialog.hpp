@@ -37,6 +37,9 @@ private:
    void AutoStartClicked(bool checked);
    void AutoStartAllClicked(bool checked);
 
+   // 二次开发（i18n）：从列表项反查插件英文原名（autostart 持久化键），显示文本已汉化不可作键
+   QString GetPluginKey(const QListWidgetItem* aItemPtr) const;
+
    void closeEvent(QCloseEvent* event) override;
    void accept() override;
    void reject() override;

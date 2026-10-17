@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -38,7 +38,8 @@ void RvInteractionPlots::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entit
             rv::ResultPlatform* ep_platform = db->FindPlatformByName(aEntityPtr->GetName());
             if (nullptr != ep_platform)
             {
-               QAction* waterfallAction = new QAction(QIcon::fromTheme("plot"), QString("Waterfall Plot"), aMenu);
+               // 二次开发（i18n）：实体右键菜单文本 tr() 化
+               QAction* waterfallAction = new QAction(QIcon::fromTheme("plot"), tr("Waterfall Plot"), aMenu);
                aMenu->addAction(waterfallAction);
                waterfallAction->setData(QString(aEntityPtr->GetName().c_str()));
                connect(waterfallAction,

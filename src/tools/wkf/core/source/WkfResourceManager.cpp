@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,7 @@
 #include <algorithm>
 
 #include <QBoxLayout>
+#include <QCoreApplication> // 二次开发（i18n）：菜单动作文本 translate 显式翻译所需
 #include <QMenu>
 #include <QTreeWidget>
 
@@ -28,7 +29,11 @@
 
 wkf::ResourceManager::ResourceManager()
 {
-   mResourcesAction = new wkf::Action(QIcon::fromTheme("disks"), "Scenario Resources", wkfEnv.GetMainWindow());
+   // 二次开发（i18n）：菜单动作文本翻译化。ResourceManager 无 Q_OBJECT（非完整 QObject），
+   // tr() 不可用，经 QCoreApplication::translate 显式指定上下文。
+   mResourcesAction = new wkf::Action(QIcon::fromTheme("disks"),
+                                      QCoreApplication::translate("wkf::ResourceManager", "Scenario Resources"),
+                                      wkfEnv.GetMainWindow());
    QObject::connect(mResourcesAction, &QAction::triggered, [this]() { Show(); });
    QMenu* toolsMenu = wkfEnv.GetMainWindow()->GetMenuByName("Tools");
    if (toolsMenu != nullptr)

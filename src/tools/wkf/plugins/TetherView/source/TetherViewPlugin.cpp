@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,7 @@
 // ****************************************************************************
 #include "TetherViewPlugin.hpp"
 
+#include <QCoreApplication>
 #include <QMenu>
 #include <QString>
 
@@ -67,7 +68,8 @@ void TetherView::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
       QString name = aEntityPtr->GetName().c_str();
       if (aEntityPtr->IsA_TypeOf<wkf::Platform>())
       {
-         QAction* tetherAction = new QAction(QIcon::fromTheme("tether"), QString("Tether to %1").arg(name), aMenu);
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
+         QAction* tetherAction = new QAction(QIcon::fromTheme("tether"), tr("Tether to %1").arg(name), aMenu);
          aMenu->addAction(tetherAction);
          connect(tetherAction, &QAction::triggered, this, [=]() { ConnectToPlatform(name)->show(); });
       }
@@ -78,7 +80,7 @@ void TetherView::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
          if (poiName != name)
          {
             QAction* lookAtAction =
-               new QAction(QIcon::fromTheme("tether"), QString("Look at %1 from %2").arg(name, poiName), aMenu);
+               new QAction(QIcon::fromTheme("tether"), tr("Look at %1 from %2").arg(name, poiName), aMenu);
             aMenu->addAction(lookAtAction);
             connect(lookAtAction, &QAction::triggered, this, [=]() { LookAt(poiName, name)->show(); });
          }
@@ -127,7 +129,8 @@ TetherView::DockWidget* TetherView::Plugin::ConnectToPlatform(const QString& aPl
            });
 
    // Set Window title
-   dockWidget->setWindowTitle(QString("Tether: %1").arg(aPlatformName));
+   // 二次开发（i18n）：TetherView::Plugin 无 Q_OBJECT，用显式 QCoreApplication::translate 指定上下文
+   dockWidget->setWindowTitle(QCoreApplication::translate("TetherView::Plugin", "Tether: %1").arg(aPlatformName));
 
    connect(dockWidget.data(),
            &TetherView::DockWidget::ImmersiveViewInitialized,
@@ -159,7 +162,8 @@ TetherView::DockWidget* TetherView::Plugin::LookAt(const QString& aFrom, const Q
 
    dockWidget->LookAt(aTo);
    // Set Window title
-   dockWidget->setWindowTitle(QString("Look At: %2, From: %1").arg(aFrom, aTo));
+   // 二次开发（i18n）：同上，无 Q_OBJECT 用显式上下文
+   dockWidget->setWindowTitle(QCoreApplication::translate("TetherView::Plugin", "Look At: %2, From: %1").arg(aFrom, aTo));
    return dockWidget;
 }
 

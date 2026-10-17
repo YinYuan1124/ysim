@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -45,7 +45,8 @@ void WkAstrolabe::Plugin::BuildEntityContextMenu(QMenu* aMenuPtr, wkf::Entity* a
       auto platformName = QString::fromStdString(aEntityPtr->GetName());
       if (mDockWidgetPtr->IsRelevantPlatform(platformName))
       {
-         QAction* actionPtr = new QAction(QString("Open with Astrolabe"), aMenuPtr);
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
+         QAction* actionPtr = new QAction(tr("Open with Astrolabe"), aMenuPtr);
          actionPtr->setIcon(QIcon::fromTheme("satellite"));
          aMenuPtr->addAction(actionPtr);
          connect(actionPtr,

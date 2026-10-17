@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -75,7 +75,8 @@ void Chat::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntityPtr)
 
 void Chat::Plugin::BuildPlatformContextMenu(QMenu* aMenu, const QString& aName)
 {
-   auto connectAction = new QAction(QString("Copy Chat Link to Clipboard"), aMenu);
+   // 二次开发（i18n）：右键菜单文本 tr() 化
+   auto connectAction = new QAction(tr("Copy Chat Link to Clipboard"), aMenu);
    aMenu->addAction(connectAction);
    connectAction->setData(aName);
    connect(connectAction, &QAction::triggered, this, &Chat::Plugin::CopyChatPlatformLink);
@@ -83,7 +84,7 @@ void Chat::Plugin::BuildPlatformContextMenu(QMenu* aMenu, const QString& aName)
 
 void Chat::Plugin::BuildTrackContextMenu(QMenu* aMenu, const QString& aName)
 {
-   auto connectAction = new QAction(QString("Copy Chat Link to Clipboard"), aMenu);
+   auto connectAction = new QAction(tr("Copy Chat Link to Clipboard"), aMenu);
    aMenu->addAction(connectAction);
    connectAction->setData(aName);
    connect(connectAction, &QAction::triggered, this, &Chat::Plugin::CopyChatTrackLink);
@@ -93,7 +94,7 @@ void Chat::Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer* aViewer
 {
    if (aViewerPtr == vaEnv.GetStandardViewer())
    {
-      auto connectAction = new QAction(QString("Copy Chat Link to Current View to Clipboard"), aMenu);
+      auto connectAction = new QAction(tr("Copy Chat Link to Current View to Clipboard"), aMenu);
       aMenu->addAction(connectAction);
       connect(connectAction, &QAction::triggered, this, &Chat::Plugin::CopyChatViewLink);
    }

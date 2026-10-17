@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -70,15 +70,16 @@ void wkf::KeyBindingsWidget::UpdateDisplay()
    }
    else
    {
-      auto* globalItem = new QTreeWidgetItem({"Global"});
+      auto* globalItem = new QTreeWidgetItem({tr("Global")}); // 二次开发（i18n）：树分组标题 tr() 化
       globalItem->addChildren(globalItems);
       mUi.treeWidget->addTopLevelItem(globalItem);
-      auto* localItem = new QTreeWidgetItem({"Local"});
+      auto* localItem = new QTreeWidgetItem({tr("Local")}); // 二次开发（i18n）：树分组标题 tr() 化
       localItem->addChildren(localItems);
       mUi.treeWidget->addTopLevelItem(localItem);
    }
 
-   mUi.treeWidget->setHeaderLabels({"Command", "Shortcut"});
+   // 二次开发（i18n）：表头标签 tr() 化（命令文本列/快捷键列为动态数据不译）
+   mUi.treeWidget->setHeaderLabels({tr("Command"), tr("Shortcut")});
    // Resize the first column based on the content width
    mUi.treeWidget->expandAll();
    mUi.treeWidget->resizeColumnToContents(0);

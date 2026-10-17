@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -109,16 +109,17 @@ void RouteBrowser::Plugin::BuildAttachmentContextMenu(QMenu* aMenu, vespa::VaAtt
             wkf::Waypoint* curWaypt = routePtr->GetWaypoint(i);
             if (aSubPartId == curWaypt->GetId())
             {
+               // 二次开发（i18n）：右键航路点附件菜单文本 tr() 化；objectName 查找键保持英文原样
                QMenu* routeSub = aMenu->findChild<QMenu*>("Route");
                if (!routeSub)
                {
-                  routeSub = aMenu->addMenu(QIcon::fromTheme("route"), "Route");
+                  routeSub = aMenu->addMenu(QIcon::fromTheme("route"), tr("Route"));
                   routeSub->setObjectName("Route");
                }
                waypointIndex = i;
-               QString  name = "Waypoint " + QString::number(waypointIndex);
+               QString  name = tr("Waypoint %1").arg(waypointIndex);
                QAction* editWaypointAction =
-                  new QAction(QIcon::fromTheme("wrench"), QString("Edit %1").arg(name), routeSub);
+                  new QAction(QIcon::fromTheme("wrench"), tr("Edit %1").arg(name), routeSub);
                routeSub->addAction(editWaypointAction);
                connect(editWaypointAction,
                        &QAction::triggered,

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -103,7 +103,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mLatitudeManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLatitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
+           [=]() { mUi.mLatitudeLineEditStatusLabel->setText(tr("Invalid Format")); }); // 二次开发（i18n）：状态文本 tr() 化
    connect(&mLatitudeManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -111,7 +111,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mLongitudeManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLongitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
+           [=]() { mUi.mLongitudeLineEditStatusLabel->setText(tr("Invalid Format")); }); // 二次开发（i18n）：状态文本 tr() 化
    connect(&mLongitudeManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -119,7 +119,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mVerticalManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLatitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
+           [=]() { mUi.mLatitudeLineEditStatusLabel->setText(tr("Invalid Format")); }); // 二次开发（i18n）：状态文本 tr() 化
    connect(&mVerticalManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -127,7 +127,7 @@ Dialog::Dialog(QWidget* aParent, Qt::WindowFlags aFlags, const Menu aCurrentMode
    connect(&mHorizontalManager,
            &LineEditSliderManager::InvalidFormat,
            this,
-           [=]() { mUi.mLongitudeLineEditStatusLabel->setText(tr("Invalid Format") // 二次开发（i18n）); });
+           [=]() { mUi.mLongitudeLineEditStatusLabel->setText(tr("Invalid Format")); }); // 二次开发（i18n）：状态文本 tr() 化
    connect(&mHorizontalManager,
            &LineEditSliderManager::ValidFormat,
            this,
@@ -454,13 +454,13 @@ void Dialog::InitializeLabels()
    mUi.mLongitudeLineEditStatusLabel->setText("");
    if (!mRelative)
    {
-      mUi.mLatitudeLineEditLabel->setText(tr("Latitudinal Coordinate:") // 二次开发（i18n）);
-      mUi.mLongitudeLineEditLabel->setText(tr("Longitudinal Coordinate:") // 二次开发（i18n）);
+      mUi.mLatitudeLineEditLabel->setText(tr("Latitudinal Coordinate:")); // 二次开发（i18n）：标签文本 tr() 化
+      mUi.mLongitudeLineEditLabel->setText(tr("Longitudinal Coordinate:")); // 二次开发（i18n）：标签文本 tr() 化
    }
    else
    {
-      mUi.mLatitudeLineEditLabel->setText(tr("Latitudinal Distance:") // 二次开发（i18n）);
-      mUi.mLongitudeLineEditLabel->setText(tr("Longitudinal Distance:") // 二次开发（i18n）);
+      mUi.mLatitudeLineEditLabel->setText(tr("Latitudinal Distance:")); // 二次开发（i18n）：标签文本 tr() 化
+      mUi.mLongitudeLineEditLabel->setText(tr("Longitudinal Distance:")); // 二次开发（i18n）：标签文本 tr() 化
    }
 }
 

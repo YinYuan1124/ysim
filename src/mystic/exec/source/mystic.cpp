@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,7 @@
 #include <QFileInfo>
 #include <QFontDatabase>
 #include <QMenu>
+#include <QTranslator> // 二次开发（i18n）：中文翻译加载
 
 #include "RvEnvironment.hpp"
 #include "RvFactory.hpp"
@@ -25,6 +26,7 @@
 #include "UtQtException.hpp"
 #include "VaPredefine.hpp"
 #include "WkfEnvironment.hpp"
+#include "logging/WkfLogModel.hpp" // 二次开发（i18n）：wkf::log::SetChineseDisplay 中文日志显示通道
 #include "WkfMainWindow.hpp"
 #include "WkfVtkEnvironment.hpp"
 #include "mystic_version_defines.hpp"
@@ -272,6 +274,25 @@ try
    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    QApplication app(aArgc, aArgv);
+
+   // 二次开发（i18n）：安装中文翻译器，与 wizard 共用 build/Release/i18n 下的 qm 文件。
+   // qm 存在即启用中文，删除 qm 即回退英文，无需语言偏好设置。
+   {
+      const QString i18nDir = QCoreApplication::applicationDirPath() + "/i18n";
+      auto* appTranslator = new QTranslator(&app);
+      if (appTranslator->load("wizard_zh_CN", i18nDir))
+      {
+         app.installTranslator(appTranslator);
+         // 二次开发（i18n）：开启 wkf 日志面板中文显示通道（落盘日志保持英文）
+         wkf::log::SetChineseDisplay(true);
+      }
+      // Qt 内置控件的翻译（OK/取消按钮、颜色对话框等）
+      auto* qtTranslator = new QTranslator(&app);
+      if (qtTranslator->load("qtbase_zh_CN", i18nDir))
+      {
+         app.installTranslator(qtTranslator);
+      }
+   }
 
    // Inner try-catch to create exception report popup before QApplication close
    try

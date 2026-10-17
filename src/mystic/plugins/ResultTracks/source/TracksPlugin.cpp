@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -295,7 +295,8 @@ void RvTracks::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntity
       wkf::Track* track = dynamic_cast<wkf::Track*>(aEntityPtr);
       if (track)
       {
-         QAction* traceAction = new QAction(QString("Trace Track"), aMenu);
+         // 二次开发（i18n）：右键菜单文本 tr() 化，Plot 动态项改 %1 占位模式
+         QAction* traceAction = new QAction(tr("Trace Track"), aMenu);
          aMenu->addAction(traceAction);
          connect(traceAction,
                  &QAction::triggered,
@@ -319,14 +320,14 @@ void RvTracks::Plugin::BuildItemContextMenu(QMenu* aMenu, QTreeWidgetItem* aItem
 
       if (local) // we don't trace on sensor tracks
       {
-         QAction* traceAction = new QAction(QString("Trace Track"), aMenu);
+         QAction* traceAction = new QAction(tr("Trace Track"), aMenu);
          aMenu->addAction(traceAction);
          connect(traceAction, &QAction::triggered, [=]() { TraceTrack(platformName, trackId); });
       }
 
       if (dynamic_cast<wkf::UnitTreeWidgetItem*>(aItemPtr))
       {
-         QString  text   = QString("Plot ") + platformName + ":" + QString::number(trackId);
+         QString  text   = tr("Plot %1:%2").arg(platformName, QString::number(trackId));
          QAction* action = new QAction(QIcon::fromTheme("plot"), text, aMenu);
          action->setProperty("platform", platformName);
          action->setProperty("trackIdx", trackId);

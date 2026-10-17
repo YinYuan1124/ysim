@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -116,9 +116,10 @@ QList<wkf::PrefWidget*> Map::Plugin::GetPreferencesWidgets() const
 void Map::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntityPtr)
 {
    QString  name         = aEntityPtr->GetName().c_str();
-   QAction* centerAction = new QAction(QIcon::fromTheme("aim"), QString("Center on %1").arg(name), aMenu);
+   // 二次开发（i18n）：实体右键菜单文本 tr() 化
+   QAction* centerAction = new QAction(QIcon::fromTheme("aim"), tr("Center on %1").arg(name), aMenu);
    aMenu->addAction(centerAction);
-   QAction* followAction = new QAction(QIcon::fromTheme("track"), QString("Follow %1").arg(name), aMenu);
+   QAction* followAction = new QAction(QIcon::fromTheme("track"), tr("Follow %1").arg(name), aMenu);
    aMenu->addAction(followAction);
 
    connect(centerAction, &QAction::triggered, this, [=]() { mDockWidgetPtr->CenterCamera(aEntityPtr); });
@@ -127,7 +128,7 @@ void Map::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntityPtr)
    if (!mDockWidgetPtr->HasActiveRuler())
    {
       wkf::Action* measureAction =
-         new wkf::Action(QIcon::fromTheme("distance"), QString("Measure from %1...").arg(name), aMenu);
+         new wkf::Action(QIcon::fromTheme("distance"), tr("Measure from %1...").arg(name), aMenu);
       connect(measureAction, &QAction::triggered, this, [=]() { mDockWidgetPtr->MeasureFrom(aEntityPtr); });
    }
 }

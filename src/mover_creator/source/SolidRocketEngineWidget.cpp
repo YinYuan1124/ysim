@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -236,7 +236,7 @@ void Designer::SolidRocketEngineWidget::PopulateLineEdits()
    {
       mUIPtr->propellantMassComboBox->setCurrentText("Absolute");
       mUIPtr->propellantMassLineEdit->setText(QString::number(mEngineSpecs.at(mNumBaseSpecs + 7)));
-      mUIPtr->propellantMassUnitLabel->setText("lbs");
+      mUIPtr->propellantMassUnitLabel->setText(tr("lbs")); // 二次开发（i18n）：单位标签接入翻译通道
    }
    else
    {
@@ -317,7 +317,7 @@ void Designer::SolidRocketEngineWidget::HandlePropellantMassComboBoxChanged(cons
 
    if (QString::compare(aPropellantMassSpecification, "Absolute") == 0)
    {
-      mUIPtr->propellantMassUnitLabel->setText("lbs");
+      mUIPtr->propellantMassUnitLabel->setText(tr("lbs")); // 二次开发（i18n）：单位标签接入翻译通道
    }
    else if (QString::compare(aPropellantMassSpecification, "Fraction") == 0)
    {

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -44,7 +44,8 @@ void Projector::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntit
          {
             if (!ProjectorExists(name, p))
             {
-               QAction* projectorAction = new QAction(QString("Add Projector to %1 : %2").arg(name, p), aMenu);
+               // 二次开发（i18n）：实体右键菜单文本 tr() 化
+               QAction* projectorAction = new QAction(tr("Add Projector to %1 : %2").arg(name, p), aMenu);
                connect(projectorAction, &QAction::triggered, this, [=]() { CreateProjector(*plat, p); });
                actions.emplace_back(projectorAction);
             }
@@ -55,7 +56,7 @@ void Projector::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntit
       {
          for (auto&& projector : projectorList->second)
          {
-            QAction* remAction = new QAction(QString("Remove Projector from %1 : %2").arg(name, projector.first), aMenu);
+            QAction* remAction = new QAction(tr("Remove Projector from %1 : %2").arg(name, projector.first), aMenu);
             connect(remAction, &QAction::triggered, this, [=]() { RemoveProjector(*plat, projector.first); });
             actions.emplace_back(remAction);
          }
@@ -63,7 +64,7 @@ void Projector::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntit
    }
    if (!actions.empty())
    {
-      QMenu* submenu = aMenu->addMenu("Projectors");
+      QMenu* submenu = aMenu->addMenu(tr("Projectors"));
       for (auto& act : actions)
       {
          submenu->addAction(act);

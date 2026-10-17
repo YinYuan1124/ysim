@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -256,8 +256,9 @@ void wizard::EditorDock::BuildStatusBar()
    // Far left
 
    // Status
+   // 二次开发（i18n）：状态栏文本 tr() 化
    mStatusLabelPtr = new QLabel;
-   mStatusLabelPtr->setText("Ready");
+   mStatusLabelPtr->setText(tr("Ready"));
    mStatusBar->addWidget(mStatusLabelPtr);
 
    // Spacer
@@ -281,19 +282,21 @@ void wizard::EditorDock::CursorPositionChanged()
 {
    size_t offset, line, column;
    mEditor->GetCurrentPosition(offset, line, column);
-   mLineLabelPtr->setText("Ln " + QString::number(line + 1));
-   mColumnLabelPtr->setText("Col " + QString::number(column + 1));
+   // 二次开发（i18n）：行号/列号文本 tr() 化
+   mLineLabelPtr->setText(tr("Ln %1").arg(line + 1));
+   mColumnLabelPtr->setText(tr("Col %1").arg(column + 1));
 }
 
 void wizard::EditorDock::StatusUpdate()
 {
    if (!ProjectWorkspace::Instance()->ParseIsUpToDate())
    {
-      mStatusLabelPtr->setText("Parsing...");
+      // 二次开发（i18n）：状态栏解析中/就绪文本 tr() 化
+      mStatusLabelPtr->setText(tr("Parsing..."));
    }
    else
    {
-      mStatusLabelPtr->setText("Ready:");
+      mStatusLabelPtr->setText(tr("Ready:"));
    }
 }
 

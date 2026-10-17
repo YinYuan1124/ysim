@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -14,6 +14,9 @@
 #include <QApplication>
 #include <QDockWidget>
 #include <QMessageBox>
+#include <QTranslator> // 二次开发（i18n）：中文翻译加载
+
+#include "logging/WkfLogModel.hpp" // 二次开发（i18n）：日志面板中文显示通道
 #ifdef _WIN32
 #include <QMimeDatabase>
 #include <QtWinExtras>
@@ -305,6 +308,25 @@ try
    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    QApplication q(argc, argv);
+
+   // 二次开发（i18n）：安装中文翻译器，与 wizard/mystic 共用 build/Release/i18n 下的 qm 文件。
+   // qm 存在即启用中文，删除 qm 即回退英文，无需语言偏好设置。
+   {
+      const QString i18nDir = QCoreApplication::applicationDirPath() + "/i18n";
+      auto* appTranslator = new QTranslator(&q);
+      if (appTranslator->load("wizard_zh_CN", i18nDir))
+      {
+         q.installTranslator(appTranslator);
+         // 二次开发（i18n）：开启 wkf 日志面板中文显示通道（落盘日志保持英文）
+         wkf::log::SetChineseDisplay(true);
+      }
+      // Qt 内置控件的翻译（OK/取消按钮、颜色对话框等）
+      auto* qtTranslator = new QTranslator(&q);
+      if (qtTranslator->load("qtbase_zh_CN", i18nDir))
+      {
+         q.installTranslator(qtTranslator);
+      }
+   }
 
    WarlockApplication app(argc, argv);
 

@@ -487,19 +487,20 @@ void Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntityPtr)
       {
          QString name = QString::fromStdString(aEntityPtr->GetName());
 
-         connect(aMenu->addAction(QString("Select %1").arg(name)),
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
+         connect(aMenu->addAction(tr("Select %1").arg(name)),
                  &QAction::triggered,
                  [=]() { wizEnv.RequestSelectPlatform(name); });
 
-         wkf::Action* gotoDef = new wkf::Action(QIcon::fromTheme("find_text"), QString("Find Definition"), aMenu);
+         wkf::Action* gotoDef = new wkf::Action(QIcon::fromTheme("find_text"), tr("Find Definition"), aMenu);
          aMenu->addAction(gotoDef);
          connect(gotoDef, &QAction::triggered, [platform]() { platform->GotoDefinition(); });
 
-         wkf::Action* deleteAction = new wkf::Action(QIcon::fromTheme("delete"), QString("Delete %1").arg(name), aMenu);
+         wkf::Action* deleteAction = new wkf::Action(QIcon::fromTheme("delete"), tr("Delete %1").arg(name), aMenu);
          aMenu->addAction(deleteAction);
          connect(deleteAction, &QAction::triggered, this, [=]() { DeletePlatformActionHandler(aEntityPtr); });
 
-         wkf::Action* cloneAction = new wkf::Action(QIcon::fromTheme("clone"), QString("Clone %1").arg(name), aMenu);
+         wkf::Action* cloneAction = new wkf::Action(QIcon::fromTheme("clone"), tr("Clone %1").arg(name), aMenu);
          aMenu->addAction(cloneAction);
          connect(cloneAction, &QAction::triggered, this, [=]() { ClonePlatformActionHandler(platform); });
       }
@@ -510,12 +511,13 @@ void Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer* aViewerPtr)
 {
    if (aViewerPtr == vaEnv.GetStandardViewer())
    {
+      // 二次开发（i18n）：子菜单标题 tr() 化；objectName 保持英文原样，供各插件 findChild 查找键使用
       auto AddLocationMenu = [aMenu]()
       {
          auto addMenu = aMenu->findChild<QMenu*>("Add at Location", Qt::FindDirectChildrenOnly);
          if (!addMenu)
          {
-            addMenu = aMenu->addMenu("Add at Location");
+            addMenu = aMenu->addMenu(tr("Add at Location"));
             addMenu->setObjectName("Add at Location");
          }
          return addMenu;
@@ -524,7 +526,7 @@ void Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer* aViewerPtr)
       if (wizard::Project::Instance() != nullptr)
       {
          auto         addMenu      = AddLocationMenu();
-         wkf::Action* createAction = new wkf::Action(QIcon::fromTheme("add"), QString("Platform"), addMenu);
+         wkf::Action* createAction = new wkf::Action(QIcon::fromTheme("add"), tr("Platform"), addMenu);
          addMenu->addAction(createAction);
          connect(createAction, &QAction::triggered, this, [=]() { CreatePlatformActionHandler(); });
       }

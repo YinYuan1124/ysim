@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -18,6 +18,7 @@
 
 #include <QAbstractButton>
 #include <QClipboard>
+#include <QCoreApplication> // 二次开发（i18n）：模板类无 Q_OBJECT，显式上下文翻译所需
 #include <QDesktopServices>
 #include <QDialog>
 #include <QDirIterator>
@@ -201,9 +202,10 @@ StartupDialog<SELECTION_TYPE>::StartupDialog(SELECTION_TYPE& aSelection,
    mUi.setupUi(this);
 
    auto* okButton = mUi.buttonBox->button(QDialogButtonBox::Ok);
-   okButton->setText("Run");
+   // 二次开发（i18n）：按钮文本接入翻译通道（上下文与 .ui 的 WkfStartupDialog 保持一致）
+   okButton->setText(QCoreApplication::translate("WkfStartupDialog", "Run"));
    okButton->setEnabled(false);
-   mUi.buttonBox->button(QDialogButtonBox::Reset)->setText("Clear Recents");
+   mUi.buttonBox->button(QDialogButtonBox::Reset)->setText(QCoreApplication::translate("WkfStartupDialog", "Clear Recents"));
 
    connect(mUi.buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
    connect(mUi.buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
@@ -217,7 +219,7 @@ StartupDialog<SELECTION_TYPE>::StartupDialog(SELECTION_TYPE& aSelection,
    mTipsList = wkfEnv.GetApplicationTips();
    if (mTipsList.empty())
    {
-      mUi.tipDescription->setText("No tips are currently available.");
+      mUi.tipDescription->setText(QCoreApplication::translate("WkfStartupDialog", "No tips are currently available.")); // 二次开发（i18n）：接入翻译通道
       mUi.tipPushButton->hide();
    }
    else
@@ -290,8 +292,9 @@ void StartupDialog<SELECTION_TYPE>::RecentLinkActivated(const QString& link)
       {
          QMessageBox::StandardButton button =
             QMessageBox::warning(this,
-                                 "File not found",
-                                 QString("File %1\ndoes not exist. Remove from recent list?").arg(filePath),
+                                 QCoreApplication::translate("WkfStartupDialog", "File not found"), // 二次开发（i18n）：接入翻译通道
+                                 QCoreApplication::translate("WkfStartupDialog", "File %1\ndoes not exist. Remove from recent list?")
+                                    .arg(filePath), // 二次开发（i18n）：接入翻译通道
                                  QMessageBox::Yes | QMessageBox::No);
          if (button == QMessageBox::Yes)
          {
@@ -317,7 +320,7 @@ void StartupDialog<SELECTION_TYPE>::RecentLabelContextMenuRequested(const QPoint
    connect(menu.addAction(RunActionText()),
            &QAction::triggered,
            [=]() { RecentLinkActivated(detail::ConvertToString(link)); });
-   connect(menu.addAction("Remove From List"),
+   connect(menu.addAction(QCoreApplication::translate("WkfStartupDialog", "Remove From List")), // 二次开发（i18n）：接入翻译通道
            &QAction::triggered,
            [=]()
            {
@@ -325,7 +328,7 @@ void StartupDialog<SELECTION_TYPE>::RecentLabelContextMenuRequested(const QPoint
               PopulateRecents();
            });
    menu.addSeparator();
-   connect(menu.addAction("Open Containing Folder"),
+   connect(menu.addAction(QCoreApplication::translate("WkfStartupDialog", "Open Containing Folder")), // 二次开发（i18n）：接入翻译通道
            &QAction::triggered,
            [link]()
            {
@@ -335,9 +338,8 @@ void StartupDialog<SELECTION_TYPE>::RecentLabelContextMenuRequested(const QPoint
                  QDesktopServices::openUrl(QUrl::fromLocalFile(fi.absolutePath()));
               }
            });
-   connect(menu.addAction("Copy Path to Clipboard"),
-           &QAction::triggered,
-           [link]() { qApp->clipboard()->setText(detail::ConvertToString(link)); });
+   connect(menu.addAction(QCoreApplication::translate("WkfStartupDialog", "Copy Path to Clipboard")), // 二次开发（i18n）：接入翻译通道
+           &QAction::triggered, [link]() { qApp->clipboard()->setText(detail::ConvertToString(link)); });
    BuildRecentContextMenu(menu, link);
 
    menu.exec(pos);
@@ -348,7 +350,9 @@ void StartupDialog<SELECTION_TYPE>::accept()
 {
    if (mSelection.isEmpty())
    {
-      QMessageBox::warning(this, "Empty Selection", "Please make a selection to continue.");
+      QMessageBox::warning(this,
+                          QCoreApplication::translate("WkfStartupDialog", "Empty Selection"), // 二次开发（i18n）：接入翻译通道
+                          QCoreApplication::translate("WkfStartupDialog", "Please make a selection to continue.")); // 二次开发（i18n）：接入翻译通道
    }
    else
    {
@@ -411,7 +415,7 @@ void StartupDialog<SELECTION_TYPE>::PopulateRecents()
 
    if (layoutPtr->count() == 0)
    {
-      QLabel* labelPtr = new QLabel("<p style=\"font-size:10pt;\"><i>No recents found</i></p>", mUi.recentsGroupBox);
+      QLabel* labelPtr = new QLabel(QCoreApplication::translate("WkfStartupDialog", "<p style=\"font-size:10pt;\"><i>No recents found</i></p>"), mUi.recentsGroupBox); // 二次开发（i18n）：接入翻译通道
       layoutPtr->addWidget(labelPtr);
    }
 
@@ -428,7 +432,7 @@ void StartupDialog<SELECTION_TYPE>::PopulateTips()
    }
    else
    {
-      mUi.tipDescription->setText("No tips are currently available.");
+      mUi.tipDescription->setText(QCoreApplication::translate("WkfStartupDialog", "No tips are currently available.")); // 二次开发（i18n）：接入翻译通道
    }
 }
 
@@ -450,7 +454,7 @@ void StartupDialog<SELECTION_TYPE>::PopulateDocumentation()
 
    if (layoutPtr->count() == 0)
    {
-      QLabel* labelPtr = new QLabel("<p style=\"font-size:10pt;\"><i>No documentation found</i></p>", mUi.docGroupBox);
+      QLabel* labelPtr = new QLabel(QCoreApplication::translate("WkfStartupDialog", "<p style=\"font-size:10pt;\"><i>No documentation found</i></p>"), mUi.docGroupBox); // 二次开发（i18n）：接入翻译通道
       layoutPtr->addWidget(labelPtr);
    }
    layoutPtr->addStretch();

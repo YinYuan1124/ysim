@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -559,10 +559,10 @@ void Engage::Dialog::AddRunOutputCB()
       QTableWidgetItem* phaseItem = new QTableWidgetItem(newItem.GetPhase());
       mUi.mRunOutputTableWidget->setItem(curRow, 0, nameItem);
       mUi.mRunOutputTableWidget->setItem(curRow, 1, phaseItem);
-      QPushButton* removeItemButton = new QPushButton(tr("Remove") // 二次开发（i18n）, mUi.mRunOutputTableWidget);
+      QPushButton* removeItemButton = new QPushButton(tr("Remove"), mUi.mRunOutputTableWidget); // 二次开发（i18n）：按钮文本 tr() 化
       removeItemButton->setFixedWidth(50);
 
-      QPushButton* editItemButton = new QPushButton(tr("Edit") // 二次开发（i18n）, mUi.mRunOutputTableWidget);
+      QPushButton* editItemButton = new QPushButton(tr("Edit"), mUi.mRunOutputTableWidget); // 二次开发（i18n）：按钮文本 tr() 化
 
       QDialogButtonBox* buttonBox = new QDialogButtonBox(Qt::Horizontal);
       buttonBox->addButton(removeItemButton, QDialogButtonBox::ActionRole);
@@ -585,10 +585,10 @@ void Engage::Dialog::AddOutputRateCB()
       mOutputRateItems.push_back(newItem);
       QTableWidgetItem* nameItem = new QTableWidgetItem(newItem.GetFileName());
       mUi.mOutputRateTableWidget->setItem(curRow, 0, nameItem);
-      QPushButton* removeItemButton = new QPushButton(tr("Remove") // 二次开发（i18n）, mUi.mOutputRateTableWidget);
+      QPushButton* removeItemButton = new QPushButton(tr("Remove"), mUi.mOutputRateTableWidget); // 二次开发（i18n）：按钮文本 tr() 化
       removeItemButton->setFixedWidth(50);
 
-      QPushButton* editItemButton = new QPushButton(tr("Edit") // 二次开发（i18n）, mUi.mOutputRateTableWidget);
+      QPushButton* editItemButton = new QPushButton(tr("Edit"), mUi.mOutputRateTableWidget); // 二次开发（i18n）：按钮文本 tr() 化
 
       QDialogButtonBox* buttonBox = new QDialogButtonBox(Qt::Horizontal);
       buttonBox->addButton(removeItemButton, QDialogButtonBox::ActionRole);

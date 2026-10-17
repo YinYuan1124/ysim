@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -44,16 +44,17 @@ void Visibility::Plugin::GuiUpdate()
 
 void Visibility::Plugin::BuildViewerContextMenu(QMenu* aMenuPtr, vespa::VaViewer* aViewerPtr)
 {
-   QMenu* subMenuPtr = new QMenu("Visibility", aMenuPtr);
+   // 二次开发（i18n）：右键菜单子菜单标题与动作文本 tr() 化
+   QMenu* subMenuPtr = new QMenu(tr("Visibility"), aMenuPtr);
 
-   QAction* showAllPtr = new QAction(QString("Remove all Filters"), subMenuPtr);
+   QAction* showAllPtr = new QAction(tr("Remove all Filters"), subMenuPtr);
    subMenuPtr->addAction(showAllPtr);
    connect(showAllPtr, &QAction::triggered, this, &Visibility::Plugin::ShowAll);
 
    if (wkfEnv.GetSelectedPlatforms().size() != 0)
    {
-      QAction* hideSelectedPtr   = new QAction(QString("Filter Out Selected Platforms"), subMenuPtr);
-      QAction* hideUnselectedPtr = new QAction(QString("Filter Out Unselected Platforms"), subMenuPtr);
+      QAction* hideSelectedPtr   = new QAction(tr("Filter Out Selected Platforms"), subMenuPtr);
+      QAction* hideUnselectedPtr = new QAction(tr("Filter Out Unselected Platforms"), subMenuPtr);
 
       subMenuPtr->addAction(hideSelectedPtr);
       subMenuPtr->addAction(hideUnselectedPtr);

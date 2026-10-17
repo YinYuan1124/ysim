@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -134,9 +134,10 @@ void wkf::MilStdIconPrefWidget::AddTeamToSection()
    }
    else
    {
+      // 二次开发（i18n）：警告框标题与文本 tr() 化（分类/队名串为映射键不译）
       QMessageBox::warning(nullptr,
-                           "Mapping Error",
-                           "The team has already been mapped. Please remove it before adding it again.");
+                           tr("Mapping Error"),
+                           tr("The team has already been mapped. Please remove it before adding it again."));
    }
 }
 

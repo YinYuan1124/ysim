@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -43,7 +43,7 @@ WizCommVis::CommVisViewLinksDialog::CommVisViewLinksDialog(const std::vector<wkf
       QLineEdit* destAddressLineEdit = new QLineEdit(QString::fromStdString(curLink.mDestinationAddress), this);
       mUI.mLinksTable->setCellWidget(row, 2, destAddressLineEdit);
 
-      QPushButton* deleteLinkPushButton = new QPushButton(tr("Delete Link") // 二次开发（i18n）, this);
+      QPushButton* deleteLinkPushButton = new QPushButton(tr("Delete Link"), this); // 二次开发（i18n）：按钮文本 tr() 化
       mUI.mLinksTable->setCellWidget(row, 3, deleteLinkPushButton);
       deleteLinkPushButton->setProperty("row", row);
       connect(deleteLinkPushButton, &QPushButton::clicked, this, &CommVisViewLinksDialog::RemoveRow);
@@ -68,7 +68,7 @@ void WizCommVis::CommVisViewLinksDialog::AddRow()
    QLineEdit* destAddressLineEdit = new QLineEdit(this);
    mUI.mLinksTable->setCellWidget(numRows, 2, destAddressLineEdit);
 
-   QPushButton* deleteLinkPushButton = new QPushButton(tr("Delete Link") // 二次开发（i18n）, this);
+   QPushButton* deleteLinkPushButton = new QPushButton(tr("Delete Link"), this); // 二次开发（i18n）：按钮文本 tr() 化
    mUI.mLinksTable->setCellWidget(numRows, 3, deleteLinkPushButton);
    connect(deleteLinkPushButton, &QPushButton::clicked, this, &CommVisViewLinksDialog::RemoveRow);
 }

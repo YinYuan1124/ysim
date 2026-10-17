@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -29,7 +29,7 @@ PositionConverter::Plugin::Plugin(const QString& aPluginName, const size_t aUniq
    if (toolsMenuPtr)
    {
       wkf::Action* dlgActionPtr =
-         new wkf::Action(QIcon::fromTheme("location"), "Position Converter Tool...", mainWindowPtr);
+         new wkf::Action(QIcon::fromTheme("location"), tr("Position Converter Tool..."), mainWindowPtr); // 二次开发（i18n）：Tools 菜单文本汉化
       connect(dlgActionPtr, &QAction::triggered, mDialog.data(), &QDialog::show);
       toolsMenuPtr->addAction(dlgActionPtr);
    }

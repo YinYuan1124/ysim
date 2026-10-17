@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -217,7 +217,8 @@ void RelativeGeometry::Dialog::Update()
    mRangeRateUpdater   = wkf::make_updater<RangeRateUpdater>(mUi.mFrom->GetPlatformName(), mUi.mTo->GetPlatformName());
    // clear then add updaters
 
-   if (mUi.mDomain->currentText() == "Satellite")
+   // 二次开发（i18n）：域切换判断改用 currentIndex（0=卫星 1=地表），原 currentText 与英文字面量比较在界面翻译后恒失配
+   if (mUi.mDomain->currentIndex() == 0)
    {
       mBearingUpdater    = nullptr;
       mElevationUpdater  = nullptr;
@@ -228,7 +229,7 @@ void RelativeGeometry::Dialog::Update()
       mInTrackUpdater    = wkf::make_updater<InTrackUpdater>(mUi.mFrom->GetPlatformName(), mUi.mTo->GetPlatformName());
       mCrossTrackUpdater = wkf::make_updater<CrossTrackUpdater>(mUi.mFrom->GetPlatformName(), mUi.mTo->GetPlatformName());
    }
-   else if (mUi.mDomain->currentText() == "Surface")
+   else if (mUi.mDomain->currentIndex() == 1)
    {
       mRadialUpdater     = nullptr;
       mInTrackUpdater    = nullptr;

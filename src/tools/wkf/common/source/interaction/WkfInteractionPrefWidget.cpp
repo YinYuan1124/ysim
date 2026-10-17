@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,33 +22,35 @@ wkf::InteractionPrefWidget::InteractionPrefWidget()
 {
    mUi.setupUi(this);
 
-   QTreeWidgetItem* lw = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList("Line Width"));
+   // 二次开发（i18n）：树项显示文本 tr() 化（颜色存取走 mItemMap 枚举键不受影响）
+   QTreeWidgetItem* lw = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList(tr("Line Width")));
    mLineWidthWidget    = new QSpinBox(this);
    mLineWidthWidget->setRange(1, 8);
    mLineWidthWidget->setValue(3);
    mUi.treeWidget->setItemWidget(lw, 1, mLineWidthWidget);
-   QTreeWidgetItem* standard = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList("Standard"));
-   mItemMap[InteractionPrefData::cDETECT]     = new QTreeWidgetItem(standard, QStringList("Detect"));
-   mItemMap[InteractionPrefData::cTRACK]      = new QTreeWidgetItem(standard, QStringList("Sensor Track"));
-   mItemMap[InteractionPrefData::cLOCALTRACK] = new QTreeWidgetItem(standard, QStringList("Local Track"));
-   mItemMap[InteractionPrefData::cFIRE]       = new QTreeWidgetItem(standard, QStringList("Fire"));
-   mItemMap[InteractionPrefData::cKILL]       = new QTreeWidgetItem(standard, QStringList("Kill*"));
-   mItemMap[InteractionPrefData::cJAM]        = new QTreeWidgetItem(standard, QStringList("Jam Request"));
-   mItemMap[InteractionPrefData::cMESSAGE]    = new QTreeWidgetItem(standard, QStringList("Comm*"));
-   mItemMap[InteractionPrefData::cTASK]       = new QTreeWidgetItem(standard, QStringList("Task"));
+   QTreeWidgetItem* standard = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList(tr("Standard")));
+   mItemMap[InteractionPrefData::cDETECT]     = new QTreeWidgetItem(standard, QStringList(tr("Detect")));
+   mItemMap[InteractionPrefData::cTRACK]      = new QTreeWidgetItem(standard, QStringList(tr("Sensor Track")));
+   mItemMap[InteractionPrefData::cLOCALTRACK] = new QTreeWidgetItem(standard, QStringList(tr("Local Track")));
+   mItemMap[InteractionPrefData::cFIRE]       = new QTreeWidgetItem(standard, QStringList(tr("Fire")));
+   mItemMap[InteractionPrefData::cKILL]       = new QTreeWidgetItem(standard, QStringList(tr("Kill*")));
+   mItemMap[InteractionPrefData::cJAM]        = new QTreeWidgetItem(standard, QStringList(tr("Jam Request")));
+   mItemMap[InteractionPrefData::cMESSAGE]    = new QTreeWidgetItem(standard, QStringList(tr("Comm*")));
+   mItemMap[InteractionPrefData::cTASK]       = new QTreeWidgetItem(standard, QStringList(tr("Task")));
    standard->setExpanded(true);
-   QTreeWidgetItem* tt = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList("Tooltips"));
+   QTreeWidgetItem* tt = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList(tr("Tooltips")));
    mTooltipWidget      = new QComboBox(this);
-   mTooltipWidget->addItem("Off", InteractionPrefData::cTT_OFF);
-   mTooltipWidget->addItem("Simple", InteractionPrefData::cTT_SIMPLE);
-   mTooltipWidget->addItem("Detailed", InteractionPrefData::cTT_DETAILED);
+   // 二次开发（i18n）：提示模式组合框项 tr() 化（存取走 currentData 不受翻译影响）
+   mTooltipWidget->addItem(tr("Off"), InteractionPrefData::cTT_OFF);
+   mTooltipWidget->addItem(tr("Simple"), InteractionPrefData::cTT_SIMPLE);
+   mTooltipWidget->addItem(tr("Detailed"), InteractionPrefData::cTT_DETAILED);
    mUi.treeWidget->setItemWidget(tt, 1, mTooltipWidget);
-   QTreeWidgetItem* to = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList("*Timeout (sec)"));
+   QTreeWidgetItem* to = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList(tr("*Timeout (sec)")));
    mTimeoutWidget      = new QSpinBox(this);
    mTimeoutWidget->setRange(0, 600);
    mTimeoutWidget->setValue(30);
    mUi.treeWidget->setItemWidget(to, 1, mTimeoutWidget);
-   QTreeWidgetItem* sl    = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList("*Permit Stack"));
+   QTreeWidgetItem* sl    = new QTreeWidgetItem(mUi.treeWidget->invisibleRootItem(), QStringList(tr("*Permit Stack")));
    mStackingAllowedWidget = new QCheckBox(this);
    mUi.treeWidget->setItemWidget(sl, 1, mStackingAllowedWidget);
 
@@ -68,7 +70,7 @@ wkf::InteractionPrefWidget::InteractionPrefWidget()
                     {
                        newparent = child;
                     }
-                    else if (child->text(0) == "Standard")
+                    else if (child->text(0) == tr("Standard")) // 二次开发（i18n）：与树项同上下文 tr() 比较，译文一致不失配
                     {
                        preceding = child;
                     }

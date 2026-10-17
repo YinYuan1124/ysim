@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -47,8 +47,9 @@ void warlock::net::PrefWidget::WritePreferenceData(PrefData& aPrefData)
 void warlock::net::PrefWidget::OnAddInterfaceClicked()
 {
    bool    isOk;
+   // 二次开发（i18n）：输入对话框标题与标签 tr() 化（默认值为 IP 格式示例，用户输入为数据，均不译）
    QString userValue =
-      QInputDialog::getText(this, "Add Interface", "Interface:", QLineEdit::Normal, "000.000.000.000", &isOk);
+      QInputDialog::getText(this, tr("Add Interface"), tr("Interface:"), QLineEdit::Normal, "000.000.000.000", &isOk);
    if (isOk)
    {
       PopulateInterfaces(userValue);

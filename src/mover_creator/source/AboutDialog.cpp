@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,9 +27,9 @@ AboutDialog::AboutDialog(QWidget* aParent,
 {
    // About Section
    mUIPtr->setupUi(this);
-   mUIPtr->mApplicationLabel->setText("Application:  AFSIM Mover Creator (MC)");
-   mUIPtr->mVersionLabel->setText(QString("Version:  %1").arg(VersionInfo::GetVersionNumberString()));
-   mUIPtr->mBuildLabel->setText(QString("Build Date:  ") + __DATE__ + " " + __TIME__);
+   mUIPtr->mApplicationLabel->setText(tr("Application:  AFSIM Mover Creator (MC)")); // 二次开发（i18n）：标签文本接入翻译通道
+   mUIPtr->mVersionLabel->setText(tr("Version:  %1").arg(VersionInfo::GetVersionNumberString())); // 二次开发（i18n）：版本标签接入翻译通道
+   mUIPtr->mBuildLabel->setText(tr("Build Date:  ") + __DATE__ + " " + __TIME__); // 二次开发（i18n）：构建日期标签接入翻译通道
 
    connect(mUIPtr->mButtonBox, &QDialogButtonBox::accepted, this, [this] { close(); });
    connect(mUIPtr->mArtworkPushButton, &QPushButton::clicked, this, &AboutDialog::HandleArtworkButtonClicked);

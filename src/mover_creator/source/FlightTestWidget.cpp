@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -79,7 +79,7 @@ void FlightTestWidget::LaunchTestClicked()
    if (mWarlockSettings == nullptr)
    {
       // Could not find the warlock settings file, warn the user and prompt them to install warlock
-      QMessageBox::warning(this, "Warlock Not Found", "Notice: Warlock needs to be installed in order to Setup/Tune Controls!", QMessageBox::Ok);
+      QMessageBox::warning(this, tr("Warlock Not Found"), tr("Notice: Warlock needs to be installed in order to Setup/Tune Controls!"), QMessageBox::Ok); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
    // Write out the warlock settings

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -154,9 +154,10 @@ void SimulationManager::PrefWidget::WritePreferenceData(PrefData& aPrefData)
 void SimulationManager::PrefWidget::Add()
 {
 #ifdef _WIN32
-   QString file = QFileDialog::getOpenFileName(this, "Choose AFSIM executable", QString(), "Executable (*.exe);;");
+   // 二次开发（i18n）：文件对话框标题与过滤器 tr() 化
+   QString file = QFileDialog::getOpenFileName(this, tr("Choose AFSIM executable"), QString(), tr("Executable (*.exe);;"));
 #else
-   QString file = QFileDialog::getOpenFileName(this, "Choose AFSIM executable", QString(), "Executable (*);;");
+   QString file = QFileDialog::getOpenFileName(this, tr("Choose AFSIM executable"), QString(), tr("Executable (*);;"));
 #endif
    if (!file.isNull())
    {
@@ -185,7 +186,8 @@ void SimulationManager::PrefWidget::Add()
       }
       else
       {
-         QMessageBox::warning(this, "Non-AFSIM executable", file + " does not appear to be an AFSIM executable.");
+         // 二次开发（i18n）：警告框标题与文本 tr() 化（文件路径为运行时数据不译）
+         QMessageBox::warning(this, tr("Non-AFSIM executable"), file + tr(" does not appear to be an AFSIM executable."));
       }
    }
    // else user canceled open dialog.  Do nothing.
@@ -290,25 +292,26 @@ void SimulationManager::PrefWidget::PopulateAppDetails(SimItem* aItem)
    mUi.simDetails->horizontalHeader()->setStretchLastSection(true);
 
    // Left column setup with non-editable labels
-   QTableWidgetItem* nameLabel = new QTableWidgetItem("Name");
+   // 二次开发（i18n）：详情表左列标签 tr() 化（右列内容为运行时数据不译）
+   QTableWidgetItem* nameLabel = new QTableWidgetItem(tr("Name"));
    nameLabel->setFlags(nameLabel->flags() & ~Qt::ItemIsEditable);
 
-   QTableWidgetItem* pathLabel = new QTableWidgetItem("Path");
+   QTableWidgetItem* pathLabel = new QTableWidgetItem(tr("Path"));
    pathLabel->setFlags(pathLabel->flags() & ~Qt::ItemIsEditable);
 
-   QTableWidgetItem* versionLabel = new QTableWidgetItem("Version");
+   QTableWidgetItem* versionLabel = new QTableWidgetItem(tr("Version"));
    versionLabel->setFlags(versionLabel->flags() & ~Qt::ItemIsEditable);
 
-   QTableWidgetItem* exeLabel = new QTableWidgetItem("Filename");
+   QTableWidgetItem* exeLabel = new QTableWidgetItem(tr("Filename"));
    exeLabel->setFlags(exeLabel->flags() & ~Qt::ItemIsEditable);
 
-   QTableWidgetItem* dateLabel = new QTableWidgetItem("Date Modified");
+   QTableWidgetItem* dateLabel = new QTableWidgetItem(tr("Date Modified"));
    dateLabel->setFlags(dateLabel->flags() & ~Qt::ItemIsEditable);
 
-   QTableWidgetItem* profilingOutLabel = new QTableWidgetItem("Profiling Output Path");
+   QTableWidgetItem* profilingOutLabel = new QTableWidgetItem(tr("Profiling Output Path"));
    profilingOutLabel->setFlags(profilingOutLabel->flags() & ~Qt::ItemIsEditable);
 
-   QTableWidgetItem* commandLineParamLabel = new QTableWidgetItem("Extra arguments (Advanced)");
+   QTableWidgetItem* commandLineParamLabel = new QTableWidgetItem(tr("Extra arguments (Advanced)"));
    commandLineParamLabel->setFlags(commandLineParamLabel->flags() & ~Qt::ItemIsEditable);
 
    // Add items to table
@@ -353,7 +356,7 @@ void SimulationManager::PrefWidget::PopulateAppDetails(SimItem* aItem)
    {
       // We query this on setting read if it doesn't exist.  If we get here it's likely the executable
       // path is wrong.
-      const QString msg("Profiling support is unknown.  Remove and re-add the executable.");
+      const QString msg(tr("Profiling support is unknown.  Remove and re-add the executable."));
       profilingOutItem->setText(msg);
       profilingOutItem->setToolTip(msg);
       profilingOutItem->setFlags(profilingOutItem->flags() & ~Qt::ItemIsEditable);
@@ -361,14 +364,14 @@ void SimulationManager::PrefWidget::PopulateAppDetails(SimItem* aItem)
    else if (!*supportsProfiling)
    {
       // Check for support above built-in so built-ins without support can be label "not supported"
-      const QString msg("Executable does not support profiling.");
+      const QString msg(tr("Executable does not support profiling."));
       profilingOutItem->setText(msg);
       profilingOutItem->setToolTip(msg);
       profilingOutItem->setFlags(profilingOutItem->flags() & ~Qt::ItemIsEditable);
    }
    else if (aItem->BuiltIn())
    {
-      const QString msg("Profiling unavailable for default executable. Add a new executable entry to enable.");
+      const QString msg(tr("Profiling unavailable for default executable. Add a new executable entry to enable."));
       profilingOutItem->setText(msg);
       profilingOutItem->setToolTip(msg);
       profilingOutItem->setFlags(profilingOutItem->flags() & ~Qt::ItemIsEditable);
@@ -407,7 +410,7 @@ void SimulationManager::PrefWidget::DetailsItemDoubleClicked(QTableWidgetItem* i
    if (item && item->row() == static_cast<int>(AppDetailsTable::Row::profilingOut) &&
        item->column() == static_cast<int>(AppDetailsTable::Col::value))
    {
-      const QString selectedPath = QFileDialog::getSaveFileName(this, "Profiling output path");
+      const QString selectedPath = QFileDialog::getSaveFileName(this, tr("Profiling output path"));
       if (!selectedPath.isNull())
       {
          item->setText(selectedPath);

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -126,14 +126,15 @@ void WkPlatformData::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* a
    std::vector<wkf::AttachmentDataRing*> rings = aEntityPtr->FindAttachmentsOfType<wkf::AttachmentDataRing>();
    if (rings.size() > 0)
    {
-      QMenu* removeRingMenu = aMenu->addMenu("Remove Data Rings");
+      // 二次开发（i18n）：Remove 动态项改 %1 占位模式，实体右键菜单文本 tr() 化
+      QMenu* removeRingMenu = aMenu->addMenu(tr("Remove Data Rings"));
       for (const auto& ring : rings)
       {
          wkf::Updater* updater = ring->GetUpdater();
          if (updater != nullptr)
          {
             QAction* ringAction =
-               new QAction(QIcon::fromTheme("data_ring"), "Remove " + updater->GetUpdaterName() + " Ring", removeRingMenu);
+               new QAction(QIcon::fromTheme("data_ring"), tr("Remove %1 Ring").arg(updater->GetUpdaterName()), removeRingMenu);
 
             unsigned int ringId    = ring->GetUniqueId();
             int          ringLevel = ring->GetLevel();
@@ -155,7 +156,7 @@ void WkPlatformData::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* a
          }
       }
 
-      QAction* removeAllAction = new QAction(QIcon::fromTheme("data_ring"), "Remove all Rings", removeRingMenu);
+      QAction* removeAllAction = new QAction(QIcon::fromTheme("data_ring"), tr("Remove all Rings"), removeRingMenu);
 
       connect(removeAllAction,
               &QAction::triggered,

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -328,7 +328,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryBodyUsingName(Designer::Vehicl
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newGeometryBody->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -377,7 +377,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryFuselageUsingName(Designer::Ve
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newGeometryFuselage->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -419,7 +419,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryNacelleUsingName(Designer::Veh
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newGeometryNacelle->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -460,7 +460,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometrySurfaceUsingName(Designer::Veh
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newGeometrySurface->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -509,7 +509,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryWingUsingName(Designer::Vehicl
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newGeometryWing->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -550,7 +550,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometrySpeedBrakeUsingName(Designer::
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newSpeedBrake->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -591,7 +591,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryLandingGearUsingName(Designer:
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newLandingGear->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -633,7 +633,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryDishUsingName(Designer::Vehicl
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newDish->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -675,7 +675,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryPointMassUsingName(Designer::V
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newMass->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -731,7 +731,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryMassPropertiesUsingName(Design
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newMass->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -784,7 +784,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryPropulsionDataUsingName(Design
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newPropulsion->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -831,7 +831,7 @@ QTreeWidgetItem* GeometryWidget::CreateNewGeometryEngineUsingName(Designer::Vehi
    QString iconThemeName = QStringLiteral("delete_2");
    icon = QIcon::fromTheme(iconThemeName);
    deleteButton->setIcon(icon);
-   deleteButton->setToolTip("Delete Component");
+   deleteButton->setToolTip(tr("Delete Component")); // 二次开发（i18n）：工具提示接入翻译通道
    newEngine->SetDeleteButton(deleteButton);
    connect(deleteButton, &QPushButton::clicked, this, &GeometryWidget::DeleteComponent);
    btnWidgetLayout->addItem(horizontalSpacer);
@@ -2388,7 +2388,7 @@ void GeometryWidget::LoadEngineLengthDiameterThrustOffset(QTreeWidgetItem* aEngi
             {
                valueLineEdit->setText(QString::number(length));
                valueLineEdit->setReadOnly(true);
-               valueLineEdit->setToolTip("Edit this value on the Engine tab");
+               valueLineEdit->setToolTip(tr("Edit this value on the Engine tab")); // 二次开发（i18n）：工具提示接入翻译通道
             }
          }
          else if (childStr == "Diameter" && diameter > 0.0)
@@ -2398,7 +2398,7 @@ void GeometryWidget::LoadEngineLengthDiameterThrustOffset(QTreeWidgetItem* aEngi
             {
                valueLineEdit->setText(QString::number(diameter));
                valueLineEdit->setReadOnly(true);
-               valueLineEdit->setToolTip("Edit this value on the Engine tab");
+               valueLineEdit->setToolTip(tr("Edit this value on the Engine tab")); // 二次开发（i18n）：工具提示接入翻译通道
             }
          }
          else if (childStr == "Thrust Offset")
@@ -2408,7 +2408,7 @@ void GeometryWidget::LoadEngineLengthDiameterThrustOffset(QTreeWidgetItem* aEngi
             {
                valueLineEdit->setText(QString::number(thrustOffset));
                valueLineEdit->setReadOnly(true);
-               valueLineEdit->setToolTip("Edit this value on the Engine tab");
+               valueLineEdit->setToolTip(tr("Edit this value on the Engine tab")); // 二次开发（i18n）：工具提示接入翻译通道
             }
          }
          else if (childStr == "Mass")
@@ -2418,7 +2418,7 @@ void GeometryWidget::LoadEngineLengthDiameterThrustOffset(QTreeWidgetItem* aEngi
             {
                valueLineEdit->setText(QString::number(mass));
                valueLineEdit->setReadOnly(true);
-               valueLineEdit->setToolTip("Edit this value on the Engine tab");
+               valueLineEdit->setToolTip(tr("Edit this value on the Engine tab")); // 二次开发（i18n）：工具提示接入翻译通道
             }
          }
          else if (childStr == "Propellant Mass")
@@ -2428,7 +2428,7 @@ void GeometryWidget::LoadEngineLengthDiameterThrustOffset(QTreeWidgetItem* aEngi
             {
                valueLineEdit->setText(QString::number(propellantMass_lbs));
                valueLineEdit->setReadOnly(true);
-               valueLineEdit->setToolTip("Edit this value on the Engine tab");
+               valueLineEdit->setToolTip(tr("Edit this value on the Engine tab")); // 二次开发（i18n）：工具提示接入翻译通道
 
                // If this is not a solid propellant rocket, then hide it
                if (!solidPropellantRocket)

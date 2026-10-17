@@ -83,9 +83,10 @@ void wizard::ToolPrefWidget::WritePreferenceData(ToolPrefData& aPrefData)
 void wizard::ToolPrefWidget::Add()
 {
 #ifdef _WIN32
-   QString file = QFileDialog::getOpenFileName(this, "Choose tool executable", QString(), "Executable (*.exe);;");
+   // 二次开发（i18n）：文件对话框标题与过滤器 tr() 化（"vespa" 为别名比较键不译）
+   QString file = QFileDialog::getOpenFileName(this, tr("Choose tool executable"), QString(), tr("Executable (*.exe);;"));
 #else
-   QString   file = QFileDialog::getOpenFileName(this, "Choose tool executable", QString(), "Executable (*);;");
+   QString   file = QFileDialog::getOpenFileName(this, tr("Choose tool executable"), QString(), tr("Executable (*);;"));
 #endif
 
    if (!file.isEmpty())
@@ -103,8 +104,8 @@ void wizard::ToolPrefWidget::Add()
       if (alias == "vespa")
       {
          if (QMessageBox::Yes == QMessageBox::question(wkfEnv.GetMainWindow(),
-                                                       "Load CME Tools?",
-                                                       "Would you like to load other CME tools?",
+                                                       tr("Load CME Tools?"),
+                                                       tr("Would you like to load other CME tools?"),
                                                        QMessageBox::Yes,
                                                        QMessageBox::No))
          {

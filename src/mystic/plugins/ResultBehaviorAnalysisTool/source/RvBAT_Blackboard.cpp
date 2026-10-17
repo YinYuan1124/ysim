@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -11,6 +11,7 @@
 
 #include "RvBAT_Blackboard.hpp"
 
+#include <QCoreApplication> // 二次开发（i18n）：显式上下文翻译所需
 #include <QBoxLayout>
 
 #include "RvEventPipeClasses.hpp"
@@ -31,11 +32,11 @@ RvBAT::Blackboard::Blackboard(QWidget* aParentPtr, size_t aWidth)
    // Set initial title values
    mTitle.setAlignment(Qt::AlignCenter);
    mTitle.setFont(f);
-   mTitle.setText("Blackboard: Shared");
+   mTitle.setText(QCoreApplication::translate("RvBAT::Blackboard", "Blackboard: Shared")); // 二次开发（i18n）：标题接入翻译通道
 
    // Set initial tree values
    mTree.setColumnCount(2);
-   QList<QString> headers = {QString("Name"), QString("Value")};
+   QList<QString> headers = {QCoreApplication::translate("RvBAT::Blackboard", "Name"), QCoreApplication::translate("RvBAT::Blackboard", "Value")}; // 二次开发（i18n）：表头接入翻译通道
    mTree.setHeaderLabels(QStringList(headers));
 
    auto layout = new QVBoxLayout;
@@ -216,5 +217,5 @@ void RvBAT::Blackboard::ClearBlackboardData()
 
 void RvBAT::Blackboard::SetBlackboardTitle(const QString& aText)
 {
-   mTitle.setText("Blackboard: " + aText);
+   mTitle.setText(QCoreApplication::translate("RvBAT::Blackboard", "Blackboard: %1").arg(aText)); // 二次开发（i18n）：标题接入翻译通道（参数化）
 }

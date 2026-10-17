@@ -19,12 +19,13 @@ wizard::StartupDialog::StartupDialog(QStringList&    aInputFiles,
                                      Qt::WindowFlags aFlags /*= Qt::WindowFlags()*/)
    : wkf::StartupDialog<QStringList>(aInputFiles, aParent, aFlags)
 {
-   mDocLinks    = {{"wizard.html", "Main Page"},
-                {"wizard_users_guide.html", "User's Guide"},
-                {"wizard_reference_guide.html", "Reference Guide"},
-                {"wizard_change_log.html", "Change Log"},
-                {"main_page.html", "AFSIM Main Page"}};
-   auto* newPtr = mUi.buttonBox->addButton("New...", QDialogButtonBox::DestructiveRole);
+   // 二次开发（i18n）：文档链接文本与 New 按钮文本 tr() 化（链接目标文件名为键，不译）
+   mDocLinks    = {{"wizard.html", tr("Main Page")},
+                {"wizard_users_guide.html", tr("User's Guide")},
+                {"wizard_reference_guide.html", tr("Reference Guide")},
+                {"wizard_change_log.html", tr("Change Log")},
+                {"main_page.html", tr("AFSIM Main Page")}};
+   auto* newPtr = mUi.buttonBox->addButton(tr("New..."), QDialogButtonBox::DestructiveRole);
    // According to Qt docs, clicking a button defined with a "destructive" role should close the dialog, but it does
    // not. This is reported in https://bugreports.qt.io/browse/QTBUG-67168. Hence the need to call QDialog::done.
    connect(newPtr,
@@ -44,10 +45,11 @@ QStringList wizard::StartupDialog::Browse()
 
    // This does not use wkf::getOpenFileNames due to wkf::Environment not being set up yet,
    // instead the Browse button is disabled directly to prevent file browsing
+   // 二次开发（i18n）：文件对话框标题与类型过滤器 tr() 化（扩展名为协议键，原样保留）
    return QFileDialog::getOpenFileNames(this,
-                                        "Select Scenario File(s)",
+                                        tr("Select Scenario File(s)"),
                                         directory,
-                                        "AFSIM Input(*.afproj *.txt);; AFSIM Project(*.afproj);; All Files (*.*)");
+                                        tr("AFSIM Input(*.afproj *.txt);; AFSIM Project(*.afproj);; All Files (*.*)"));
 }
 
 void wizard::StartupDialog::RemoveRecent(const QStringList& aRecent)
@@ -104,7 +106,8 @@ bool wizard::StartupDialog::ValidateSelection()
       QFileInfo info(file);
       if (!info.exists())
       {
-         QMessageBox::warning(this, "File Not Found", "File: " + file + " was not found.");
+         // 二次开发（i18n）：警告框标题与正文 tr() 化（拼接串改 %1 参数化）
+         QMessageBox::warning(this, tr("File Not Found"), tr("File: %1 was not found.").arg(file));
          return false;
       }
    }

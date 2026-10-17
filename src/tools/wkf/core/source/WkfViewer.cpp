@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,8 @@
 // ****************************************************************************
 
 #include "WkfViewer.hpp"
+
+#include <QCoreApplication> // 二次开发（i18n）：显式翻译通道所需
 
 #include "UtMemory.hpp"
 #include "VaCamera.hpp"
@@ -68,7 +70,9 @@ wkf::AttachmentRubberband* wkf::Viewer::BeginRubberband(const vespa::VaEntity&  
       mParentPtr->setFocus(); // Give keyboard focus to dock widget so 'Esc' key can be used to cancel
       mParentPtr->setCursor(Qt::PointingHandCursor);
       // catch right clicks and esc
-      wkfEnv.GetMainWindow()->ShowStatusMessage(aStatusMessage + "  Press 'Esc' or right click to cancel...");
+      // 二次开发（i18n）：取消提示走显式翻译通道（wkf::Viewer 无 Q_OBJECT），所有橡皮筋操作状态栏共用
+      wkfEnv.GetMainWindow()->ShowStatusMessage(
+         aStatusMessage + QCoreApplication::translate("wkf::Viewer", "  Press 'Esc' or right click to cancel..."));
       mParentPtr->installEventFilter(mEventFilterPtr.get());
    }
    return mActiveRubberbandPtr;

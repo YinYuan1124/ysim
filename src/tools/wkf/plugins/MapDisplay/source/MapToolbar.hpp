@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -29,6 +29,8 @@ namespace Map
 {
 class ToolBar : public QToolBar
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 落到本类上下文
+
 public:
    ToolBar();
    ~ToolBar() override = default;

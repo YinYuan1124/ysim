@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -167,7 +167,7 @@ void CrdImporter::Dialog::AddPushButtonClicked()
    }
    QStringList inputFiles =
       QFileDialog::getOpenFileNames(this,
-                                    tr("Please select input .CRD file(s)") // 二次开发（i18n）,
+                                    tr("Please select input .CRD file(s)"), // 二次开发（i18n）：对话框标题 tr() 化
                                     mOpenFileLocationForFileDialog,
                                     "Common Route Definition files (*.crd *.xml);;All Files (*.*)");
 
@@ -328,7 +328,7 @@ void CrdImporter::Dialog::BrowsePushButtonClicked()
 
    fileDialog.setFileMode(QFileDialog::DirectoryOnly);
    fileDialog.setNameFilter("*.*");
-   fileDialog.setWindowTitle(tr("Please select an output directory") // 二次开发（i18n）);
+   fileDialog.setWindowTitle(tr("Please select an output directory")); // 二次开发（i18n）：对话框标题 tr() 化
 
    if (fileDialog.exec() == QFileDialog::Accepted)
    {

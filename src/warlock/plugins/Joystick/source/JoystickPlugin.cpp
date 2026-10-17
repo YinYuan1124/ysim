@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -133,7 +133,8 @@ void Joystick::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntity
       QString name = aEntityPtr->GetName().c_str();
       if (mDataContainer.IsPlatformP6DOF_Entity(name))
       {
-         wkf::Action* connectAction = new wkf::Action(QIcon::fromTheme("controller"), QString("Joystick Control"), aMenu);
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
+         wkf::Action* connectAction = new wkf::Action(QIcon::fromTheme("controller"), tr("Joystick Control"), aMenu);
          connectAction->setData(name);
          connect(connectAction, &QAction::triggered, this, &Plugin::ConnectToPlatformActionHandler);
       }

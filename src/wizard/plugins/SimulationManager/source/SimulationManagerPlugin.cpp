@@ -1,4 +1,4 @@
-﻿// ****************************************************************************
+// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -164,17 +164,20 @@ SimulationManager::Plugin::Plugin(const QString& aPluginName, const size_t aUniq
    mProgressBarAction->setVisible(false);
 
    mBreakpointControlPtr = new ScriptBreakpointControl(wkfEnv.GetMainWindow());
-   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mBreakpointControlPtr, tr("Script Tools")); // 二次开发（i18n）
+   // 二次开发（i18n）：直接传英文 "Script Tools"，由 FindOrCreateViewSubMenu 内部统一翻译。
+   // 不能先 tr() 成中文再传入，否则 FindOrCreateViewSubMenu 在 WkfMainWindowUi 上下文里
+   // 找不到中文 source 字符串，导致子菜单标题翻译静默失败。
+   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mBreakpointControlPtr, "Script Tools");
    wkfEnv.GetMainWindow()->tabifyDockWidget(mOutputPanel, mBreakpointControlPtr);
    mBreakpointControlPtr->setVisible(false);
 
    mDebugWatchControlPtr = new WsfScriptDebuggerWatchControl(wkfEnv.GetMainWindow());
-   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugWatchControlPtr, tr("Script Tools")); // 二次开发（i18n）
+   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugWatchControlPtr, "Script Tools");
    wkfEnv.GetMainWindow()->tabifyDockWidget(mOutputPanel, mDebugWatchControlPtr);
    mDebugWatchControlPtr->setVisible(false);
 
    mDebugCallstackControlPtr = new WsfScriptDebuggerCallstackControl(wkfEnv.GetMainWindow());
-   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugCallstackControlPtr, tr("Script Tools")); // 二次开发（i18n）
+   mainWindowPtr->AddDockWidget(Qt::BottomDockWidgetArea, mDebugCallstackControlPtr, "Script Tools");
    wkfEnv.GetMainWindow()->tabifyDockWidget(mOutputPanel, mDebugCallstackControlPtr);
    mDebugCallstackControlPtr->setVisible(false);
 
@@ -422,7 +425,9 @@ void SimulationManager::Plugin::Run(bool aDebug, bool aRestart)
                                      "No application configured",
                                      "This scenario needs to be configured with an application.");
          }
-         wkfEnv.GetMainWindow()->ShowPreferencePage(GetName());
+         // 二次开发（i18n）：原 GetName()（"Simulation Manager"）与任何首选项页面标题都不匹配，
+         // 英文原版即从未命中跳转目标。此场景（想定未配置应用）意图是定位 Sim Execution 页，改为显式传页面标题。
+         wkfEnv.GetMainWindow()->ShowPreferencePage(QString("Sim Execution"));
       }
    }
 }

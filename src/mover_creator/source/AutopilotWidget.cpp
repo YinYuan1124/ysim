@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -241,13 +241,13 @@ void AutopilotWidget::HandleTuneControlsClickedP6DOF()
    if (!mWarlockSettings)
    {
       // Could not find the warlock settings file, warn the user and prompt them to install warlock
-      QMessageBox::warning(this, "Warlock Not Found", "Notice: Warlock needs to be installed in order to Setup/Tune Controls!", QMessageBox::Ok);
+      QMessageBox::warning(this, tr("Warlock Not Found"), tr("Notice: Warlock needs to be installed in order to Setup/Tune Controls!"), QMessageBox::Ok); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
 
    if (mTunerFileName == "")
    {
-      QMessageBox::warning(this, "Warning: No PID Tuner File Specified", "Please specify a PID Tuning file before proceeding");
+      QMessageBox::warning(this, tr("Warning: No PID Tuner File Specified"), tr("Please specify a PID Tuning file before proceeding")); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
 
@@ -359,13 +359,13 @@ void AutopilotWidget::HandleTuneControlsClickedSixDOF(ScriptGeneratorSixDOF* aSc
    if (!mWarlockSettings)
    {
       // Could not find the warlock settings file, warn the user and prompt them to install warlock
-      QMessageBox::warning(this, "Warlock Not Found", "Notice: Warlock needs to be installed in order to Setup/Tune Controls!", QMessageBox::Ok);
+      QMessageBox::warning(this, tr("Warlock Not Found"), tr("Notice: Warlock needs to be installed in order to Setup/Tune Controls!"), QMessageBox::Ok); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
 
    if (mTunerFileName == "")
    {
-      QMessageBox::warning(this, "Warning: No PID Tuner File Specified", "Please specify a PID Tuning file before proceeding");
+      QMessageBox::warning(this, tr("Warning: No PID Tuner File Specified"), tr("Please specify a PID Tuning file before proceeding")); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
 
@@ -469,12 +469,12 @@ void AutopilotWidget::HandleHardwareTuneControlsClicked()
    if (!mWarlockSettings)
    {
       // Could not find the warlock settings file, warn the user and prompt them to install warlock
-      QMessageBox::warning(this, "Warlock Not Found", "Notice: Warlock needs to be installed in order to Setup/Tune Controls!", QMessageBox::Ok);
+      QMessageBox::warning(this, tr("Warlock Not Found"), tr("Notice: Warlock needs to be installed in order to Setup/Tune Controls!"), QMessageBox::Ok); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
    if (mTunerFileName == "")
    {
-      QMessageBox::warning(this, "Warning: No PID Tuner File Specified", "Please specify a PID Tuning file before proceeding");
+      QMessageBox::warning(this, tr("Warning: No PID Tuner File Specified"), tr("Please specify a PID Tuning file before proceeding")); // 二次开发（i18n）：警告框接入翻译通道
       return;
    }
 

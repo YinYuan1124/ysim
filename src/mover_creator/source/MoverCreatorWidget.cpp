@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -581,8 +581,8 @@ void MoverCreatorWidget::keyPressEvent(QKeyEvent* aEvent)
 
 void MoverCreatorWidget::RevertChanges()
 {
-   if (QMessageBox::warning(this, "Revert File Warning",
-                            "Warning: this will undo all changes made to the currently loaded vehicle!",
+   if (QMessageBox::warning(this, tr("Revert File Warning"), // 二次开发（i18n）：警告框接入翻译通道
+                            tr("Warning: this will undo all changes made to the currently loaded vehicle!"),
                             QDialogButtonBox::Ok, QDialogButtonBox::Cancel) == QDialogButtonBox::Ok)
    {
       // User clicked ok, revert to the original file

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,28 +19,30 @@
 wkf::OrbitPrefWidget::OrbitPrefWidget(bool aRealtime)
    : wkf::PrefWidgetT<wkf::OrbitPrefObject>()
 {
-   setWindowTitle("Orbits");
+   setWindowTitle(tr("Orbits")); // 二次开发（i18n）：页面标题 tr() 化
 
    QFormLayout* form = new QFormLayout(this);
    setLayout(form);
    if (aRealtime)
    {
+      // 二次开发（i18n）：表单标签 tr() 化
       mFadeout = new QSpinBox(this);
       mFadeout->setRange(1, 99999);
-      form->addRow("Fadeout (sec):", mFadeout);
+      form->addRow(tr("Fadeout (sec):"), mFadeout);
       mColorMode = new QComboBox(this);
-      mColorMode->addItem("White", OrbitPrefData::eWHITE);
-      mColorMode->addItem("Team", OrbitPrefData::eTEAM);
-      mColorMode->addItem("Name", OrbitPrefData::eNAMEHASH);
-      mColorMode->addItem("Scenario", OrbitPrefData::eSCENARIO);
-      form->addRow("Color:", mColorMode);
+      // 二次开发（i18n）：颜色模式组合框项 tr() 化（存取走 currentData 不受翻译影响）
+      mColorMode->addItem(tr("White"), OrbitPrefData::eWHITE);
+      mColorMode->addItem(tr("Team"), OrbitPrefData::eTEAM);
+      mColorMode->addItem(tr("Name"), OrbitPrefData::eNAMEHASH);
+      mColorMode->addItem(tr("Scenario"), OrbitPrefData::eSCENARIO);
+      form->addRow(tr("Color:"), mColorMode);
    }
    mLineWidth = new QSpinBox(this);
    mLineWidth->setRange(1, 6);
-   form->addRow("Line Width:", mLineWidth);
+   form->addRow(tr("Line Width:"), mLineWidth);
    mPeriods = new QSpinBox(this);
    mPeriods->setRange(1, 16);
-   form->addRow("Periods:", mPeriods);
+   form->addRow(tr("Periods:"), mPeriods);
 }
 
 void wkf::OrbitPrefWidget::WritePreferenceData(OrbitPrefData& aPrefData)
@@ -65,20 +67,11 @@ void wkf::OrbitPrefWidget::ReadPreferenceData(const OrbitPrefData& aPrefData)
    }
    if (mColorMode)
    {
-      switch (aPrefData.mColorMode)
+      // 二次开发（i18n）：组合框项已翻译，setCurrentText 按英文文本设置会失配，改用 findData 按数据恢复
+      int index = mColorMode->findData(static_cast<int>(aPrefData.mColorMode));
+      if (index != -1)
       {
-      case (OrbitPrefData::eWHITE):
-         mColorMode->setCurrentText("White");
-         break;
-      case (OrbitPrefData::eTEAM):
-         mColorMode->setCurrentText("Team");
-         break;
-      case (OrbitPrefData::eNAMEHASH):
-         mColorMode->setCurrentText("Name");
-         break;
-      case (OrbitPrefData::eSCENARIO):
-         mColorMode->setCurrentText("Scenario");
-         break;
+         mColorMode->setCurrentIndex(index);
       }
    }
    mLineWidth->setValue(aPrefData.mLineWidth);

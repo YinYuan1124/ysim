@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -88,18 +88,19 @@ Map::DockWidget::DockWidget(QMainWindow* parent, Qt::WindowFlags flags)
    mCallbacks.Add(vespa::VaObserver::AttachmentSelected.Connect(&DockWidget::AttachmentSelectedCB, this));
    mCallbacks.Add(vespa::VaObserver::AttachmentDeleted.Connect(&DockWidget::AttachmentDeletedCB, this));
 
-   mCenterOnSelectionPtr = new wkf::Action(QString("Center on Selection"), this, QKeySequence(Qt::ALT + Qt::Key_Home));
-   mCenterOnScenarioPtr  = new wkf::Action(QString("Center on Scenario"), this, QKeySequence(Qt::Key_Home));
+   // 二次开发（i18n）：右键菜单动作文本 tr() 化
+   mCenterOnSelectionPtr = new wkf::Action(tr("Center on Selection"), this, QKeySequence(Qt::ALT + Qt::Key_Home));
+   mCenterOnScenarioPtr  = new wkf::Action(tr("Center on Scenario"), this, QKeySequence(Qt::Key_Home));
    mCopyCursorToClipboardPtr = new wkf::Action(QIcon::fromTheme("location_clipboard"),
-                                               QString("Copy Location to Clipboard"),
+                                               tr("Copy Location to Clipboard"),
                                                this,
                                                QKeySequence(QKeySequence::Copy));
    mMeasureFromLocationPtr   = new wkf::Action(QIcon::fromTheme("distance"),
-                                             QString("Measure from Location..."),
+                                             tr("Measure from Location..."),
                                              this,
                                              QKeySequence(Qt::CTRL + Qt::Key_M));
    mMeasureFromPlatformPtr   = new wkf::Action(QIcon::fromTheme("distance"),
-                                             QString("Measure from Platform..."),
+                                             tr("Measure from Platform..."),
                                              this,
                                              QKeySequence(Qt::ALT + Qt::Key_M));
    connect(mCenterOnSelectionPtr, &QAction::triggered, [this]() { mViewerPtr->CenterCamera(true); });
@@ -147,19 +148,19 @@ Map::DockWidget::DockWidget(QMainWindow* parent, Qt::WindowFlags flags)
    QMenu* devMenu = wkfEnv.GetMainWindow()->GetMenuByName("Developer");
    if (devMenu)
    {
-      QAction* action = new QAction(QIcon::fromTheme("graph"), "Show Map Window Scene Graph", devMenu);
+      QAction* action = new QAction(QIcon::fromTheme("graph"), tr("Show Map Window Scene Graph"), devMenu);
       connect(action, &QAction::triggered, this, &DockWidget::SceneGraphAction);
       devMenu->addAction(action);
 
-      QAction* shaderReload = new QAction("Reload Shaders", devMenu);
+      QAction* shaderReload = new QAction(tr("Reload Shaders"), devMenu);
       connect(shaderReload, &QAction::triggered, this, &DockWidget::ReloadShaders);
       devMenu->addAction(shaderReload);
 
-      mToggleStatsPtr = new wkf::Action("Toggle Graphics Stats", devMenu);
+      mToggleStatsPtr = new wkf::Action(tr("Toggle Graphics Stats"), devMenu);
       connect(mToggleStatsPtr, &QAction::triggered, this, &DockWidget::ToggleStatsAction);
       devMenu->addAction(mToggleStatsPtr);
 
-      mTogglePolygonModePtr = new wkf::Action("Toggle Polygon Mode", devMenu);
+      mTogglePolygonModePtr = new wkf::Action(tr("Toggle Polygon Mode"), devMenu);
       connect(mTogglePolygonModePtr, &QAction::triggered, this, &DockWidget::ToggleModeAction);
       devMenu->addAction(mTogglePolygonModePtr);
    }
@@ -730,7 +731,7 @@ void Map::DockWidget::MeasureFrom(const vespa::VaLocationReference& aLocRef)
          widget()->setFocus(); // Give keyboard focus to dock widget so 'Esc' key can be used to cancel
          widget()->setCursor(Qt::PointingHandCursor);
          wkfEnv.GetMainWindow()->ShowStatusMessage(
-            "Click on destination point to anchor ruler. Press 'Esc' or right click to cancel...");
+            tr("Click on destination point to anchor ruler. Press 'Esc' or right click to cancel..."));
       }
    }
    else
@@ -812,7 +813,7 @@ void Map::DockWidget::CopyCursorLocationToClipboard()
 
    QString text(oss.str().c_str());
    qApp->clipboard()->setText(text);
-   wkfEnv.GetMainWindow()->ShowStatusMessage(QString("Cursor location %1 copied to clipboard").arg(text), 2000);
+   wkfEnv.GetMainWindow()->ShowStatusMessage(tr("Cursor location %1 copied to clipboard").arg(text), 2000);
 }
 
 void Map::DockWidget::EndRuler(bool aCancel)

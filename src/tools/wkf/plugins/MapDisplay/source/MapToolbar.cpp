@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -255,14 +255,15 @@ void Map::ToolBar::MenuItemContextMenu(QTreeView*             aView,
 
             QMenu menu;
             wkfEnv.BuildViewerContextMenu(&menu, vaEnv.GetStandardViewer());
+            // 二次开发（i18n）：改用 objectName 查找键判断子菜单，避免菜单标题翻译后文本比较失配
             for (auto a : menu.actions())
             {
-               if (a->text() != "Add at Location")
+               if (!(a->menu() && a->menu()->objectName() == "Add at Location"))
                {
                   menu.removeAction(a);
                }
             }
-            connect(menu.addAction("Copy Location to Clipboard"),
+            connect(menu.addAction(tr("Copy Location to Clipboard")),
                     &QAction::triggered,
                     [pos]()
                     {
@@ -275,7 +276,7 @@ void Map::ToolBar::MenuItemContextMenu(QTreeView*             aView,
 
                        QString text(oss.str().c_str());
                        qApp->clipboard()->setText(text);
-                       wkfEnv.GetMainWindow()->ShowStatusMessage(QString("Location %1 copied to clipboard").arg(text),
+                       wkfEnv.GetMainWindow()->ShowStatusMessage(tr("Location %1 copied to clipboard").arg(text),
                                                                  2000);
                     });
             menu.exec(aView->mapToGlobal(aPoint));

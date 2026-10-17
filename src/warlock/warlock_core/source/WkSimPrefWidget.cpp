@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -25,12 +25,13 @@ warlock::SimPrefWidget::SimPrefWidget(QWidget* parent)
    connect(mUi.multicastHelpPushButton, &QPushButton::clicked, this, &SimPrefWidget::MulticastHelpButton);
    connect(mUi.interfaceHelpPushButton, &QPushButton::clicked, this, &SimPrefWidget::InterfaceHelpButton);
 
-   mUi.simClockRateComboBox->addItem("1 hz", 1.0);
-   mUi.simClockRateComboBox->addItem("5 hz", 5.0);
-   mUi.simClockRateComboBox->addItem("10 hz", 10.0);
-   mUi.simClockRateComboBox->addItem("20 hz", 20.0);
-   mUi.simClockRateComboBox->addItem("30 hz", 30.0);
-   mUi.simClockRateComboBox->addItem("60 hz", 60.0);
+   // 二次开发（i18n）：时钟率组合框项 tr() 化（存取走 currentData/findData 不受影响）
+   mUi.simClockRateComboBox->addItem(tr("1 hz"), 1.0);
+   mUi.simClockRateComboBox->addItem(tr("5 hz"), 5.0);
+   mUi.simClockRateComboBox->addItem(tr("10 hz"), 10.0);
+   mUi.simClockRateComboBox->addItem(tr("20 hz"), 20.0);
+   mUi.simClockRateComboBox->addItem(tr("30 hz"), 30.0);
+   mUi.simClockRateComboBox->addItem(tr("60 hz"), 60.0);
 
    // Deferred Start Time should not be less than 1 second
    mUi.deferredStartTimeLineEdit->SetBounds(1.0, std::numeric_limits<double>::max());
@@ -42,10 +43,11 @@ void warlock::SimPrefWidget::WritePreferenceData(SimPrefData& aPrefData)
    if (enableDIS && !ValidateInputs())
    {
       enableDIS = false;
+      // 二次开发（i18n）：警告框标题与文本 tr() 化
       QMessageBox::warning(nullptr,
-                           "Network Config Error",
+                           tr("Network Config Error"),
                            QString(
-                              "The DIS Settings specified in Preferences are not valid.\n Disabling DIS Settings."));
+                              tr("The DIS Settings specified in Preferences are not valid.\n Disabling DIS Settings.")));
       // immediately uncheck the preference box when there is invalid DIS setting input
       mUi.disGroupBox->setChecked(enableDIS);
    }
@@ -71,20 +73,22 @@ bool warlock::SimPrefWidget::ValidateInputs()
 
 void warlock::SimPrefWidget::MulticastHelpButton()
 {
+   // 二次开发（i18n）：帮助框标题与文本 tr() 化（IP 段为技术值不译）
    QMessageBox::information(nullptr,
-                            "Multicast Addressing",
-                            "The multicast address must be the same for all connected simulations.\nValid address are "
-                            "in the range 224.0.0.0 to 239.255.255.255.");
+                            tr("Multicast Addressing"),
+                            tr("The multicast address must be the same for all connected simulations.\nValid address are "
+                               "in the range 224.0.0.0 to 239.255.255.255."));
 }
 
 void warlock::SimPrefWidget::InterfaceHelpButton()
 {
+   // 二次开发（i18n）：帮助框标题与文本 tr() 化（接口地址为运行时数据不译）
    QStringList list = UtQtNetwork::GetMulticastIpv4Interfaces();
-   QString     text("The interface address tells Warlock which network card to use for sending messages. This will be "
-                    "different for different computers.\nAvailable addresses are:\n");
+   QString     text(tr("The interface address tells Warlock which network card to use for sending messages. This will be "
+                       "different for different computers.\nAvailable addresses are:\n"));
    if (list.empty())
    {
-      text.append("No Valid Interfaces Detected.");
+      text.append(tr("No Valid Interfaces Detected."));
    }
    else
    {
@@ -93,8 +97,8 @@ void warlock::SimPrefWidget::InterfaceHelpButton()
          text.append(addr + "\n");
       }
    }
-   text.append("Note: Not all available address will work for multicast. This depends on your device configuration.");
-   QMessageBox::information(nullptr, "Interface Address", text);
+   text.append(tr("Note: Not all available address will work for multicast. This depends on your device configuration."));
+   QMessageBox::information(nullptr, tr("Interface Address"), text);
 }
 
 void warlock::SimPrefWidget::showEvent(QShowEvent*)

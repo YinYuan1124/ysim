@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -45,9 +45,10 @@ void WkCyberEngagementController::Plugin::BuildEntityContextMenu(QMenu* aMenu, w
    // Only show menus if the entity is a wkfPlatform and there are attack types to show
    if (aEntityPtr->IsA_TypeOf<wkf::Platform>() && !attackTypes.empty() && !wkfEnv.GetSelectedPlatforms().empty())
    {
-      QMenu* cyberEffectsMenu = new QMenu("Initiate Cyber Engagement", aMenu);
-      QMenu* attackMenu       = new QMenu("Attack", aMenu);
-      QMenu* scanMenu         = new QMenu("Scan", aMenu);
+      // 二次开发（i18n）：菜单与 QMessageBox 标题 tr() 化
+      QMenu* cyberEffectsMenu = new QMenu(tr("Initiate Cyber Engagement"), aMenu);
+      QMenu* attackMenu       = new QMenu(tr("Attack"), aMenu);
+      QMenu* scanMenu         = new QMenu(tr("Scan"), aMenu);
       aMenu->addMenu(cyberEffectsMenu);
       cyberEffectsMenu->addMenu(attackMenu);
       cyberEffectsMenu->addMenu(scanMenu);
@@ -66,7 +67,7 @@ void WkCyberEngagementController::Plugin::BuildEntityContextMenu(QMenu* aMenu, w
                        if (!warlock::HasPermissionToControlPlatform(*platform))
                        {
                           QMessageBox::warning(nullptr,
-                                               "Attack Not Executed",
+                                               tr("Attack Not Executed"),
                                                "User does not have permissions to modify platform " +
                                                   QString::fromStdString(platform->GetName()) + ".");
                        }
@@ -93,7 +94,7 @@ void WkCyberEngagementController::Plugin::BuildEntityContextMenu(QMenu* aMenu, w
                        if (!warlock::HasPermissionToControlPlatform(*platform))
                        {
                           QMessageBox::warning(nullptr,
-                                               "Scan Not Executed",
+                                               tr("Scan Not Executed"),
                                                "User does not have permissions to modify platform " +
                                                   QString::fromStdString(platform->GetName()) + ".");
                        }

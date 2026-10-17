@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,7 @@
 #include "WkfSharedMapPreferencesWidget.hpp"
 
 #include <QComboBox>
+#include <QCoreApplication> // 二次开发（i18n）：MapDisplayName 动态翻译所需
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QFormLayout>
@@ -31,6 +32,13 @@
 #include "WkfEnvironment.hpp"
 #include "WkfSharedMapPreferencesObject.hpp"
 
+// 二次开发（i18n）：地图名为持久化数据键（QSettings/ProfileMap 均存英文原名），显示与键分离——
+// 键保持英文原样，渲染点经 "MapName" 伪上下文动态翻译为显示名；用户自定义地图名（无译文）原样显示。
+static QString MapDisplayName(const QString& aKey)
+{
+   return QCoreApplication::translate("MapName", aKey.toUtf8().constData());
+}
+
 
 wkf::SharedMapPreferencesWidget::SharedMapPreferencesWidget(QWidget* aParent, Qt::WindowFlags aFlags)
    : wkf::PrefWidgetT<wkf::SharedMapPreferencesObject>(aParent, aFlags)
@@ -39,10 +47,11 @@ wkf::SharedMapPreferencesWidget::SharedMapPreferencesWidget(QWidget* aParent, Qt
    {
       setObjectName("WkfSharedMapPreferencesWidget");
    }
-   setWindowTitle("Map Definitions");
+   // 二次开发（i18n）：首选项页面标题与控件文本 tr() 化
+   setWindowTitle(tr("Map Definitions"));
    setLayout(new QVBoxLayout(this));
 
-   auto* label     = new QLabel("Preferences on this page are shared among all AFSIM applications", this);
+   auto* label     = new QLabel(tr("Preferences on this page are shared among all AFSIM applications"), this);
    QFont labelFont = label->font();
    labelFont.setBold(true);
    label->setFont(labelFont);
@@ -50,8 +59,8 @@ wkf::SharedMapPreferencesWidget::SharedMapPreferencesWidget(QWidget* aParent, Qt
 
    QHBoxLayout* hbox = new QHBoxLayout();
    layout()->addItem(hbox);
-   hbox->addWidget(new QLabel("Maps", this));
-   QPushButton* newMap = new QPushButton("Add New Map", this);
+   hbox->addWidget(new QLabel(tr("Maps"), this));
+   QPushButton* newMap = new QPushButton(tr("Add New Map"), this);
    connect(newMap, &QPushButton::clicked, this, &SharedMapPreferencesWidget::AddNewMap);
    layout()->addWidget(newMap);
    hbox->addWidget(newMap);
@@ -59,7 +68,7 @@ wkf::SharedMapPreferencesWidget::SharedMapPreferencesWidget(QWidget* aParent, Qt
    mMapTreePtr = new QTreeWidget(this);
    layout()->addWidget(mMapTreePtr);
 
-   layout()->addWidget(new QLabel("Profiles", this));
+   layout()->addWidget(new QLabel(tr("Profiles"), this));
 
    mProfileTreePtr = new QTreeWidget(this);
    layout()->addWidget(mProfileTreePtr);
@@ -117,7 +126,8 @@ void wkf::SharedMapPreferencesWidget::WritePreferenceData(SharedMapPreferencesDa
       auto             type =
          static_cast<SharedMapPreferencesData::MapType>(profile->data(0, Qt::UserRole + 1).value<int>()); // profile idx
       QComboBox* combo = dynamic_cast<QComboBox*>(mProfileTreePtr->itemWidget(profile, 1));
-      QString    name  = combo->currentText();
+      // 二次开发（i18n）：取 itemData 中的英文键（currentText 显示名翻译后为中文，不可作持久化键）
+      QString    name  = combo->currentData().toString();
       aPrefData.mProfileMap.emplace(type, name.toStdString());
    }
 }
@@ -132,7 +142,8 @@ void wkf::SharedMapPreferencesWidget::ReadPreferenceData(const SharedMapPreferen
    for (auto& it : aPrefData.mMaps)
    {
       QString          name = it.first.c_str();
-      QTreeWidgetItem* map  = new QTreeWidgetItem(mMapTreePtr->invisibleRootItem(), QStringList(name));
+      // 二次开发（i18n）：树显示名经 MapDisplayName 翻译；键（UserRole+1）保持英文原文
+      QTreeWidgetItem* map  = new QTreeWidgetItem(mMapTreePtr->invisibleRootItem(), QStringList(MapDisplayName(name)));
       if (it.second.mLock)
       {
          QFont font = map->font(0);
@@ -175,23 +186,28 @@ void wkf::SharedMapPreferencesWidget::UpdateProfiles()
       QComboBox* combo = new QComboBox(this);
       mProfileTreePtr->setItemWidget(profile, 1, combo);
 
+      // 二次开发（i18n）：组合框双通道——显示名经 MapDisplayName 翻译、itemData 存英文键；
+      // 恢复用 findData(键) 匹配（原 setCurrentText 在显示名翻译后会与英文键失配）
       for (int i = 0; i < mMapTreePtr->invisibleRootItem()->childCount(); ++i)
       {
-         combo->addItem(mMapTreePtr->invisibleRootItem()->child(i)->text(0));
+         QString key = mMapTreePtr->invisibleRootItem()->child(i)->data(0, Qt::UserRole + 1).toString();
+         combo->addItem(MapDisplayName(key));
+         combo->setItemData(i, key);
       }
-      combo->setCurrentText(map);
+      combo->setCurrentIndex(combo->findData(map));
    }
 }
 
 QString wkf::SharedMapPreferencesWidget::ProfileTypeLookup(wkf::SharedMapPreferencesData::MapType aType)
 {
+   // 二次开发（i18n）：Profile 树项显示文本 tr() 化（default 分支为不可达防御代码，保持原样）
    switch (aType)
    {
    case (wkf::SharedMapPreferencesData::IMMERSIVE):
-      return "Immersive";
+      return tr("Immersive");
       break;
    case (wkf::SharedMapPreferencesData::NAVIGATIONAL):
-      return "Navigational";
+      return tr("Navigational");
       break;
    default:
       return "UNKNOWN";
@@ -212,8 +228,9 @@ void wkf::SharedMapPreferencesWidget::ContextMenuEvent(const QPoint& aPoint)
          if (!item->data(0, Qt::UserRole + 4).toBool())
          {
             QMenu   popup(this);
-            QString renameMap = "Rename";
-            QString removemap = "Remove";
+            // 二次开发（i18n）：右键菜单动作文本 tr() 化（比较用同一变量，译文一致不失配）
+            QString renameMap = tr("Rename");
+            QString removemap = tr("Remove");
             popup.addAction(renameMap);
             popup.addAction(removemap);
             QAction* action = popup.exec(mMapTreePtr->mapToGlobal(aPoint));
@@ -241,7 +258,8 @@ void wkf::SharedMapPreferencesWidget::ContextMenuEvent(const QPoint& aPoint)
 void wkf::SharedMapPreferencesWidget::AddNewMap()
 {
    // ask for the map file
-   QString fileName = wkf::getOpenFileName(this, "Open Map File", QString(), "Map Files (*.ive *.osg *.osgb *.earth)");
+   // 二次开发（i18n）：文件对话框标题与过滤器 tr() 化
+   QString fileName = wkf::getOpenFileName(this, tr("Open Map File"), QString(), tr("Map Files (*.ive *.osg *.osgb *.earth)"));
    if (!fileName.isEmpty())
    {
       osg::Node* file = osgDB::readNodeFile(fileName.toStdString());
@@ -276,7 +294,7 @@ void wkf::SharedMapPreferencesWidget::AddNewMap()
                QFormLayout form(&dialog);
                QLineEdit   nameEdit(&dialog);
                nameEdit.setText(sname.c_str());
-               form.addRow(new QLabel("Map Name:"), &nameEdit);
+               form.addRow(new QLabel(tr("Map Name:")), &nameEdit);
 
                QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
                form.addRow(&buttonBox);
@@ -289,7 +307,8 @@ void wkf::SharedMapPreferencesWidget::AddNewMap()
                   if (!sname.empty())
                   {
                      QString          name = GetUniqueName(sname.c_str());
-                     QTreeWidgetItem* map  = new QTreeWidgetItem(mMapTreePtr->invisibleRootItem(), QStringList(name));
+                     // 二次开发（i18n）：显示名经 MapDisplayName（自定义名无译文原样显示）
+                     QTreeWidgetItem* map  = new QTreeWidgetItem(mMapTreePtr->invisibleRootItem(), QStringList(MapDisplayName(name)));
                      map->setData(0, Qt::UserRole, cMAP);
                      map->setData(0, Qt::UserRole + 1, name);
                      if (!geocentric)
@@ -317,7 +336,8 @@ void wkf::SharedMapPreferencesWidget::AddNewMap()
             }
             else
             {
-               QMessageBox::warning(this, "File not usable", "OsgEarth file does not contain a map: " + fileName);
+               // 二次开发（i18n）：警告框标题与文本 tr() 化
+               QMessageBox::warning(this, tr("File not usable"), tr("OsgEarth file does not contain a map: ") + fileName);
                file = 0;
                return;
             }
@@ -325,17 +345,18 @@ void wkf::SharedMapPreferencesWidget::AddNewMap()
          QDialog     dialog(this);
          QFormLayout form(&dialog);
          QLineEdit   nameEdit(&dialog);
-         form.addRow(new QLabel("Map Name:"), &nameEdit);
+         form.addRow(new QLabel(tr("Map Name:")), &nameEdit);
          QComboBox projection(&dialog);
-         projection.addItem("Round");
-         projection.addItem("Flat");
-         projection.setCurrentText("Round");
-         form.addRow(new QLabel("Projection:"), &projection);
+         // 二次开发（i18n）：组合框项 tr() 化；改用索引设置/判断，避免项文本翻译后 currentText 比较失配
+         projection.addItem(tr("Round"));
+         projection.addItem(tr("Flat"));
+         projection.setCurrentIndex(0);
+         form.addRow(new QLabel(tr("Projection:")), &projection);
          QSpinBox offset(&dialog);
          offset.setMinimum(-180);
          offset.setMaximum(180);
          offset.setValue(0);
-         form.addRow(new QLabel("Lon. Offset (deg):"), &offset);
+         form.addRow(new QLabel(tr("Lon. Offset (deg):")), &offset);
          QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
          form.addRow(&buttonBox);
          QObject::connect(&buttonBox, SIGNAL(accepted()), &dialog, SLOT(accept()));
@@ -352,7 +373,8 @@ void wkf::SharedMapPreferencesWidget::AddNewMap()
                QTreeWidgetItem* map = new QTreeWidgetItem(mMapTreePtr->invisibleRootItem(), QStringList(name));
                map->setData(0, Qt::UserRole, cMAP);
                map->setData(0, Qt::UserRole + 1, name);
-               if (projection.currentText() == "Flat")
+               // 二次开发（i18n）：组合框项翻译后文本比较失配，改用索引判断（Round=0/Flat=1）
+               if (projection.currentIndex() == 1)
                {
                   map->setData(0, Qt::UserRole + 2, QString("CME_EQR"));
                }
@@ -374,7 +396,8 @@ void wkf::SharedMapPreferencesWidget::AddNewMap()
          file = 0;
          return;
       }
-      QMessageBox::warning(this, "File not usable", "Could not load " + fileName);
+      // 二次开发（i18n）：警告框标题与文本 tr() 化
+      QMessageBox::warning(this, tr("File not usable"), tr("Could not load ") + fileName);
    }
 }
 
@@ -386,7 +409,7 @@ void wkf::SharedMapPreferencesWidget::RemoveMap(QTreeWidgetItem* aMapItem)
    {
       QString name      = "None";
       QString identname = "    ";
-      identname += name;
+      identname += MapDisplayName(name); // 二次开发（i18n）：显示名翻译，键保持英文
       QTreeWidgetItem* map  = new QTreeWidgetItem(mMapTreePtr->invisibleRootItem(), QStringList(identname));
       QFont            font = map->font(0);
       font.setItalic(true);
@@ -406,7 +429,7 @@ void wkf::SharedMapPreferencesWidget::RenameMap(QTreeWidgetItem* aItem)
    QFormLayout form(&dialog);
    QLineEdit   nameEdit(&dialog);
    nameEdit.setText(aItem->data(0, Qt::UserRole + 1).toString());
-   form.addRow(new QLabel("Map Name:"), &nameEdit);
+   form.addRow(new QLabel(tr("Map Name:")), &nameEdit);
 
    QDialogButtonBox buttonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, &dialog);
    form.addRow(&buttonBox);
@@ -419,7 +442,7 @@ void wkf::SharedMapPreferencesWidget::RenameMap(QTreeWidgetItem* aItem)
       if (!name.isEmpty())
       {
          name = GetUniqueName(name);
-         aItem->setText(0, name);
+         aItem->setText(0, MapDisplayName(name)); // 二次开发（i18n）：显示名翻译，键保持英文
          aItem->setData(0, Qt::UserRole + 1, name);
       }
    }

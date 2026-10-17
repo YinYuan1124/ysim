@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -44,7 +44,7 @@ void TerrainTools::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEn
       {
          QString  name = aEntityPtr->GetName().c_str();
          QAction* measureAction =
-            ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("eye"), QString("Line-of-sight from %1...").arg(name), aMenu);
+            ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("eye"), tr("Line-of-sight from %1...").arg(name), aMenu); // 二次开发（i18n）：实体右键菜单文本 tr() 化
          QObject::connect(measureAction, &QAction::triggered, this, [=]() { LineOfSightFrom(aEntityPtr); });
          aMenu->addAction(measureAction);
 
@@ -66,7 +66,7 @@ void TerrainTools::Plugin::LineOfSightFrom(const vespa::VaLocationReference& aLo
                viewerPtr->BeginRubberband(*aLocRef.GetEntity(),
                                           std::bind(&Plugin::RubberbandUpdater, this, std::placeholders::_1),
                                           std::bind(&Plugin::MakeLOS, this, std::placeholders::_1),
-                                          "Click on destination point for the Line-of-sight.");
+                                          tr("Click on destination point for the Line-of-sight.")); // 二次开发（i18n）：状态栏提示 tr() 化（类无 Q_OBJECT，落 wkf::Plugin 上下文）
             RubberbandUpdater(*r);
          }
       }

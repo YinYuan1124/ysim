@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,8 @@
 // ****************************************************************************
 
 #include "WaterfallPlotDialog.hpp"
+
+#include <QCoreApplication> // 二次开发（i18n）：显式上下文翻译所需
 
 RvInteractionPlots::WaterfallPlotDialog::WaterfallPlotDialog(QMainWindow*        aParent,
                                                              rv::ResultDb*       aDatabasePtr,
@@ -27,7 +29,7 @@ RvInteractionPlots::WaterfallPlotDialog::WaterfallPlotDialog(QMainWindow*       
    connect(mUi.mGroupChooser,
            &wkf::GroupingSelector::GroupingSelected,
            [this](const wkf::PlatformGrouping aGrouping) { mUi.mWaterfallPlot->SetFilter(aGrouping); });
-   mUi.mGroupChooser->setText("Platform Type: WSF_PLATFORM");
+   mUi.mGroupChooser->setText(QCoreApplication::translate("RvInteractionPlots::WaterfallPlotDialog", "Platform Type: WSF_PLATFORM")); // 二次开发（i18n）：分组标题接入翻译通道
 }
 
 void RvInteractionPlots::WaterfallPlotDialog::SetTime(double aTime)

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -11,6 +11,7 @@
 #include "MapPrefWidget.hpp"
 
 #include <QComboBox>
+#include <QCoreApplication> // 二次开发（i18n）：MapDisplayName 动态翻译所需
 #include <QDialogButtonBox>
 #include <QFont>
 #include <QFormLayout>
@@ -29,6 +30,13 @@
 #include "WkfEnvironment.hpp"
 #include "WkfSharedMapPreferencesObject.hpp"
 
+// 二次开发（i18n）：地图名为持久化数据键（QSettings/ActiveMap 均存英文原名），显示与键分离——
+// 键保持英文原样，渲染点经 "MapName" 伪上下文动态翻译；用户自定义地图名（无译文）原样显示。
+static QString MapDisplayName(const QString& aKey)
+{
+   return QCoreApplication::translate("MapName", aKey.toUtf8().constData());
+}
+
 Map::PrefWidget::PrefWidget()
    : wkf::PrefWidgetT<PrefObject>()
    , mDefaultTerrainMapIndex(0)
@@ -41,32 +49,33 @@ Map::PrefWidget::PrefWidget()
 
    mUi.setupUi(this);
 
+   // 二次开发（i18n）：树项/单选钮等运行时构建的显示文本 tr() 化
    mUi.vectorTree->setSortingEnabled(false);
 
    mUi.vectorTree->setColumnCount(2);
    mUi.vectorTree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
    mUi.vectorTree->clear();
 
-   mMap        = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList("Map"));
+   mMap        = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList(tr("Map")));
    mMapChooser = new QComboBox(this);
    mUi.vectorTree->setItemWidget(mMap, 1, mMapChooser);
 
-   QTreeWidgetItem* mapSettings = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList("Map Options"));
-   mIntensity                   = new QTreeWidgetItem(mapSettings, QStringList("Brightness"));
+   QTreeWidgetItem* mapSettings = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList(tr("Map Options")));
+   mIntensity                   = new QTreeWidgetItem(mapSettings, QStringList(tr("Brightness")));
    mIntensitySlider             = new QSlider(Qt::Horizontal, this);
    mIntensitySlider->setMinimum(-50);
    mIntensitySlider->setMaximum(50);
    mIntensitySlider->setValue(0);
    mUi.vectorTree->setItemWidget(mIntensity, 1, mIntensitySlider);
 
-   mContrast       = new QTreeWidgetItem(mapSettings, QStringList("Contrast"));
+   mContrast       = new QTreeWidgetItem(mapSettings, QStringList(tr("Contrast")));
    mContrastSlider = new QSlider(Qt::Horizontal, this);
    mContrastSlider->setMinimum(-50);
    mContrastSlider->setMaximum(100);
    mContrastSlider->setValue(50);
    mUi.vectorTree->setItemWidget(mContrast, 1, mContrastSlider);
 
-   mSaturation       = new QTreeWidgetItem(mapSettings, QStringList("Saturation"));
+   mSaturation       = new QTreeWidgetItem(mapSettings, QStringList(tr("Saturation")));
    mSaturationSlider = new QSlider(Qt::Horizontal, this);
    mSaturationSlider->setMinimum(-50);
    mSaturationSlider->setMaximum(150);
@@ -75,65 +84,65 @@ Map::PrefWidget::PrefWidget()
 
    mapSettings->setExpanded(true);
 
-   QTreeWidgetItem* modelOptions = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList("Model Options"));
-   mTeamColor                    = new QTreeWidgetItem(modelOptions, QStringList("Display Team Color"));
+   QTreeWidgetItem* modelOptions = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList(tr("Model Options")));
+   mTeamColor                    = new QTreeWidgetItem(modelOptions, QStringList(tr("Display Team Color")));
    mTeamColor->setCheckState(0, Qt::Unchecked);
-   mTrueScale = new QTreeWidgetItem(modelOptions, QStringList("True Scale"));
+   mTrueScale = new QTreeWidgetItem(modelOptions, QStringList(tr("True Scale")));
    mTrueScale->setCheckState(0, Qt::Unchecked);
    modelOptions->setExpanded(true);
-   QTreeWidgetItem* modelScale = new QTreeWidgetItem(modelOptions, QStringList("Model Scale"));
+   QTreeWidgetItem* modelScale = new QTreeWidgetItem(modelOptions, QStringList(tr("Model Scale")));
    mModelScaleSlider           = new QSlider(Qt::Horizontal, this);
    mModelScaleSlider->setMinimum(50);
    mModelScaleSlider->setMaximum(500);
    mModelScaleSlider->setValue(100);
    mUi.vectorTree->setItemWidget(modelScale, 1, mModelScaleSlider);
-   QTreeWidgetItem* labelSize = new QTreeWidgetItem(modelOptions, QStringList("Label Font"));
+   QTreeWidgetItem* labelSize = new QTreeWidgetItem(modelOptions, QStringList(tr("Label Font")));
    mLabelButton               = new UtQtFontButton(this);
-   mLabelButton->SetWindowTitle("Choose Platform Label Font");
+   mLabelButton->SetWindowTitle(tr("Choose Platform Label Font"));
    mUi.vectorTree->setItemWidget(labelSize, 1, mLabelButton);
 
-   QTreeWidgetItem* overlays = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList("Overlays"));
-   mGrid                     = new QTreeWidgetItem(overlays, QStringList("Grid Lines"));
+   QTreeWidgetItem* overlays = new QTreeWidgetItem(mUi.vectorTree->invisibleRootItem(), QStringList(tr("Overlays")));
+   mGrid                     = new QTreeWidgetItem(overlays, QStringList(tr("Grid Lines")));
    mGrid->setCheckState(0, Qt::Unchecked);
    SetColor(mGrid, Qt::red);
-   QTreeWidgetItem* gridDensity = new QTreeWidgetItem(mGrid, QStringList("Density"));
+   QTreeWidgetItem* gridDensity = new QTreeWidgetItem(mGrid, QStringList(tr("Density")));
    mGridDensity                 = new QSlider(Qt::Horizontal, this);
    mGridDensity->setMinimum(-3);
    mGridDensity->setMaximum(3);
    mGridDensity->setValue(0);
    mUi.vectorTree->setItemWidget(gridDensity, 1, mGridDensity);
 
-   mElevationLines = new QTreeWidgetItem(overlays, QStringList("Elevation Lines"));
+   mElevationLines = new QTreeWidgetItem(overlays, QStringList(tr("Elevation Lines")));
    mElevationLines->setCheckState(0, Qt::Unchecked);
 
-   mElevationSpacing = new QTreeWidgetItem(mElevationLines, QStringList("Spacing (m)"));
+   mElevationSpacing = new QTreeWidgetItem(mElevationLines, QStringList(tr("Spacing (m)")));
    SetValue(mElevationSpacing, 400, 10, 1000);
-   mElevationMin = new QTreeWidgetItem(mElevationLines, QStringList("Min (m)"));
+   mElevationMin = new QTreeWidgetItem(mElevationLines, QStringList(tr("Min (m)")));
    SetValue(mElevationMin, -413, -413, 8850);
-   mElevationMax = new QTreeWidgetItem(mElevationLines, QStringList("Max (m)"));
+   mElevationMax = new QTreeWidgetItem(mElevationLines, QStringList(tr("Max (m)")));
    SetValue(mElevationMax, 8850, -413, 8850);
-   mElevationSource = new QTreeWidgetItem(mElevationLines, QStringList("Source"));
+   mElevationSource = new QTreeWidgetItem(mElevationLines, QStringList(tr("Source")));
    SetFilename(mElevationSource, "");
 
-   mCoast = new QTreeWidgetItem(overlays, QStringList("Coast Lines"));
+   mCoast = new QTreeWidgetItem(overlays, QStringList(tr("Coast Lines")));
    mCoast->setCheckState(0, Qt::Unchecked);
    SetColor(mCoast, Qt::red);
-   mCountry = new QTreeWidgetItem(overlays, QStringList("Country Borders"));
+   mCountry = new QTreeWidgetItem(overlays, QStringList(tr("Country Borders")));
    mCountry->setCheckState(0, Qt::Unchecked);
    SetColor(mCountry, Qt::red);
-   mInternal = new QTreeWidgetItem(overlays, QStringList("US Internal Borders"));
+   mInternal = new QTreeWidgetItem(overlays, QStringList(tr("US Internal Borders")));
    mInternal->setCheckState(0, Qt::Unchecked);
    SetColor(mInternal, Qt::red);
-   mLakes = new QTreeWidgetItem(overlays, QStringList("Lakes and Rivers"));
+   mLakes = new QTreeWidgetItem(overlays, QStringList(tr("Lakes and Rivers")));
    mLakes->setCheckState(0, Qt::Unchecked);
    SetColor(mLakes, Qt::red);
-   mRings = new QTreeWidgetItem(overlays, QStringList("Screen-Centered Range Rings"));
+   mRings = new QTreeWidgetItem(overlays, QStringList(tr("Screen-Centered Range Rings")));
    mRings->setCheckState(0, Qt::Unchecked);
    SetColor(mRings, Qt::red);
-   mTerminator = new QTreeWidgetItem(overlays, QStringList("Terminator"));
+   mTerminator = new QTreeWidgetItem(overlays, QStringList(tr("Terminator")));
    mTerminator->setCheckState(0, Qt::Unchecked);
    SetColor(mTerminator, Qt::yellow);
-   QTreeWidgetItem* terminatorWidth = new QTreeWidgetItem(mTerminator, QStringList("Line Width"));
+   QTreeWidgetItem* terminatorWidth = new QTreeWidgetItem(mTerminator, QStringList(tr("Line Width")));
    mTerminatorWidthSlider           = ut::qt::make_qt_ptr<QSlider>(Qt::Horizontal, this);
    mTerminatorWidthSlider->setMinimum(1);
    mTerminatorWidthSlider->setMaximum(5);
@@ -150,7 +159,7 @@ Map::PrefWidget::PrefWidget()
       aPoint = new QTreeWidgetItem(overlays, QStringList(aName));
       aPoint->setCheckState(0, Qt::Unchecked);
       SetColor(aPoint, Qt::gray);
-      QTreeWidgetItem* scale = new QTreeWidgetItem(aPoint, QStringList("Scale"));
+      QTreeWidgetItem* scale = new QTreeWidgetItem(aPoint, QStringList(tr("Scale")));
       aScale                 = ut::qt::make_qt_ptr<QSlider>(Qt::Horizontal, this);
       aScale->setMinimum(1);
       aScale->setMaximum(20);
@@ -158,9 +167,9 @@ Map::PrefWidget::PrefWidget()
       mUi.vectorTree->setItemWidget(scale, 1, aScale);
       QTreeWidgetItem* radioItem  = new QTreeWidgetItem();
       QFrame*          groupFrame = ut::qt::make_qt_ptr<QFrame>(mUi.vectorTree);
-      aDefaultIcon                = ut::qt::make_qt_ptr<QRadioButton>("Default Icon", groupFrame);
+      aDefaultIcon                = ut::qt::make_qt_ptr<QRadioButton>(tr("Default Icon"), groupFrame);
       aDefaultIcon->setChecked(true);
-      aCustomIcon    = ut::qt::make_qt_ptr<QRadioButton>("Custom Icon", groupFrame);
+      aCustomIcon    = ut::qt::make_qt_ptr<QRadioButton>(tr("Custom Icon"), groupFrame);
       aImageSelector = ut::qt::make_qt_ptr<wkf::ImageSelectionWidget>(groupFrame);
       aImageSelector->setEnabled(false);
       connect(aCustomIcon, &QRadioButton::toggled, aImageSelector, &wkf::ImageSelectionWidget::SetEnabledUpdate);
@@ -175,32 +184,32 @@ Map::PrefWidget::PrefWidget()
       mUi.vectorTree->setFirstItemColumnSpanned(radioItem, true);
    };
 
-   PopulateCelestialOptions(mSubSolarPoint, mSubSolarScale, mDefaultSunIcon, mCustomSunIcon, mSunImageSelector, "Sub-Solar Point");
-   PopulateCelestialOptions(mSubLunarPoint, mSubLunarScale, mDefaultMoonIcon, mCustomMoonIcon, mMoonImageSelector, "Sub-Lunar Point");
+   PopulateCelestialOptions(mSubSolarPoint, mSubSolarScale, mDefaultSunIcon, mCustomSunIcon, mSunImageSelector, tr("Sub-Solar Point"));
+   PopulateCelestialOptions(mSubLunarPoint, mSubLunarScale, mDefaultMoonIcon, mCustomMoonIcon, mMoonImageSelector, tr("Sub-Lunar Point"));
 
-   mSolarPath = new QTreeWidgetItem(overlays, QStringList("Solar Path"));
+   mSolarPath = new QTreeWidgetItem(overlays, QStringList(tr("Solar Path")));
    mSolarPath->setCheckState(0, Qt::Unchecked);
    SetColor(mSolarPath, Qt::yellow);
-   QTreeWidgetItem* solarPathWidth = new QTreeWidgetItem(mSolarPath, QStringList("Line Width"));
+   QTreeWidgetItem* solarPathWidth = new QTreeWidgetItem(mSolarPath, QStringList(tr("Line Width")));
    mSolarPathWidthSlider           = new QSlider(Qt::Horizontal, this);
    mSolarPathWidthSlider->setMinimum(1);
    mSolarPathWidthSlider->setMaximum(5);
    mSolarPathWidthSlider->setValue(2);
    mUi.vectorTree->setItemWidget(solarPathWidth, 1, mSolarPathWidthSlider);
 
-   mScale = new QTreeWidgetItem(overlays, QStringList("Scale"));
+   mScale = new QTreeWidgetItem(overlays, QStringList(tr("Scale")));
    mScale->setCheckState(0, Qt::Unchecked);
-   mCompass = new QTreeWidgetItem(overlays, QStringList("Compass"));
+   mCompass = new QTreeWidgetItem(overlays, QStringList(tr("Compass")));
    mCompass->setCheckState(0, Qt::Unchecked);
-   mLighting = new QTreeWidgetItem(mapSettings, QStringList("Lighting"));
+   mLighting = new QTreeWidgetItem(mapSettings, QStringList(tr("Lighting")));
    mLighting->setCheckState(0, Qt::Unchecked);
-   mECI = new QTreeWidgetItem(mapSettings, QStringList("ECI Camera"));
+   mECI = new QTreeWidgetItem(mapSettings, QStringList(tr("ECI Camera")));
    mECI->setCheckState(0, Qt::Unchecked);
-   mCenterOnStart = new QTreeWidgetItem(mapSettings, QStringList("Center On Start"));
+   mCenterOnStart = new QTreeWidgetItem(mapSettings, QStringList(tr("Center On Start")));
    mCenterOnStart->setCheckState(0, Qt::Unchecked);
-   mShowAltitudeAtCursor = new QTreeWidgetItem(mapSettings, QStringList("Show Terrain Altitude At Cursor"));
+   mShowAltitudeAtCursor = new QTreeWidgetItem(mapSettings, QStringList(tr("Show Terrain Altitude At Cursor")));
    mShowAltitudeAtCursor->setCheckState(0, Qt::Unchecked);
-   mZoomOnCursor = new QTreeWidgetItem(mapSettings, QStringList("Zoom on Mouse Cursor"));
+   mZoomOnCursor = new QTreeWidgetItem(mapSettings, QStringList(tr("Zoom on Mouse Cursor")));
    mZoomOnCursor->setCheckState(0, Qt::Checked);
    overlays->setExpanded(true);
 }
@@ -264,7 +273,8 @@ void Map::PrefWidget::WritePreferenceData(PrefData& aPrefData)
    aPrefData.mSolarPathWidth              = mSolarPathWidthSlider->value();
    aPrefData.mScale                       = (mScale->checkState(0) == Qt::Checked);
    aPrefData.mCompass                     = (mCompass->checkState(0) == Qt::Checked);
-   aPrefData.mActiveMap                   = mMapChooser->currentText().toStdString();
+   // 二次开发（i18n）：取 itemData 中的英文键（currentText 显示名翻译后为中文，不可作持久化键）
+   aPrefData.mActiveMap                   = mMapChooser->currentData().toString().toStdString();
    aPrefData.mTeamColor                   = (mTeamColor->checkState(0) == Qt::Checked);
    aPrefData.mTrueScale                   = (mTrueScale->checkState(0) == Qt::Checked);
    aPrefData.mModelScale                  = (mModelScaleSlider->value() / 100.0f);
@@ -350,9 +360,11 @@ void Map::PrefWidget::ReadPreferenceData(const PrefData& aPrefData)
    for (auto& it : wkfEnv.GetPreferenceObject<wkf::SharedMapPreferencesObject>()->GetMaps())
    {
       QString name = it.first.c_str();
-      mMapChooser->addItem(name);
+      // 二次开发（i18n）：显示名翻译 + itemData 存英文键；恢复用 findData(键)
+      mMapChooser->addItem(MapDisplayName(name));
+      mMapChooser->setItemData(mMapChooser->count() - 1, name);
    }
-   mMapChooser->setCurrentText(aPrefData.mActiveMap.c_str());
+   mMapChooser->setCurrentIndex(mMapChooser->findData(QString::fromStdString(aPrefData.mActiveMap)));
 
    mTeamColor->setCheckState(0, aPrefData.mTeamColor ? Qt::Checked : Qt::Unchecked);
    mTrueScale->setCheckState(0, aPrefData.mTrueScale ? Qt::Checked : Qt::Unchecked);
@@ -362,14 +374,16 @@ void Map::PrefWidget::ReadPreferenceData(const PrefData& aPrefData)
 
 void Map::PrefWidget::SharedMapsChanged()
 {
-   QString ctext = mMapChooser->currentText();
+   // 二次开发（i18n）：重建时经 itemData(英文键) 保留当前选择（currentText 为翻译后显示名不可作键）
+   QString ctext = mMapChooser->currentData().toString();
    mMapChooser->clear();
    for (auto& it : wkfEnv.GetPreferenceObject<wkf::SharedMapPreferencesObject>()->GetMaps())
    {
       QString name = QString::fromStdString(it.first);
-      mMapChooser->addItem(name);
+      mMapChooser->addItem(MapDisplayName(name));
+      mMapChooser->setItemData(mMapChooser->count() - 1, name);
    }
-   mMapChooser->setCurrentText(ctext);
+   mMapChooser->setCurrentIndex(mMapChooser->findData(ctext));
 }
 
 QColor Map::PrefWidget::GetColor(QTreeWidgetItem* aItem)
@@ -434,7 +448,8 @@ void Map::PrefWidget::SetFilename(QTreeWidgetItem* aItem, const QString& aFilena
    {
       pb = new QPushButton(this);
       mUi.vectorTree->setItemWidget(aItem, 1, pb);
-      connect(pb, &QPushButton::clicked, [this, aItem]() { SelectFile(aItem, "Choose TMS Source", "tms.xml"); });
+      // 二次开发（i18n）：文件选择对话框标题 tr() 化（"tms.xml" 为文件过滤器保持原样）
+      connect(pb, &QPushButton::clicked, [this, aItem]() { SelectFile(aItem, tr("Choose TMS Source"), "tms.xml"); });
    }
    if (pb)
    {

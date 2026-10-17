@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -27,7 +27,7 @@ DemoBrowser::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
    wkf::MainWindow* mainWindowPtr = wkfEnv.GetMainWindow();
 
    QMenu*       help   = mainWindowPtr->FindOrCreateMenu("Help");
-   wkf::Action* action = new wkf::Action(QString("Demo Browser"), mainWindowPtr);
+   wkf::Action* action = new wkf::Action(tr("Demo Browser"), mainWindowPtr); // 二次开发（i18n）：Help 菜单动作文本 tr() 化（类无 Q_OBJECT，落 wkf::Plugin 上下文，与启动按钮一致）
    help->addAction(action);
    connect(action, &QAction::triggered, [this]() { Show(); });
 }

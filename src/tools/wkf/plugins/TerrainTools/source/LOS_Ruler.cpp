@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,7 @@
 #include <sstream>
 
 #include <QBuffer>
+#include <QCoreApplication> // 二次开发（i18n）：LOS_Ruler 无 QObject 祖先，界面文本走显式翻译通道
 #include <QLayout>
 #include <QPainter>
 #include <QPushButton>
@@ -100,10 +101,11 @@ std::string TerrainTools::LOS_Ruler::GetDescription(unsigned int aSubId)
 
 void TerrainTools::LOS_Ruler::BuildContextMenu(QMenu& aMenu, unsigned int aSubPartId)
 {
-   QAction* plot = new QAction("Plot Terrain Profile...", &aMenu);
+   // 二次开发（i18n）：附件右键菜单文本显式翻译（类无 QObject 祖先）
+   QAction* plot = new QAction(QCoreApplication::translate("TerrainTools::LOS_Ruler", "Plot Terrain Profile..."), &aMenu);
    aMenu.addAction(plot);
    QObject::connect(plot, &QAction::triggered, [this]() { ShowPlot(); });
-   QAction* mast = new QAction("Set Mast Height...", &aMenu);
+   QAction* mast = new QAction(QCoreApplication::translate("TerrainTools::LOS_Ruler", "Set Mast Height..."), &aMenu);
    QObject::connect(mast, &QAction::triggered, [this]() { ConfigureMastHeight(); });
    aMenu.addAction(mast);
 }
@@ -116,8 +118,8 @@ void TerrainTools::LOS_Ruler::ConfigureMastHeight()
    edit->SetValue(mMastHeight);
    dlg.layout()->addWidget(edit);
    QHBoxLayout* hbox   = new QHBoxLayout();
-   QPushButton* cancel = new QPushButton("Cancel", &dlg);
-   QPushButton* ok     = new QPushButton("OK", &dlg);
+   QPushButton* cancel = new QPushButton(QCoreApplication::translate("TerrainTools::LOS_Ruler", "Cancel"), &dlg); // 二次开发（i18n）
+   QPushButton* ok     = new QPushButton(QCoreApplication::translate("TerrainTools::LOS_Ruler", "OK"), &dlg); // 二次开发（i18n）
    hbox->addWidget(ok);
    hbox->addWidget(cancel);
    QObject::connect(edit, &QLineEdit::textChanged, [edit, ok]() { ok->setEnabled(edit->IsValid()); });
@@ -138,10 +140,11 @@ void TerrainTools::LOS_Ruler::ShowPlot()
    {
       mPlotDockWidgetPtr = new wkf::PlotDockWidget(wkfEnv.GetMainWindow());
       mPlotDockWidgetPtr->setAttribute(Qt::WA_DeleteOnClose);
-      QPushButton* updateButton = new QPushButton("Update", mPlotDockWidgetPtr);
+      QPushButton* updateButton =
+         new QPushButton(QCoreApplication::translate("TerrainTools::LOS_Ruler", "Update"), mPlotDockWidgetPtr); // 二次开发（i18n）
       mPlotDockWidgetPtr->layout()->addWidget(updateButton);
-      mPlotDockWidgetPtr->setWindowTitle(
-         QString("Height Above Terrain between %1 and %2").arg(GetParent().GetName().c_str(), mTarget->GetName().c_str()));
+      mPlotDockWidgetPtr->setWindowTitle(QCoreApplication::translate("TerrainTools::LOS_Ruler", "Height Above Terrain between %1 and %2")
+                                            .arg(GetParent().GetName().c_str(), mTarget->GetName().c_str())); // 二次开发（i18n）
       QObject::connect(updateButton, &QPushButton::clicked, [this]() { UpdatePlottingWidget(); });
       mPlotDockWidgetPtr->show();
    }
@@ -152,7 +155,7 @@ void TerrainTools::LOS_Ruler::UpdatePlottingWidget()
 {
    mPlotDockWidgetPtr->GetPlot()->ClearData();
    mPlotDockWidgetPtr->GetPlot()->AddPoints(std::map<double, double>(mResults.begin(), mResults.end()));
-   mPlotDockWidgetPtr->GetPlot()->SetLabelYAxis("Height Above Terrain");
+   mPlotDockWidgetPtr->GetPlot()->SetLabelYAxis(QCoreApplication::translate("TerrainTools::LOS_Ruler", "Height Above Terrain")); // 二次开发（i18n）：Y 轴标签
    mPlotDockWidgetPtr->GetPlot()->AddPoint(0, 0, 2);
    mPlotDockWidgetPtr->GetPlot()->AddPoint(1, 0, 2); // add a zero line
    mPlotDockWidgetPtr->GetPlot()->MakePlotPretty();

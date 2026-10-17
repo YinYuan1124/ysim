@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -143,17 +143,18 @@ void ConvertBrawlerAircraftDialog::OkClicked(bool aClicked)
    BrawlerConverter converter(mUIPtr->mInputFileLineEdit->text());
    if (converter.OutputSixDOF_Vehicle())
    {
-      std::string dialogText = "A PointMassSixDOF vehicle has been generated and saved to ";
+      // 二次开发（i18n）：导出完成对话框文本分句接入翻译通道
+      std::string dialogText = tr("A PointMassSixDOF vehicle has been generated and saved to ").toStdString();
       dialogText += converter.GetVehicleDir().absolutePath().toStdString();
-      dialogText += ".\n\nThis vehicle is ready for use as-is, but you may wish to tune its controllers to your use case.\n\n";
-      dialogText += "Additional adjustments, such as aerodynamic response, can be made according to the documentation for PointMassSixDOF.\n\n";
-      dialogText += "Future versions of Mover Creator will improve the match between Brawler and PM6DOF movers out of the box.";
+      dialogText += tr(".\n\nThis vehicle is ready for use as-is, but you may wish to tune its controllers to your use case.\n\n").toStdString();
+      dialogText += tr("Additional adjustments, such as aerodynamic response, can be made according to the documentation for PointMassSixDOF.\n\n").toStdString();
+      dialogText += tr("Future versions of Mover Creator will improve the match between Brawler and PM6DOF movers out of the box.").toStdString();
 
       QMessageBox conclusionBox;
-      conclusionBox.setWindowTitle("Vehicle Exported");
+      conclusionBox.setWindowTitle(tr("Vehicle Exported")); // 二次开发（i18n）：标题接入翻译通道
       conclusionBox.setText(dialogText.c_str());
       conclusionBox.addButton(QMessageBox::Ok);
-      QPushButton* openTunerButton = conclusionBox.addButton("Open Tuner", QMessageBox::ActionRole);
+      QPushButton* openTunerButton = conclusionBox.addButton(tr("Open Tuner"), QMessageBox::ActionRole); // 二次开发（i18n）：按钮文本接入翻译通道
 
       conclusionBox.exec();
       if (conclusionBox.clickedButton() == openTunerButton)

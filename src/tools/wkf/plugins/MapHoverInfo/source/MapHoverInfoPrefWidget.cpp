@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -32,10 +32,11 @@ MapHoverInfo::PrefWidget::PrefWidget()
       mUi.widgetLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding));
    }
 
-   mUi.platformHoverInfo->setTitle("Platforms");
-   mUi.trackHoverInfo->setTitle("Tracks");
-   mUi.platformEventHoverInfo->setTitle("Platform Events");
-   mUi.weaponEventHoverInfo->setTitle("Weapon Events");
+   // 二次开发（i18n）：分组框标题 tr() 化
+   mUi.platformHoverInfo->setTitle(tr("Platforms"));
+   mUi.trackHoverInfo->setTitle(tr("Tracks"));
+   mUi.platformEventHoverInfo->setTitle(tr("Platform Events"));
+   mUi.weaponEventHoverInfo->setTitle(tr("Weapon Events"));
 
    mUi.trackHoverInfo->SetAvailableOptions(cPOSITION_DATA);
    mUi.trackHoverInfo->AddOptions(

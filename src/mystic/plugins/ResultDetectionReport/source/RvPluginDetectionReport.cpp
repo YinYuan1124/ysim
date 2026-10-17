@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -11,6 +11,7 @@
 #include "RvPluginDetectionReport.hpp"
 
 #include <QAction>
+#include <QCoreApplication> // 二次开发（i18n）：显式上下文翻译所需
 #include <QDockWidget>
 #include <QMenu>
 #include <QVBoxLayout>
@@ -56,8 +57,9 @@ void RvDetectionReport::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity
             {
                if (!ep_platform->GetDetectionAttemptMap().empty())
                {
+                  // 二次开发（i18n）：实体右键菜单文本 tr() 化
                   wkf::Action* connectAction =
-                     new wkf::Action(QIcon::fromTheme("plot"), QString("Sensor Detection Report"), aMenu);
+                     new wkf::Action(QIcon::fromTheme("plot"), tr("Sensor Detection Report"), aMenu);
                   connectAction->setData(QString(aEntityPtr->GetName().c_str()));
                   connect(connectAction,
                           &QAction::triggered,
@@ -131,7 +133,7 @@ void RvDetectionReport::Plugin::CustomPlotContextMenu(const QPoint& aPoint, cons
    if (aPlot2D)
    {
       QMenu menu;
-      menu.addAction("Set current time: " + QString::number(aDataPoint.x()));
+      menu.addAction(QCoreApplication::translate("RvDetectionReport::Plugin", "Set current time: %1").arg(aDataPoint.x())); // 二次开发（i18n）：菜单项接入翻译通道（参数化）
       if (menu.exec(aPoint))
       {
          rvEnv.SetTime(aDataPoint.x());

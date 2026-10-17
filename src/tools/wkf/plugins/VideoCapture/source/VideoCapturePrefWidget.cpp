@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -46,7 +46,8 @@ void VideoCapture::PrefWidget::ReadPreferenceData(const PrefData& aPrefData)
 
 void VideoCapture::PrefWidget::ChooseDir()
 {
-   QString dir = wkf::getExistingDirectory(this, "Choose Screenshot/Video Output Directory", mUi.mOutputDir->text());
+   // 二次开发（i18n）：目录选择对话框标题 tr() 化
+   QString dir = wkf::getExistingDirectory(this, tr("Choose Screenshot/Video Output Directory"), mUi.mOutputDir->text());
    if (!dir.isEmpty())
    {
       mUi.mOutputDir->setText(dir);

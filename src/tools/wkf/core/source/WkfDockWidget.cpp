@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -39,8 +39,9 @@ wkf::DockWidget::DockWidget(const QString&  aObjectName,
    connect(this, &QDockWidget::topLevelChanged, this, &DockWidget::FloatingChanged);
 
    // Create a full screen option
+   // 二次开发（i18n）：右键菜单动作文本 tr() 化
    mFullScreenActionPtr =
-      new Action(QIcon::fromTheme("fullscreen"), "Full Screen", this, QKeySequence(QKeySequence::FullScreen));
+      new Action(QIcon::fromTheme("fullscreen"), tr("Full Screen"), this, QKeySequence(QKeySequence::FullScreen));
    mFullScreenActionPtr->setShortcutContext(Qt::WidgetWithChildrenShortcut);
    mFullScreenActionPtr->setCheckable(true);
    connect(mFullScreenActionPtr, &QAction::triggered, this, &DockWidget::FullscreenActionTriggered);
@@ -230,11 +231,11 @@ void wkf::DockWidget::BuildContextMenuP(QMenu& aMenu, const QPoint& pos)
    // widget or whether it is separate.
    if (!isFloating()) // Dock Widget is displaying the contents widget
    {
-      Action* action = new Action(QIcon::fromTheme("move"), "Move to New Window", &aMenu);
+      Action* action = new Action(QIcon::fromTheme("move"), tr("Move to New Window"), &aMenu);
       connect(action, &QAction::triggered, this, [this]() { setFloating(true); });
       aMenu.addAction(action);
 
-      auto* hideAction = new QAction(QIcon::fromTheme("hide"), "Hide", &aMenu);
+      auto* hideAction = new QAction(QIcon::fromTheme("hide"), tr("Hide"), &aMenu);
       connect(hideAction, &QAction::triggered, this, &DockWidget::hide);
       aMenu.addAction(hideAction);
    }

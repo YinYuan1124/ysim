@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -23,9 +23,10 @@
 wkf::OverlayUpdaterPrefWidget::OverlayUpdaterPrefWidget(QWidget* aParent /*= nullptr*/)
    : wkf::PrefWidgetT<wkf::OverlayUpdaterPrefObject>(aParent)
 {
-   setWindowTitle("Data Displays");
+   // 二次开发（i18n）：首选项页面标题与控件文本 tr() 化
+   setWindowTitle(tr("Data Displays"));
    setLayout(new QVBoxLayout(this));
-   layout()->addWidget(new QLabel("Data Types", this));
+   layout()->addWidget(new QLabel(tr("Data Types"), this));
    mListWidget = new QListWidget(this);
    layout()->addWidget(mListWidget);
    QHBoxLayout* hbox = new QHBoxLayout();
@@ -34,8 +35,9 @@ wkf::OverlayUpdaterPrefWidget::OverlayUpdaterPrefWidget(QWidget* aParent /*= nul
    mEditButton = new QToolButton(this);
    mEditButton->setIcon(QIcon::fromTheme("wrench"));
    mMenu = new QMenu(mEditButton);
-   connect(mMenu->addAction("Set Color"), &QAction::triggered, this, &OverlayUpdaterPrefWidget::SetColor);
-   connect(mMenu->addAction("Set Style"), &QAction::triggered, this, &OverlayUpdaterPrefWidget::SetStyle);
+   // 二次开发（i18n）：菜单动作文本 tr() 化
+   connect(mMenu->addAction(tr("Set Color")), &QAction::triggered, this, &OverlayUpdaterPrefWidget::SetColor);
+   connect(mMenu->addAction(tr("Set Style")), &QAction::triggered, this, &OverlayUpdaterPrefWidget::SetStyle);
    mEditButton->setMenu(mMenu);
    mEditButton->setEnabled(false);
    mDeleteButton = new QPushButton(QIcon::fromTheme("delete"), "", this);
@@ -124,8 +126,9 @@ void wkf::OverlayUpdaterPrefWidget::SetColor()
    {
       QString       name         = mListWidget->currentItem()->text();
       const QColor& currentColor = mListWidget->currentItem()->textColor();
+      // 二次开发（i18n）：颜色对话框标题 tr() 化
       QColor        newColor =
-         QColorDialog::getColor(currentColor, this, QString("Choose Color for %1").arg(mListWidget->currentItem()->text()));
+         QColorDialog::getColor(currentColor, this, tr("Choose Color for %1").arg(mListWidget->currentItem()->text()));
       if (newColor != currentColor)
       {
          mListWidget->currentItem()->setTextColor(newColor);
@@ -141,8 +144,9 @@ void wkf::OverlayUpdaterPrefWidget::SetStyle()
       QString      name        = mListWidget->currentItem()->text();
       const QFont& currentFont = mListWidget->currentItem()->font();
       bool         ok          = false;
+      // 二次开发（i18n）：字体对话框标题 tr() 化
       QFont        newFont =
-         QFontDialog::getFont(&ok, currentFont, this, QString("Choose Font for %1").arg(mListWidget->currentItem()->text()));
+         QFontDialog::getFont(&ok, currentFont, this, tr("Choose Font for %1").arg(mListWidget->currentItem()->text()));
       if (ok)
       {
          mListWidget->currentItem()->setFont(newFont);

@@ -43,10 +43,11 @@ WizCommVis::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
 QList<wkf::Tip> WizCommVis::Plugin::GetTips() const
 {
    QList<wkf::Tip> tips;
-   tips.append(wkf::Tip("Comms Visualization",
-                        "You can view communication network activity.",
+   // 二次开发（i18n）：tips 标题/正文/链接文本 tr() 化（文档路径为 URL 键，不译）
+   tips.append(wkf::Tip(tr("Comms Visualization"),
+                        tr("You can view communication network activity."),
                         "wkf_plugin/wiz_comm_vis.html",
-                        "Comms Visualization"));
+                        tr("Comms Visualization")));
    return tips;
 }
 

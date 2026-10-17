@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -64,16 +64,17 @@ void RvHeadsUpDisplay::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity*
       wkf::Platform* platPtr = dynamic_cast<wkf::Platform*>(aEntityPtr);
       if (HasSituationAwarenessProcessor(platPtr) && mHuds.find(QString::fromStdString(platPtr->GetName())) == mHuds.end())
       {
+         // 二次开发（i18n）：菜单标题 tr() 化；findChild/setObjectName 查找键保持英文原样
          auto airCombatMenu = aMenu->findChild<QMenu*>("Air Combat");
          if (!airCombatMenu)
          {
-            airCombatMenu = ut::qt::make_qt_ptr<QMenu>(QString("Air Combat"), aMenu);
+            airCombatMenu = ut::qt::make_qt_ptr<QMenu>(tr("Air Combat"), aMenu);
             aMenu->addMenu(airCombatMenu);
             airCombatMenu->setObjectName("Air Combat");
          }
 
          QString      name          = aEntityPtr->GetName().c_str();
-         wkf::Action* connectAction = new wkf::Action(QIcon::fromTheme("headsup"), QString("Head Up View"), airCombatMenu);
+         wkf::Action* connectAction = new wkf::Action(QIcon::fromTheme("headsup"), tr("Head Up View"), airCombatMenu);
          connectAction->setData(name);
          connect(connectAction, &QAction::triggered, this, &Plugin::ConnectToPlatform);
       }

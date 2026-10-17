@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -83,7 +83,8 @@ void RvRoute::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntityP
    {
       if (GetRouteData(*static_cast<wkf::Platform*>(aEntityPtr)))
       {
-         QAction* projectorAction = new QAction(QIcon::fromTheme("route"), QString("Show Route Information"), aMenu);
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
+         QAction* projectorAction = new QAction(QIcon::fromTheme("route"), tr("Show Route Information"), aMenu);
          aMenu->addAction(projectorAction);
          connect(projectorAction,
                  &QAction::triggered,

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,7 +21,7 @@
 HDD::PrefWidget::PrefWidget()
    : wkf::PrefWidgetT<HDD::PrefObject>()
 {
-   setWindowTitle("Head Down View");
+   setWindowTitle(tr("Head Down View")); // 二次开发（i18n）：页面标题 tr() 化
 
    QVBoxLayout* lo = new QVBoxLayout(this);
    lo->setObjectName(QStringLiteral("verticalLayout"));
@@ -36,7 +36,8 @@ HDD::PrefWidget::PrefWidget()
    vectorTree->setColumnCount(2);
 
    // Resolution choices.
-   QTreeWidgetItem* resItem = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Resolution"));
+   // 二次开发（i18n）：树项显示文本 tr() 化（分辨率/页面组合框项为技术规格与持久化值，保持原样）
+   QTreeWidgetItem* resItem = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Resolution")));
    mResolution              = new QComboBox(this);
    mResolution->addItem("960x540");
    mResolution->addItem("960x600");
@@ -46,18 +47,18 @@ HDD::PrefWidget::PrefWidget()
    mResolution->addItem("1920x1200");
 
    // Create our page tree widgets.
-   QTreeWidgetItem* page1Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 1"));
-   QTreeWidgetItem* page2Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 2"));
-   QTreeWidgetItem* page3Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 3"));
-   QTreeWidgetItem* page4Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 4"));
-   QTreeWidgetItem* page5Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 5"));
-   QTreeWidgetItem* page6Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 6"));
-   QTreeWidgetItem* page7Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 7"));
-   QTreeWidgetItem* page8Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 8"));
-   QTreeWidgetItem* page9Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 9"));
-   QTreeWidgetItem* page10Item = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 10"));
-   QTreeWidgetItem* page11Item = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 11"));
-   QTreeWidgetItem* page12Item = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Page 12"));
+   QTreeWidgetItem* page1Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 1")));
+   QTreeWidgetItem* page2Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 2")));
+   QTreeWidgetItem* page3Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 3")));
+   QTreeWidgetItem* page4Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 4")));
+   QTreeWidgetItem* page5Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 5")));
+   QTreeWidgetItem* page6Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 6")));
+   QTreeWidgetItem* page7Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 7")));
+   QTreeWidgetItem* page8Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 8")));
+   QTreeWidgetItem* page9Item  = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 9")));
+   QTreeWidgetItem* page10Item = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 10")));
+   QTreeWidgetItem* page11Item = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 11")));
+   QTreeWidgetItem* page12Item = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Page 12")));
 
    // Page choices.
    mPages[1]                     = new QComboBox(this);

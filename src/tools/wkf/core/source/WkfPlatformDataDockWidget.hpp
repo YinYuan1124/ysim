@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -23,6 +23,7 @@ namespace wkf
 {
 class WKF_EXPORT PlatformDataDockWidget : public PlatformContextDockWidget
 {
+   Q_OBJECT // 二次开发（i18n）：补 Q_OBJECT 使 tr() 落到本类上下文
 public:
    PlatformDataDockWidget(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
    virtual ~PlatformDataDockWidget() override;

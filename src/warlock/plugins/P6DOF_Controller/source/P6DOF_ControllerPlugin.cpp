@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -61,7 +61,8 @@ void WkP6DOF_Controller::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entit
 
       if (mControllerObjectPtr->GetDataContainer().IsPlatformP6DOF_Entity(name))
       {
-         wkf::Action* connectAction = new wkf::Action(QIcon::fromTheme("controller"), QString("P6DOF Controller"), aMenu);
+         // 二次开发（i18n）：实体右键菜单文本 tr() 化
+         wkf::Action* connectAction = new wkf::Action(QIcon::fromTheme("controller"), tr("P6DOF Controller"), aMenu);
          connectAction->setData(name);
          connect(connectAction, &QAction::triggered, this, &Plugin::ConnectToPlatformActionHandler);
       }

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -67,8 +67,11 @@ void wkf::TipContainer::QueryPluginsForTips()
          auto tips = p.second->GetTips();
          for (auto& tip : tips)
          {
-            QString text = "<b>" + tip.title + "</b> \n\n" + tip.text + "\n\nFor more information visit the \n<a href=\"" +
-                           dir + tip.docLocation + "\">" + tip.docDescription + "</a> documentation.";
+            // 二次开发（i18n）：尾句模板 tr() 化（链接与文档名动态填入）；标题/正文/链接文本
+            // 由各插件 GetTips 内 tr() 化后传入。
+            QString tail = tr("For more information visit the \n<a href=\"%1\">%2</a> documentation.")
+                              .arg(dir + tip.docLocation, tip.docDescription);
+            QString text = "<b>" + tip.title + "</b> \n\n" + tip.text + "\n\n" + tail;
             mTips.append(text);
          }
       }

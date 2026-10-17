@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -292,14 +292,14 @@ QTreeWidgetItem* Designer::GeometryEngine::CreateTreeWidgetItem(QString& aType, 
    editIcon = QIcon::fromTheme(iconThemeName);
    QPushButton* editButton = new QPushButton("");
    editButton->setIcon(editIcon);
-   editButton->setToolTip("Edit Engine");
+   editButton->setToolTip(tr("Edit Engine")); // 二次开发（i18n）：工具提示接入翻译通道
 
    QIcon createIcon;
    QString createIconThemeName = QStringLiteral("add");
    createIcon = QIcon::fromTheme(createIconThemeName);
    QPushButton* createButton = new QPushButton("");
    createButton->setIcon(createIcon);
-   createButton->setToolTip("Create Engine");
+   createButton->setToolTip(tr("Create Engine")); // 二次开发（i18n）：工具提示接入翻译通道
 
    btnWidgetLayout->addWidget(editButton);
    btnWidgetLayout->addWidget(createButton);

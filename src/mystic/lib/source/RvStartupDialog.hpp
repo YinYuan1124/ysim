@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,8 @@
 #include "RvExport.hpp"
 #include "WkfStartupDialog.hpp"
 
+#include <QCoreApplication> // 二次开发（i18n）：类无 Q_OBJECT，显式上下文翻译所需
+
 namespace rv
 {
 class RV_EXPORT StartupDialog : public wkf::StartupDialog<QString>
@@ -28,7 +30,10 @@ private:
    void                  ClearRecents() override;
    const QList<QString>& GetRecents() const override;
    QString               GetRecentLabelDisplayName(const QString& aFile, bool aDisplayFullPath) const override;
-   QString               RunActionText() const override { return "Open Recording"; }
+   QString               RunActionText() const override
+   {
+      return QCoreApplication::translate("rv::StartupDialog", "Open Recording"); // 二次开发（i18n）：接入翻译通道
+   }
    void                  PopulateLabels() override;
 
    bool    ValidateSelection() override;

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,8 @@
 // ****************************************************************************
 
 #include "WkfPrefObject.hpp"
+
+#include <QCoreApplication>
 
 #include <exception>
 
@@ -42,10 +44,13 @@ wkf::detail::PrefObjectScopeGuard::~PrefObjectScopeGuard() noexcept
    {
       // If this warning is appearing, that means the current PrefObject does not have matching beginGroup/endGroup or
       // beginArray/endArray calls.
+      // 二次开发（i18n）：警告框标题与文本翻译化（本类非 QObject，用显式上下文 wkf::PrefObject 登记；%1 为组名）
       QMessageBox::warning(nullptr,
-                           "Load Preferences Error",
-                           QString("The %1 preference object encountered an error when loading "
-                                   "preferences.\nPreferences may not have been loaded.")
+                           QCoreApplication::translate("wkf::PrefObject", "Load Preferences Error"),
+                           QString(QCoreApplication::translate("wkf::PrefObject",
+                                                               "The %1 preference object encountered an error when "
+                                                               "loading preferences.\nPreferences may not have been "
+                                                               "loaded."))
                               .arg(mGroup));
 
       // End groups until back to root level.

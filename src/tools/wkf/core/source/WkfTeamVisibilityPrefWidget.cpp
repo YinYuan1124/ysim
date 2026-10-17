@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -42,7 +42,8 @@ void wkf::TeamVisibilityPrefWidget::AddNewTeamButtonPressed()
    QString teamName = mUi.teamNameLineEdit->text();
    if (teamName.contains(" "))
    {
-      QMessageBox::information(nullptr, "Invalid Team Entry", "Team name can't include space characters.");
+      // 二次开发（i18n）：提示框标题与文本 tr() 化（teamName 为用户输入数据不译）
+      QMessageBox::information(nullptr, tr("Invalid Team Entry"), tr("Team name can't include space characters."));
    }
    else if (!teamName.isEmpty())
    {
@@ -92,9 +93,10 @@ void wkf::TeamVisibilityPrefWidget::AddNewTeamButtonPressed()
       }
       else
       {
+         // 二次开发（i18n）：提示框标题与文本 tr() 化（%1 为用户输入的队名）
          QMessageBox::information(nullptr,
-                                  "Duplicate Team Entry",
-                                  QString("Team %1 already exists, unable to add team.").arg(teamName));
+                                  tr("Duplicate Team Entry"),
+                                  tr("Team %1 already exists, unable to add team.").arg(teamName));
       }
    }
 }
@@ -124,7 +126,8 @@ bool wkf::TeamVisibilityPrefWidget::eventFilter(QObject* aObject, QEvent* aEvent
             QString teamName = mUi.teamTableWidget->item(row, 0)->text();
             if (teamName == wkf::TeamVisibilityPrefData::cDEFAULT_TEAM)
             {
-               QMessageBox::information(nullptr, "Can't Remove Default Team", "Cannot remove the default team. It is used when an entity's team name does not match any team name in this list.");
+               // 二次开发（i18n）：提示框标题与文本 tr() 化
+               QMessageBox::information(nullptr, tr("Can't Remove Default Team"), tr("Cannot remove the default team. It is used when an entity's team name does not match any team name in this list."));
             }
             else
             {

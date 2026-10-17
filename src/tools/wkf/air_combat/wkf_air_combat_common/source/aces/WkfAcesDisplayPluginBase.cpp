@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -49,15 +49,16 @@ void wkf::AcesDisplay::PluginBase::BuildEntityContextMenu(QMenu* aMenu, wkf::Ent
          //   - aEntityPtr is a pointer to a wkf::Platform
          //   - AND the platform has a SituationAwarenessProcessor,
          //   - AND there is no dock widget for this platform already
+         // 二次开发（i18n）：菜单标题 tr() 化；findChild/setObjectName 查找键保持英文原样
          auto airCombatMenu = aMenu->findChild<QMenu*>("Air Combat");
          if (!airCombatMenu)
          {
-            airCombatMenu = ut::qt::make_qt_ptr<QMenu>(QString("Air Combat"), aMenu);
+            airCombatMenu = ut::qt::make_qt_ptr<QMenu>(tr("Air Combat"), aMenu);
             aMenu->addMenu(airCombatMenu);
             airCombatMenu->setObjectName("Air Combat");
          }
 
-         QAction* acesViewAction = new QAction(QIcon::fromTheme("tether"), QString("ACES View"), airCombatMenu);
+         QAction* acesViewAction = new QAction(QIcon::fromTheme("tether"), tr("ACES View"), airCombatMenu);
          airCombatMenu->addAction(acesViewAction);
          connect(acesViewAction,
                  &QAction::triggered,

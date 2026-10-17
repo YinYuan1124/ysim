@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -40,17 +40,20 @@ void rv::DocumentationDialog::PopulateDialog()
    if (fi.isDir())
    {
       QString dir(fi.absoluteFilePath().append("/html/docs/"));
-      CreateDocLink(dir + "mystic.html", "Main Page", vLayout);
-      CreateDocLink(dir + "mystic_users_guide.html", "User's Guide", vLayout);
-      CreateDocLink(dir + "mystic_reference_guide.html", "Reference Guide", vLayout);
-      CreateDocLink(dir + "mystic_change_log.html", "Change Log", vLayout);
-      CreateDocLink(dir + "event_pipe.html", "Event Pipe", vLayout);
-      CreateDocLink(dir + "main_page.html", "AFSIM Main Page", vLayout);
+      // 二次开发（i18n）：文档链接文本经基类 tr() 翻译（本类无 Q_OBJECT，
+      // 显式限定 wkf::DocumentationDialog 上下文，四应用共用同一份译文）
+      CreateDocLink(dir + "mystic.html", wkf::DocumentationDialog::tr("Main Page"), vLayout);
+      CreateDocLink(dir + "mystic_users_guide.html", wkf::DocumentationDialog::tr("User's Guide"), vLayout);
+      CreateDocLink(dir + "mystic_reference_guide.html", wkf::DocumentationDialog::tr("Reference Guide"), vLayout);
+      CreateDocLink(dir + "mystic_change_log.html", wkf::DocumentationDialog::tr("Change Log"), vLayout);
+      CreateDocLink(dir + "event_pipe.html", wkf::DocumentationDialog::tr("Event Pipe"), vLayout);
+      CreateDocLink(dir + "main_page.html", wkf::DocumentationDialog::tr("AFSIM Main Page"), vLayout);
    }
 
    if (vLayout->count() == 0)
    {
-      QLabel* labelPtr = new QLabel("<p style=\"font-size:10pt;\"><i>No documentation found</i></p>", this);
+      // 二次开发（i18n）：无文档提示 tr() 化
+      QLabel* labelPtr = new QLabel(wkf::DocumentationDialog::tr("<p style=\"font-size:10pt;\"><i>No documentation found</i></p>"), this);
       vLayout->addWidget(labelPtr);
       vLayout->addStretch();
    }

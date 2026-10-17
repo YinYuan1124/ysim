@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -20,8 +20,9 @@ RvTimeController::PrefWidget::PrefWidget()
    mUi.setupUi(this);
 
    // There doesn't seem to be a way to add userData in Qt designer.
-   mUi.mSpeedLimitComboBox->addItem("1,000 times real time", 3);
-   mUi.mSpeedLimitComboBox->addItem("10,000 times real time", 4);
+   // 二次开发（i18n）：速度上限组合框项 tr() 化（存取走 currentData/findData 不受影响）
+   mUi.mSpeedLimitComboBox->addItem(tr("1,000 times real time"), 3);
+   mUi.mSpeedLimitComboBox->addItem(tr("10,000 times real time"), 4);
 }
 
 void RvTimeController::PrefWidget::WritePreferenceData(PrefData& aPrefData)

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -43,8 +43,9 @@ void WkPlatformBrowser::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity
    if (aEntityPtr->IsA_TypeOf<wkf::Platform>())
    {
       QString      name = aEntityPtr->GetName().c_str();
+      // 二次开发（i18n）：实体右键菜单文本 tr() 化
       wkf::Action* deleteAction =
-         new wkf::Action(QIcon::fromTheme("delete"), QString("Delete Platform %1").arg(name), aMenu);
+         new wkf::Action(QIcon::fromTheme("delete"), tr("Delete Platform %1").arg(name), aMenu);
       connect(deleteAction, &QAction::triggered, std::bind(&Interface::DeletePlatform, mPlatformBrowserInterface, name));
    }
 }

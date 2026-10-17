@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -10,6 +10,8 @@
 // ****************************************************************************
 
 #include "RvPluginMerger.hpp"
+
+#include <QCoreApplication> // 二次开发（i18n）：显式上下文翻译所需
 
 #include "WkfEnvironment.hpp"
 #include "WkfMainWindow.hpp"
@@ -29,7 +31,7 @@ RvMerger::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
 
    if (mainWindow != nullptr)
    {
-      mainWindow->AddDialogToToolMenu(&mDialog, "Merge Recordings...");
+      mainWindow->AddDialogToToolMenu(&mDialog, QCoreApplication::translate("RvMerger::Plugin", "Merge Recordings...")); // 二次开发（i18n）：工具菜单项接入翻译通道
    }
 
    connect(&mDialog, &MergeDialog::Merge, this, &Plugin::BeginMerge);
@@ -41,7 +43,7 @@ RvMerger::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
       this,
       [this](const std::string& aErrorMessage)
       {
-         QMessageBox::critical(&mDialog, "Error Merging Recordings", QString::fromStdString(aErrorMessage));
+         QMessageBox::critical(&mDialog, QCoreApplication::translate("RvMerger::Plugin", "Error Merging Recordings"), QString::fromStdString(aErrorMessage)); // 二次开发（i18n）：标题接入翻译通道（错误消息来自底层保持原文）
          mDialog.Abort();
       },
       Qt::BlockingQueuedConnection);

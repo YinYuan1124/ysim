@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -95,10 +95,11 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
       {
          if (vaEnv.GetStandardScenario())
          {
-            auto rrMenu = ut::qt::make_qt_ptr<QMenu>(QString("Range Rings"), aMenu);
+            // 二次开发（i18n）：实体右键菜单文本 tr() 化
+            auto rrMenu = ut::qt::make_qt_ptr<QMenu>(tr("Range Rings"), aMenu);
             rrMenu->setIcon(QIcon::fromTheme("rangering"));
             aMenu->addMenu(rrMenu);
-            auto rangeRing = ut::qt::make_qt_ptr<QAction>(QString("Add Range Ring to %1").arg(qname), rrMenu);
+            auto rangeRing = ut::qt::make_qt_ptr<QAction>(tr("Add Range Ring to %1").arg(qname), rrMenu);
             connect(rangeRing,
                     &QAction::triggered,
                     this,
@@ -115,7 +116,7 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
 
             if (aEntityPtr->FindFirstAttachmentOfType<wkf::AttachmentRangeRing>())
             {
-               auto editRangeRing = ut::qt::make_qt_ptr<QAction>(QString("Edit Range Rings on %1").arg(qname), rrMenu);
+               auto editRangeRing = ut::qt::make_qt_ptr<QAction>(tr("Edit Range Rings on %1").arg(qname), rrMenu);
                connect(editRangeRing,
                        &QAction::triggered,
                        this,
@@ -133,7 +134,7 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
             for (auto&& it : rrList)
             {
                auto remRangeRing =
-                  ut::qt::make_qt_ptr<QAction>(QString("Remove Range Ring \"%1\" from %2").arg(it->GetName().c_str(), qname),
+                  ut::qt::make_qt_ptr<QAction>(tr("Remove Range Ring \"%1\" from %2").arg(it->GetName().c_str(), qname),
                                                rrMenu);
                connect(remRangeRing,
                        &QAction::triggered,
@@ -150,9 +151,9 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
             }
             if (isPlatform)
             {
-               auto vectorMenu = ut::qt::make_qt_ptr<QMenu>("Custom Vectors", aMenu);
+               auto vectorMenu = ut::qt::make_qt_ptr<QMenu>(tr("Custom Vectors"), aMenu);
                aMenu->addMenu(vectorMenu);
-               auto customvector = ut::qt::make_qt_ptr<QAction>("Add Custom Vectors...", vectorMenu);
+               auto customvector = ut::qt::make_qt_ptr<QAction>(tr("Add Custom Vectors..."), vectorMenu);
                connect(customvector,
                        &QAction::triggered,
                        this,
@@ -180,7 +181,7 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
                   auto vectorList = mDisplayInterface->GetVectors()[aEntityPtr->GetUniqueId()];
                   for (const auto& cust : vectorList)
                   {
-                     auto cv = ut::qt::make_qt_ptr<QAction>(QString("Remove ") + cust.second.mName, vectorMenu);
+                     auto cv = ut::qt::make_qt_ptr<QAction>(tr("Remove %1").arg(cust.second.mName), vectorMenu);
                      vectorMenu->addAction(cv);
                      connect(cv,
                              &QAction::triggered,
@@ -200,7 +201,7 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
       }
       if (isPOI)
       {
-         auto poi = ut::qt::make_qt_ptr<QAction>(QString("Edit Point of Interest"), aMenu);
+         auto poi = ut::qt::make_qt_ptr<QAction>(tr("Edit Point of Interest"), aMenu);
          connect(poi,
                  &QAction::triggered,
                  this,
@@ -216,35 +217,35 @@ void Annotation::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEnti
       }
       // Allow decorations to be added to Tracks and POIs (previously limited to Platforms)
       {
-         auto markMenu = ut::qt::make_qt_ptr<QMenu>(QString("Decorate %1").arg(qname), aMenu);
+         auto markMenu = ut::qt::make_qt_ptr<QMenu>(tr("Decorate %1").arg(qname), aMenu);
          aMenu->addMenu(markMenu);
          auto spade =
-            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/spade.png"), "Spade", markMenu);
+            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/spade.png"), tr("Spade"), markMenu);
          markMenu->addAction(spade);
          auto heart =
-            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/heart.png"), "Heart", markMenu);
+            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/heart.png"), tr("Heart"), markMenu);
          markMenu->addAction(heart);
          auto diamond =
-            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/diamond.png"), "Diamond", markMenu);
+            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/diamond.png"), tr("Diamond"), markMenu);
          markMenu->addAction(diamond);
          auto club =
-            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/club.png"), "Club", markMenu);
+            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/club.png"), tr("Club"), markMenu);
          markMenu->addAction(club);
-         auto one = ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/one.png"), "One", markMenu);
+         auto one = ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/one.png"), tr("One"), markMenu);
          markMenu->addAction(one);
-         auto two = ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/two.png"), "Two", markMenu);
+         auto two = ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/two.png"), tr("Two"), markMenu);
          markMenu->addAction(two);
          auto three =
-            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/three.png"), "Three", markMenu);
+            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/three.png"), tr("Three"), markMenu);
          markMenu->addAction(three);
          auto four =
-            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/four.png"), "Four", markMenu);
+            ut::qt::make_qt_ptr<QAction>(mDisplayInterface->GetDecorationIcon(":/icons/four.png"), tr("Four"), markMenu);
          markMenu->addAction(four);
-         auto text = ut::qt::make_qt_ptr<QAction>("Annotation", markMenu);
+         auto text = ut::qt::make_qt_ptr<QAction>(tr("Annotation"), markMenu);
          markMenu->addAction(text);
-         auto image = ut::qt::make_qt_ptr<QAction>("Image", markMenu);
+         auto image = ut::qt::make_qt_ptr<QAction>(tr("Image"), markMenu);
          markMenu->addAction(image);
-         auto clear = ut::qt::make_qt_ptr<QAction>("None", markMenu);
+         auto clear = ut::qt::make_qt_ptr<QAction>(tr("None"), markMenu);
          markMenu->addAction(clear);
 
          // Decorations do not need to set exportability, since they're re-created each time they're changed
@@ -267,20 +268,21 @@ void Annotation::Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer* a
 {
    if (aViewerPtr == vaEnv.GetStandardViewer() && mEnableFeatures)
    {
+      // 二次开发（i18n）：子菜单标题 tr() 化；objectName 保持英文原样，供各插件 findChild 查找键使用（查找通道与显示通道分离）
       auto addMenu = aMenu->findChild<QMenu*>("Add at Location");
       if (!addMenu)
       {
-         addMenu = aMenu->addMenu("Add at Location");
+         addMenu = aMenu->addMenu(tr("Add at Location"));
          addMenu->setObjectName("Add at Location");
          UtQtTranslucentMenu(*addMenu);
       }
 
       vespa::VaPosition p = vaEnv.GetCurrentCursorPosition();
-      auto bullseye       = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("bullseye"), QString("Bullseye"), addMenu);
+      auto bullseye       = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("bullseye"), tr("Bullseye"), addMenu);
       addMenu->addAction(bullseye);
-      auto pointOfInterest = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("poi"), QString("Point of Interest"), addMenu);
+      auto pointOfInterest = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("poi"), tr("Point of Interest"), addMenu);
       addMenu->addAction(pointOfInterest);
-      auto rangeRing = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("rangering"), QString("Range Ring"), addMenu);
+      auto rangeRing = ut::qt::make_qt_ptr<QAction>(QIcon::fromTheme("rangering"), tr("Range Ring"), addMenu);
       addMenu->addAction(rangeRing);
 
       connect(rangeRing, &QAction::triggered, this, [=]() { mDisplayInterface->AddRangeRing(p.GetLat(), p.GetLon()); });

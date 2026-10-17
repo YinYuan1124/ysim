@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -116,7 +116,8 @@ void WkDialogBuilder::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* 
       auto plat = dynamic_cast<wkf::Platform*>(aEntityPtr);
       if (plat)
       {
-         QMenu* scriptsMenu = new QMenu(QString("Scripts"), aMenu);
+         // 二次开发（i18n）：仅子菜单标题 tr() 化，动态脚本名不译
+         QMenu* scriptsMenu = new QMenu(tr("Scripts"), aMenu);
          scriptsMenu->setIcon(QIcon::fromTheme("script"));
 
          bool        platformScriptsFound = false;

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -16,12 +16,14 @@ wkf::PlatformHistoryPrefWidget::PlatformHistoryPrefWidget()
    : PrefWidgetT<PlatformHistoryPrefObject>()
 {
    mUi.setupUi(this);
+   // 二次开发（i18n）：颜色方案组合框项 tr() 化（存取走 currentData/index 不受影响；
+   // "team_color"/"name"/"state" 为模式映射键 token，保持原样）
    mUi.tracelineColorCombo->addItem(QStringLiteral("team_color"), TraceStateValue::eTRACE_TEAM_COLOR);
    mUi.tracelineColorCombo->addItem(QStringLiteral("name"), TraceStateValue::eTRACE_NAME_HASH);
 
-   mUi.colorSchemeComboBox->addItem(QStringLiteral("Team Color"), WingRibbonStyle::eTEAM);
-   mUi.colorSchemeComboBox->addItem(QStringLiteral("Green Scale"), WingRibbonStyle::eGREEN);
-   mUi.colorSchemeComboBox->addItem(QStringLiteral("Gray Scale"), WingRibbonStyle::eGRAY);
+   mUi.colorSchemeComboBox->addItem(tr("Team Color"), WingRibbonStyle::eTEAM);
+   mUi.colorSchemeComboBox->addItem(tr("Green Scale"), WingRibbonStyle::eGREEN);
+   mUi.colorSchemeComboBox->addItem(tr("Gray Scale"), WingRibbonStyle::eGRAY);
 
    connect(mUi.tracelineColorCombo,
            QOverload<const QString&>::of(&QComboBox::currentIndexChanged),

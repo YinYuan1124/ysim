@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -170,8 +170,9 @@ void wkf::log::ConsolePrefWidget::OnAppendClicked()
 
 void wkf::log::ConsolePrefWidget::OnRegexHelpClicked() const
 {
+   // 二次开发（i18n）：帮助框标题 tr() 化（正文为正则语法技术参考表，保留原文）
    QMessageBox msgBox{QMessageBox::Icon::NoIcon,
-                      "Regex Help",
+                      tr("Regex Help"),
                       R"regex(Perl Regular Expression Quick Reference Guide
 
 Characters:

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -154,14 +154,15 @@ void ZoneEditor::Plugin::BuildViewerContextMenu(QMenu* aMenuPtr, vespa::VaViewer
 {
    if (wizard::ProjectWorkspace::Instance()->GetProject() != nullptr)
    {
+      // 二次开发（i18n）：子菜单标题 tr() 化；objectName 保持英文原样，供各插件 findChild 查找键使用
       auto addMenu = aMenuPtr->findChild<QMenu*>("Add at Location");
       if (!addMenu)
       {
-         addMenu = aMenuPtr->addMenu("Add at Location");
+         addMenu = aMenuPtr->addMenu(tr("Add at Location"));
          addMenu->setObjectName("Add at Location");
       }
       vespa::VaPosition p        = vaEnv.GetCurrentCursorPosition();
-      wkf::Action* createZonePtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("zone"), QString("Zone"), addMenu);
+      wkf::Action* createZonePtr = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("zone"), tr("Zone"), addMenu);
       addMenu->addAction(createZonePtr);
 
       connect(createZonePtr, &QAction::triggered, [this, p]() { CreateDialog(p); });
@@ -174,8 +175,9 @@ void ZoneEditor::Plugin::BuildAttachmentContextMenu(QMenu* aMenu, vespa::VaAttac
    wkf::AttachmentZone* zonePtr = dynamic_cast<wkf::AttachmentZone*>(aAttachmentPtr);
    if (zonePtr && zonePtr->GetContextMenuEnabled())
    {
+      // 二次开发（i18n）：附件右键菜单文本 tr() 化
       wkf::Action* gotoDefPtr =
-         ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("find_text"), QString("Go to Zone Definition"), aMenu);
+         ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("find_text"), tr("Go to Zone Definition"), aMenu);
       aMenu->addAction(gotoDefPtr);
       connect(gotoDefPtr,
               &QAction::triggered,

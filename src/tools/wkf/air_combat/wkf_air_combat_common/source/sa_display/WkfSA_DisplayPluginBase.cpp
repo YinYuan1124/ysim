@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -54,15 +54,16 @@ void wkf::SA_Display::PluginBase::BuildEntityContextMenu(QMenu* aMenu, wkf::Enti
          QString name  = aEntityPtr->GetName().c_str();
          size_t  index = platPtr->GetIndex();
 
+         // 二次开发（i18n）：菜单标题 tr() 化；findChild/setObjectName 查找键保持英文原样
          auto airCombatMenu = aMenu->findChild<QMenu*>("Air Combat");
          if (!airCombatMenu)
          {
-            airCombatMenu = ut::qt::make_qt_ptr<QMenu>(QString("Air Combat"), aMenu);
+            airCombatMenu = ut::qt::make_qt_ptr<QMenu>(tr("Air Combat"), aMenu);
             aMenu->addMenu(airCombatMenu);
             airCombatMenu->setObjectName("Air Combat");
          }
 
-         QAction* saViewAction = new QAction(QIcon::fromTheme("tether"), QString("SA View"), airCombatMenu);
+         QAction* saViewAction = new QAction(QIcon::fromTheme("tether"), tr("SA View"), airCombatMenu);
          airCombatMenu->addAction(saViewAction);
          connect(saViewAction,
                  &QAction::triggered,

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -43,11 +43,12 @@ void RelativeGeometry::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity*
          QString poiName = poi->GetName().c_str();
          if (poiName != name)
          {
-            QMenu* relativeGeo = new QMenu("Relative Geometry", aMenu);
+            // 二次开发（i18n）：实体右键菜单文本 tr() 化
+            QMenu* relativeGeo = new QMenu(tr("Relative Geometry"), aMenu);
             aMenu->addMenu(relativeGeo);
-            QAction* fromAction = new QAction(QString("From %1 to %2").arg(poiName, name), relativeGeo);
+            QAction* fromAction = new QAction(tr("From %1 to %2").arg(poiName, name), relativeGeo);
             relativeGeo->addAction(fromAction);
-            QAction* toAction = new QAction(QString("From %1 to %2").arg(name, poiName), relativeGeo);
+            QAction* toAction = new QAction(tr("From %1 to %2").arg(name, poiName), relativeGeo);
             relativeGeo->addAction(toAction);
             wkf::SpatialDomain secondDomain = poi->GetSpatialDomain();
             connect(fromAction, &QAction::triggered, this, [=]() { Display(poiName, name, secondDomain); });
@@ -57,11 +58,11 @@ void RelativeGeometry::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity*
       }
       if (!added)
       {
-         QMenu* relativeGeo = new QMenu("Relative Geometry", aMenu);
+         QMenu* relativeGeo = new QMenu(tr("Relative Geometry"), aMenu);
          aMenu->addMenu(relativeGeo);
-         QAction* fromAction = new QAction(QString("From %1").arg(name), relativeGeo);
+         QAction* fromAction = new QAction(tr("From %1").arg(name), relativeGeo);
          relativeGeo->addAction(fromAction);
-         QAction* toAction = new QAction(QString("To %1").arg(name), relativeGeo);
+         QAction* toAction = new QAction(tr("To %1").arg(name), relativeGeo);
          relativeGeo->addAction(toAction);
          connect(fromAction, &QAction::triggered, this, [=]() { Display(name, "", firstDomain); });
          connect(toAction, &QAction::triggered, this, [=]() { Display("", name, firstDomain); });

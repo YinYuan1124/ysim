@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -83,7 +83,8 @@ QString SpaceTools::PrefWidget::GetDisplayName(const QString& aPath) const
 
 void SpaceTools::PrefWidget::AddDatabase()
 {
-   QStringList databases = QFileDialog::getOpenFileNames(this, "Add Database", "", QString("Json (*.json)"));
+   // 二次开发（i18n）：文件对话框标题与过滤器 tr() 化（数据库路径为运行时数据不译）
+   QStringList databases = QFileDialog::getOpenFileNames(this, tr("Add Database"), "", tr("Json (*.json)"));
    for (const auto& database : databases)
    {
       bool loaded = false;
@@ -185,7 +186,8 @@ void SpaceTools::FilterListWidget::contextMenuEvent(QContextMenuEvent* aEventPtr
    if (itemPtr != nullptr)
    {
       QMenu    menu(this);
-      QAction* removeFilter = new QAction("Remove Filter", &menu);
+      // 二次开发（i18n）：右键菜单动作文本 tr() 化（本类无 Q_OBJECT，tr 落 QListWidget 基类上下文）
+      QAction* removeFilter = new QAction(tr("Remove Filter"), &menu);
       connect(removeFilter,
               &QAction::triggered,
               [this, itemPtr]()

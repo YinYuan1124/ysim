@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -169,7 +169,7 @@ void wkf::PlatformBrowserDockWidget::UpdateInfo()
       mUI.tableView->resizeColumnsToContents();
       mUI.tableView->resizeRowsToContents();
       mUI.tableView->setSortingEnabled(true);
-      setWindowTitle(QString("Platform Browser (%1)").arg(mFilterModel.rowCount()));
+      setWindowTitle(tr("Platform Browser (%1)").arg(mFilterModel.rowCount())); // 二次开发（i18n）
    }
 }
 

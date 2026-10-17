@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -15,6 +15,7 @@
 
 #include <QCheckBox>
 #include <QColorDialog>
+#include <QCoreApplication> // 二次开发（i18n）：自由函数内 translate 显式翻译所需
 #include <QInputDialog>
 
 #include "UtQtColorButton.hpp"
@@ -107,13 +108,27 @@ void AddMode(QTableWidget* aWidget, const std::set<std::string>& aNames, wkf::Se
 
    bool    ok = true;
    QString mode;
+   // 二次开发（i18n）：输入对话框标题与标签翻译化。此处为自由函数，tr() 不可用，
+   // 改用 QCoreApplication::translate 显式指定 wkf::PrefWidget 上下文（该类无 Q_OBJECT，
+   // 成员函数内 tr() 亦落基类上下文，保持一致）。模式名列表/用户输入值为键，不译。
    if (aEntryMethod == wkf::SensorVolumesPrefWidget::EntryMethod::cCOMBOBOX)
    {
-      mode = QInputDialog::getItem(aWidget, "Select a mode", "Mode:", undefinedModes, 0, true, &ok);
+      mode = QInputDialog::getItem(aWidget,
+                                   QCoreApplication::translate("wkf::PrefWidget", "Select a mode"),
+                                   QCoreApplication::translate("wkf::PrefWidget", "Mode:"),
+                                   undefinedModes,
+                                   0,
+                                   true,
+                                   &ok);
    }
    else if (aEntryMethod == wkf::SensorVolumesPrefWidget::EntryMethod::cLINEEDIT)
    {
-      mode = QInputDialog::getText(aWidget, "Enter a mode", "Mode:", QLineEdit::Normal, "", &ok);
+      mode = QInputDialog::getText(aWidget,
+                                   QCoreApplication::translate("wkf::PrefWidget", "Enter a mode"),
+                                   QCoreApplication::translate("wkf::PrefWidget", "Mode:"),
+                                   QLineEdit::Normal,
+                                   "",
+                                   &ok);
    }
    if ((ok) && !mode.isEmpty())
    {
@@ -216,29 +231,28 @@ void wkf::SensorVolumesPrefWidget::WritePreferenceData(SensorVolumesPrefData& aP
       writePrefHelper(i, true, mUi.weaponTableWidget);
    }
 
-   if (mUi.mVolumeType->currentText() == "Slew Limits")
+   // 二次开发（i18n）：组合框项翻译后 currentText() 与英文比较会失配，改按 currentIndex 映射
+   //（.ui 中 mVolumeType 项顺序 0-5 与 SensorVolumesPrefData::DrawMode 枚举值一一对应）
+   switch (mUi.mVolumeType->currentIndex())
    {
+   case 0:
       aPrefData.mDrawMode = SensorVolumesPrefData::cSLEW_VOLUME;
-   }
-   else if (mUi.mVolumeType->currentText() == "Cue Limits")
-   {
+      break;
+   case 1:
       aPrefData.mDrawMode = SensorVolumesPrefData::cCUE_VOLUME;
-   }
-   else if (mUi.mVolumeType->currentText() == "Scan Limits")
-   {
+      break;
+   case 2:
       aPrefData.mDrawMode = SensorVolumesPrefData::cSCAN_VOLUME;
-   }
-   else if (mUi.mVolumeType->currentText() == "Field of View")
-   {
+      break;
+   case 3:
       aPrefData.mDrawMode = SensorVolumesPrefData::cFIELD_OF_VIEW;
-   }
-   else if (mUi.mVolumeType->currentText() == "Beam Width")
-   {
+      break;
+   case 4:
       aPrefData.mDrawMode = SensorVolumesPrefData::cBEAM_WIDTH;
-   }
-   else
-   {
+      break;
+   default:
       aPrefData.mDrawMode = SensorVolumesPrefData::cCALCULATED;
+      break;
    }
 }
 
@@ -276,25 +290,26 @@ void wkf::SensorVolumesPrefWidget::ReadPreferenceData(const SensorVolumesPrefDat
    }
    mUi.sensorTableWidget->resizeRowsToContents();
    mUi.weaponTableWidget->resizeRowsToContents();
+   // 二次开发（i18n）：组合框项翻译后 setCurrentText 按英文设置会失配，改按 currentIndex 恢复
    switch (aPrefData.mDrawMode)
    {
    case (SensorVolumesPrefData::cSLEW_VOLUME):
-      mUi.mVolumeType->setCurrentText("Slew Limits");
+      mUi.mVolumeType->setCurrentIndex(0);
       break;
    case (SensorVolumesPrefData::cCUE_VOLUME):
-      mUi.mVolumeType->setCurrentText("Cue Limits");
+      mUi.mVolumeType->setCurrentIndex(1);
       break;
    case (SensorVolumesPrefData::cSCAN_VOLUME):
-      mUi.mVolumeType->setCurrentText("Scan Limits");
+      mUi.mVolumeType->setCurrentIndex(2);
       break;
    case (SensorVolumesPrefData::cFIELD_OF_VIEW):
-      mUi.mVolumeType->setCurrentText("Field of View");
+      mUi.mVolumeType->setCurrentIndex(3);
       break;
    case (SensorVolumesPrefData::cBEAM_WIDTH):
-      mUi.mVolumeType->setCurrentText("Beam Width");
+      mUi.mVolumeType->setCurrentIndex(4);
       break;
    case (SensorVolumesPrefData::cCALCULATED):
-      mUi.mVolumeType->setCurrentText("Calculated");
+      mUi.mVolumeType->setCurrentIndex(5);
       break;
    }
 }

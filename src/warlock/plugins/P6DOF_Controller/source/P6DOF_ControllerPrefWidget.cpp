@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -23,7 +23,8 @@
 WkP6DOF_Controller::PrefWidget::PrefWidget()
    : wkf::PrefWidgetT<PrefObject>()
 {
-   setWindowTitle("P6DOF Controller");
+   // 二次开发（i18n）：窗口标题与树项显示文本 tr() 化（分辨率组合框项为技术规格且参与文本比较，保持原样）
+   setWindowTitle(tr("P6DOF Controller"));
 
    QVBoxLayout* lo = new QVBoxLayout(this);
    lo->setObjectName(QStringLiteral("verticalLayout"));
@@ -37,41 +38,41 @@ WkP6DOF_Controller::PrefWidget::PrefWidget()
    lo->addWidget(vectorTree);
    vectorTree->setColumnCount(2);
 
-   mShowHud = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Show HUD"));
+   mShowHud = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Show HUD")));
    mShowHud->setCheckState(0, Qt::Unchecked);
    mShowHud->setExpanded(true);
 
-   mFirstPerson = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("1st Person View"));
+   mFirstPerson = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("1st Person View")));
    mFirstPerson->setCheckState(0, Qt::Unchecked);
 
-   mHDD = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Launch HDD"));
+   mHDD = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Launch HDD")));
    mHDD->setCheckState(0, Qt::Unchecked);
 
    QTreeWidgetItem* pilotMode =
-      new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Pilot Mode (applied to new windows)"));
-   QTreeWidgetItem* autopilotItem = new QTreeWidgetItem(pilotMode, QStringList("    Autopilot"));
+      new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Pilot Mode (applied to new windows)")));
+   QTreeWidgetItem* autopilotItem = new QTreeWidgetItem(pilotMode, QStringList(tr("    Autopilot")));
    mAutopilot                     = new QRadioButton(this);
    vectorTree->setItemWidget(autopilotItem, 0, mAutopilot);
    mAutopilot->setChecked(false);
 
-   QTreeWidgetItem* manualPilotItem = new QTreeWidgetItem(pilotMode, QStringList("    Manual Pilot"));
+   QTreeWidgetItem* manualPilotItem = new QTreeWidgetItem(pilotMode, QStringList(tr("    Manual Pilot")));
    mManualPilot                     = new QRadioButton(this);
    vectorTree->setItemWidget(manualPilotItem, 0, mManualPilot);
    mManualPilot->setChecked(false);
 
-   QTreeWidgetItem* syntheticPilotItem = new QTreeWidgetItem(pilotMode, QStringList("    Synthetic Pilot"));
+   QTreeWidgetItem* syntheticPilotItem = new QTreeWidgetItem(pilotMode, QStringList(tr("    Synthetic Pilot")));
    mSyntheticPilot                     = new QRadioButton(this);
    vectorTree->setItemWidget(syntheticPilotItem, 0, mSyntheticPilot);
    mSyntheticPilot->setChecked(false);
 
-   QTreeWidgetItem* guidancePilot = new QTreeWidgetItem(pilotMode, QStringList("    Guidance Pilot"));
+   QTreeWidgetItem* guidancePilot = new QTreeWidgetItem(pilotMode, QStringList(tr("    Guidance Pilot")));
    mGuidancePilot                 = new QRadioButton(this);
    vectorTree->setItemWidget(guidancePilot, 0, mGuidancePilot);
    mGuidancePilot->setChecked(false);
 
    pilotMode->setExpanded(true);
 
-   QTreeWidgetItem* resItem = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Resolution"));
+   QTreeWidgetItem* resItem = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Resolution")));
    mResolution              = new QComboBox(this);
    mResolution->addItem("960x540");
    mResolution->addItem("960x1080");

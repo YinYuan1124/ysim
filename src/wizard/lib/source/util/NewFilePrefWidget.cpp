@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -88,7 +88,8 @@ bool wizard::NewFilePrefWidget::ValidateName() const
 {
    if (mUi.nameLineEdit->text().isEmpty())
    {
-      QMessageBox::critical(nullptr, "Invalid Name", "Name field cannot be left empty.");
+      // 二次开发（i18n）：校验错误框标题与文本 tr() 化
+      QMessageBox::critical(nullptr, tr("Invalid Name"), tr("Name field cannot be left empty."));
       mUi.comboBox->setCurrentText(QString::fromStdString(mCurrentItem));
       return false;
    }
@@ -104,7 +105,7 @@ bool wizard::NewFilePrefWidget::ValidateName() const
 
    if (nameCollisions > 1)
    {
-      QMessageBox::critical(nullptr, "Invalid Name", "Heading profile names must be unique.");
+      QMessageBox::critical(nullptr, tr("Invalid Name"), tr("Heading profile names must be unique."));
       mUi.comboBox->setCurrentText(QString::fromStdString(mCurrentItem));
       return false;
    }

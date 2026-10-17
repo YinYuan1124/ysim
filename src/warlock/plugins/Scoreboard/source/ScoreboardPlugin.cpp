@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -43,11 +43,12 @@ WkScoreboard::Plugin::Plugin(const QString& aPluginName, const size_t aUniqueId)
 QList<wkf::Tip> WkScoreboard::Plugin::GetTips() const
 {
    QList<wkf::Tip> tips;
-   tips.append(wkf::Tip("Scoreboard",
-                        "You can view weapon performance such as number of weapons fired and the number of kills using "
-                        "the Scoreboard dialog located under the Tools menu.",
+   // 二次开发（i18n）：tips 标题/正文/链接文本 tr() 化（文档路径为 URL 键，不译）
+   tips.append(wkf::Tip(tr("Scoreboard"),
+                        tr("You can view weapon performance such as number of weapons fired and the number of kills using "
+                           "the Scoreboard dialog located under the Tools menu."),
                         "wkf_plugin/wk_scoreboard.html",
-                        "Scoreboard"));
+                        tr("Scoreboard")));
    return tips;
 }
 

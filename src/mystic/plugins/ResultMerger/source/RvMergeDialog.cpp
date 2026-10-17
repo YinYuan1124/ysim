@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -11,6 +11,7 @@
 
 #include "RvMergeDialog.hpp"
 
+#include <QCoreApplication> // 二次开发（i18n）：显式上下文翻译所需
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -108,8 +109,8 @@ void RvMerger::MergeDialog::MergeFinished()
       if (QMessageBox::StandardButton::Yes ==
           QMessageBox::question(
              nullptr,
-             "Merge Finished",
-             QString("The final recording is stored in \"%1\". Open it now?").arg(mUi.outputLineEdit->text())))
+             QCoreApplication::translate("rv::MergeDialog", "Merge Finished"), // 二次开发（i18n）：标题接入翻译通道
+             QCoreApplication::translate("rv::MergeDialog", "The final recording is stored in \"%1\". Open it now?").arg(mUi.outputLineEdit->text()))) // 二次开发（i18n）：正文接入翻译通道（参数化）
       {
          rvEnv.OpenEventRecording(mUi.outputLineEdit->text());
       }

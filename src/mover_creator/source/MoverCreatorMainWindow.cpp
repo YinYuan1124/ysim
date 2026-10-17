@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -98,7 +98,7 @@ void MoverCreatorMainWindow::ApplySettings()
       {
          ut::log::info() << "Site directory not found; using resources/site/ instead.";
          mSiteDirectory = "";
-         settingsUIPtr->mSiteDir->setText("No directory specified...");
+         settingsUIPtr->mSiteDir->setText(tr("No directory specified...")); // 二次开发（i18n）：占位文本接入翻译通道
       }
       else
       {
@@ -109,7 +109,7 @@ void MoverCreatorMainWindow::ApplySettings()
       {
          ut::log::info() << "OsgConv not found.";
          mOsgConvPath = "";
-         settingsUIPtr->mOsgConv->setText("No file specified...");
+         settingsUIPtr->mOsgConv->setText(tr("No file specified...")); // 二次开发（i18n）：占位文本接入翻译通道
       }
       else
       {
@@ -147,8 +147,8 @@ void MoverCreatorMainWindow::HandleResetSettings()
    Ui::SettingsDialog* settingsUIPtr = mSettingsDialogPtr->getUIPtr();
    if (settingsUIPtr != nullptr)
    {
-      settingsUIPtr->mSiteDir->setText("No directory specified...");
-      settingsUIPtr->mOsgConv->setText("No file specified...");
+      settingsUIPtr->mSiteDir->setText(tr("No directory specified...")); // 二次开发（i18n）：占位文本接入翻译通道
+      settingsUIPtr->mOsgConv->setText(tr("No file specified...")); // 二次开发（i18n）：占位文本接入翻译通道
    }
 
    mUserSettings->setValue("theme", "Dark");
@@ -180,8 +180,8 @@ void MoverCreatorMainWindow::HandleSetSiteDirectory()
    {
       // Ask the user if they would like to create a site directory here
       QMessageBox addSiteDir;
-      addSiteDir.setText("The selected directory isn't a site folder.");
-      addSiteDir.setInformativeText("Would you like to create one here?");
+      addSiteDir.setText(tr("The selected directory isn't a site folder.")); // 二次开发（i18n）：提示文本接入翻译通道
+      addSiteDir.setInformativeText(tr("Would you like to create one here?")); // 二次开发（i18n）：提示文本接入翻译通道
       addSiteDir.addButton(QMessageBox::Yes);
       addSiteDir.addButton(QMessageBox::No);
 

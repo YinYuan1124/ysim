@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,7 +22,7 @@
 wkf::HUD_PrefWidget::HUD_PrefWidget()
    : wkf::PrefWidgetT<HUD_PrefObject>()
 {
-   setWindowTitle("Head Up View");
+   setWindowTitle(tr("Head Up View")); // 二次开发（i18n）：页面标题 tr() 化
 
    QVBoxLayout* lo = new QVBoxLayout(this);
    lo->setObjectName(QStringLiteral("verticalLayout"));
@@ -36,7 +36,8 @@ wkf::HUD_PrefWidget::HUD_PrefWidget()
    lo->addWidget(vectorTree);
    vectorTree->setColumnCount(2);
 
-   QTreeWidgetItem* resItem = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList("Resolution"));
+   // 二次开发（i18n）：树项显示文本 tr() 化（分辨率组合框项为技术规格且参与文本比较，保持原样）
+   QTreeWidgetItem* resItem = new QTreeWidgetItem(vectorTree->invisibleRootItem(), QStringList(tr("Resolution")));
    mResolution              = new QComboBox(this);
    mResolution->addItem("960x540");
    mResolution->addItem("960x1080");

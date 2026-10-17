@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI//REL TO USA ONLY
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -112,7 +112,7 @@ void PerformanceTestWidget::UpdateProgressBar()
       mUIPtr->mTestProgressBar->setValue(100);
       mUIPtr->mTestProgressBar->setFormat("Test Complete");
       mUIPtr->mTestProgressBar->setTextVisible(true);
-      mUIPtr->mStartTestButton->setText("Start Test");
+      mUIPtr->mStartTestButton->setText(tr("Start Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(false);
 
       //srand(time(NULL));
@@ -142,7 +142,7 @@ void PerformanceTestWidget::HandleTestChanged()
    mUIPtr->mTestProgressBar->setMaximum(100);
    mUIPtr->mTestProgressBar->setValue(0);
    mUIPtr->mTestProgressBar->setTextVisible(false);
-   mUIPtr->mStartTestButton->setText("Start Test");
+   mUIPtr->mStartTestButton->setText(tr("Start Test")); // 二次开发（i18n）：按钮文本接入翻译通道
    mUIPtr->mStartTestButton->setDisabled(false);
 
    mUIPtr->mResultLineEdit->setText("");
@@ -175,7 +175,7 @@ double PerformanceTestWidget::RunMaxSpeedTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -191,7 +191,7 @@ double PerformanceTestWidget::RunMinSpeedTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -207,7 +207,7 @@ double PerformanceTestWidget::RunMaxGLoadTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -223,7 +223,7 @@ double PerformanceTestWidget::RunMaxSustainedGLoadTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -239,7 +239,7 @@ double PerformanceTestWidget::RunMaxLevelFlightTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -255,7 +255,7 @@ double PerformanceTestWidget::RunMaxLoftedRangeTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -271,7 +271,7 @@ double PerformanceTestWidget::RunMaxSustainedPitchAngleTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -287,7 +287,7 @@ double PerformanceTestWidget::RunMaxRollRateTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -303,7 +303,7 @@ double PerformanceTestWidget::RunTimeToDampRollTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -319,7 +319,7 @@ double PerformanceTestWidget::RunMaxPitchRateTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -335,7 +335,7 @@ double PerformanceTestWidget::RunTimeToDampPitchTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -351,7 +351,7 @@ double PerformanceTestWidget::RunMaxYawRateTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }
@@ -367,7 +367,7 @@ double PerformanceTestWidget::RunTimeToDampYawTest()
       mProgressTimer->start(25);
       mUIPtr->mTestProgressBar->setMaximum(0);
       mUIPtr->mTestProgressBar->setValue(-1);
-      mUIPtr->mStartTestButton->setText("Running Test");
+      mUIPtr->mStartTestButton->setText(tr("Running Test")); // 二次开发（i18n）：按钮文本接入翻译通道
       mUIPtr->mStartTestButton->setDisabled(true);
       mUIPtr->mResultLineEdit->setText("");
    }

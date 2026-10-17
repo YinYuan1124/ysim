@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -19,16 +19,17 @@
 wkf::SatelliteTetherPrefWidget::SatelliteTetherPrefWidget()
    : PrefWidgetT<SatelliteTetherPrefObject>()
 {
-   setWindowTitle("Satellite Tether");
+   setWindowTitle(tr("Satellite Tether")); // 二次开发（i18n）：页面标题 tr() 化
 
    QFormLayout* lo = ut::qt::make_qt_ptr<QFormLayout>(this);
    setLayout(lo);
    mShowNames        = new QCheckBox(this);
    mShowFutureTracks = new QCheckBox(this);
    mEnableLighting   = new QCheckBox(this);
-   lo->addRow("Show Names", mShowNames);
-   lo->addRow("Show Future Track", mShowFutureTracks);
-   lo->addRow("Enable Lighting", mEnableLighting);
+   // 二次开发（i18n）：表单标签 tr() 化
+   lo->addRow(tr("Show Names"), mShowNames);
+   lo->addRow(tr("Show Future Track"), mShowFutureTracks);
+   lo->addRow(tr("Enable Lighting"), mEnableLighting);
 }
 
 void wkf::SatelliteTetherPrefWidget::ReadPreferenceData(const SatelliteTetherPrefData& aPrefData)

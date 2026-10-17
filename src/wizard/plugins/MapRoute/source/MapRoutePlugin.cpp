@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -584,16 +584,17 @@ void MapRoute::Plugin::BuildAttachmentContextMenu(QMenu* aMenu, vespa::VaAttachm
             wkf::Waypoint* curWaypt = routePtr->GetWaypoint(i);
             if (aSubPartId == curWaypt->GetId())
             {
+               // 二次开发（i18n）：右键航路点附件菜单文本 tr() 化；objectName 查找键保持英文原样
                QMenu* routeSub = aMenu->findChild<QMenu*>("Route", Qt::FindDirectChildrenOnly);
                if (!routeSub)
                {
-                  routeSub = aMenu->addMenu(QIcon::fromTheme("route"), "Route");
+                  routeSub = aMenu->addMenu(QIcon::fromTheme("route"), tr("Route"));
                   routeSub->setObjectName("Route");
                }
                waypointIndex     = i;
-               QString      name = "Waypoint " + QString::number(waypointIndex);
+               QString      name = tr("Waypoint %1").arg(waypointIndex);
                wkf::Action* deleteWaypointAction =
-                  new wkf::Action(QIcon::fromTheme("delete"), QString("Delete %1").arg(name), routeSub);
+                  new wkf::Action(QIcon::fromTheme("delete"), tr("Delete %1").arg(name), routeSub);
                routeSub->addAction(deleteWaypointAction);
                connect(deleteWaypointAction,
                        &QAction::triggered,
@@ -601,7 +602,7 @@ void MapRoute::Plugin::BuildAttachmentContextMenu(QMenu* aMenu, vespa::VaAttachm
                        [=]() { DeleteWaypointActionHandler(routePtr, waypointIndex); });
 
                wkf::Action* createWaypointAction =
-                  new wkf::Action(QIcon::fromTheme("add"), QString("Add Waypoint after"), routeSub);
+                  new wkf::Action(QIcon::fromTheme("add"), tr("Add Waypoint after"), routeSub);
                routeSub->addAction(createWaypointAction);
                connect(createWaypointAction,
                        &QAction::triggered,
@@ -629,14 +630,15 @@ void MapRoute::Plugin::BuildEntityContextMenu(QMenu* aMenu, wkf::Entity* aEntity
          {
             if (platformPtr->IsRouteable())
             {
+               // 二次开发（i18n）：子菜单标题 tr() 化；findChild/setObjectName 查找键保持英文原样
                QMenu* routeSub = aMenu->findChild<QMenu*>("Route", Qt::FindDirectChildrenOnly);
                if (!routeSub)
                {
-                  routeSub = aMenu->addMenu(QIcon::fromTheme("route"), "Route");
+                  routeSub = aMenu->addMenu(QIcon::fromTheme("route"), tr("Route"));
                   routeSub->setObjectName("Route");
                }
                wkf::Action* addRoute =
-                  new wkf::Action(QIcon::fromTheme("add"), QString("Create Route on %1").arg(name), routeSub);
+                  new wkf::Action(QIcon::fromTheme("add"), tr("Create Route on %1").arg(name), routeSub);
                routeSub->addAction(addRoute);
                connect(addRoute, &QAction::triggered, this, [=]() { AddRouteToPlatformHandler(platformPtr); });
             }
@@ -649,12 +651,13 @@ void MapRoute::Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer* aVi
 {
    if (aViewerPtr && aViewerPtr == vaEnv.GetStandardViewer())
    {
+      // 二次开发（i18n）：子菜单标题 tr() 化；objectName 保持英文原样，供各插件 findChild 查找键使用
       auto AddLocationMenu = [aMenu]()
       {
          auto addMenu = aMenu->findChild<QMenu*>("Add at Location", Qt::FindDirectChildrenOnly);
          if (!addMenu)
          {
-            addMenu = aMenu->addMenu("Add at Location");
+            addMenu = aMenu->addMenu(tr("Add at Location"));
             addMenu->setObjectName("Add at Location");
          }
          return addMenu;
@@ -689,7 +692,7 @@ void MapRoute::Plugin::BuildViewerContextMenu(QMenu* aMenu, vespa::VaViewer* aVi
                {
                   auto addMenu              = AddLocationMenu();
                   auto createWaypointAction = ut::qt::make_qt_ptr<wkf::Action>(QIcon::fromTheme("route"),
-                                                                               QString("Waypoint after selection"),
+                                                                               tr("Waypoint after selection"),
                                                                                addMenu);
                   addMenu->addAction(createWaypointAction);
                   connect(createWaypointAction,

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -12,6 +12,8 @@
 #include "PlatformMovementShortcut.hpp"
 
 #include <functional>
+
+#include <QCoreApplication> // 二次开发（i18n）：Shortcut 非 QObject 类，界面文本走显式翻译通道
 
 #include "PlatformMovementSimCommands.hpp"
 #include "UtSphericalEarth.hpp"
@@ -60,7 +62,7 @@ wkf::AttachmentRubberband* WkPlatformMovement::Shortcut::Start(void (Shortcut::*
       return viewerPtr->BeginRubberband(*source,
                                         std::bind(&Shortcut::RubberbandUpdate, this, _1),
                                         std::bind(aFinishCB, this, _1),
-                                        "Select location");
+                                        QCoreApplication::translate("WkPlatformMovement::Shortcut", "Select location")); // 二次开发（i18n）：状态栏提示显式翻译
    }
    else
    {

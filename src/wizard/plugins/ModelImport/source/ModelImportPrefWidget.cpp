@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -57,8 +57,8 @@ void ModelImport::PrefWidget::WritePreferenceData(PrefDataType& aPrefData)
       else if (QMessageBox::Yes ==
                QMessageBox::question(
                   nullptr,
-                  QString("Model Import Beta"),
-                  QString("The file \"%1\" could not be located. Would you like Wizard to generate it for you?")
+                  QString(tr("Model Import Beta")),
+                  QString(tr("The file \"%1\" could not be located. Would you like Wizard to generate it for you?"))
                      .arg(aPrefData.mMetaFile)))
       {
          emit UpdateWithOverwrite();
@@ -70,9 +70,10 @@ void ModelImport::PrefWidget::WritePreferenceData(PrefDataType& aPrefData)
    }
    else if (!mUI.pathLineEdit->text().isEmpty())
    {
+      // 二次开发（i18n）：警告框标题与文本 tr() 化（%1 为用户输入路径）
       QMessageBox::warning(nullptr,
-                           "Model Import Beta",
-                           QString("The path \"%1\" does not exist.").arg(mUI.pathLineEdit->text()));
+                           tr("Model Import Beta"),
+                           QString(tr("The path \"%1\" does not exist.")).arg(mUI.pathLineEdit->text()));
    }
 }
 
@@ -80,7 +81,8 @@ void ModelImport::PrefWidget::WritePreferenceData(PrefDataType& aPrefData)
 
 void ModelImport::PrefWidget::BrowseForDirectory()
 {
-   QString dir = wkf::getExistingDirectory(this, "Model Import Search Directory", mUI.pathLineEdit->text());
+   // 二次开发（i18n）：目录对话框标题 tr() 化
+   QString dir = wkf::getExistingDirectory(this, tr("Model Import Search Directory"), mUI.pathLineEdit->text());
 
    if (!dir.isEmpty())
    {
@@ -95,13 +97,14 @@ void ModelImport::PrefWidget::PromptForUpdate()
    ApplyChanges();
    if (QFile::exists(ModelImport::Path(mUI.pathLineEdit->text(), mUI.metaFileLineEdit->text())))
    {
+      // 二次开发（i18n）：对话框标题/文本与按钮 tr() 化（按钮判定走指针比较不受影响）
       QMessageBox dialog(QMessageBox::Icon::Question,
-                         "Overwrite Model Mapping File?",
-                         "How should Wizard handle the existing Model Mapping File?");
+                         tr("Overwrite Model Mapping File?"),
+                         tr("How should Wizard handle the existing Model Mapping File?"));
 
-      QPushButton* mergeButton     = dialog.addButton("Merge", QMessageBox::ButtonRole());
-      QPushButton* overwriteButton = dialog.addButton("Overwrite", QMessageBox::ButtonRole());
-      dialog.addButton("Cancel", QMessageBox::ButtonRole::RejectRole);
+      QPushButton* mergeButton     = dialog.addButton(tr("Merge"), QMessageBox::ButtonRole());
+      QPushButton* overwriteButton = dialog.addButton(tr("Overwrite"), QMessageBox::ButtonRole());
+      dialog.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
 
       dialog.exec();
 

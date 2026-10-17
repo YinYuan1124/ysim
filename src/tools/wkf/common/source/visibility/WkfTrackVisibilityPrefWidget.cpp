@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -22,7 +22,7 @@ wkf::TrackVisibilityPrefWidget::TrackVisibilityPrefWidget(QWidget* aParent)
 {
    mUi.setupUi(this);
    mUi.trackFontButton->SetFont(QFont());
-   mUi.trackFontButton->setWindowTitle("Choose Track Label Font");
+   mUi.trackFontButton->setWindowTitle(tr("Choose Track Label Font")); // 二次开发（i18n）：字体对话框标题 tr() 化
    mUi.showNetworkedSimulationsTracks->hide();
    connect(mUi.showTeamTracksRadioButton, &QRadioButton::toggled, mUi.showTeamTracksComboBox, &QWidget::setEnabled);
    connect(mUi.customIconRadioButton, &QRadioButton::toggled, mUi.customImageSelector, &ImageSelectionWidget::SetEnabledUpdate);

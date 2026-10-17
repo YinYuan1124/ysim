@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -9,6 +9,8 @@
 // limitation or restriction. See accompanying README and LICENSE for details.
 // ****************************************************************************
 #include "RvPlatformHistoryBehaviorColorWidget.hpp"
+
+#include <QCoreApplication> // 二次开发（i18n）：类无 Q_OBJECT，显式上下文翻译所需
 
 #include "UtCast.hpp"
 #include "UtQtColorButton.hpp"
@@ -54,7 +56,7 @@ void RvPlatformHistory::PlatformHistoryBehaviorColorWidget::BehaviorColorAdded()
    QString behaviorName = mUi.mBehaviorName_tx->text();
    if (behaviorName.contains(" "))
    {
-      QMessageBox::information(nullptr, "Invalid Behavior Entry", "Behavior name can't include space characters.");
+      QMessageBox::information(nullptr, QCoreApplication::translate("RvPlatformHistory::PlatformHistoryBehaviorColorWidget", "Invalid Behavior Entry"), QCoreApplication::translate("RvPlatformHistory::PlatformHistoryBehaviorColorWidget", "Behavior name can't include space characters.")); // 二次开发（i18n）：提示框接入翻译通道
    }
    else if (!behaviorName.isEmpty())
    {
@@ -90,8 +92,8 @@ void RvPlatformHistory::PlatformHistoryBehaviorColorWidget::BehaviorColorAdded()
       else
       {
          QMessageBox::information(nullptr,
-                                  "Duplicate Behavior Entry",
-                                  QString("Behavior %1 already exists, unable to add team.").arg(behaviorName));
+                                  QCoreApplication::translate("RvPlatformHistory::PlatformHistoryBehaviorColorWidget", "Duplicate Behavior Entry"), // 二次开发（i18n）：标题接入翻译通道
+                                  QCoreApplication::translate("RvPlatformHistory::PlatformHistoryBehaviorColorWidget", "Behavior %1 already exists, unable to add team.").arg(behaviorName)); // 二次开发（i18n）：正文接入翻译通道（参数化）
       }
    }
 }

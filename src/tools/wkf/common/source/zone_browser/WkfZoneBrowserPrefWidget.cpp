@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -21,14 +21,15 @@ wkf::ZoneBrowserPrefWidget::ZoneBrowserPrefWidget()
 {
    mUi.setupUi(this);
 
-   QLabel* lineLabelPtr = ut::qt::make_qt_ptr<QLabel>("Line Color:");
-   QLabel* fillLabelPtr = ut::qt::make_qt_ptr<QLabel>("Fill Color:");
+   // 二次开发（i18n）：标签与颜色对话框标题 tr() 化
+   QLabel* lineLabelPtr = ut::qt::make_qt_ptr<QLabel>(tr("Line Color:"));
+   QLabel* fillLabelPtr = ut::qt::make_qt_ptr<QLabel>(tr("Fill Color:"));
    mLineColorButtonPtr  = ut::qt::make_qt_ptr<UtQtColorButton>(this);
    mLineColorButtonPtr->setFixedWidth(30);
-   mLineColorButtonPtr->SetColorWindowTitle("Choose Line Color");
+   mLineColorButtonPtr->SetColorWindowTitle(tr("Choose Line Color"));
    mFillColorButtonPtr = ut::qt::make_qt_ptr<UtQtColorButton>(this);
    mFillColorButtonPtr->setFixedWidth(30);
-   mFillColorButtonPtr->SetColorWindowTitle("Choose Fill Color");
+   mFillColorButtonPtr->SetColorWindowTitle(tr("Choose Fill Color"));
    mFillColorButtonPtr->ShowAlpha(true);
 
    QHBoxLayout* horizontalBoxPtr = ut::qt::make_qt_ptr<QHBoxLayout>();
