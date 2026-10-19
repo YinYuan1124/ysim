@@ -2,7 +2,7 @@
 
 ## 工程介绍
 
-本工程基于 **AFSIM v2.9.0**（The Advanced Framework for Simulation, Integration, and Modeling）源码开展**持续性二次开发**。本地化（i18n）是当前已系统性落地的第一个功能板块，后续将围绕**仿真模型扩展、插件开发、工具链定制、想定工程支持**等方向持续开展二开工作。
+本工程基于 **AFSIM v2.9.0**（The Advanced Framework for Simulation, Integration, and Modeling）源码开展**持续性二次开发**。本地化（i18n）是当前已系统性落地的第一个功能板块，后续将按 **"往外连（数据进出）、往里长（模型与工具链）"** 双主线持续开展二开（规划见 [.trae/specs/roadmap.md](.trae/specs/roadmap.md)，详见第三节）。
 
 **本地化板块目标**：在保持官方技术支持可用（日志落盘英文 + 消息 ID）的前提下，实现界面与诊断信息的中文本地化。
 
@@ -168,12 +168,19 @@ cmake --build build --config Release --target wizard
 - `doc/` 修改日志按"日期+修改日志"每日一档归档
 - `.trae/PROMPT.md` 项目强制规范 + `afsim-dev` 二开技能（源码地图/坑表/接入范式）
 
-### 三、后续二开方向（规划中）
+### 三、后续二开方向（详见 `.trae/specs/`，ext-01 已收官 A/B/C/D 全落地）
 
-本地化之外，本工程规划持续开展以下二开工作（按需排期）：
+本地化之外，本工程按 **"往外连（数据进出）、往里长（模型与工具链）"** 双主线开展二开。功能规划统一维护在 `.trae/specs/`（SpecKit 规范：`序号+功能/spec.md+plan.md+tasks.md`），README 仅保留方向概览，落地进度以各工作包 `tasks.md` 为准：
 
-- **仿真模型扩展**：传感器、武器、运动体（mover）模型的定制开发与参数调优
-- **插件开发**：基于 wsf_plugins 机制开发专用领域插件（air_combat/p6dof 模式）
-- **想定工程支持**：想定模板库、常用平台/传感器/武器配置的复用资产建设
-- **工具链定制**：wizard 功能扩展、批量仿真脚本、结果后处理流程定制
-- **界面功能增强**：wizard 可视化编辑、态势显示等 Qt 界面二次开发
+| 方向 | 工作包 | 优先级 | 内容概要 |
+|---|---|---|---|
+| 数据出口 | [ext-01-data-export](.trae/specs/ext-01-data-export/spec.md) | P0 | **已收官 A/B/C/D（2026-10-19）**：`ysim_data_export` 插件（WsfObserver 零侵入订阅 + 多通道适配器架构：TCP 行协议 / WebSocket（自实现 RFC 6455）/ UDP 组播，新客户端快照补推）+ 结构化落盘（CSV 时序三文件 + SQLite 快照库 + 平台级/运行级评估指标表）+ **适配器热切换**（ControlChannel 控制通道：`add_tcp/add_ws/add_udp/remove/list` 运行期增删通道不重启仿真）；阶段 D 验收全 PASS：全流程数据可见（落盘=推流 648=648）、热切换 13/13 断言、帧率影响 -rt 实时口径 +0.41%（<5% 红线）。待续：Track/Engagement 数据源与交战类指标、掉线外推（ext-02 对接） |
+| 外部接入 | [ext-02-protocol-gateway](.trae/specs/ext-02-protocol-gateway/spec.md) | P1 | **阶段 A 已完成（2026-10-19，含指令注入闭环+平台级指令集）**：`ysim_xio_gateway` 插件（XIO 自定义 Packet 350-353：事件/状态下行、上行指令仿真线程注入执行 pause/resume/get_status/ping + 平台级 set_speed/set_route/add_platform/delete_platform（态势注入+运动控制，Clone/AddPlatform/DeletePlatform + GoToSpeed/SetRoute 双航点防瞬移）+ AckPkt 回执；`pause_for_connection`+快照补推保全量事件可见）+ 外部客户端 `xio_gateway_client`（多播心跳自动发现+TCP 握手+指令脚本），RT 模式端到端 47 断言全 PASS；**阶段 B 批次 B1 已完成（2026-10-19）**：`ysim_dis_gateway` 插件（DIS Entity Type 七段码映射表国产装备 20 条运行期零侵入注入 GetObjectToEntityTypeMap，想定显式 entity_type 优先），Python 最小 DIS 监听客户端多播收包断言两轮 22 断言+降级回归 ALL PASS；**阶段 B 批次 B2 已完成（2026-10-19）**：同 DLL 第二模块 `YsimDisFieldPatch`（官方发包前钩子 ProcessFirePDU/ProcessDetonationPDU/OverrideTypeAndFunction 补齐 Fire/Detonation 的 Warhead/Fuse 与 Emission 的 EmitterName/Function，补缺不覆盖；Signal 空载荷缺口记录在案），SA-10C 单进程交战想定 + 增强捕获客户端两轮 8 断言+降级回归+B1 回归 ALL PASS；后续：B3-B4（自定义 PDU 含 Signal 载荷/DIS↔XIO 中继）、HLA、数实联动/HIL、推演引擎后端 |
+| 模型与想定工具链 | [ext-03-model-toolchain](.trae/specs/ext-03-model-toolchain/spec.md) | P2 | 国产装备参数化模型库（"指标→参数"配置化）、行为与智能层（行为树增强/RL Gym 封装/LLM 意图下达）、图形化想定编辑器、批量实验设计（正交/拉丁超立方） |
+| 评估与工程化 | [ext-04-eval-platform](.trae/specs/ext-04-eval-platform/spec.md) | P3 | 指标体系与模板化报告、VV&A 支撑（一致性比对/回放拟合）、分布式蒙特卡洛、国产化适配（麒麟/UOS/ARM64）、性能剖析 |
+
+**扩展点红线**（"能改哪里"，所有二开对号入座）：一律走 AFSIM 扩展点——Application/Scenario/Simulation 扩展（`Wsf*Extension`）、组件（`WsfSensor/WsfProcessor/WsfMover/WsfWeapon`）、事件（`WsfEvent`）、观察者（`WsfObserver::*`）；插件导出 `WsfPluginVersion`/`WsfPluginSetup` 并置于 `wsf_plugins`（编译器版本一致、`/MD`）。**禁止直接修改核心源码**，保证官方版本升级可合并。
+
+**实施路线**：阶段一打通数据（Observer 骨架 + 一条外发通道 + 最小客户端）→ 阶段二标准化对外（统一中间件 + DIS 映射 + 标准态势流）→ 阶段三模型与想定（装备模型库 + 行为模型 + 想定工具）→ 阶段四智能与生态（RL/LLM 智能体 + VV&A + 国产化）。
+
+> 总览见 [.trae/specs/roadmap.md](.trae/specs/roadmap.md)（含扩展点分层表与避坑清单）；每落地一个功能点，同步在本节更新方向状态、并在对应工作包 tasks.md 勾选归档。
