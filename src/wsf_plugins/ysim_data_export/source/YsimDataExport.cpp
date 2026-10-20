@@ -343,7 +343,9 @@ std::string Sha1(const std::string& aInput)
    out.reserve(20);
    for (int i = 0; i < 5; ++i)
    {
-      for (int j = 31; j >= 0; j -= 8)
+      // 二次开发（缺陷修复）：逐字节大端输出。移位窗口必须 8 位对齐（j=24/16/8/0），
+      // 原 j=31/23/15/7 与 &0xFF 组合错位（j=31 仅取最高 1 位），导致 Accept 全错、浏览器拒绝握手
+      for (int j = 24; j >= 0; j -= 8)
       {
          out += static_cast<char>((h[i] >> j) & 0xFF);
       }

@@ -1,0 +1,11 @@
+# ext-02 阶段 B 批次 B2：dis_interface 组网块（对齐 B1 实测参数）
+# 显式 entity_type SA-10C（陆基地空导弹七段码 2:1:36:1:2——表1 命中键，想定显式优先路径）
+dis_interface
+   exercise      1
+   site          25
+   application   1
+   multicast     224.2.25.54 192.168.5.3
+   port          3225
+   autostart
+   entity_type   SA-10C 2:1:36:1:2:0:0
+end_dis_interface

@@ -1,4 +1,4 @@
-// ****************************************************************************
+﻿// ****************************************************************************
 // CUI
 //
 // The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
@@ -17,6 +17,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QCoreApplication>
 #include <QDataStream>
 #include <QDesktopServices>
 #include <QFileDialog>
@@ -502,9 +503,13 @@ void wizard::TextSource::SaveWithNotifications()
 {
    if (!Save())
    {
-      std::stringstream ss;
-      ss << "Could not save file " + GetFilePath().GetSystemPath() + ", check that the file/directory is writable.";
-      int bn = QMessageBox::warning(nullptr, "Could not save", ss.str().c_str(), "Retry", "Cancel");
+      // 二次开发（i18n）：保存失败提示框接入翻译通道（TextSource 无 Q_OBJECT，显式 translate 落本类上下文）
+      int bn = QMessageBox::warning(nullptr,
+                                    QCoreApplication::translate("wizard::TextSource", "Could not save"),
+                                    QCoreApplication::translate("wizard::TextSource", "Could not save file %1, check that the file/directory is writable.")
+                                       .arg(QString::fromStdString(GetFilePath().GetSystemPath())),
+                                    QCoreApplication::translate("wizard::TextSource", "Retry"),
+                                    QCoreApplication::translate("wizard::TextSource", "Cancel"));
       if (bn == 0)
       {
          SaveWithNotifications();
@@ -620,9 +625,13 @@ void wizard::TextSource::SaveAs()
 
          while (!outfile)
          {
-            std::stringstream ss;
-            ss << "Could not save file " + newFilePath + ", check that the file/directory is writable.";
-            int bn = QMessageBox::warning(nullptr, "Could not save", ss.str().c_str(), "Retry", "Cancel");
+            // 二次开发（i18n）：另存为路径保存失败提示接入翻译通道（同 SaveWithNotifications 分支）
+            int bn = QMessageBox::warning(nullptr,
+                                          QCoreApplication::translate("wizard::TextSource", "Could not save"),
+                                          QCoreApplication::translate("wizard::TextSource", "Could not save file %1, check that the file/directory is writable.")
+                                             .arg(QString::fromStdString(newFilePath)),
+                                          QCoreApplication::translate("wizard::TextSource", "Retry"),
+                                          QCoreApplication::translate("wizard::TextSource", "Cancel"));
             if (bn != 0)
             {
                break;

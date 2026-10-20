@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Ysim 实时态势页（WebSocket 端到端联调示例）</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0f14; color: #c8d6e0; font: 13px/1.5 "Microsoft YaHei", Consolas, monospace; height: 100vh; display: flex; flex-direction: column; }
+  #bar { display: flex; gap: 16px; align-items: center; padding: 8px 14px; background: #101922; border-bottom: 1px solid #1e2c38; }
+  #bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #e74c3c; }
+  #bar .dot.on { background: #2ecc71; }
+  #bar input { background: #0a0f14; color: #c8d6e0; border: 1px solid #2a3c4c; padding: 3px 8px; width: 220px; font: inherit; }
+  #bar button { background: #16324a; color: #c8d6e0; border: 1px solid #2a5788; padding: 4px 14px; cursor: pointer; font: inherit; }
+  #bar .k { color: #5d7a92; }
+  #bar .v { color: #e8f2fa; font-weight: bold; }
+  #main { flex: 1; display: flex; min-height: 0; }
+  #cv { flex: 1; display: block; }
+  #side { width: 330px; display: flex; flex-direction: column; border-left: 1px solid #1e2c38; background: #0c141c; }
+  #tblwrap { flex: 1; overflow: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { position: sticky; top: 0; background: #101922; color: #5d7a92; text-align: left; padding: 5px 8px; border-bottom: 1px solid #1e2c38; }
+  td { padding: 4px 8px; border-bottom: 1px solid #14202b; white-space: nowrap; }
+  tr.blue td:first-child { color: #5dade2; }
+  tr.red td:first-child { color: #ec7063; }
+  #logwrap { height: 180px; border-top: 1px solid #1e2c38; display: flex; flex-direction: column; }
+  #logwrap h3 { padding: 5px 10px; background: #101922; color: #5d7a92; font-size: 12px; }
+  #log { flex: 1; overflow: auto; padding: 4px 10px; }
+  #log div { color: #7fa3bd; }
+  #log div.ev { color: #f5b041; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <span class="dot" id="dot"></span>
+  <span id="st">未连接</span>
+  <input id="wsurl" value="127.0.0.1:31601" title="WS 地址 host:port">
+  <button onclick="connect()">连接</button>
+  <span class="k">仿真时间 <span class="v" id="t">-</span> s</span>
+  <span class="k">平台 <span class="v" id="np">0</span></span>
+  <span class="k">帧 <span class="v" id="nf">0</span></span>
+</div>
+<div id="main">
+  <canvas id="cv"></canvas>
+  <div id="side">
+    <div id="tblwrap">
+      <table>
+        <thead><tr><th>平台</th><th>侧</th><th>高度 m</th><th>速度 m/s</th><th>航向°</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div id="logwrap"><h3>事件日志</h3><div id="log"></div></div>
+  </div>
+</div>
+<script>
+"use strict";
+// ============================================================================
+// Ysim 实时态势页：mission.exe 后台仿真 → ysim_data_export WS 推流 → 本页渲染
+// 协议：RFC 6455 文本帧，每帧一行 JSON：
+//   platform_added {id,name,platform_type,side} / platform_removed {id,name}
+//   state {id,name,side,lat,lon,alt_m,speed_mps,heading_deg,...}
+//   sim_start / sim_complete / heartbeat {time}
+// ============================================================================
+
+var plat = {};            // id -> {name,side,type,lat,lon,alt,spd,hdg,trail:[],alive}
+var frames = 0, simTime = 0, ws = null;
+var TRAIL_MAX = 120;      // 尾迹点数上限
+
+var cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+function resize() { cv.width = cv.clientWidth; cv.height = cv.clientHeight; }
+window.addEventListener("resize", resize);
+
+function log(text, ev) {
+  var el = document.getElementById("log"), d = document.createElement("div");
+  d.textContent = "[" + new Date().toLocaleTimeString() + "] " + text;
+  if (ev) d.className = "ev";
+  el.insertBefore(d, el.firstChild);
+  while (el.childNodes.length > 200) el.removeChild(el.lastChild);
+}
+
+function connect() {
+  if (ws) { ws.close(); ws = null; }
+  var url = document.getElementById("wsurl").value.trim();
+  ws = new WebSocket("ws://" + url);
+  ws.onopen = function () { log("已连接 " + url); };
+  ws.onclose = function () { setSt(false); log("连接关闭"); };
+  ws.onerror = function () { setSt(false); log("连接错误（mission 是否已启动？）"); };
+  ws.onmessage = function (e) { onFrame(JSON.parse(e.data)); };
+}
+function setSt(on) {
+  document.getElementById("dot").className = "dot" + (on ? " on" : "");
+  document.getElementById("st").textContent = on ? "已连接" : "未连接";
+}
+
+function onFrame(f) {
+  frames++;
+  if (f.type === "state") {
+    simTime = f.time;
+    var p = plat[f.id];
+    if (!p) { p = plat[f.id] = { trail: [] }; }
+    p.name = f.name; p.side = f.side; p.type = f.platform_type;
+    p.lat = f.lat; p.lon = f.lon; p.alt = f.alt_m; p.spd = f.speed_mps; p.hdg = f.heading_deg;
+    p.alive = true;
+    p.trail.push([f.lon, f.lat]);
+    if (p.trail.length > TRAIL_MAX) p.trail.shift();
+  } else if (f.type === "platform_added") {
+    if (!plat[f.id]) plat[f.id] = { trail: [] };
+    plat[f.id].name = f.name; plat[f.id].side = f.side; plat[f.id].type = f.platform_type;
+    plat[f.id].alive = true;
+    log("平台加入 " + f.name + "（" + f.side + "）", true);
+  } else if (f.type === "platform_removed") {
+    if (plat[f.id]) plat[f.id].alive = false;
+    log("平台移除 " + f.name, true);
+  } else if (f.type === "sim_start") {
+    log("仿真开始", true);
+  } else if (f.type === "sim_complete") {
+    log("仿真结束", true);
+  }
+  setSt(true);
+  document.getElementById("nf").textContent = frames;
+  document.getElementById("np").textContent = Object.keys(plat).filter(function (k) { return plat[k].alive; }).length;
+}
+
+// ---------- 俯视态势渲染（经纬度自动缩放） ----------
+function bounds() {
+  var b = null;
+  for (var k in plat) {
+    var p = plat[k];
+    if (p.lat === undefined) continue;
+    if (!b) b = { lo: p.lon, hi: p.lon, la: p.lat, ha: p.lat };
+    b.lo = Math.min(b.lo, p.lon); b.hi = Math.max(b.hi, p.lon);
+    b.la = Math.min(b.la, p.lat); b.ha = Math.max(b.ha, p.lat);
+  }
+  return b;
+}
+function draw() {
+  requestAnimationFrame(draw);
+  resize();
+  ctx.fillStyle = "#0a0f14"; ctx.fillRect(0, 0, cv.width, cv.height);
+  var b = bounds();
+  if (!b) return;
+  var pad = 60, spanLon = Math.max(b.hi - b.lo, 1e-4), spanLat = Math.max(b.ha - b.la, 1e-4);
+  var sc = Math.min((cv.width - 2 * pad) / spanLon, (cv.height - 2 * pad) / spanLat);
+  function X(lon) { return pad + (lon - b.lo) * sc + (cv.width - 2 * pad - spanLon * sc) / 2; }
+  function Y(lat) { return cv.height - pad - (lat - b.la) * sc - (cv.height - 2 * pad - spanLat * sc) / 2; }
+  // 网格
+  ctx.strokeStyle = "#12202b"; ctx.lineWidth = 1;
+  for (var g = 0; g <= 8; g++) {
+    var x = (cv.width / 8) * g, y = (cv.height / 8) * g;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, cv.height); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cv.width, y); ctx.stroke();
+  }
+  var trow = "";
+  for (var k in plat) {
+    var p = plat[k];
+    if (p.lat === undefined) continue;
+    var x = X(p.lon), y = Y(p.lat);
+    var col = (p.side === "blue") ? "#5dade2" : "#ec7063";
+    // 尾迹
+    if (p.trail.length > 1) {
+      ctx.strokeStyle = col + "55"; ctx.lineWidth = 1.5; ctx.beginPath();
+      for (var i = 0; i < p.trail.length; i++) {
+        var tx = X(p.trail[i][0]), ty = Y(p.trail[i][1]);
+        i ? ctx.lineTo(tx, ty) : ctx.moveTo(tx, ty);
+      }
+      ctx.stroke();
+    }
+    if (!p.alive) continue;
+    // 航向线
+    var rad = p.hdg * Math.PI / 180;
+    ctx.strokeStyle = col; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x, y);
+    ctx.lineTo(x + 22 * Math.sin(rad), y - 22 * Math.cos(rad)); ctx.stroke();
+    // 平台标记
+    ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(x, y, 7, 0, 2 * Math.PI); ctx.fill();
+    ctx.strokeStyle = "#0a0f14"; ctx.lineWidth = 2; ctx.stroke();
+    // 标签
+    ctx.fillStyle = col; ctx.font = "12px Microsoft YaHei";
+    ctx.fillText(p.name + " " + Math.round(p.alt) + "m", x + 12, y - 10);
+    trow += "<tr class='" + p.side + "'><td>" + p.name + "</td><td>" + p.side +
+            "</td><td>" + Math.round(p.alt) + "</td><td>" + Math.round(p.spd) +
+            "</td><td>" + Math.round(p.hdg) + "</td></tr>";
+  }
+  document.getElementById("tbody").innerHTML = trow;
+  document.getElementById("t").textContent = simTime.toFixed(1);
+}
+requestAnimationFrame(draw);
+
+// URL 参数 ?ws=host:port 可覆盖默认地址
+var q = new URLSearchParams(location.search).get("ws");
+if (q) document.getElementById("wsurl").value = q;
+connect();
+</script>
+</body>
+</html>

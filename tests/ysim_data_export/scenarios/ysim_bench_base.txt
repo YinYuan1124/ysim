@@ -1,0 +1,3 @@
+# 基线想定（无 ysim 块，配合 DLL 禁用跑无插件基准）
+include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+end_time 600 s

@@ -1,0 +1,38 @@
+# ****************************************************************************
+# 二次开发（ext-02 阶段 B 批次 B1 验证资产）：降级回归想定（无 DIS 设备）
+# 与 dis_b1_scenario.txt 同构但不带 dis_iface_block——插件应告警闲置、
+# 仿真正常跑完无 FATAL（降级回归锚点）。
+# 运行：CWD=build/demos/air_to_air 下
+#       mission.exe -rt <本文件绝对路径>
+# ****************************************************************************
+file_path .
+
+define_path_variable SCNRIO 2v2_air_movers
+log_file output/dis_b1_nodevice.log
+
+include_once _common.txt
+include_once scenarios/${SCNRIO}.txt
+
+$define REP 1
+
+script_variables
+   double closest_hostile = 1000*MATH.M_PER_NM();
+   bool log_print = true;
+   bool iout_print = true;
+   bool sensor_print =  false;
+   WsfGeoPoint origin = WsfGeoPoint.Construct("00:00:00.00n 00:00:00.00e");
+   int rseed = (int)WsfSimulation.RandomSeed();
+   Array<string> log_string = {"output/","LOG",".",(string)$<REP>$};
+   Array<string> iout_string = {"output/","IOUT",".",(string)$<REP>$};
+   Array<string> sensor_string = {"output/","SENSOR",".",(string)$<REP>$};
+   string log_path = "".Join(log_string);
+   string iout_path = "".Join(iout_string);
+   string sensor_path = "".Join(sensor_string);
+   FileIO log = FileIO();
+   FileIO iout = FileIO();
+   FileIO sensorIO = FileIO();
+end_script_variables
+
+end_time 10 s
+
+random_seed 13579

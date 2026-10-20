@@ -1906,6 +1906,14 @@ does not exist. Remove from recent list?</source>
       <source>Print Document</source>
       <translation>打印文档</translation>
     </message>
+    <message>
+      <source>Save Changes</source>
+      <translation>保存更改</translation>
+    </message>
+    <message>
+      <source>Save changes to the file: '%1'?</source>
+      <translation>要保存对文件“%1”的更改吗？</translation>
+    </message>
   </context>
   <context>
     <name>wizard::Environment</name>
@@ -1993,6 +2001,26 @@ Choose Unlist to remove from your recent list or OK to create.</source>
     <message>
       <source>This file is non-ascii and no tools are configured for this file type. Cannot open file.</source>
       <translation>该文件为非文本文件，且未为此文件类型配置任何工具。无法打开文件。</translation>
+    </message>
+    <message>
+      <source>Save Project?</source>
+      <translation>保存项目？</translation>
+    </message>
+    <message>
+      <source>Project &lt;b&gt;%1&lt;/b&gt; has unsaved changes. Would you like to save?</source>
+      <translation>项目 &lt;b&gt;%1&lt;/b&gt; 有未保存的修改。是否保存？</translation>
+    </message>
+    <message>
+      <source>Save</source>
+      <translation>保存</translation>
+    </message>
+    <message>
+      <source>Discard</source>
+      <translation>放弃</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>取消</translation>
     </message>
   </context>
   <context>
@@ -2092,6 +2120,25 @@ Choose Unlist to remove from your recent list or OK to create.</source>
       <location filename="../source/core/TextLocationItemModel.cpp" line="101" />
       <source>Text</source>
       <translation>文本</translation>
+    </message>
+  </context>
+  <context>
+    <name>wizard::TextSource</name>
+    <message>
+      <source>Could not save</source>
+      <translation>无法保存</translation>
+    </message>
+    <message>
+      <source>Could not save file %1, check that the file/directory is writable.</source>
+      <translation>无法保存文件 %1，请检查文件/目录是否可写。</translation>
+    </message>
+    <message>
+      <source>Retry</source>
+      <translation>重试</translation>
+    </message>
+    <message>
+      <source>Cancel</source>
+      <translation>取消</translation>
     </message>
   </context>
   <context>

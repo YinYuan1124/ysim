@@ -274,13 +274,14 @@ bool wizard::Project::RequestClose(bool aForce)
          // Determine if the scenario has changed by diffing the output XML
          if (mLoadedXML != GetXmlText())
          {
+            // 二次开发（i18n）：退出项目未保存提示框接入翻译通道（标题/正文/按钮原为硬编码英文）
             int choice =
                QMessageBox::warning(wkfEnv.GetMainWindow(),
-                                    "Save Project?",
-                                    QString("Project <b>%1</b> has unsaved changes. Would you like to save?").arg(Name()),
-                                    "Save",
-                                    "Discard",
-                                    "Cancel",
+                                    tr("Save Project?"),
+                                    tr("Project <b>%1</b> has unsaved changes. Would you like to save?").arg(Name()),
+                                    tr("Save"),
+                                    tr("Discard"),
+                                    tr("Cancel"),
                                     0,
                                     2);
             if (choice == 0)

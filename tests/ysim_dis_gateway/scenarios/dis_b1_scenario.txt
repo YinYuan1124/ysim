@@ -1,0 +1,42 @@
+# ****************************************************************************
+# 二次开发（ext-02 阶段 B 批次 B1 验证资产）：DIS 七段码映射验证想定
+# 结构：复刻官方 2v2.txt（SCNRIO=2v2_air_movers，平台类型链
+#       BLUE/RED_FIGHTER_AIR → AIR_MOVER_FIGHTER），运行时长压到 20s。
+# 运行：CWD=build/demos/air_to_air 下
+#       mission.exe -rt <dis_iface_block.txt 绝对路径> <本文件绝对路径>
+# 断言口径：blue_1/blue_2（BLUE_FIGHTER_AIR）走想定显式映射（country=225）；
+#           red_1/red_2（RED_FIGHTER_AIR）走插件注入映射（country=36）。
+# 说明：保留 2v2.txt 的全局 script_variables（FileIO 日志对象被
+#       air_movers 平台脚本运行期引用）。
+# ****************************************************************************
+file_path .
+
+define_path_variable SCNRIO 2v2_air_movers
+log_file output/dis_b1.log
+
+include_once _common.txt
+include_once scenarios/${SCNRIO}.txt
+
+$define REP 1
+
+script_variables
+   double closest_hostile = 1000*MATH.M_PER_NM();
+   bool log_print = true;
+   bool iout_print = true;
+   bool sensor_print =  false;
+   WsfGeoPoint origin = WsfGeoPoint.Construct("00:00:00.00n 00:00:00.00e");
+   int rseed = (int)WsfSimulation.RandomSeed();
+   Array<string> log_string = {"output/","LOG",".",(string)$<REP>$};
+   Array<string> iout_string = {"output/","IOUT",".",(string)$<REP>$};
+   Array<string> sensor_string = {"output/","SENSOR",".",(string)$<REP>$};
+   string log_path = "".Join(log_string);
+   string iout_path = "".Join(iout_string);
+   string sensor_path = "".Join(sensor_string);
+   FileIO log = FileIO();
+   FileIO iout = FileIO();
+   FileIO sensorIO = FileIO();
+end_script_variables
+
+end_time 20 s
+
+random_seed 13579

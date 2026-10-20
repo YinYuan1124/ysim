@@ -1,0 +1,23 @@
+# ****************************************************************************
+# 二次开发（ext-01 阶段 C）：ysim_data_export 结构化落盘冒烟想定
+# 内容：复用官方 air_to_air demo 完整想定（2v2 空战），通道全关、落盘全开
+# 运行：CWD=build/demos/air_to_air 下执行
+#        mission.exe E:/afsim/ysim/temp/ysim_smoke_record.txt
+# 校验：temp/ysim_record_verify.py（CSV 行数/事件完整性 + SQLite 四表一致性）
+# ****************************************************************************
+
+include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+
+# 缩短运行时长：覆盖原 1 hr
+end_time 20 s
+
+# 数据出口配置：三通道禁用（本批聚焦落盘），结构化落盘全开
+ysim_data_export
+   tcp_port           0
+   websocket_port     0
+   udp_port           0
+   record             true
+   record_directory   E:/afsim/ysim/temp/ysim_record_out
+   record_csv         true
+   record_sqlite      true
+end_ysim_data_export

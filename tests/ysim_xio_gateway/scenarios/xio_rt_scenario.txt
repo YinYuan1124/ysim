@@ -1,0 +1,8 @@
+# 二次开发（ext-02 指令注入闭环验证资产）：短程 RT 验证想定
+# 说明：复用官方 2v2 空战想定，结束时间压到 25s——配合 mission -rt 实时模式，
+#       使 pause/resume 指令可真实冻结/恢复实时时钟（事件驱动全速模式下
+#       Pause() 对事件时钟是空操作，实测无冻结效果）。
+# 用法：mission.exe -rt xio_iface_block.txt 本文件（CWD 须为 demos/air_to_air，
+#       include 以 CWD 解析）
+include_once 2v2.txt
+end_time 25 s

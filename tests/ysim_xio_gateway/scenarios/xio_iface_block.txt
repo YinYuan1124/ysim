@@ -1,0 +1,16 @@
+# 二次开发（ext-02 阶段 A 验证资产）：XIO 组网块
+# 用法：mission.exe <本文件绝对路径> 2v2.txt（CWD 须为 demos/air_to_air）
+# 说明：多播接口前缀按本机网卡实际地址段填写（192.168.x）；
+#       心跳 1s 加速客户端发现；pause_for_connection 使 mission 等客户端
+#       XIO 连接建立并收到 cRESUME 才开跑（全量事件可见，客户端模拟轻量
+#       controller）；send_aux_data_updates 关闭原生 AuxData 推送
+#       （客户端未注册 ID 73 包，避免未知包告警噪声）。
+# 注意：pause_for_connection 下无客户端时 mission 将等待，勿用于无人值守场景。
+xio_interface
+   multicast 235.7.11.27 192.168.
+   port 3002
+   heartbeat_interval 1.0 s
+   time_to_live 8
+   pause_for_connection true
+   send_aux_data_updates false
+end_xio_interface

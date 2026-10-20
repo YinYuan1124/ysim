@@ -1,0 +1,3 @@
+# 基线想定 60s（覆盖完整交战窗口）
+include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+end_time 60 s

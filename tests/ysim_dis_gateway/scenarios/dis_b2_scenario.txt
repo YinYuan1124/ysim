@@ -1,0 +1,78 @@
+# ext-02 阶段 B 批次 B2 验证想定：SA-10C 交战（Fire/Detonation/Emission）+ comm 消息（Signal）
+# 结构复刻 src/core/wsf_mil/test_mission/dis/warfare（types/shooter/target 单进程合并版）
+# 武器链经 include 源码树 warfare/types.txt（其内部相对路径 include sa-10c 链均同目录）
+include_once e:/afsim/ysim/src/core/wsf_mil/test_mission/dis/warfare/types.txt
+
+# ---- comm 消息通道（Signal PDU 源：消息传输触发 WsfDisPlatform::MessageTransmitted）----
+medium YSIM_B2_MEDIUM WSF_COMM_MEDIUM_GUIDED
+   channels 10
+   transfer_rate 1000 bits/s
+end_medium
+
+comm YSIM_B2_RADIO WSF_COMM_TRANSCEIVER
+   channels 4
+   add medium YSIM_B2_MEDIUM end_medium
+end_comm
+
+# ---- 平台类型（派生 warfare 原型 + comm 无线电）----
+platform_type F18E_COMMS F-18E
+   comm radio YSIM_B2_RADIO end_comm
+end_platform_type
+
+platform_type SA10C_LAUNCHER_COMMS SA-10C_LAUNCHER
+   comm radio YSIM_B2_RADIO end_comm
+end_platform_type
+
+# ---- 红方：SA-10C 发射单元（雷达开机 → Emission PDU；20km 自动交战 → Fire）----
+platform sa-10c_launcher_1 SA10C_LAUNCHER_COMMS
+   side red
+   position 36:30n 115w altitude 1 ft agl
+end_platform
+
+# ---- 蓝方：F-18E 航线穿越（36:41n→36:30n 往返，30000ft 500kts）----
+platform f-18e_1 F18E_COMMS
+   side blue
+   route
+      position 36:41:00n 115:00:00w altitude 30000 ft msl
+         speed 500 kts
+      position 36:30:00n 115:00:00w altitude 30000 ft msl
+         speed 500 kts
+      position 36:41:00n 115:00:00w altitude 30000 ft msl
+         speed 500 kts
+   end_route
+end_platform
+
+# ---- 周期 comm 消息（Signal PDU 触发：4 条覆盖 60s 想定全程）----
+execute at_time 2 s absolute
+   WsfComm radio = WsfSimulation.FindPlatform("f-18e_1").Comm("radio");
+   WsfMessage msg = {};
+   msg.SetSizeInBits(100);
+   msg.SetType("B2_SIGNAL_TEST");
+   radio.SendMessage(msg, "sa-10c_launcher_1", "radio");
+end_execute
+
+execute at_time 15 s absolute
+   WsfComm radio = WsfSimulation.FindPlatform("f-18e_1").Comm("radio");
+   WsfMessage msg = {};
+   msg.SetSizeInBits(100);
+   msg.SetType("B2_SIGNAL_TEST");
+   radio.SendMessage(msg, "sa-10c_launcher_1", "radio");
+end_execute
+
+execute at_time 30 s absolute
+   WsfComm radio = WsfSimulation.FindPlatform("f-18e_1").Comm("radio");
+   WsfMessage msg = {};
+   msg.SetSizeInBits(100);
+   msg.SetType("B2_SIGNAL_TEST");
+   radio.SendMessage(msg, "sa-10c_launcher_1", "radio");
+end_execute
+
+execute at_time 45 s absolute
+   WsfComm radio = WsfSimulation.FindPlatform("f-18e_1").Comm("radio");
+   WsfMessage msg = {};
+   msg.SetSizeInBits(100);
+   msg.SetType("B2_SIGNAL_TEST");
+   radio.SendMessage(msg, "sa-10c_launcher_1", "radio");
+end_execute
+
+end_time 60 s

@@ -1,0 +1,18 @@
+# 二次开发（ext-02 阶段 B 批次 B1 验证资产）：DIS 组网块
+# 用法：mission.exe -rt <本文件绝对路径> <dis_b1_scenario.txt 绝对路径>
+#       （CWD 须为 build/demos/air_to_air）
+# 说明：多播组用 DIS 官方默认 224.2.25.54:3225，接口按本机网卡地址填写；
+#       autostart 使网络模式下 mission 不等外部 Start/Resume PDU 自行开跑；
+#       显式 entity_type（美制 country=225）验证优先级语义——插件表内
+#       BLUE_FIGHTER_AIR 的国产值不得覆盖想定显式映射。
+dis_interface
+   exercise      1
+   site          25
+   application   1
+   multicast     224.2.25.54 192.168.5.3
+   port          3225
+   autostart
+
+   # 想定显式映射优先级验证键（美制 country=225，与插件表同键不同值）
+   entity_type   BLUE_FIGHTER_AIR 1:2:225:2:1:1:0
+end_dis_interface

@@ -166,10 +166,15 @@ bool wizard::Editor::AcceptsClose()
 {
    if (GetSource()->IsModified())
    {
-      std::stringstream ss;
-      ss << "Save changes to the file: '" << GetSource()->GetSystemPath() << "'?";
+      // 二次开发（i18n）：关闭编辑器未保存提示框接入翻译通道（Editor 无 Q_OBJECT，显式 translate 落本类上下文）
       int bn =
-         QMessageBox::warning(this, "Save Changes", ss.str().c_str(), QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+         QMessageBox::warning(this,
+                              QCoreApplication::translate("wizard::Editor", "Save Changes"),
+                              QCoreApplication::translate("wizard::Editor", "Save changes to the file: '%1'?")
+                                 .arg(QString::fromStdString(GetSource()->GetSystemPath())),
+                              QMessageBox::Yes,
+                              QMessageBox::No,
+                              QMessageBox::Cancel);
       if (bn == QMessageBox::Yes)
       {
          GetSource()->WaitForSourceModifications();
