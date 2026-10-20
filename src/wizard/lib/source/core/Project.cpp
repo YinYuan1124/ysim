@@ -231,9 +231,12 @@ bool wizard::Project::RequestClose(bool aForce)
    }
    if (modificationCount > 0 && !aForce)
    {
+      // 二次开发（i18n）：关闭项目放弃更改提示框接入翻译通道（标题/正文原为硬编码英文，
+      // Ok/Cancel 为标准按钮由 qtbase 中文包覆盖）
+      QString msg = tr("Are you sure you want to close the project? The modifications to the following %1 files will be lost:")
+                       .arg(modificationCount);
       std::stringstream ss;
-      ss << "Are you sure you want to close the project? The modifications to the following " << modificationCount
-         << " files will be lost:<ul>";
+      ss << msg.toStdString() << "<ul>";
       std::list<std::string>::iterator it;
       int                              t = 0;
       for (it = modList.begin(); it != modList.end(); ++it)
@@ -249,7 +252,7 @@ bool wizard::Project::RequestClose(bool aForce)
          ss << "<li><b>...</b></li>";
       }
       ss << "</ul>";
-      QMessageBox warn(QMessageBox::Warning, "Abandon Changes?", ss.str().c_str(), QMessageBox::Ok | QMessageBox::Cancel);
+      QMessageBox warn(QMessageBox::Warning, tr("Abandon Changes?"), ss.str().c_str(), QMessageBox::Ok | QMessageBox::Cancel);
       warn.setTextFormat(Qt::RichText);
       const int bn = warn.exec();
       allowClose   = (bn == QMessageBox::Ok);

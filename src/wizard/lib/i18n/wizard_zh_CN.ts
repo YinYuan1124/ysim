@@ -2007,6 +2007,14 @@ Choose Unlist to remove from your recent list or OK to create.</source>
       <translation>保存项目？</translation>
     </message>
     <message>
+      <source>Abandon Changes?</source>
+      <translation>放弃更改？</translation>
+    </message>
+    <message>
+      <source>Are you sure you want to close the project? The modifications to the following %1 files will be lost:</source>
+      <translation>确定要关闭项目吗？以下 %1 个文件的修改将会丢失：</translation>
+    </message>
+    <message>
       <source>Project &lt;b&gt;%1&lt;/b&gt; has unsaved changes. Would you like to save?</source>
       <translation>项目 &lt;b&gt;%1&lt;/b&gt; 有未保存的修改。是否保存？</translation>
     </message>
