@@ -50,6 +50,7 @@
 //      record_csv         true     # CSV Sink 子开关
 //      record_sqlite      true     # SQLite Sink 子开关
 //      control_port       31603    # 热切换控制通道（默认 0=禁用）
+//      start_paused       true     # 起步暂停：仿真首帧即暂停，等控制通道 resume（默认 false）
 //   end_ysim_data_export
 //
 // 命令行（选项必须置于文件名之前，框架约定）：
@@ -59,6 +60,7 @@
 // 热切换控制命令（连接 control_port 后逐行发送）：
 //   add_tcp <port> / add_ws <port> / add_udp <address> <port> [ttl]
 //   remove <port> / list / help
+//   pause / resume / set_rate <0.1-100> / status（仿真运行控制，e2e 控制面板）
 // *****************************************************************************
 
 // Winsock 头必须最先包含：防止其他头文件间接引入 windows.h 时拉入旧版 winsock.h
@@ -1659,6 +1661,7 @@ struct InputData
    // 二次开发（ext-01 阶段 D）：热切换控制通道（默认 0=禁用）
    int         mControlPort          = 0;            // 控制端口（add/remove/list 命令）
    bool        mControlPortFromCmdLine = false;      // 控制端口已被 --ysim-control-port 锁定
+   bool        mStartPaused          = false;       // 起步暂停（首帧即暂停，等控制通道 resume）
 };
 
 //! 单平台评估指标聚合器（阶段 C：仿真回调线程内联累计，无锁）
@@ -1913,6 +1916,9 @@ public:
          }
       }
 
+      // 二次开发（e2e 控制面板）：start_paused 置位（OnAdvanceTime 仿真首帧消费）
+      mStartPauseArmed.store(mData.mStartPaused);
+
       // 二次开发（ext-01 阶段 D）：热切换控制通道（control_port > 0 启用，默认禁用）
       if (mData.mControlPort > 0)
       {
@@ -1920,7 +1926,7 @@ public:
          if (mControlChannel->Start())
          {
             auto out = ut::log::info() << "ysim_data_export: control channel started on port " << mData.mControlPort << ".";
-            out.AddNote() << "Hot-swap commands: add_tcp/add_ws/add_udp/remove/list/help.";
+            out.AddNote() << "Hot-swap commands: add_tcp/add_ws/add_udp/remove/list/pause/resume/set_rate/status/help.";
          }
          else
          {
@@ -2232,11 +2238,42 @@ private:
    //! 仿真时间推进（每帧触发，等价"帧完成"回调）：按周期推送心跳帧
    void OnAdvanceTime(double aSimTime)
    {
+      // 二次开发（e2e 控制面板）：start_paused——仿真首帧即刻暂停时钟，等待控制通道
+      // resume 指令（首帧时平台已全部就绪，WS 快照可补推完整初始态势）
+      if (mStartPauseArmed.exchange(false))
+      {
+         PauseByControl();
+         auto out = ut::log::info() << "ysim_data_export: start_paused in effect, simulation paused at t="
+                                    << aSimTime << " s (send 'resume' via control channel).";
+      }
       if (aSimTime - mLastHeartbeat >= mData.mHeartbeatInterval)
       {
          mLastHeartbeat = aSimTime;
          Publish(BuildSimpleFrame("heartbeat", aSimTime));
       }
+   }
+
+   //! 二次开发（e2e 控制面板）：控制通道暂停仿真（时钟停摆 + 状态记录）
+   //! 线程安全依据：Pause/Resume 最终作用于时钟源标志（WsfClockSource::StopClock/
+   //! StartClock 为平凡 bool 写入），且 SimulationPausing/Resuming 观察者全源码树无订阅者，
+   //! 控制线程直调安全（官方 DIS 亦在网络线程跨线程调用 SetClockRate，同源先例）
+   void PauseByControl()
+   {
+      GetSimulation().Pause();
+      mPausedByControl.store(true);
+   }
+
+   //! 二次开发（e2e 控制面板）：控制通道恢复仿真
+   void ResumeByControl()
+   {
+      GetSimulation().Resume();
+      mPausedByControl.store(false);
+   }
+
+   //! 二次开发（e2e 控制面板）：控制通道视角的暂停状态（status 命令上报）
+   bool IsPausedByControl() const
+   {
+      return mPausedByControl.load();
    }
 
    // -------------------------------------------------------------------------
@@ -2370,7 +2407,11 @@ private:
    // 二次开发（ext-01 阶段 D）：通道列表读写锁（仿真线程 Publish 共享读/控制线程增删独占写）
    mutable std::shared_timed_mutex mChannelsMutex;
    std::vector<std::unique_ptr<Channel>> mChannels;    // 已装配通道适配器（TCP/WS/UDP）
+   // 二次开发（e2e 控制面板）：控制通道访问运行控制方法（HandleCommand 命令分发）
+   friend class ControlChannel;
    std::unique_ptr<ControlChannel>    mControlChannel; // 热切换控制通道（阶段 D，默认空）
+   std::atomic<bool> mStartPauseArmed{false};          // start_paused 待触发（Initialize 置位，仿真首帧消费）
+   std::atomic<bool> mPausedByControl{false};          // 控制通道暂停状态（status 命令上报）
    // 二次开发（ext-01 阶段 C）：结构化落盘器与指标聚合状态
    std::unique_ptr<Recorder>           mRecorder;      // 落盘器（record=false 时为空）
    std::map<size_t, PlatformStats>     mStats;         // 各平台指标聚合器（仅仿真线程访问，无锁）
@@ -2570,10 +2611,48 @@ std::string ControlChannel::HandleCommand(const std::string& aLine)
       std::snprintf(buf, sizeof(buf), "{\"type\":\"channel_list\",\"channels\":[%s]}", channels.c_str());
       return buf;
    }
+   // 二次开发（e2e 控制面板）：仿真运行控制命令（pause/resume/set_rate/status）
+   if (cmd == "pause")
+   {
+      mOwner->PauseByControl();
+      return "{\"type\":\"control_result\",\"ok\":true,\"detail\":\"paused\"}";
+   }
+   if (cmd == "resume")
+   {
+      mOwner->ResumeByControl();
+      return "{\"type\":\"control_result\",\"ok\":true,\"detail\":\"resumed\"}";
+   }
+   if (cmd == "set_rate")
+   {
+      double rate = 0.0;
+      if ((tokens.size() == 2) && (std::sscanf(tokens[1].c_str(), "%lf", &rate) == 1) &&
+          (rate >= 0.1) && (rate <= 100.0))
+      {
+         mOwner->GetSimulation().SetClockRate(rate);
+         std::snprintf(buf, sizeof(buf), "{\"type\":\"control_result\",\"ok\":true,\"detail\":\"clock_rate=%g\"}",
+                       mOwner->GetSimulation().GetClockRate());
+         return buf;
+      }
+      return "{\"type\":\"control_result\",\"ok\":false,\"detail\":\"usage: set_rate <0.1-100>\"}";
+   }
+   if (cmd == "status")
+   {
+      auto& sim = mOwner->GetSimulation();
+      std::snprintf(buf, sizeof(buf),
+                    "{\"type\":\"sim_status\",\"state\":\"%s\",\"paused\":%s,\"clock_rate\":%g,"
+                    "\"sim_time\":%.3f,\"platform_count\":%u}",
+                    sim.GetStateString().c_str(),
+                    mOwner->IsPausedByControl() ? "true" : "false",
+                    sim.GetClockRate(),
+                    sim.GetSimTime(),
+                    static_cast<unsigned>(sim.GetPlatformCount()));
+      return buf;
+   }
    if (cmd == "help")
    {
       return "{\"type\":\"control_result\",\"ok\":true,\"detail\":\"commands: add_tcp <port> | add_ws <port> | "
-             "add_udp <address> <port> [ttl] | remove <port> | list\"}";
+             "add_udp <address> <port> [ttl] | remove <port> | list | pause | resume | "
+             "set_rate <0.1-100> | status\"}";
    }
    std::snprintf(buf, sizeof(buf), "{\"type\":\"control_result\",\"ok\":false,\"detail\":\"unknown command: %s\"}",
                  JsonEscape(cmd).c_str());
@@ -2706,6 +2785,11 @@ public:
             else if (subCommand == "record_sqlite")
             {
                aInput.ReadValue(mData.mRecordSqlite);
+            }
+            // 二次开发（e2e 控制面板）：起步暂停（仿真首帧即暂停，等待控制通道 resume）
+            else if (subCommand == "start_paused")
+            {
+               aInput.ReadValue(mData.mStartPaused);
             }
             // 二次开发（ext-01 阶段 D）：热切换控制通道端口（0=禁用，默认禁用）
             else if (subCommand == "control_port")

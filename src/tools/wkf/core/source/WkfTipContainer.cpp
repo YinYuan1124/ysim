@@ -11,6 +11,7 @@
 
 #include "WkfTipContainer.hpp"
 
+#include <QCoreApplication>
 #include <QFile>
 #include <QTextStream>
 
@@ -48,6 +49,10 @@ void wkf::TipContainer::ReadTipsFromFile()
       for (auto& tip : mTips)
       {
          tip = tip.trimmed();
+         // 二次开发（i18n）：qrc tips.txt 条目接入翻译通道（整条富文本为翻译单元）。
+         // 译文中 <b>/<a doclink="..."> 标签与 doclink 键须原样保留，
+         // doclink→href 的目录替换（UpdateDocLinks）在翻译之后进行，不受影响。
+         tip = QCoreApplication::translate("wkf::TipContainer", tip.toUtf8().constData());
       }
 
       UpdateDocLinks();

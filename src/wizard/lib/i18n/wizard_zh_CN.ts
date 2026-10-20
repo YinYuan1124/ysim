@@ -16601,6 +16601,358 @@ Are you sure you want to delete all created dialogs by restoring defaults?</sour
       <translation>有关更多信息，请访问
 &lt;a href="%1"&gt;%2&lt;/a&gt; 文档。</translation>
     </message>
+    <message>
+      <source>&lt;b&gt;The hat&lt;/b&gt;
+
+The wizard's hat is grape flavored.
+&lt;!--
+For more information visit the
+&lt;a doclink="MissingNO.html"&gt;Missing Link&lt;/a&gt; documentation.--&gt;</source>
+      <translation>&lt;b&gt;巫师帽&lt;/b&gt;
+
+巫师的帽子是葡萄味的。
+&lt;!--
+For more information visit the
+&lt;a doclink="MissingNO.html"&gt;Missing Link&lt;/a&gt; documentation.--&gt;</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Platform Type Instantiation&lt;/b&gt;
+
+You can drag platform types from the type browser onto the map to instantiate a platform.
+
+For more information visit the
+&lt;a doclink="wkf_plugin/wiz_type_browser.html"&gt;Wizard Type Browser&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;平台类型实例化&lt;/b&gt;
+
+您可以从类型浏览器拖拽平台类型到地图上以实例化一个平台。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_type_browser.html"&gt;向导类型浏览器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Cloning Platforms&lt;/b&gt;
+
+You can drag platforms from the platform browser onto the text editor to instantiate a copy of a platform.
+
+For more information visit the
+&lt;a doclink="wkf_plugin/wiz_platform_browser.html"&gt;Wizard Platform Browser&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;克隆平台&lt;/b&gt;
+
+您可以从平台浏览器拖拽平台到文本编辑器以创建该平台的副本。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_platform_browser.html"&gt;向导平台浏览器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Error List&lt;/b&gt;
+
+Wizard will detect syntax errors as you are typing and will display them in the Error List window.
+
+For more information visit the
+&lt;a doclink="wkf_plugin/wiz_error_list.html"&gt;Error List&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;错误列表&lt;/b&gt;
+
+向导会在您输入时检测语法错误，并显示在错误列表窗口中。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_error_list.html"&gt;错误列表&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Keyboard Shortcuts&lt;/b&gt;
+
+Keyboard shortcuts may be assigned to certain actions in the Preferences udnder Environment -&gt; Keyboard Shortcuts.
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;键盘快捷键&lt;/b&gt;
+
+可以在首选项中的环境 -&gt; 键盘快捷键下为特定操作分配键盘快捷键。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Units&lt;/b&gt;
+
+Default units for each measurement type may be changed under Environment -&gt; Units in the Preferences.
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;单位&lt;/b&gt;
+
+各类度量单位的默认值可在首选项中的环境 -&gt; 单位下更改。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Map Definitions&lt;/b&gt;
+
+You can add your own map to use in the Map Display in the Preferences under Environment -&gt; Map Definitions.
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;地图定义&lt;/b&gt;
+
+您可以在首选项中的环境 -&gt; 地图定义下添加自己的地图用于地图显示。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Team Visibility&lt;/b&gt;
+
+You can add a new team name and assign a unique color to it in the Preferences under Environment -&gt; Team Visibility
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;队伍可见性&lt;/b&gt;
+
+您可以在首选项中的环境 -&gt; 队伍可见性下添加新队伍名称并为其指定唯一颜色。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Text Editor&lt;/b&gt;
+
+The text editor color scheme can be customized under Environment -&gt; Text Editor in the Preferences 
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;文本编辑器&lt;/b&gt;
+
+文本编辑器的配色方案可在首选项中的环境 -&gt; 文本编辑器下自定义。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Tool Launcher&lt;/b&gt;
+
+You can configure external tools in the Preferences under Environment -&gt; Tool Launcher. This allows you to open other applications from Wizard.
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;工具启动器&lt;/b&gt;
+
+您可以在首选项中的环境 -&gt; 工具启动器下配置外部工具，从而在向导中打开其他应用程序。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Map Display Options&lt;/b&gt;
+
+Map Display options such as colors, grid lines, elevation lines, and model size may be changed in the Preferences under 'Map Display'.
+
+For more information visit the
+&lt;a doclink="wizard_preferences.html"&gt;Preferences&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;地图显示选项&lt;/b&gt;
+
+颜色、网格线、等高线、模型大小等地图显示选项可在首选项中的“地图显示”下更改。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_preferences.html"&gt;首选项&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Sim Executor&lt;/b&gt;
+
+You can change the simulation that runs your scenario in the Run toolbar, and new simulation may be added in the Preferences under 'Sim Manager'.
+
+For more information visit the
+&lt;a doclink="wkf_plugin/wiz_simulation_manager.html"&gt;Simulation Manager&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;仿真执行器&lt;/b&gt;
+
+您可以在运行工具栏更改运行想定的仿真程序，新仿真可在首选项中的“仿真管理器”下添加。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_simulation_manager.html"&gt;仿真管理器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Command Documentation&lt;/b&gt;
+
+You can consult the documentation on a particular command by right-clicking on the command and selecting 'Command Documentation' (or F1 by default). This will open the Context Help window.
+
+For more information visit the
+&lt;a doclink="wizard_command_documentation.html"&gt;Command Documentation&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;命令文档&lt;/b&gt;
+
+在命令上点击右键并选择“命令文档”（默认或按 F1）即可查阅该命令的文档，这将打开上下文帮助窗口。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_command_documentation.html"&gt;命令文档&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Go To Definition&lt;/b&gt;
+
+To quickly navigate to the definition of a script variable or user defined type, right-click on the text and select 'Go To Definition' (or Alt-G by default).
+
+For more information visit the
+&lt;a doclink="wizard_text_editor.html"&gt;Wizard Text Editor&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;转到定义&lt;/b&gt;
+
+要快速跳转到脚本变量或用户自定义类型的定义，请在文本上点击右键并选择“转到定义”（默认为 Alt-G）。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_text_editor.html"&gt;向导文本编辑器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Find in Files&lt;/b&gt;
+
+You can search your scenario for a certain string of text by highlighting the desired text, right-clicking, and selecting 'Find...' (or Ctrl-Shift-F by default).
+
+For more information visit the
+&lt;a doclink="wizard_find_results.html"&gt;Find Results&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;在文件中查找&lt;/b&gt;
+
+高亮选中文本后点击右键并选择“查找...”（默认为 Ctrl-Shift-F），即可在想定中搜索特定文本。
+
+有关更多信息，请访问
+&lt;a doclink="wizard_find_results.html"&gt;查找结果&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Table Plotter&lt;/b&gt;
+
+You can visualize table data by right clicking a table command and selecting the "Plot Table Data..." option from the context menu. The Table Plotter is also accessible from the Wizard Tools menu.
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_table_plotter.html"&gt;Table Plotter&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;表格绘图器&lt;/b&gt;
+
+在表格命令上点击右键并从上下文菜单选择“绘制表格数据...”即可可视化表格数据。表格绘图器也可从向导工具菜单打开。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_table_plotter.html"&gt;表格绘图器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Satellite Inserter&lt;/b&gt;
+
+You can insert existing satellite definitions using the Satellite Inserter Space Tool by clicking Tools-&gt;Satellite Inserter. 
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;Satellite Inserter&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;卫星插入器&lt;/b&gt;
+
+点击工具 -&gt; 卫星插入器，即可使用卫星插入器空间工具插入现有卫星定义。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;卫星插入器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Satellite Inserter&lt;/b&gt;
+
+You can filter platforms by column in the Satellite Inserter by right clicking on the column. You can also save, load and clear existing filters by right clicking the upper portion of the tool. 
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;Satellite Inserter&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;卫星插入器&lt;/b&gt;
+
+在卫星插入器中右键点击列即可按列筛选平台，右键点击工具上部还可保存、加载和清除现有筛选。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;卫星插入器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Updating Two-Line Elements&lt;/b&gt;
+
+You can update space platforms that have two-line elements (TLEs) by adding files with updated TLE sets to the "Update TLEs" tab in the Satellite Inserter, then clicking the "Update TLEs" button. 
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;Satellite Inserter&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;更新两行轨道根数&lt;/b&gt;
+
+将含更新 TLE 数据的文件添加到卫星插入器的“更新 TLE”页签并点击“更新 TLE”按钮，即可更新具有两行轨道根数（TLE）的空间平台。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;卫星插入器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt; Line-of-sight&lt;/b&gt;
+
+You can determine line-of-sight between two platforms by right clicking on the first platform, selecting "Line-of-sight", and then left-clicking on the second platform.
+
+For more information visit the
+&lt;a doclink="wkf_plugin/wiz_terrain_tools.html"&gt;Terrain tools&lt;/a&gt; documentation.
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;Satellite Inserter&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;视线&lt;/b&gt;
+
+在第一个平台上点击右键选择“视线”，再左键点击第二个平台，即可判断两平台间的视线通视性。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_terrain_tools.html"&gt;地形工具&lt;/a&gt; 文档。
+&lt;a doclink="wkf_plugin/wiz_satellite_inserter.html"&gt;卫星插入器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Zone Browser&lt;/b&gt;
+
+You can manage which zones and zone sets are visible in the map display through the Zone Browser. 
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_zone_editor.html"&gt;Zone Editor&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;区域浏览器&lt;/b&gt;
+
+您可以通过区域浏览器管理地图显示中可见的区域和区域集。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_zone_editor.html"&gt;区域编辑器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Zone Editor&lt;/b&gt;
+
+You can create a new zone by right clicking on the map and selecting "Create Zone at location". 
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_zone_editor.html"&gt;Zone Editor&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;区域编辑器&lt;/b&gt;
+
+在地图上点击右键并选择“在位置创建区域”，即可创建新区域。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_zone_editor.html"&gt;区域编辑器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Color Utils&lt;/b&gt;
+
+You can see what colors look like in AFSIM by hovering over static methods in the Color script class or the side name of a platform. You can also create custom colors by right clicking on the Construct method of the Color script class and selecting "Construct color...".   
+
+For more information visit the 
+&lt;a doclink="wkf_plugin/wiz_color_utils.html"&gt;Color Utils&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;颜色工具&lt;/b&gt;
+
+将鼠标悬停在 Color 脚本类的静态方法或平台侧别名称上，即可查看颜色在 AFSIM 中的效果。右键点击 Color 脚本类的 Construct 方法并选择“构造颜色...”，还可创建自定义颜色。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_color_utils.html"&gt;颜色工具&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Event Output Editor&lt;/b&gt;
+
+You can add or edit event_output (and csv_event_output) blocks in any input file of your choosing.  This editor is intended to replace writing these blocks manually in the input file.  It is located under the Tools menu.
+
+For more information, visit the
+&lt;a doclink="wkf_plugin/wiz_event_output.html"&gt;Event Output Editor&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;事件输出编辑器&lt;/b&gt;
+
+您可以在任意输入文件中添加或编辑 event_output（及 csv_event_output）块。此编辑器旨在取代在输入文件中手写这些块，位于工具菜单下。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_event_output.html"&gt;事件输出编辑器&lt;/a&gt; 文档。</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;Task List&lt;/b&gt;
+
+You can leave comments prefixed with TODO or a custom tag as a reminder to complete it later.  The Task List will consolidate these in a table for convenience.  You can double-click any task to navigate to it in the scenario.
+
+For more information, visit the
+&lt;a doclink="wkf_plugin/wiz_task_list.html"&gt;Task List&lt;/a&gt; documentation.</source>
+      <translation>&lt;b&gt;任务列表&lt;/b&gt;
+
+您可以添加以 TODO 或自定义标签为前缀的注释作为待办提醒。任务列表会将这些注释汇总到表格中，双击任一任务即可在想定中跳转到对应位置。
+
+有关更多信息，请访问
+&lt;a doclink="wkf_plugin/wiz_task_list.html"&gt;任务列表&lt;/a&gt; 文档。</translation>
+    </message>
   </context>
   <context>
     <name>WkScoreboard::Plugin</name>

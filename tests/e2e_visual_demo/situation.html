@@ -2,194 +2,415 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>Ysim 实时态势页（WebSocket 端到端联调示例）</title>
+<title>Ysim 仿真控制与态势页（e2e 演示）</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #0a0f14; color: #c8d6e0; font: 13px/1.5 "Microsoft YaHei", Consolas, monospace; height: 100vh; display: flex; flex-direction: column; }
-  #bar { display: flex; gap: 16px; align-items: center; padding: 8px 14px; background: #101922; border-bottom: 1px solid #1e2c38; }
-  #bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #e74c3c; }
+  #bar { display: flex; gap: 10px; align-items: center; padding: 7px 14px; background: #101922; border-bottom: 1px solid #1e2c38; flex-wrap: wrap; }
+  #bar .dot { width: 10px; height: 10px; border-radius: 50%; background: #e74c3c; flex: none; }
   #bar .dot.on { background: #2ecc71; }
-  #bar input { background: #0a0f14; color: #c8d6e0; border: 1px solid #2a3c4c; padding: 3px 8px; width: 220px; font: inherit; }
-  #bar button { background: #16324a; color: #c8d6e0; border: 1px solid #2a5788; padding: 4px 14px; cursor: pointer; font: inherit; }
+  .badge { padding: 2px 10px; border-radius: 10px; font-size: 12px; background: #233240; color: #9fb8cc; flex: none; }
+  .badge.ready { background: #1d3a52; color: #6db3f2; }
+  .badge.running { background: #143d2b; color: #52d68f; }
+  .badge.paused { background: #4a3a14; color: #e8c157; }
+  .badge.completed { background: #3a1d24; color: #e0707a; }
+  .badge.restarting { background: #2d2a45; color: #a99ce8; }
+  .badge.connecting { background: #233240; color: #9fb8cc; }
+  button { background: #16324a; color: #c8d6e0; border: 1px solid #2a5788; padding: 4px 16px; cursor: pointer; font: inherit; border-radius: 3px; }
+  button:hover:not(:disabled) { background: #1d4260; }
+  button:disabled { opacity: .35; cursor: not-allowed; }
+  button.primary { background: #175134; border-color: #2b8a5a; }
+  button.warn { background: #5c3a12; border-color: #9a6a25; }
+  select { background: #0a0f14; color: #c8d6e0; border: 1px solid #2a3c4c; padding: 3px 6px; font: inherit; border-radius: 3px; }
+  #bar .sep { width: 1px; height: 20px; background: #1e2c38; }
   #bar .k { color: #5d7a92; }
   #bar .v { color: #e8f2fa; font-weight: bold; }
   #main { flex: 1; display: flex; min-height: 0; }
-  #cv { flex: 1; display: block; }
-  #side { width: 330px; display: flex; flex-direction: column; border-left: 1px solid #1e2c38; background: #0c141c; }
-  #tblwrap { flex: 1; overflow: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th { position: sticky; top: 0; background: #101922; color: #5d7a92; text-align: left; padding: 5px 8px; border-bottom: 1px solid #1e2c38; }
-  td { padding: 4px 8px; border-bottom: 1px solid #14202b; white-space: nowrap; }
-  tr.blue td:first-child { color: #5dade2; }
-  tr.red td:first-child { color: #ec7063; }
-  #logwrap { height: 180px; border-top: 1px solid #1e2c38; display: flex; flex-direction: column; }
-  #logwrap h3 { padding: 5px 10px; background: #101922; color: #5d7a92; font-size: 12px; }
-  #log { flex: 1; overflow: auto; padding: 4px 10px; }
-  #log div { color: #7fa3bd; }
-  #log div.ev { color: #f5b041; }
+  #cv { flex: 1; min-width: 0; display: block; } /* min-width:0 解除 flex 项内容宽锁死（canvas width 属性反馈会把 #side 挤出视口） */
+  #side { width: 560px; flex-shrink: 0; min-width: 460px; display: flex; flex-direction: column; border-left: 1px solid #1e2c38; background: #0c141c; }
+  #tblwrap { height: 55%; overflow: auto; border-bottom: 1px solid #1e2c38; }
+  #filterbar { display: flex; flex-wrap: wrap; gap: 4px; padding: 6px 8px; background: #101922; border-bottom: 1px solid #1e2c38; }
+  #filterbar button { padding: 4px 12px; border: 1px solid #2a4256; background: #0c141c; color: #7fa3bd; cursor: pointer; border-radius: 3px; font-size: 12px; white-space: nowrap; }
+  #filterbar button:hover { border-color: #3d7ab8; }
+  #filterbar button.act { background: #2a5788; color: #e8f2fa; border-color: #3d7ab8; }
+  #filterbar button.b-blue { color: #5dade2; }
+  #filterbar button.b-red { color: #ec7063; }
+  /* 高可见度滚动条（深色主题下滑块加亮，用户一眼可见可滚动） */
+  #tblwrap::-webkit-scrollbar, #streamwrap::-webkit-scrollbar { width: 10px; height: 10px; }
+  #tblwrap::-webkit-scrollbar-track, #streamwrap::-webkit-scrollbar-track { background: #0c141c; }
+  #tblwrap::-webkit-scrollbar-thumb, #streamwrap::-webkit-scrollbar-thumb { background: #2a5788; border-radius: 5px; }
+  #tblwrap::-webkit-scrollbar-thumb:hover, #streamwrap::-webkit-scrollbar-thumb:hover { background: #3d7ab8; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th { position: sticky; top: 0; background: #101922; text-align: center; padding: 6px 10px; border-bottom: 2px solid #2a4256; border-right: 1px solid #1e2c38; white-space: nowrap; }
+  td { padding: 4px 10px; border-bottom: 1px solid #14202b; border-right: 1px solid #14202b; white-space: nowrap; text-align: center; }
+  tr.blue td { color: #5dade2; }
+  tr.red td { color: #ec7063; }
+  tbody tr:nth-child(even) td { background: rgba(255, 255, 255, 0.03); }
+  th:last-child, td:last-child { border-right: none; }
+  #tabs { display: flex; background: #101922; border-bottom: 1px solid #1e2c38; }
+  #tabs div { padding: 6px 14px; cursor: pointer; color: #5d7a92; border-right: 1px solid #1e2c38; }
+  #tabs div.act { color: #e8f2fa; background: #0c141c; }
+  #streamwrap { flex: 1; overflow: auto; padding: 4px 10px; font-size: 12px; }
+  #stream div { color: #7fa3bd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #stream div.t-state { color: #6fb3e0; }
+  #stream div.t-heartbeat { color: #55697a; }
+  #stream div.ev { color: #f5b041; }
+  #stream div.cmd { color: #52d68f; }
+  #stream div.rst { color: #a99ce8; }
 </style>
 </head>
 <body>
 <div id="bar">
   <span class="dot" id="dot"></span>
-  <span id="st">未连接</span>
-  <input id="wsurl" value="127.0.0.1:31601" title="WS 地址 host:port">
-  <button onclick="connect()">连接</button>
+  <span class="badge connecting" id="badge">连接中</span>
+  <button id="btnStart" class="primary" onclick="cmd('resume')">开始仿真</button>
+  <button id="btnPause" onclick="cmd(paused?'resume':'pause')">暂停</button>
+  <button id="btnReset" class="warn" onclick="cmd('reset')">重置</button>
+  <select id="rateSel" onchange="cmd('set_rate', this.value)" title="仿真频率（时钟倍率）">
+    <option value="0.5">频率 0.5×</option>
+    <option value="1" selected>频率 1×</option>
+    <option value="2">频率 2×</option>
+    <option value="4">频率 4×</option>
+    <option value="8">频率 8×</option>
+  </select>
+  <span class="sep"></span>
   <span class="k">仿真时间 <span class="v" id="t">-</span> s</span>
+  <span class="k">倍率 <span class="v" id="rate">1×</span></span>
   <span class="k">平台 <span class="v" id="np">0</span></span>
   <span class="k">帧 <span class="v" id="nf">0</span></span>
 </div>
 <div id="main">
   <canvas id="cv"></canvas>
   <div id="side">
+    <div id="filterbar"></div>
     <div id="tblwrap">
       <table>
-        <thead><tr><th>平台</th><th>侧</th><th>高度 m</th><th>速度 m/s</th><th>航向°</th></tr></thead>
+        <thead><tr><th>时间 s</th><th>平台</th><th>侧别</th><th>高度 m</th><th>速度 m/s</th><th>航向°</th><th>纬度°</th><th>经度°</th></tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
-    <div id="logwrap"><h3>事件日志</h3><div id="log"></div></div>
+    <div id="tabs">
+      <div class="act" onclick="tab('ev', this)">事件与命令</div>
+      <div onclick="tab('raw', this)">原始数据流</div>
+    </div>
+    <div id="streamwrap"><div id="stream"></div></div>
   </div>
 </div>
 <script>
 "use strict";
 // ============================================================================
-// Ysim 实时态势页：mission.exe 后台仿真 → ysim_data_export WS 推流 → 本页渲染
-// 协议：RFC 6455 文本帧，每帧一行 JSON：
-//   platform_added {id,name,platform_type,side} / platform_removed {id,name}
-//   state {id,name,side,lat,lon,alt_m,speed_mps,heading_deg,...}
-//   sim_start / sim_complete / heartbeat {time}
+// Ysim 仿真控制与态势页（e2e 演示 v2）
+// 数据链路：mission.exe → ysim_data_export WS(31601) → 桥接器转发(/data) → 本页态势渲染
+// 控制链路：本页 → 桥接器 run_demo.py(/ws) → 仿真控制通道(TCP 31610)
+//           pause/resume/set_rate/status/reset（reset 由桥接器重启仿真进程）
+// 状态机：connecting → ready →(开始)→ running ⇄ paused → completed
+//                ↖ ←—————— 重置（重启进程）——————↗
 // ============================================================================
 
-var plat = {};            // id -> {name,side,type,lat,lon,alt,spd,hdg,trail:[],alive}
-var frames = 0, simTime = 0, ws = null;
-var TRAIL_MAX = 120;      // 尾迹点数上限
+var plat = {};                 // id -> {name,side,type,lat,lon,alt,spd,hdg,trail,alive}
+var frames = 0, simTime = 0, clockRate = 1, paused = true;
+var state = "connecting";      // connecting/ready/running/paused/completed/restarting
+var dataWS = null, ctrlWS = null, resetPending = false, reconnectTimer = null;
+var TRAIL_MAX = 150;
+// 数据流端点策略：默认走同源桥接转发(/data，页面能开即数据能通，免受跨端口
+// 拦截/环境差异影响)；?ws=host:port 显式指定时直连该端点（高级用法）。
+var DATA_URL = new URLSearchParams(location.search).get("ws");
+var dataViaBridge = !DATA_URL;
 
 var cv = document.getElementById("cv"), ctx = cv.getContext("2d");
-function resize() { cv.width = cv.clientWidth; cv.height = cv.clientHeight; }
-window.addEventListener("resize", resize);
+window.addEventListener("resize", function () { cv.width = cv.clientWidth; cv.height = cv.clientHeight; });
 
-function log(text, ev) {
-  var el = document.getElementById("log"), d = document.createElement("div");
-  d.textContent = "[" + new Date().toLocaleTimeString() + "] " + text;
-  if (ev) d.className = "ev";
-  el.insertBefore(d, el.firstChild);
-  while (el.childNodes.length > 200) el.removeChild(el.lastChild);
+// ---------- 状态机与控件联动（每次交互/状态变化统一走这里刷新） ----------
+var BADGE_TXT = { connecting: "连接中", ready: "就绪（待开始）", running: "运行中",
+                  paused: "已暂停", completed: "仿真结束", restarting: "重启中…" };
+function setState(s) {
+   state = s;
+   var b = document.getElementById("badge");
+   b.textContent = BADGE_TXT[s];
+   b.className = "badge " + s;
+   document.getElementById("dot").className = "dot" +
+      ((s === "running" || s === "ready" || s === "paused") ? " on" : "");
+   document.getElementById("btnStart").disabled = (s !== "ready");
+   var pb = document.getElementById("btnPause");
+   pb.disabled = !(s === "running" || s === "paused");
+   pb.textContent = (s === "paused") ? "继续" : "暂停";
+   document.getElementById("btnReset").disabled =
+      (s === "restarting" || s === "connecting");
+   document.getElementById("rateSel").disabled =
+      (s === "restarting" || s === "connecting" || s === "completed");
+}
+function busy(on) {  // 命令下发期间临时禁用全部控件（回执后由 setState 恢复）
+   ["btnStart", "btnPause", "btnReset", "rateSel"].forEach(function (id) {
+      document.getElementById(id).disabled = on;
+   });
+}
+function tab(which, el) {
+   document.querySelectorAll("#tabs div").forEach(function (d) { d.className = ""; });
+   el.className = "act";
+   logMode = which;
+   document.getElementById("stream").innerHTML = "";
+   document.getElementById("streamwrap").scrollTop = 0;
 }
 
-function connect() {
-  if (ws) { ws.close(); ws = null; }
-  var url = document.getElementById("wsurl").value.trim();
-  ws = new WebSocket("ws://" + url);
-  ws.onopen = function () { log("已连接 " + url); };
-  ws.onclose = function () { setSt(false); log("连接关闭"); };
-  ws.onerror = function () { setSt(false); log("连接错误（mission 是否已启动？）"); };
-  ws.onmessage = function (e) { onFrame(JSON.parse(e.data)); };
+// ---------- 日志（事件与命令 / 原始数据流 两种视图，各自限 300 行） ----------
+var logMode = "ev";
+function log(text, cls) {
+   var el = document.getElementById("stream"), d = document.createElement("div");
+   d.textContent = "[" + new Date().toLocaleTimeString() + "] " + text;
+   if (cls) d.className = cls;
+   el.appendChild(d);
+   while (el.childNodes.length > 300) el.removeChild(el.firstChild);
+   el.parentNode.scrollTop = el.parentNode.scrollHeight;
 }
-function setSt(on) {
-  document.getElementById("dot").className = "dot" + (on ? " on" : "");
-  document.getElementById("st").textContent = on ? "已连接" : "未连接";
+function logRaw(obj) {
+   if (logMode !== "raw") return;
+   var el = document.getElementById("stream"), d = document.createElement("div");
+   d.className = "t-" + (obj.type || "?");
+   d.textContent = JSON.stringify(obj).slice(0, 200);
+   el.appendChild(d);
+   while (el.childNodes.length > 300) el.removeChild(el.firstChild);
+   el.parentNode.scrollTop = el.parentNode.scrollHeight;
+}
+
+// ---------- 数据链路：默认经桥接器同源转发(8080/data)；?ws= 指定时直连。  ----------
+// ---------- 断开自动重连；重置后清空态势                                  ----------
+function connectData() {
+   if (dataWS) { try { dataWS.close(); } catch (e) {} }
+   var url = dataViaBridge ? (location.host + "/data") : DATA_URL;
+   dataWS = new WebSocket("ws://" + url);
+   dataWS.onopen = function () {
+      log("数据流已连接 " + url + (dataViaBridge ? "（桥接转发）" : ""), "t-state");
+      if (resetPending) { plat = {}; frames = 0; rowCache = []; filterNames = []; nameSide = {}; curFilter = "all"; document.getElementById("tbody").innerHTML = ""; renderFilterBar(); resetPending = false; log("态势已重置（新仿真进程）", "rst"); }
+      if (state === "connecting") setState("ready");
+   };
+   dataWS.onclose = function () {
+      log("数据流断开，1 秒后重连…", "t-state");
+      if (state !== "completed") setState("connecting");
+      if (reconnectTimer) clearTimeout(reconnectTimer);
+      reconnectTimer = setTimeout(connectData, 1000);
+   };
+   dataWS.onerror = function () { try { dataWS.close(); } catch (e) {} };
+   dataWS.onmessage = function (e) { onFrame(JSON.parse(e.data)); };
+}
+
+// ---------- 实时数据表格：每条 state 帧追加一行（红蓝按平台侧别整行着色）， ----------
+// ---------- 数据增多容器自动出滚动条，可回滑查看历史；                       ----------
+// ---------- 用户滑离底部时暂停自动跟随，回到底部恢复跟随；上限 2000 行防膨胀 ----------
+// ---------- 表格上方平台切换控件：点击"全部/某平台"过滤显示对应数据列表 ----------
+var MAX_ROWS = 2000;
+var curFilter = "all";      // 当前筛选：all 或某平台名
+var rowCache = [];          // 历史行缓存 [{side,name,vals}]，切换平台时全量重渲染
+var filterNames = [];       // 出现过的平台名（去重按序，生成切换按钮）
+var nameSide = {};          // 平台名 -> 侧别（按钮着色）
+
+function appendTr(side, vals) {
+   var tr = document.getElementById("tbody").insertRow(-1);
+   tr.className = side;
+   for (var i = 0; i < vals.length; i++) tr.insertCell(-1).textContent = vals[i];
+   return tr;
+}
+
+function renderFilterBar() {
+   var html = '<button' + (curFilter === "all" ? ' class="act"' : '') +
+              ' onclick="switchFilter(\'all\', this)">全部</button>';
+   for (var i = 0; i < filterNames.length; i++) {
+      var nm = filterNames[i];
+      var cls = nameSide[nm] === "blue" ? "b-blue" : (nameSide[nm] === "red" ? "b-red" : "");
+      if (curFilter === nm) cls += " act";
+      html += '<button class="' + cls + '" onclick="switchFilter(\'' + nm + '\', this)">' + nm + '</button>';
+   }
+   document.getElementById("filterbar").innerHTML = html;
+}
+
+function renderTable() {
+   var tb = document.getElementById("tbody");
+   tb.innerHTML = "";
+   for (var i = 0; i < rowCache.length; i++) {
+      var r = rowCache[i];
+      if (curFilter === "all" || r.name === curFilter) appendTr(r.side, r.vals);
+   }
+   document.getElementById("tblwrap").scrollTop = document.getElementById("tblwrap").scrollHeight;
+}
+
+function switchFilter(name, btn) {
+   curFilter = name;
+   var bs = document.querySelectorAll("#filterbar button");
+   for (var i = 0; i < bs.length; i++) bs[i].classList.remove("act");
+   if (btn) btn.classList.add("act");
+   renderTable();
+}
+
+function appendDataRow(f) {
+   var wrap = document.getElementById("tblwrap");
+   var tb = document.getElementById("tbody");
+   var atBottom = wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight < 24;
+   var vals = [f.time.toFixed(1), f.name, f.side, Math.round(f.alt_m),
+               Math.round(f.speed_mps), Math.round(f.heading_deg),
+               f.lat.toFixed(3), f.lon.toFixed(3)];
+   // 登记平台（去重）与侧别，生成/刷新切换按钮
+   nameSide[f.name] = f.side;
+   if (filterNames.indexOf(f.name) < 0) { filterNames.push(f.name); renderFilterBar(); }
+   // 历史行缓存（切换平台时全量重渲染）
+   rowCache.push({ side: f.side, name: f.name, vals: vals });
+   while (rowCache.length > MAX_ROWS) rowCache.shift();
+   // 当前筛选命中才追加显示
+   if (curFilter === "all" || f.name === curFilter) {
+      appendTr(f.side, vals);
+      while (tb.rows.length > MAX_ROWS) tb.deleteRow(0);
+      if (atBottom) wrap.scrollTop = wrap.scrollHeight;
+   }
 }
 
 function onFrame(f) {
-  frames++;
-  if (f.type === "state") {
-    simTime = f.time;
-    var p = plat[f.id];
-    if (!p) { p = plat[f.id] = { trail: [] }; }
-    p.name = f.name; p.side = f.side; p.type = f.platform_type;
-    p.lat = f.lat; p.lon = f.lon; p.alt = f.alt_m; p.spd = f.speed_mps; p.hdg = f.heading_deg;
-    p.alive = true;
-    p.trail.push([f.lon, f.lat]);
-    if (p.trail.length > TRAIL_MAX) p.trail.shift();
-  } else if (f.type === "platform_added") {
-    if (!plat[f.id]) plat[f.id] = { trail: [] };
-    plat[f.id].name = f.name; plat[f.id].side = f.side; plat[f.id].type = f.platform_type;
-    plat[f.id].alive = true;
-    log("平台加入 " + f.name + "（" + f.side + "）", true);
-  } else if (f.type === "platform_removed") {
-    if (plat[f.id]) plat[f.id].alive = false;
-    log("平台移除 " + f.name, true);
-  } else if (f.type === "sim_start") {
-    log("仿真开始", true);
-  } else if (f.type === "sim_complete") {
-    log("仿真结束", true);
-  }
-  setSt(true);
-  document.getElementById("nf").textContent = frames;
-  document.getElementById("np").textContent = Object.keys(plat).filter(function (k) { return plat[k].alive; }).length;
+   frames++;
+   logRaw(f);
+   if (f.type === "state") {
+      simTime = f.time;
+      var p = plat[f.id] || (plat[f.id] = { trail: [] });
+      p.name = f.name; p.side = f.side; p.type = f.platform_type;
+      p.lat = f.lat; p.lon = f.lon; p.alt = f.alt_m; p.spd = f.speed_mps;
+      p.hdg = f.heading_deg; p.alive = true;
+      p.trail.push([f.lon, f.lat]);
+      if (p.trail.length > TRAIL_MAX) p.trail.shift();
+      appendDataRow(f);
+   } else if (f.type === "platform_added") {
+      var q = plat[f.id] || (plat[f.id] = { trail: [] });
+      q.name = f.name; q.side = f.side; q.type = f.platform_type; q.alive = true;
+      log("平台加入 " + f.name + "（" + f.side + "）", "ev");
+   } else if (f.type === "platform_removed") {
+      if (plat[f.id]) plat[f.id].alive = false;
+      log("平台移除 " + f.name, "ev");
+   } else if (f.type === "sim_complete") {
+      log("仿真结束", "ev"); setState("completed");
+   } else if (f.type === "heartbeat") {
+      simTime = f.time;
+   }
+   document.getElementById("nf").textContent = frames;
+   document.getElementById("np").textContent =
+      Object.keys(plat).filter(function (k) { return plat[k].alive; }).length;
 }
 
-// ---------- 俯视态势渲染（经纬度自动缩放） ----------
+// ---------- 控制链路：经桥接器转发到仿真控制通道 ----------
+function connectCtrl() {
+   ctrlWS = new WebSocket("ws://" + location.host + "/ws");
+   ctrlWS.onopen = function () {
+      log("控制通道已连接", "cmd");
+      cmd("status", null, true);
+   };
+   ctrlWS.onclose = function () {
+      log("控制通道断开，1 秒后重连…", "cmd");
+      setTimeout(connectCtrl, 1000);
+   };
+   ctrlWS.onerror = function () { try { ctrlWS.close(); } catch (e) {} };
+   ctrlWS.onmessage = function (e) { onCtrlMsg(JSON.parse(e.data)); };
+}
+
+function cmd(action, value, silent) {
+   if (!ctrlWS || ctrlWS.readyState !== 1) { log("控制通道未就绪，指令未发送: " + action, "cmd"); return; }
+   busy(true);
+   var msg = { action: action };
+   if (value !== undefined && value !== null) msg.value = value;
+   ctrlWS.send(JSON.stringify(msg));
+   if (!silent) log("下发指令: " + action + (value !== undefined && value !== null ? " " + value : ""), "cmd");
+}
+
+function onCtrlMsg(r) {
+   if (r.type === "sim_status") {
+      paused = r.paused;
+      simTime = r.sim_time;
+      clockRate = r.clock_rate;
+      document.getElementById("t").textContent = simTime.toFixed(1);
+      document.getElementById("rate").textContent = clockRate + "×";
+      if (state !== "restarting") {
+         if (r.state === "COMPLETE") setState("completed");
+         else setState(r.paused ? (r.sim_time < 1 ? "ready" : "paused") : "running");
+      }
+      return;
+   }
+   // control_result：命令回执
+   if (r.action === "reset" && r.ok) {
+      resetPending = true;
+      plat = {}; frames = 0;
+      setState("restarting");
+      log("仿真进程已重启，等待数据流重连…", "rst");
+   } else if (r.ok) {
+      log("回执: " + (r.detail || "ok"), "cmd");
+   } else {
+      log("指令失败: " + (r.detail || "未知错误"), "cmd");
+   }
+   cmd("status", null, true);  // 回执后立即刷新状态徽标
+}
+
+// 状态轮询（2s）：保持徽标/倍率/时间与仿真一致（含桥接器重启后的自愈）
+setInterval(function () {
+   if (ctrlWS && ctrlWS.readyState === 1) cmd("status", null, true);
+}, 2000);
+
+// ---------- 俯视态势渲染（经纬度自动缩放，同 v1） ----------
 function bounds() {
-  var b = null;
-  for (var k in plat) {
-    var p = plat[k];
-    if (p.lat === undefined) continue;
-    if (!b) b = { lo: p.lon, hi: p.lon, la: p.lat, ha: p.lat };
-    b.lo = Math.min(b.lo, p.lon); b.hi = Math.max(b.hi, p.lon);
-    b.la = Math.min(b.la, p.lat); b.ha = Math.max(b.ha, p.lat);
-  }
-  return b;
+   var b = null;
+   for (var k in plat) {
+      var p = plat[k];
+      if (p.lat === undefined) continue;
+      if (!b) b = { lo: p.lon, hi: p.lon, la: p.lat, ha: p.lat };
+      b.lo = Math.min(b.lo, p.lon); b.hi = Math.max(b.hi, p.lon);
+      b.la = Math.min(b.la, p.lat); b.ha = Math.max(b.ha, p.lat);
+   }
+   return b;
 }
 function draw() {
-  requestAnimationFrame(draw);
-  resize();
-  ctx.fillStyle = "#0a0f14"; ctx.fillRect(0, 0, cv.width, cv.height);
-  var b = bounds();
-  if (!b) return;
-  var pad = 60, spanLon = Math.max(b.hi - b.lo, 1e-4), spanLat = Math.max(b.ha - b.la, 1e-4);
-  var sc = Math.min((cv.width - 2 * pad) / spanLon, (cv.height - 2 * pad) / spanLat);
-  function X(lon) { return pad + (lon - b.lo) * sc + (cv.width - 2 * pad - spanLon * sc) / 2; }
-  function Y(lat) { return cv.height - pad - (lat - b.la) * sc - (cv.height - 2 * pad - spanLat * sc) / 2; }
-  // 网格
-  ctx.strokeStyle = "#12202b"; ctx.lineWidth = 1;
-  for (var g = 0; g <= 8; g++) {
-    var x = (cv.width / 8) * g, y = (cv.height / 8) * g;
-    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, cv.height); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(cv.width, y); ctx.stroke();
-  }
-  var trow = "";
-  for (var k in plat) {
-    var p = plat[k];
-    if (p.lat === undefined) continue;
-    var x = X(p.lon), y = Y(p.lat);
-    var col = (p.side === "blue") ? "#5dade2" : "#ec7063";
-    // 尾迹
-    if (p.trail.length > 1) {
-      ctx.strokeStyle = col + "55"; ctx.lineWidth = 1.5; ctx.beginPath();
-      for (var i = 0; i < p.trail.length; i++) {
-        var tx = X(p.trail[i][0]), ty = Y(p.trail[i][1]);
-        i ? ctx.lineTo(tx, ty) : ctx.moveTo(tx, ty);
+   requestAnimationFrame(draw);
+   if (cv.width !== cv.clientWidth) cv.width = cv.clientWidth;
+   if (cv.height !== cv.clientHeight) cv.height = cv.clientHeight;
+   ctx.fillStyle = "#0a0f14"; ctx.fillRect(0, 0, cv.width, cv.height);
+   var b = bounds();
+   var X = null, Y = null;  // 投影函数：注意不能声明在 if 块内（严格模式下块级作用域，块外不可见）
+   if (b) {
+      var pad = 60, spanLon = Math.max(b.hi - b.lo, 1e-4), spanLat = Math.max(b.ha - b.la, 1e-4);
+      var sc = Math.min((cv.width - 2 * pad) / spanLon, (cv.height - 2 * pad) / spanLat);
+      X = function (lon) { return pad + (lon - b.lo) * sc + (cv.width - 2 * pad - spanLon * sc) / 2; };
+      Y = function (lat) { return cv.height - pad - (lat - b.la) * sc - (cv.height - 2 * pad - spanLat * sc) / 2; };
+      ctx.strokeStyle = "#12202b"; ctx.lineWidth = 1;
+      for (var g = 0; g <= 8; g++) {
+         var gx = (cv.width / 8) * g, gy = (cv.height / 8) * g;
+         ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, cv.height); ctx.stroke();
+         ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(cv.width, gy); ctx.stroke();
       }
-      ctx.stroke();
-    }
-    if (!p.alive) continue;
-    // 航向线
-    var rad = p.hdg * Math.PI / 180;
-    ctx.strokeStyle = col; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(x, y);
-    ctx.lineTo(x + 22 * Math.sin(rad), y - 22 * Math.cos(rad)); ctx.stroke();
-    // 平台标记
-    ctx.fillStyle = col;
-    ctx.beginPath(); ctx.arc(x, y, 7, 0, 2 * Math.PI); ctx.fill();
-    ctx.strokeStyle = "#0a0f14"; ctx.lineWidth = 2; ctx.stroke();
-    // 标签
-    ctx.fillStyle = col; ctx.font = "12px Microsoft YaHei";
-    ctx.fillText(p.name + " " + Math.round(p.alt) + "m", x + 12, y - 10);
-    trow += "<tr class='" + p.side + "'><td>" + p.name + "</td><td>" + p.side +
-            "</td><td>" + Math.round(p.alt) + "</td><td>" + Math.round(p.spd) +
-            "</td><td>" + Math.round(p.hdg) + "</td></tr>";
-  }
-  document.getElementById("tbody").innerHTML = trow;
-  document.getElementById("t").textContent = simTime.toFixed(1);
+   }
+   for (var k in plat) {
+      var p = plat[k];
+      if (p.lat === undefined || !X) continue;
+      var x = X(p.lon), y = Y(p.lat);
+      var col = (p.side === "blue") ? "#5dade2" : "#ec7063";
+      if (p.trail.length > 1) {
+         ctx.strokeStyle = col + "55"; ctx.lineWidth = 1.5; ctx.beginPath();
+         for (var i = 0; i < p.trail.length; i++) {
+            var tx = X(p.trail[i][0]), ty = Y(p.trail[i][1]);
+            i ? ctx.lineTo(tx, ty) : ctx.moveTo(tx, ty);
+         }
+         ctx.stroke();
+      }
+      if (!p.alive) continue;
+      var rad = p.hdg * Math.PI / 180;
+      ctx.strokeStyle = col; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x, y);
+      ctx.lineTo(x + 22 * Math.sin(rad), y - 22 * Math.cos(rad)); ctx.stroke();
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.arc(x, y, 7, 0, 2 * Math.PI); ctx.fill();
+      ctx.strokeStyle = "#0a0f14"; ctx.lineWidth = 2; ctx.stroke();
+      ctx.font = "12px Microsoft YaHei";
+      // 标签贴右缘时翻转到标记点左侧，防截断
+      var lbl = p.name + " " + Math.round(p.alt) + "m";
+      var tw = ctx.measureText(lbl).width;
+      var lx = (x + 12 + tw > cv.width - 4) ? (x - 12 - tw) : (x + 12);
+      ctx.fillText(lbl, lx, y - 10);
+   }
+   document.getElementById("t").textContent = simTime.toFixed(1);
 }
 requestAnimationFrame(draw);
 
-// URL 参数 ?ws=host:port 可覆盖默认地址
-var q = new URLSearchParams(location.search).get("ws");
-if (q) document.getElementById("wsurl").value = q;
-connect();
+connectData();
+connectCtrl();
 </script>
 </body>
 </html>
