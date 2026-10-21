@@ -4,9 +4,11 @@
 
 ## 脚本清单
 
-| 脚本 | 用途 | 运行方式 |
+> 配同名 `.bat` **一键运行**（双击即跑；通用机制与排错 FAQ 见 [../BAT_USAGE.md](../BAT_USAGE.md)）。
+
+| 脚本 | 用途 | 一键运行（bat，推荐） |
 |---|---|---|
-| xio_e2e_verify.py | 端到端全链路：起 xio_gateway_client（180s 超时）→ 3s 后起 mission（air_movers+xio 块，pause_for_connection）→ 10 条指令脚本（ping/add_platform/set_route/set_speed/pause/resume/get_status/delete_platform×2/负向 UNKNOWN）→ 断言增删/航路/调速/回执闭环；`--regression` 无块降级回归 | `python xio_e2e_verify.py --regression` |
+| xio_e2e_verify.py | 端到端全链路：起 xio_gateway_client（180s 超时）→ 3s 后起 mission（air_movers+xio 块，pause_for_connection）→ 10 条指令脚本（ping/add_platform/set_route/set_speed/pause/resume/get_status/delete_platform×2/负向 UNKNOWN）→ 断言增删/航路/调速/回执闭环；`--regression` 无块降级回归 | 双击 `xio_e2e_verify.bat`（加 `--regression` ＝仅跑降级回归，跳过两轮端到端） |
 
 ## scenarios/ 想定与组网块
 

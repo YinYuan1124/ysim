@@ -1,0 +1,119 @@
+# ****************************************************************************
+# CUI
+#
+# The Advanced Framework for Simulation, Integration, and Modeling (AFSIM)
+#
+# Copyright 2003-2015 The Boeing Company. All rights reserved.
+#
+# The use, dissemination or disclosure of data in this file is subject to
+# limitation or restriction. See accompanying README and LICENSE for details.
+# ****************************************************************************
+# 二次开发（ext-05）：EquipmentDB 端到端验证想定
+#
+# 查询结果以 key=value 行写入 CWD 下 eqdb_result.txt，
+# 由 tests/equipmentdb/verify_equipmentdb.py 与 SQLite 直查结果交叉断言。
+# database 路径相对本想定文件目录解析（插件内置基准目录机制）。
+
+ysim_equipment_db
+   database ../../build/db/DB3K_modern.db3
+   max_rows 100
+   preload true
+end_ysim_equipment_db
+
+on_initialize
+   EquipmentDB equipdb = EquipmentDB();
+   FileIO outFile = FileIO();
+   outFile.Open("eqdb_result.txt", "out");
+
+   bool opened = equipdb.Open("");
+
+   if (opened) { outFile.Writeln("open=true"); } else { outFile.Writeln("open=false"); }
+
+   outFile.Write("aircraft_count=");
+   outFile.Writeln((string)equipdb.GetEquipmentCount("DataAircraft"));
+   outFile.Write("aircraft_count_star=");
+   outFile.Writeln((string)equipdb.GetEquipmentCount("*"));
+   outFile.Write("sensor_count=");
+   outFile.Writeln((string)equipdb.GetEquipmentCount("DataSensor"));
+
+   Array<int> f16ids = equipdb.FindByName("F-16", "DataAircraft");
+   outFile.Write("f16_count=");
+   outFile.Writeln((string)f16ids.Size());
+   if (f16ids.Size() > 0)
+   {
+      outFile.Write("f16_first=");
+      outFile.Writeln((string)f16ids[0]);
+   }
+
+   Map<string, string> s = equipdb.GetSummary("DataAircraft", 122);
+   outFile.Write("summary_name=");
+   outFile.Writeln(s["Name"]);
+   outFile.Write("summary_name_cn=");
+   outFile.Writeln(s["Name_CN"]);
+
+   Map<string, string> w = equipdb.GetRecord("DataWeapon", 1);
+   outFile.Write("weapon_id=");
+   outFile.Writeln(w["ID"]);
+
+   Map<string, string> a = equipdb.GetRecord("DataAircraft", 122);
+   outFile.Write("aircraft_rec_id=");
+   outFile.Writeln(a["ID"]);
+   outFile.Write("aircraft_rec_name=");
+   outFile.Writeln(a["Name"]);
+
+   Array<string> cols = equipdb.GetColumnNames("DataWeapon");
+   outFile.Write("weapon_cols=");
+   outFile.Writeln((string)cols.Size());
+
+   outFile.Write("enum_desc=");
+   outFile.Writeln(equipdb.GetEnumDescription("EnumAircraftType", 2002));
+
+   # ---- F 阶段：关联表导航（ID→ComponentID 约定，Tu-22RDK 1305 为富组件夹具） ----
+   Array<int> sensors1305 = equipdb.GetLinkedIDs("DataAircraftSensors", 1305);
+   outFile.Write("linked_sensor_count_1305=");
+   outFile.Writeln((string)sensors1305.Size());
+   if (sensors1305.Size() > 0)
+   {
+      outFile.Write("linked_sensor_first_1305=");
+      outFile.Writeln((string)sensors1305[0]);
+   }
+   outFile.Write("linked_mount_count_1305=");
+   outFile.Writeln((string)equipdb.GetLinkedIDs("DataAircraftMounts", 1305).Size());
+   outFile.Write("linked_loadout_count_1305=");
+   outFile.Writeln((string)equipdb.GetLinkedIDs("DataAircraftLoadouts", 1305).Size());
+   outFile.Write("linked_a5257_loadouts=");
+   outFile.Writeln((string)equipdb.GetLinkedIDs("DataAircraftLoadouts", 5257).Size());
+
+   # ---- F 阶段：组合过滤（空串通配/年代 0 不设限；NULL 字段自然排除） ----
+   outFile.Write("f1_us_aircraft=");
+   outFile.Writeln((string)equipdb.FindFiltered("DataAircraft", "", "United States", "", "", 0, 0).Size());
+   outFile.Write("f2_fixedwing_1980_2005=");
+   outFile.Writeln((string)equipdb.FindFiltered("DataAircraft", "", "", "Fixed Wing", "", 1980, 2005).Size());
+   Array<int> tu22 = equipdb.FindFiltered("DataAircraft", "Tu-22", "", "", "", 0, 0);
+   outFile.Write("f3_tu22_count=");
+   outFile.Writeln((string)tu22.Size());
+   if (tu22.Size() > 0)
+   {
+      outFile.Write("f3_tu22_first=");
+      outFile.Writeln((string)tu22[0]);
+   }
+   outFile.Write("f4_f16_us_1978_1990=");
+   outFile.Writeln((string)equipdb.FindFiltered("DataAircraft", "F-16", "United States", "", "", 1978, 1990).Size());
+   outFile.Write("f_type_fighter=");
+   outFile.Writeln((string)equipdb.FindFiltered("DataAircraft", "", "", "", "Fighter", 0, 0).Size());
+
+   # ---- 负面用例：必须不崩溃，返回约定错误值 ----
+   EquipmentDB bad = EquipmentDB();
+   if (bad.Open("ysim_no_such_file_12345.db3")) { outFile.Writeln("neg_open=true"); } else { outFile.Writeln("neg_open=false"); }
+   outFile.Write("neg_count=");
+   outFile.Writeln((string)equipdb.GetEquipmentCount("NotATable!"));
+   Map<string, string> empty = equipdb.GetRecord("DataWeapon", 99999999);
+   if (empty["ID"] == "") { outFile.Writeln("neg_record=true"); } else { outFile.Writeln("neg_record=false"); }
+   outFile.Write("neg_link_missing=");
+   outFile.Writeln((string)equipdb.GetLinkedIDs("DataAircraftSensors", 99999999).Size());
+   outFile.Write("neg_filter_badtable=");
+   outFile.Writeln((string)equipdb.FindFiltered("Bad!", "", "", "", "", 0, 0).Size());
+
+   outFile.Writeln(equipdb.GetInfo());
+   outFile.Close();
+end_on_initialize

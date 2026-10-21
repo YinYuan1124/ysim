@@ -12,6 +12,7 @@
 ├── ext-02-protocol-gateway/  # 外部接入（DIS/HLA/XIO/数实联动/推演后端）— P1
 ├── ext-03-model-toolchain/   # 模型与想定工具链（模型库/行为智能/编辑器）— P2
 ├── ext-04-eval-platform/     # 评估与工程化（指标/VV&A/并行/国产化）— P3
+├── ext-05-equipmentdb/       # 现代装备数据库封装（EquipmentDB 插件/脚本查询）— P2
 ├── i18n-batch18/          # 界面本地化（已完成，补充归档）
 │   └── msgid-batch18/     # 历史/子批次归档（消息 ID 化第十八批）
 ```

@@ -4,12 +4,14 @@
 
 ## 脚本清单
 
-| 脚本 | 用途 | 运行方式 |
+> 全部脚本均配同名 `.bat` **一键运行**（双击自动「起 mission + 组网块/想定 → 跑客户端/断言 → 清理」；通用机制与排错 FAQ 见 [../BAT_USAGE.md](../BAT_USAGE.md)）。
+
+| 脚本 | 用途 | 一键运行（bat，推荐） |
 |---|---|---|
-| dis_listen.py | DIS 多播监听客户端：join 224.2.25.54:3225 收 PDU，聚合各平台 EntityState 七段码输出 RESULT（B1 断言载体） | 被编排脚本拉起，也可独立运行（IFACE 常量须改本机出接口 IP） |
-| dis_capture.py | DIS 捕获客户端（增强版）：解析 Fire/Detonation/Emission/Signal 关键字段（Warhead/Fuse/EmitterName 等偏移取值）输出 RESULT（B2 断言载体） | 被 dis_b2_verify.py 拉起 |
-| dis_b1_verify.py | B1 端到端：起监听→起 mission（air_movers+dis 块 RT 20s）→ 断言想定显式 entity_type 优先（BLUE country=225）+ 插件注入生效（RED country=36）；`--regression` 无块降级回归 | `python dis_b1_verify.py --regression` |
-| dis_b2_verify.py | B2 端到端：SA-10C 交战想定 RT 60s，断言 Fire/Detonation Warhead+Fuse 补齐、Emission EmitterName+Function 补齐、Signal 空载荷现状记录 + B1 回归共存 | `python dis_b2_verify.py` |
+| dis_listen.py | DIS 多播监听客户端：join 224.2.25.54:3225 收 PDU，聚合各平台 EntityState 七段码输出 RESULT（B1 断言载体） | 双击 `dis_listen.bat`：自动起 B1 组网+想定（RT 20s）→ 监听输出 RESULT → 清理（IFACE 须为本机出接口 IP；正式断言验收用 dis_b1_verify.bat） |
+| dis_capture.py | DIS 捕获客户端（增强版）：解析 Fire/Detonation/Emission/Signal 关键字段（Warhead/Fuse/EmitterName 等偏移取值）输出 RESULT（B2 断言载体） | 双击 `dis_capture.bat`：自动起 B2 组网+交战想定（RT 60s，CWD 自动切源码树 dis\warfare）→ 捕获输出 RESULT → 清理（LOCAL_IF 须为本机出接口 IP） |
+| dis_b1_verify.py | B1 端到端：起监听→起 mission（air_movers+dis 块 RT 20s）→ 断言想定显式 entity_type 优先（BLUE country=225）+ 插件注入生效（RED country=36）；`--regression` 无块降级回归 | 双击 `dis_b1_verify.bat`（加 `--regression` 追加降级回归） |
+| dis_b2_verify.py | B2 端到端：SA-10C 交战想定 RT 60s，断言 Fire/Detonation Warhead+Fuse 补齐、Emission EmitterName+Function 补齐、Signal 空载荷现状记录 + B1 回归共存 | 双击 `dis_b2_verify.bat`（加 `--regression` 追加降级回归） |
 
 ## scenarios/ 想定与组网块
 

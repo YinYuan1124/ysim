@@ -48,3 +48,4 @@
 - [ext-02-protocol-gateway](ext-02-protocol-gateway/spec.md)：DIS/HLA/XIO 网关 / 数实联动 / 推演引擎后端
 - [ext-03-model-toolchain](ext-03-model-toolchain/spec.md)：参数化模型库 / 行为与智能 / 想定工具链 / 批量实验
 - [ext-04-eval-platform](ext-04-eval-platform/spec.md)：指标体系与报告 / VV&A / 分布式与国产化 / 性能剖析
+- [ext-05-equipmentdb](ext-05-equipmentdb/spec.md)：现代装备数据库（DB3K）EquipmentDB 插件 / 脚本查询接口
