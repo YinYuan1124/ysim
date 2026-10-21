@@ -187,7 +187,7 @@ end_ysim_equipment_db
 1. 编译：`cmake --build E:/afsim/ysim/build --config Release --target ysim_equipment_db -- /m`
    成功 ✓；`ysim_equipment_db.dll` 已出现在 `build/Release/mission_plugins/` ✓；
    `YSIM_EQDB_SQLITE_SUPPORT=OFF` 降级路径编译通过后已恢复 AUTO 并重建复验 ✓
-2. 端到端（tests\equipmentdb\run_equipmentdb.bat）**17/17 断言全部 PASS**：
+2. 端到端（tests\equipmentdb\，当时经 run_equipmentdb.bat 一键运行，该 bat 后按 tests\ demo 定位策略于 2026-10-21 移除，现行入口为 mission 跑想定 + `python verify_equipmentdb.py` 两步直跑）**17/17 断言全部 PASS**：
    - GetEquipmentCount("DataAircraft") == 6933、("*") == 71166、("DataSensor") == 7034（与 sqlite3 实时直查一致）
    - FindByName("F-16","DataAircraft")：命中 max_rows 上限 100，首 ID == 122（LIKE 双字段 + ESCAPE 生效）
    - GetSummary("DataAircraft",122)：Name == "F-16A Falcon [Netz]"，Name_CN == "F-16 战隼"（中文全程无损）

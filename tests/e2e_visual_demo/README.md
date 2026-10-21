@@ -16,15 +16,13 @@
 
 退出：桥接器窗口内 **Ctrl+C**（同时结束仿真进程）。
 
-无头验证（不开浏览器，双击即跑、自起自清 mission）：`e2e_control_verify.bat`（控制链路 13 断言：起步冻结/推进/暂停/4×加速/重置/树杀清理）、`e2e_ws_verify.bat`（WS 推流 6 断言：握手/快照/状态流/心跳/字段）。
+无头验证（不开浏览器，自起自清 mission，`python` 直跑——bat 仅保留 demo 定位，全局策略见 [../BAT_USAGE.md](../BAT_USAGE.md)）：`python e2e_control_verify.py`（控制链路 13 断言：起步冻结/推进/暂停/4×加速/重置/树杀清理）、`python e2e_ws_verify.py`（WS 推流 6 断言：握手/快照/状态流/心跳/字段）。
 
 ## 文件清单
 
 | 文件 | 用途 |
 |---|---|
-| start_demo.bat | 一键启动入口 |
-| e2e_control_verify.bat | 一键无头控制链路验证入口 |
-| e2e_ws_verify.bat | 一键无头 WS 推流验证入口 |
+| start_demo.bat | 一键启动入口（demo） |
 | run_demo.py | 桥接器：mission 进程管理（拉起/重置/清理）+ HTTP 服务 + /ws 控制端点（控制指令转发到 TCP 31610） |
 | situation.html | 浏览器控制与态势页（自包含单文件）：控制栏 + 状态机 + 俯视态势图 + 平台表格 + 事件/命令日志 + 原始数据流 |
 | e2e_control_verify.py | 无头全链路验证：起步冻结/推进/暂停冻结/4×加速/重置重启/树杀清理，13 断言 |

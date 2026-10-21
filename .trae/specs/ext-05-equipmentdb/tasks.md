@@ -22,7 +22,8 @@
 
 - [x] C1 测试想定（输入块 + on_initialize 脚本查询写结果文件）
 - [x] C2 verify_equipmentdb.py 交叉断言 17 项（与 sqlite3 直查逐项比对）
-- [x] C3 run_equipmentdb.bat 一键运行（标题 ysim-bat-equipmentdb、ASCII 注释、PASS 删/FAIL 留）
+- [x] C3 run_equipmentdb.bat 一键运行（标题 ysim-bat-equipmentdb、ASCII 注释、PASS 删/FAIL 留；
+      2026-10-21 按 tests\ 全局 demo 定位策略随纯验证类 bat 一并移除，入口改 python 直跑——见文件尾验收命令口径）
 
 ## 阶段 D：收尾
 
@@ -54,6 +55,8 @@
 cmake --build E:/afsim/ysim/build --config Release --target ysim_equipment_db -- /m
 # 部署确认
 dir E:\afsim\ysim\build\Release\mission_plugins\ysim_equipment_db.dll
-# 端到端（17 项断言 + RESULT JSON 行）
-E:\afsim\ysim\tests\equipmentdb\run_equipmentdb.bat
+# 端到端（37 项断言 + RESULT JSON 行）——bat 已按 tests\ demo 定位策略移除（2026-10-21），改两步直跑：
+cd E:\afsim\ysim\tests\equipmentdb
+E:\afsim\ysim\build\Release\mission.exe scenarios\test_equipmentdb.txt
+python verify_equipmentdb.py
 ```

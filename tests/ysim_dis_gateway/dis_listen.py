@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-# 二次开发（ext-02 阶段 B 批次 B1 验证资产）：最小 DIS 监听客户端
+# 二次开发（ext-02 阶段 B 批次 B1 验证资产）：最小 DIS 监听客户端（直播版）
 #
 # 职责：加入 DIS 多播组接收 PDU，解析 PDU 头与 EntityState（type=1）体的
 #       Entity ID + Entity Type 七段码，按实体聚合并输出 RESULT JSON 行
-#       （供 dis_b1_verify.py 断言消费）。
+#       （供 dis_b1_verify.py 断言消费，RESULT 行契约不变）。
+# 直播（2026-10-21 按用户诉求）：控制台实时打印首包到达、每个实体首次出现
+#       （Marking + 七段码 + 阵营）、2 秒心跳（PDU 速率/类型分布）。
 # 依据：DIS PDU 大端定长头 12B（version/exercise/type/family/timestamp/
 #       length/pad）；EntityState 体偏移 12 起：EntityID 6B（site/app/entity
 #       各 u16）+ ForceId 1B + pad 1B + EntityType 8B（kind u8/domain u8/
@@ -29,20 +31,30 @@ PDU_TYPE_NAMES = {
     23: "Emission", 25: "Transmitter", 26: "Signal", 27: "Receiver",
 }
 
+FORCE_NAMES = {0: "?", 1: "友方 BLUE", 2: "敌方 RED", 3: "中立"}
+
 
 def main():
+    print("=" * 62)
+    print(" ysim_dis_gateway 插件 - DIS 七段码实时监听（B1）")
+    print(" 多播组: %s:%d  出接口: %s" % (GROUP, PORT, IFACE))
+    print("=" * 62)
+
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(("", PORT))
     mreq = struct.pack("=4s4s", socket.inet_aton(GROUP), socket.inet_aton(IFACE))
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
     sock.settimeout(0.5)
+    print("[join] 已加入多播组，等待 PDU...（若长时间无包，检查组网块/IFACE IP）")
 
     entities = {}   # "site:app:ent" -> {"type": [7段], "seen": n, "marking": str}
     pdu_counts = {}  # type -> count
     total = 0
     start = time.time()
     last_pkt = time.time()
+    last_beat = time.time()
+    first_pkt = True
 
     while True:
         now = time.time()
@@ -50,11 +62,19 @@ def main():
             break
         if (now - start) > MAX_WAIT:
             break
+        # 心跳：让控制台始终有反馈
+        if now - last_beat >= 2.0:
+            rate = total / max(now - start, 0.001)
+            print("[beat] t+%4.1fs  %d PDU (%.0f/s)  %r" % (now - start, total, rate, pdu_counts))
+            last_beat = now
         try:
             data, addr = sock.recvfrom(4096)
         except socket.timeout:
             continue
         last_pkt = time.time()
+        if first_pkt:
+            print("[recv] 首个 PDU 到达（来自 %s），开始解析实体..." % (addr,))
+            first_pkt = False
         total += 1
         if len(data) < 12:
             continue
@@ -82,6 +102,11 @@ def main():
                     rec["marking"] = raw.decode("ascii", errors="ignore").rstrip("\x00").strip()
                 except Exception:
                     pass
+            # 直播：每个实体首次出现打一行（七段码即插件注入效果）
+            if rec["seen"] == 1:
+                seg = "-".join(str(x) for x in rec["type"])
+                print("[ent ] 实体 %s  Marking=%-11s 阵营=%s  七段码 %s" %
+                      (key, rec["marking"] or "?", FORCE_NAMES.get(force_id, str(force_id)), seg))
 
     country_counts = {}
     for rec in entities.values():
@@ -99,6 +124,12 @@ def main():
             "country_counts": country_counts,
         }
     }
+    # 汇总（人读）
+    print("\n" + "-" * 62)
+    print(" 监听小结: %.1fs 内 %d PDU，实体 %d 个，国别分布 %r" %
+          (result["RESULT"]["duration_s"], total, len(entities), country_counts))
+    print("-" * 62)
+    # RESULT JSON 行契约（dis_b1_verify.py 消费，保持最后一行原样）
     print(json.dumps(result, ensure_ascii=False))
     sock.close()
 

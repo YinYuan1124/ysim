@@ -27,6 +27,8 @@ CWD_DEMO = r"e:\afsim\ysim\build\demos\air_to_air"
 def run_e2e(round_id):
     c_out = TEMP / f"xio_client_r{round_id}.out"
     m_out = TEMP / f"xio_mission_r{round_id}.out"
+    print(f"\n=== 第 {round_id} 轮端到端：起客户端(XIO C++ 网关客户端) + mission(air_movers+xio 块, RT 45s) ===",
+          flush=True)
     client = subprocess.Popen(
         [CLIENT_EXE, "235.7.11.27", "192.168.", "3002", "180", "5"],
         cwd=r"e:\afsim\ysim\build\Release",
@@ -36,6 +38,36 @@ def run_e2e(round_id):
         # -rt 实时模式（选项须置于文件名之前）；想定 end_time 45s
         [MISSION_EXE, "-rt", XIO_BLOCK, SCENARIO], cwd=CWD_DEMO,
         stdout=open(m_out, "w"), stderr=subprocess.STDOUT)
+
+    # 直播（2026-10-21 按用户诉求）：运行期流式打印关键动态——
+    #   客户端输出全量透传（[client] 前缀）；mission 侧只透传本插件相关行（[xio] 前缀，
+    #   AFSIM 引擎日志量大，滤掉）；每 5 秒一行进度心跳
+    c_fh = open(c_out, "r", encoding="utf-8", errors="replace")
+    m_fh = open(m_out, "r", encoding="utf-8", errors="replace")
+    t0, last_beat = time.time(), time.time()
+
+    def drain(fh, tag, filt=None):
+        lines = fh.readlines()
+        for l in lines:
+            l = l.rstrip()
+            if not l:
+                continue
+            if filt and not any(k in l for k in filt):
+                continue
+            print(f"[{tag}] {l}", flush=True)
+
+    while mission.poll() is None:
+        drain(c_fh, "client")
+        drain(m_fh, "xio", filt=("ysim_xio_gateway", "FATAL"))
+        if time.time() - last_beat >= 5.0:
+            print(f"[beat] t+{time.time() - t0:4.0f}s  mission 运行中 (RT 45s 想定)", flush=True)
+            last_beat = time.time()
+        time.sleep(0.3)
+    drain(c_fh, "client")
+    drain(m_fh, "xio", filt=("ysim_xio_gateway", "FATAL"))
+    c_fh.close()
+    m_fh.close()
+    print(f"[done] mission 退出（耗时 {time.time() - t0:.0f}s），等待客户端收尾与 RESULT...", flush=True)
     m_rc = mission.wait(timeout=300)
     c_rc = client.wait(timeout=60)
 
@@ -52,6 +84,8 @@ def run_e2e(round_id):
 
 def run_regression():
     """无 xio_interface 块：插件闲置告警 + 仿真正常完成"""
+    print("\n=== 降级回归：无 xio_interface 块跑 2v2.txt（插件应闲置告警且仿真正常完成）===",
+          flush=True)
     out = TEMP / "xio_regress_r.out"
     p = subprocess.run([MISSION_EXE, "2v2.txt"], cwd=CWD_DEMO,
                        stdout=open(out, "w"), stderr=subprocess.STDOUT, timeout=300)

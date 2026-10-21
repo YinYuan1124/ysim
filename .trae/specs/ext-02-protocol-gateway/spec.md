@@ -1,4 +1,4 @@
-﻿# 外部接入工作包规格（ext-02-protocol-gateway）
+# 外部接入工作包规格（ext-02-protocol-gateway）
 
 > 序号：ext-02 ｜ 功能：协议网关与外部系统接入 ｜ 状态：**阶段 A 已完成（XIO 自定义 Packet 端到端 + 指令注入闭环 + 平台级指令集，2026-10-19）**
 > 优先级：P1（第二阶段"标准化对外"） ｜ 依赖：ext-01 的数据通道
@@ -46,6 +46,32 @@
 3. HIL：MAVLink 模拟器驱动平台位置，误差在容忍域内
 4. 推演后端：外部下发指令 → 仿真执行 → 裁决结果回收（gRPC 契约测试）
 5. 时间同步策略文档化：lock-step vs 异步 + 掉线外推
+
+### 3.1 demo 直播化改造（2026-10-21，测试资产维护，与 ext-01 §6.1 同批）
+
+用户反馈：dis 两个 demo bat 与 xio verify 直跑时控制台无输出。改造（插件 DLL 零改动）：
+
+1. **dis_listen.py**：首包到达、每实体首次出现（Marking + 阵营 + 七段码 = B1 注入效果直读）、
+   2s 心跳（PDU 速率/类型分布）；RESULT JSON 行契约不变（b1_verify 只认 `{"RESULT` 前缀）
+2. **dis_capture.py**：Fire/Detonation 逐条直播（武器七段码/弹头/引信/爆点结果），
+   Emission 首条+1/40 抽样，2s 心跳；RESULT 行契约不变
+3. **两个 bat**：mission 窗口最小化+重定向 → 可见直出（与 ext-01 demo 同样式）
+4. **xio_e2e_verify.py**：运行期流式直播——mission 侧仅透传 `ysim_xio_gateway` 行
+   （received/executed command 全链路实时可见）+ 5s 心跳；文件句柄边写边读，
+   断言逻辑与 RESULT 消费不变（文件读用独立 read_text 复核）
+5. **验证**：dis_listen.bat（实体七段码 225/36 直播）、dis_capture.bat（2 Fire/2 Det 实时）、
+   xio_e2e_verify.py 全程（两轮指令闭环直播 + 回归 PASS）实跑通过
+6. **xio_demo.bat 补齐**（2026-10-21 同日，按用户诉求）：XIO 目录原只有验证脚本无 demo；
+   新增三窗联动纯 bat demo（客户端窗 + mission 窗原生直出，规避验证脚本管道缓冲不可见问题）——
+   控制窗按 235.7.11.27/3002 组网参数先起 xio_gateway_client（180s）→ 3s 后起 mission
+   （xio_rt2 想定，RT 45s）→ 双窗直读指令闭环 → 75s 后定向清理；实跑验证进程起停与清理零残留。
+   tests\ demo bat 总数 6→7
+7. **xio_demo.bat 控制窗详细日志**（2026-10-21 同日，按用户诉求）：控制窗升级为分步日志——
+   环境检查（client/mission/插件 DLL/组网块/想定 5 项逐条 FOUND/MISSING，缺项中止）、分步启动说明、
+   5s 一跳双进程存活监测（mission 自退即提前收尾，上限 75s）、清理结果可见输出（taskkill SUCCESS +
+   tasklist 双 [OK] 复核）、结束汇总。坑：`timeout.exe` 在 stdin 重定向环境报
+   "Input redirection is not supported" 直接跳过等待 → 首跳在子进程未起完时误判 exited 提前清理；
+   改用 stdin 无关的 `ping -n N 127.0.0.1` 计时 + 先等后查（tick 标签与真实墙钟一致）
 
 ## 4. 阶段 A 实施规格：XIO 自定义 Packet 端到端（2026-10-19）
 

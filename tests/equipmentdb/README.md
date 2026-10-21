@@ -5,16 +5,22 @@
 功能：封装 `EquipmentDB` 类（继承 `WsfObject`）注册到 WSF 脚本系统，
 以只读模式查询 `build\db\DB3K_modern.db3`（71,166 条现代装备记录，含中英文名称）。
 
-## 一键运行
+## 运行方式（python 直跑，本目录无 demo bat）
 
-双击 [run_equipmentdb.bat](./run_equipmentdb.bat)：自动跑 mission 想定 →
-脚本查询结果与 SQLite 直查交叉断言（37 项）→ 清理。
+> tests\ 全局策略：bat 仅保留 demo 定位；本目录为纯验证编排，`python` 直跑
+>（见 [../BAT_USAGE.md](../BAT_USAGE.md)）。
 
-- 无参数；窗口标题 `ysim-bat-equipmentdb`
+```powershell
+cd E:\afsim\ysim\tests\equipmentdb
+..\..\build\Release\mission.exe scenarios\test_equipmentdb.txt   # 跑想定，脚本查询写 eqdb_result.txt
+python verify_equipmentdb.py                                    # 与 SQLite 直查交叉断言 37 项
+del eqdb_result.txt                                             # PASS 后清理（FAIL 保留排查）
+```
+
 - 断言覆盖：各类计数 / F-16 名称检索 / 汇总表与明细表整行读取 / 中英文名回读 /
   Enum 代码翻译 / 列名 / 关联表导航（传感器/挂架/挂载方案计数与首 ID、max_rows 截断）/
   组合过滤（国别/类别+年代/名称/型别）/ 负面用例（坏路径、非法表名、不存在 ID 不崩溃）
-- 结果文件 `eqdb_result.txt` 生成于本目录，PASS 时自动删除，FAIL 保留供排查
+- 结果文件 `eqdb_result.txt` 生成于本目录（mission 跑想定时产生）
 
 ## 脚本用法（WSF 脚本）
 

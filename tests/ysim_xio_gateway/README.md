@@ -4,11 +4,12 @@
 
 ## 脚本清单
 
-> 配同名 `.bat` **一键运行**（双击即跑；通用机制与排错 FAQ 见 [../BAT_USAGE.md](../BAT_USAGE.md)）。
+> **demo**：双击 [xio_demo.bat](./xio_demo.bat)（三窗联动，纯 bat 无 python：控制窗分步详细日志——环境检查/启动/5s 进程监测/清理复核，mission 自退即提前收尾；客户端窗 10 条指令脚本+回执直出；mission 窗插件 received/executed 日志直出。tests\ 全局策略见 [../BAT_USAGE.md](../BAT_USAGE.md)）。
 
-| 脚本 | 用途 | 一键运行（bat，推荐） |
+| 脚本 | 用途 | 运行方式 |
 |---|---|---|
-| xio_e2e_verify.py | 端到端全链路：起 xio_gateway_client（180s 超时）→ 3s 后起 mission（air_movers+xio 块，pause_for_connection）→ 10 条指令脚本（ping/add_platform/set_route/set_speed/pause/resume/get_status/delete_platform×2/负向 UNKNOWN）→ 断言增删/航路/调速/回执闭环；`--regression` 无块降级回归 | 双击 `xio_e2e_verify.bat`（加 `--regression` ＝仅跑降级回归，跳过两轮端到端） |
+| xio_demo.bat | **demo**：三窗联动观摩 XIO 指令闭环——控制窗分步详细日志（环境检查 5 项 → 起客户端 → 3s → 起 mission → 5s 一跳监测双进程 → mission 自退即提前收尾 → 清理输出可见 + 双 [OK] 复核）→ 客户端窗 10 条指令（ping/add_platform/set_route/set_speed/pause/resume/get_status/delete_platform×2/负向 UNKNOWN）回执实时直出 → mission 窗插件 received/executed 日志直出 | 双击即跑，无参 |
+| xio_e2e_verify.py | 端到端全链路：起 xio_gateway_client（180s 超时）→ 3s 后起 mission（air_movers+xio 块，pause_for_connection）→ 10 条指令脚本（ping/add_platform/set_route/set_speed/pause/resume/get_status/delete_platform×2/负向 UNKNOWN）→ 断言增删/航路/调速/回执闭环；`--regression` 无块降级回归 | **验证**：`python xio_e2e_verify.py`（加 `--regression` ＝仅跑降级回归，跳过两轮端到端） |
 
 ## scenarios/ 想定与组网块
 
