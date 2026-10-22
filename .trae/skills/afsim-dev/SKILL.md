@@ -7,7 +7,7 @@ description: AFSIM C++/OSG/osgEarth/Qt secondary development guide — source ma
 
 ## 项目描述
 
-AFSIM (Advanced Framework for Simulation, Integration, and Modeling) v2.9.0，Boeing 开发的分布式作战仿真框架，CUI 限制。本仓库 `e:\afsim\ysim` 用于对 AFSIM 源码做二次开发。
+AFSIM (Advanced Framework for Simulation, Integration, and Modeling) v2.9.0，Boeing 开发的分布式作战仿真框架，CUI 限制。本仓库 `e:\Project\ysim` 用于对 AFSIM 源码做二次开发。
 
 - **语言/标准**: C++11（MSVC v144 工具集下按 C++14 编译）
 - **构建**: CMake + Visual Studio 2022 x64 生成器，源码根 `src/`，输出 `build/`
@@ -49,21 +49,21 @@ AFSIM (Advanced Framework for Simulation, Integration, and Modeling) v2.9.0，Bo
 1. 参考 `src/core/wsf/source/Wsf*.hpp` 中同类型组件的接口（如 `WsfSensor`）
 2. 在对应 Types 工厂中注册（`WsfSensorTypes::Add` 模式）
 3. 新 CMake 模块用 `wsf_module` 惯例（参考 `src/wsf_plugins/` 任一插件的 CMakeLists.txt）
-4. 编译: `cmake --build E:/afsim/ysim/build --config Release --target <目标> -- /m`
+4. 编译: `cmake --build E:/Project/ysim/build --config Release --target <目标> -- /m`
 5. DLL 落到 `build/Release/`；若为运行时插件，确认被拷到 `wsf_plugins/` 子目录
 
 ## 构建
 
 ```powershell
 # 配置（已配置过，无需重复）
-cmake -G "Visual Studio 17 2022" -A x64 -B E:/afsim/ysim/build  # 在 src/ 下执行
+cmake -G "Visual Studio 17 2022" -A x64 -B E:/Project/ysim/build  # 在 src/ 下执行
 
 # 增量编译单目标（日常）
-cmake --build E:/afsim/ysim/build --config Release --target wizard -- /m
-cmake --build E:/afsim/ysim/build --config Debug   --target wizard -- /m
+cmake --build E:/Project/ysim/build --config Release --target wizard -- /m
+cmake --build E:/Project/ysim/build --config Debug   --target wizard -- /m
 
 # 全量
-cmake --build E:/afsim/ysim/build --config Release --target ALL_BUILD -- /m
+cmake --build E:/Project/ysim/build --config Release --target ALL_BUILD -- /m
 ```
 
 - Debug 产物带 `_d` 后缀（`wsf_d.dll`、`wizard_core_d.dll`），PDB 同目录
@@ -73,7 +73,7 @@ cmake --build E:/afsim/ysim/build --config Release --target ALL_BUILD -- /m
 ## 调试
 
 - **TRAE 内 F5 不可用** — `cppvsdbg` 有微软 license 校验，拒绝非官方 VS Code
-- **官方 VS Code**: `code e:\afsim\ysim` 后 F5，`.vscode/launch.json` 双配置现成（Debug 构建 → 断点单步；Release 构建 → 直接运行）
+- **官方 VS Code**: `code e:\Project\ysim` 后 F5，`.vscode/launch.json` 双配置现成（Debug 构建 → 断点单步；Release 构建 → 直接运行）
 - **VS2022**: 打开 `build/afsim.sln`，wizard 设启动项目，Debug+x64，F5
 - 调试环境布局: `build/Debug/` 与 `build/Release/` 各自独立完整（qt.conf + qt_plugins + 全部 DLL），**cwd 必须是对应配置目录**
 
@@ -87,7 +87,7 @@ cmake --build E:/afsim/ysim/build --config Release --target ALL_BUILD -- /m
 | Qt 插件加载失败 | GUI 秒退无输出 | `qt_plugins/`（含 `platforms/qwindows.dll`）+ `qt.conf`（`Prefix=.`）必须在 exe 同目录 |
 | cmake --install 中断 | 找不到 `engage.exe` 等未编译目标 | 先 `--target <缺失目标>` 编译再 install |
 | GEOS debug/release 同名 | Debug 里误放 release 版 geos.dll | Debug 目录必须用 `3rd_party/geos/debug/bin/geos.dll` |
-| 新增 .ui/.cpp 后编译报 C1083 找不到 ui_*.h | wizard lib 用 `file(GLOB)` 收集源文件，配置期扫描 | 增删文件后必须重新 configure：`cmake -B E:/afsim/ysim/build -S E:/afsim/ysim/src` |
+| 新增 .ui/.cpp 后编译报 C1083 找不到 ui_*.h | wizard lib 用 `file(GLOB)` 收集源文件，配置期扫描 | 增删文件后必须重新 configure：`cmake -B E:/Project/ysim/build -S E:/Project/ysim/src` |
 | PowerShell 处理 .ts 翻译 XML | 空 `<translation>` 元素被 XML 适配器折叠成字符串属性，InnerText 赋值静默失败 | 逐行文本处理或正则替换，不要用 `[xml]` + 属性赋值 |
 | **含中文注释的源文件无 UTF-8 BOM** | MSVC 按代码页 936(GBK) 解析 UTF-8 注释，双字节序列吞掉换行/代码字符 → C2447/C2065 等离奇语法错误，行号对不上实际内容 | **任何含非 ASCII 的 .cpp/.hpp 必须存为 UTF-8 with BOM**（`[IO.File]::WriteAllText($f, $text, [Text.UTF8Encoding]::new($true))`）；只有纯 ASCII 文件才能无 BOM |
 | **`fromUtf8("中文")` 窄字面量乱码** | 源文件带 BOM 也无用：MSVC 窄字符串字面量的**执行编码**默认是系统代码页(GBK)，obj 里存 GBK 字节，`fromUtf8` 按 UTF-8 解析 GBK → 运行时乱码 | 含中文的 QString 字面量一律用 `QStringLiteral("中文")`（展开为 UTF-16 宽字面量，全程 Unicode 不经代码页转换）；需运行时拼接的用 `QString::fromWCharArray(L"中文")` |

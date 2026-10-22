@@ -24,7 +24,7 @@
 
 ## 任务 4：BOM 循环剥离 + 编译验证
 - [x] 对全部 16 个修改文件（hpp/cpp/14 业务文件去重）执行循环剥离 BOM 脚本，确保单层 UTF-8 BOM
-- [x] `cmake --build "e:\afsim\ysim\build" --config Release --target wsf mission` exit 0 无 error
+- [x] `cmake --build "e:\Project\ysim\build" --config Release --target wsf mission` exit 0 无 error
 
 ## 任务 5：记账三件套
 - [x] doc/2026-10-15修改日志.md 顶部插第十八批章节（Edit 锚点勿吞后续章节标题行）

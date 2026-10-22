@@ -9,9 +9,9 @@ rem Usage: ysim_bench_client.bat [port] [seconds] (default 31600 300; custom por
 rem *****************************************************************
 chcp 65001 >nul
 set PYTHONUTF8=1
-set "MISSION=e:\afsim\ysim\build\Release\mission.exe"
-set "DEMO=e:\afsim\ysim\build\demos\air_to_air"
-set "SCEN=e:\afsim\ysim\tests\ysim_data_export\scenarios\ysim_bench_full.txt"
+set "MISSION=e:\Project\ysim\build\Release\mission.exe"
+set "DEMO=e:\Project\ysim\build\demos\air_to_air"
+set "SCEN=e:\Project\ysim\tests\ysim_data_export\scenarios\ysim_bench_full.txt"
 set "WTITLE=ysim-bat-bench"
 cd /d %~dp0
 set "MARGS=-rt"

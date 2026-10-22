@@ -21,7 +21,7 @@ TCP_PORT = 31600
 WS_PORT = 31601
 UDP_GROUP = "239.16.16.16"
 UDP_PORT = 31602
-RESULT_FILE = r"E:\afsim\ysim\temp\ysim_multi_result.txt"
+RESULT_FILE = r"E:\Project\ysim\temp\ysim_multi_result.txt"
 
 results = {}
 lock = threading.Lock()

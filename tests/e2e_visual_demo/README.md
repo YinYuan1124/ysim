@@ -43,8 +43,8 @@
 ## 手工运行（不经桥接器）
 
 ```powershell
-cd e:\afsim\ysim\build\demos\air_to_air
-e:\afsim\ysim\build\Release\mission.exe -rt e:\afsim\ysim\tests\e2e_visual_demo\scenarios\e2e_control_scenario.txt
+cd e:\Project\ysim\build\demos\air_to_air
+e:\Project\ysim\build\Release\mission.exe -rt e:\Project\ysim\tests\e2e_visual_demo\scenarios\e2e_control_scenario.txt
 # 浏览器打开 situation.html（自动连 ws://127.0.0.1:31601 收流；控制指令可发 TCP 31610）
 ```
 

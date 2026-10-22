@@ -1,6 +1,6 @@
 # 二次开发（修复验证 2026-10-19）：YSIM_NO_SQLITE 降级冒烟想定
 # OFF 版 DLL：CSV 落盘照常、无 ysim_export.db、无 FATAL
-include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+include_once E:/Project/ysim/build/demos/air_to_air/2v2.txt
 
 end_time 20 s
 
@@ -9,7 +9,7 @@ ysim_data_export
    websocket_port     0
    udp_port           0
    record             true
-   record_directory   E:/afsim/ysim/temp/ysim_record_off_out
+   record_directory   E:/Project/ysim/temp/ysim_record_off_out
    record_csv         true
    record_sqlite      true
 end_ysim_data_export

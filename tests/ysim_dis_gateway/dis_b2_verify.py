@@ -21,12 +21,12 @@ import time
 from pathlib import Path
 
 # 测试资产归档（tests/）：输入（想定/块/子客户端）取本目录，运行输出仍写 temp/
-TEMP = Path(r"e:\afsim\ysim\temp")
+TEMP = Path(r"e:\Project\ysim\temp")
 HERE = Path(__file__).resolve().parent
-MISSION_EXE = r"e:\afsim\ysim\build\Release\mission.exe"
+MISSION_EXE = r"e:\Project\ysim\build\Release\mission.exe"
 IFACE = str(HERE / "scenarios" / "dis_b2_iface.txt")
 SCENARIO = str(HERE / "scenarios" / "dis_b2_scenario.txt")
-CWD = r"e:\afsim\ysim\src\core\wsf_mil\test_mission\dis\warfare"
+CWD = r"e:\Project\ysim\src\core\wsf_mil\test_mission\dis\warfare"
 
 DET_RESULTS_OK = {1, 2, 5, 6}  # 1=Entity Impact 2=Entity Proximity 5=Ground Impact 6=Ground Proximity（近似语义域）
 

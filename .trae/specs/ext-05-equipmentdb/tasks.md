@@ -52,11 +52,11 @@
 
 ```
 # 编译
-cmake --build E:/afsim/ysim/build --config Release --target ysim_equipment_db -- /m
+cmake --build E:/Project/ysim/build --config Release --target ysim_equipment_db -- /m
 # 部署确认
-dir E:\afsim\ysim\build\Release\mission_plugins\ysim_equipment_db.dll
+dir E:\Project\ysim\build\Release\mission_plugins\ysim_equipment_db.dll
 # 端到端（37 项断言 + RESULT JSON 行）——bat 已按 tests\ demo 定位策略移除（2026-10-21），改两步直跑：
-cd E:\afsim\ysim\tests\equipmentdb
-E:\afsim\ysim\build\Release\mission.exe scenarios\test_equipmentdb.txt
+cd E:\Project\ysim\tests\equipmentdb
+E:\Project\ysim\build\Release\mission.exe scenarios\test_equipmentdb.txt
 python verify_equipmentdb.py
 ```

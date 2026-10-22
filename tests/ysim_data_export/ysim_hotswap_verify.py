@@ -14,11 +14,11 @@ import sys
 import threading
 import time
 
-MISSION = r"E:\afsim\ysim\build\Release\mission.exe"
+MISSION = r"E:\Project\ysim\build\Release\mission.exe"
 # 测试资产归档（tests/）：想定取本目录 scenarios/，运行输出仍写 temp/
-SCENARIO = r"E:/afsim/ysim/tests/ysim_data_export/scenarios/ysim_smoke_hotswap.txt"
-CWD = r"E:\afsim\ysim\build\demos\air_to_air"
-RESULT = r"E:\afsim\ysim\temp\ysim_hotswap_result.txt"
+SCENARIO = r"E:/Project/ysim/tests/ysim_data_export/scenarios/ysim_smoke_hotswap.txt"
+CWD = r"E:\Project\ysim\build\demos\air_to_air"
+RESULT = r"E:\Project\ysim\temp\ysim_hotswap_result.txt"
 
 class Reader(threading.Thread):
     """行流读取器（TCP）"""

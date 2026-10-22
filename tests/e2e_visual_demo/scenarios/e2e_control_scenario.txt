@@ -5,7 +5,7 @@
 #       pause/resume/set_rate/status 控制指令；心跳 1s 让页面状态更跟手
 # ****************************************************************************
 
-include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+include_once E:/Project/ysim/build/demos/air_to_air/2v2.txt
 
 end_time 600 s
 

@@ -1,5 +1,5 @@
 # 全开想定（三通道+控制+落盘，与基线仿真本体一致）
-include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+include_once E:/Project/ysim/build/demos/air_to_air/2v2.txt
 end_time 600 s
 ysim_data_export
    tcp_port           31600
@@ -11,5 +11,5 @@ ysim_data_export
    deadband           2 m
    min_update_interval 0.2 s
    record             true
-   record_directory   E:/afsim/ysim/temp/ysim_bench_out
+   record_directory   E:/Project/ysim/temp/ysim_bench_out
 end_ysim_data_export

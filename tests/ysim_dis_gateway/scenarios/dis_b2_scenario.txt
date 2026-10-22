@@ -1,7 +1,7 @@
 # ext-02 阶段 B 批次 B2 验证想定：SA-10C 交战（Fire/Detonation/Emission）+ comm 消息（Signal）
 # 结构复刻 src/core/wsf_mil/test_mission/dis/warfare（types/shooter/target 单进程合并版）
 # 武器链经 include 源码树 warfare/types.txt（其内部相对路径 include sa-10c 链均同目录）
-include_once e:/afsim/ysim/src/core/wsf_mil/test_mission/dis/warfare/types.txt
+include_once e:/Project/ysim/src/core/wsf_mil/test_mission/dis/warfare/types.txt
 
 # ---- comm 消息通道（Signal PDU 源：消息传输触发 WsfDisPlatform::MessageTransmitted）----
 medium YSIM_B2_MEDIUM WSF_COMM_MEDIUM_GUIDED

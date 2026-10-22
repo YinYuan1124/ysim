@@ -86,7 +86,7 @@ taskkill /F /T /FI "WINDOWTITLE eq ysim-bat-tcp"
 基准想定数据出口就绪较慢，bat 已内置 3s 等待（bench 客户端无重试逻辑）；仍失败时查看 `temp\bat_bench_mission.out`。快速自检可用 `ysim_bench_client.bat 31600 60`。
 
 **Q5：找不到结果文件**
-所有产物统一落 `e:\afsim\ysim\temp\`：`bat_*_mission.out`＝bat 拉起的 mission 控制台输出；`ysim_*_result.txt`＝客户端明细；`ysim_record_out\run_*`＝落盘校验对象（verify 脚本直跑时生成）。
+所有产物统一落 `e:\Project\ysim\temp\`：`bat_*_mission.out`＝bat 拉起的 mission 控制台输出；`ysim_*_result.txt`＝客户端明细；`ysim_record_out\run_*`＝落盘校验对象（verify 脚本直跑时生成）。
 
 **Q6：能否并行跑多个 demo**
 不能：31600/31601/31602 与 DIS 多播组为全局资源。需要连续观摩时按顺序执行，等上一个窗口出现 `pause` 并按键退出后再双击下一个；确需并行须先改想定中的端口/多播地址。

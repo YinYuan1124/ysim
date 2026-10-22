@@ -14,13 +14,13 @@ import time
 from pathlib import Path
 
 # 测试资产归档（tests/）：输入（想定/块/子客户端）取本目录，运行输出仍写 temp/
-TEMP = Path(r"e:\afsim\ysim\temp")
+TEMP = Path(r"e:\Project\ysim\temp")
 HERE = Path(__file__).resolve().parent
-MISSION_EXE = r"e:\afsim\ysim\build\Release\mission.exe"
+MISSION_EXE = r"e:\Project\ysim\build\Release\mission.exe"
 DIS_BLOCK = str(HERE / "scenarios" / "dis_iface_block.txt")
 SCENARIO = str(HERE / "scenarios" / "dis_b1_scenario.txt")
 SCENARIO_NODEVICE = str(HERE / "scenarios" / "dis_b1_nodevice.txt")
-CWD_DEMO = r"e:\afsim\ysim\build\demos\air_to_air"
+CWD_DEMO = r"e:\Project\ysim\build\demos\air_to_air"
 
 # 插件表值（YsimDisGateway.cpp cTYPE_MAPPINGS）：RED_FIGHTER_AIR 国产映射
 EXPECT_CN = [1, 2, 36, 2, 1, 2, 0]

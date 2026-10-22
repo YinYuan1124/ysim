@@ -49,7 +49,7 @@
 
 ## 3. 编辑明细
 
-### 3.1 UtMsgCatalog.hpp（e:\afsim\ysim\src\tools\util\source\）
+### 3.1 UtMsgCatalog.hpp（e:\Project\ysim\src\tools\util\source\）
 
 三处插入（均按既有分段注释风格）：
 
@@ -128,7 +128,7 @@ ut::log::error() << ut::msg::FormatEnTagged(ut::msg::MSG_XXX, {});
 ## 4. 验证与收尾流程
 
 1. **BOM 处理**：所有修改文件执行循环剥离脚本（剥离所有前导 BOM 只留单层 UTF-8 BOM）——多重 BOM 叠加会导致 MSVC `sal.h C2144` + `(1,1) C4430`
-2. **编译验证**：`cmake --build "e:\afsim\ysim\build" --config Release --target wsf mission`（wsf 库变更级联 wsf_mil → mission）；要求 exit 0 无 error
+2. **编译验证**：`cmake --build "e:\Project\ysim\build" --config Release --target wsf mission`（wsf 库变更级联 wsf_mil → mission）；要求 exit 0 无 error
 3. **记账三件套**：
    - `doc/2026-10-15修改日志.md` 顶部插第十八批章节（注意 Edit 锚点需保留后一章节标题行）
    - `.trae/skills/afsim-dev/SKILL.md` L2 消息层累计口径更新为 **317 条/341 处，分十八批**，追加⑱明细

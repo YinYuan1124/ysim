@@ -1,12 +1,12 @@
 # ****************************************************************************
 # 二次开发（端到端联调示例）：mission 后台仿真 + 浏览器 WebSocket 态势页
 # 运行：CWD=build/demos/air_to_air 下执行
-#        mission.exe -rt E:/afsim/ysim/tests/e2e_visual_demo/scenarios/e2e_visual_scenario.txt
+#        mission.exe -rt E:/Project/ysim/tests/e2e_visual_demo/scenarios/e2e_visual_scenario.txt
 # 浏览器打开 situation.html 即可观看实时态势（WS 127.0.0.1:31601）
 # 说明：end_time 600s 给足开浏览器时间（RT 实时倍率）；WS 中途接入有 platform_added 快照补推
 # ****************************************************************************
 
-include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+include_once E:/Project/ysim/build/demos/air_to_air/2v2.txt
 
 end_time 600 s
 

@@ -2,11 +2,11 @@
 # 二次开发（ext-01 阶段 B）：ysim_data_export 多通道冒烟想定
 # 内容：复用官方 air_to_air demo 完整想定（2v2 空战），三通道全开
 # 运行：CWD=build/demos/air_to_air 下执行
-#        mission.exe -rt E:/afsim/ysim/temp/ysim_smoke_2v2.txt
+#        mission.exe -rt E:/Project/ysim/temp/ysim_smoke_2v2.txt
 # 客户端：temp/ysim_multi_client.py（TCP 延迟接入验证快照 + WebSocket + UDP 组播）
 # ****************************************************************************
 
-include_once E:/afsim/ysim/build/demos/air_to_air/2v2.txt
+include_once E:/Project/ysim/build/demos/air_to_air/2v2.txt
 
 # 缩短运行时长：实时模式下约 20 秒墙钟时间完成冒烟（覆盖原 1 hr）
 end_time 20 s

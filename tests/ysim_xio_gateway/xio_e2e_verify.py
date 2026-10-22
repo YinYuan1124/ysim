@@ -14,15 +14,15 @@ import time
 from pathlib import Path
 
 # 测试资产归档（tests/）：输入（想定/块）取本目录，运行输出仍写 temp/
-TEMP = Path(r"e:\afsim\ysim\temp")
+TEMP = Path(r"e:\Project\ysim\temp")
 HERE = Path(__file__).resolve().parent
-CLIENT_EXE = r"e:\afsim\ysim\build\Release\xio_gateway_client.exe"
-MISSION_EXE = r"e:\afsim\ysim\build\Release\mission.exe"
+CLIENT_EXE = r"e:\Project\ysim\build\Release\xio_gateway_client.exe"
+MISSION_EXE = r"e:\Project\ysim\build\Release\mission.exe"
 XIO_BLOCK = str(HERE / "scenarios" / "xio_iface_block.txt")
 # 平台级指令集验证用 air_movers 版 RT 想定（45s）：
 # set_route/set_speed 需 RouteMover 族（BLUE/RED_FIGHTER_AIR），XIO_DRONE 为靶标类型
 SCENARIO = str(HERE / "scenarios" / "xio_rt2_scenario.txt")
-CWD_DEMO = r"e:\afsim\ysim\build\demos\air_to_air"
+CWD_DEMO = r"e:\Project\ysim\build\demos\air_to_air"
 
 def run_e2e(round_id):
     c_out = TEMP / f"xio_client_r{round_id}.out"
@@ -31,7 +31,7 @@ def run_e2e(round_id):
           flush=True)
     client = subprocess.Popen(
         [CLIENT_EXE, "235.7.11.27", "192.168.", "3002", "180", "5"],
-        cwd=r"e:\afsim\ysim\build\Release",
+        cwd=r"e:\Project\ysim\build\Release",
         stdout=open(c_out, "w"), stderr=subprocess.STDOUT)
     time.sleep(3)
     mission = subprocess.Popen(

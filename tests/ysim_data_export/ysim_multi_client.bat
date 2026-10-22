@@ -10,9 +10,9 @@ rem Output: tcp/ws/udp live progress + PASS/FAIL here, detail -> temp\ysim_multi
 rem *****************************************************************
 chcp 65001 >nul
 set PYTHONUTF8=1
-set "MISSION=e:\afsim\ysim\build\Release\mission.exe"
-set "DEMO=e:\afsim\ysim\build\demos\air_to_air"
-set "SCEN=e:\afsim\ysim\tests\ysim_data_export\scenarios\ysim_smoke_full.txt"
+set "MISSION=e:\Project\ysim\build\Release\mission.exe"
+set "DEMO=e:\Project\ysim\build\demos\air_to_air"
+set "SCEN=e:\Project\ysim\tests\ysim_data_export\scenarios\ysim_smoke_full.txt"
 set "WTITLE=ysim-bat-multi"
 cd /d %~dp0
 taskkill /F /T /FI "WINDOWTITLE eq %WTITLE%" >nul 2>&1

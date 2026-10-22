@@ -9,9 +9,9 @@ rem Output: live stream here, detail -> temp\ysim_client_result.txt
 rem *****************************************************************
 chcp 65001 >nul
 set PYTHONUTF8=1
-set "MISSION=e:\afsim\ysim\build\Release\mission.exe"
-set "DEMO=e:\afsim\ysim\build\demos\air_to_air"
-set "SCEN=e:\afsim\ysim\tests\ysim_data_export\scenarios\ysim_smoke_2v2.txt"
+set "MISSION=e:\Project\ysim\build\Release\mission.exe"
+set "DEMO=e:\Project\ysim\build\demos\air_to_air"
+set "SCEN=e:\Project\ysim\tests\ysim_data_export\scenarios\ysim_smoke_2v2.txt"
 set "WTITLE=ysim-bat-tcp"
 cd /d %~dp0
 rem Port override: set YSIM_PORT=32700 before running (applies to both mission and client)

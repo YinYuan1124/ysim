@@ -31,10 +31,10 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 HERE = Path(__file__).resolve().parent
-MISSION_EXE = r"e:\afsim\ysim\build\Release\mission.exe"
-CWD_DEMO = r"e:\afsim\ysim\build\demos\air_to_air"
+MISSION_EXE = r"e:\Project\ysim\build\Release\mission.exe"
+CWD_DEMO = r"e:\Project\ysim\build\demos\air_to_air"
 DEFAULT_SCENARIO = str(HERE / "scenarios" / "e2e_control_scenario.txt")
-TEMP = Path(r"e:\afsim\ysim\temp")
+TEMP = Path(r"e:\Project\ysim\temp")
 MISSION_OUT = TEMP / "e2e_demo_mission.out"
 
 CTRL_HOST, CTRL_PORT = "127.0.0.1", 31610

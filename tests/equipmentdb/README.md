@@ -11,7 +11,7 @@
 >（见 [../BAT_USAGE.md](../BAT_USAGE.md)）。
 
 ```powershell
-cd E:\afsim\ysim\tests\equipmentdb
+cd E:\Project\ysim\tests\equipmentdb
 ..\..\build\Release\mission.exe scenarios\test_equipmentdb.txt   # 跑想定，脚本查询写 eqdb_result.txt
 python verify_equipmentdb.py                                    # 与 SQLite 直查交叉断言 37 项
 del eqdb_result.txt                                             # PASS 后清理（FAIL 保留排查）
@@ -52,6 +52,6 @@ FindFiltered 为名称/国别/类别/型别（均含中文列）+ 年代区间�
 （自建微型夹具库，31 项断言）：
 
 ```powershell
-cmake --build E:/afsim/ysim/build --config Release --target ysim_equipment_db_test -- /m
-E:\afsim\ysim\build\Release\ysim_equipment_db_test.exe
+cmake --build E:/Project/ysim/build --config Release --target ysim_equipment_db_test -- /m
+E:\Project\ysim\build\Release\ysim_equipment_db_test.exe
 ```

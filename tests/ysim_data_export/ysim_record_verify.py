@@ -15,7 +15,7 @@ import os
 import sqlite3
 import sys
 
-ROOT = r"E:\afsim\ysim\temp\ysim_record_out"
+ROOT = r"E:\Project\ysim\temp\ysim_record_out"
 
 def main():
     runs = sorted(glob.glob(os.path.join(ROOT, "run_*")))

@@ -19,12 +19,12 @@ rem       Formal assertion runs: python xio_e2e_verify.py
 rem *****************************************************************
 setlocal EnableDelayedExpansion
 chcp 65001 >nul
-set "CLIENT=e:\afsim\ysim\build\Release\xio_gateway_client.exe"
-set "MISSION=e:\afsim\ysim\build\Release\mission.exe"
-set "PLUGIN=e:\afsim\ysim\build\Release\mission_plugins\ysim_xio_gateway.dll"
-set "DEMO=e:\afsim\ysim\build\demos\air_to_air"
-set "IBLK=e:\afsim\ysim\tests\ysim_xio_gateway\scenarios\xio_iface_block.txt"
-set "SCEN=e:\afsim\ysim\tests\ysim_xio_gateway\scenarios\xio_rt2_scenario.txt"
+set "CLIENT=e:\Project\ysim\build\Release\xio_gateway_client.exe"
+set "MISSION=e:\Project\ysim\build\Release\mission.exe"
+set "PLUGIN=e:\Project\ysim\build\Release\mission_plugins\ysim_xio_gateway.dll"
+set "DEMO=e:\Project\ysim\build\demos\air_to_air"
+set "IBLK=e:\Project\ysim\tests\ysim_xio_gateway\scenarios\xio_iface_block.txt"
+set "SCEN=e:\Project\ysim\tests\ysim_xio_gateway\scenarios\xio_rt2_scenario.txt"
 set "CTITLE=ysim-bat-xio-client"
 set "MTITLE=ysim-bat-xio"
 cd /d %~dp0
@@ -45,7 +45,7 @@ taskkill /F /T /FI "WINDOWTITLE eq %MTITLE%" >nul 2>&1
 echo          leftover windows from a previous run: cleaned (if any)
 
 echo [bat] step 1/5: starting XIO client window (title %CTITLE%) ...
-start "%CTITLE%" /d "e:\afsim\ysim\build\Release" cmd /c ""%CLIENT%" 235.7.11.27 192.168. 3002 180 5"
+start "%CTITLE%" /d "e:\Project\ysim\build\Release" cmd /c ""%CLIENT%" 235.7.11.27 192.168. 3002 180 5"
 echo          client joining multicast 235.7.11.27:3002, will run a
 echo          10-command script and print every ack in its own window
 

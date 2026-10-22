@@ -184,7 +184,7 @@ end_ysim_equipment_db
 
 ## 4. 验证与收尾标准（2026-10-21 验收结论：全部通过）
 
-1. 编译：`cmake --build E:/afsim/ysim/build --config Release --target ysim_equipment_db -- /m`
+1. 编译：`cmake --build E:/Project/ysim/build --config Release --target ysim_equipment_db -- /m`
    成功 ✓；`ysim_equipment_db.dll` 已出现在 `build/Release/mission_plugins/` ✓；
    `YSIM_EQDB_SQLITE_SUPPORT=OFF` 降级路径编译通过后已恢复 AUTO 并重建复验 ✓
 2. 端到端（tests\equipmentdb\，当时经 run_equipmentdb.bat 一键运行，该 bat 后按 tests\ demo 定位策略于 2026-10-21 移除，现行入口为 mission 跑想定 + `python verify_equipmentdb.py` 两步直跑）**17/17 断言全部 PASS**：
@@ -231,7 +231,7 @@ end_ysim_equipment_db
 5. 版本坑（记入已知坑）：本仓库 GTest 锁 1.8.0，套件钩子须用 `SetUpTestCase/TearDownTestCase`
    （`SetUpTestSuite` 为 1.10+ 命名，静默不被调用 → 夹具从未创建，31 项全秒败）；
    另 `GetEquipmentCount("合法但无记录的表名")` 返回 0（TableName 过滤语义），仅白名单拦截才 -1
-6. 运行：`cmake --build E:/afsim/ysim/build --config Release --target ysim_equipment_db_test -- /m`
+6. 运行：`cmake --build E:/Project/ysim/build --config Release --target ysim_equipment_db_test -- /m`
    后在 build\Release 运行 `ysim_equipment_db_test.exe`（亦注册为 ctest 项 ysim_equipment_db）
 
 ## 5. 遗留项（转后续批次）

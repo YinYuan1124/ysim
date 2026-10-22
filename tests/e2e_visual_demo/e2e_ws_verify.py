@@ -16,10 +16,10 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-TEMP = Path(r"e:\afsim\ysim\temp")
-MISSION_EXE = r"e:\afsim\ysim\build\Release\mission.exe"
+TEMP = Path(r"e:\Project\ysim\temp")
+MISSION_EXE = r"e:\Project\ysim\build\Release\mission.exe"
 SCENARIO = str(HERE / "scenarios" / "e2e_visual_scenario.txt")
-CWD_DEMO = r"e:\afsim\ysim\build\demos\air_to_air"
+CWD_DEMO = r"e:\Project\ysim\build\demos\air_to_air"
 WS_HOST, WS_PORT = "127.0.0.1", 31601
 
 

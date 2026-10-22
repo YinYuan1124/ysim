@@ -60,7 +60,7 @@ ysim/
 │   └── cmake/ doc/         # CMake 模块 / 源内文档
 │
 ├── build/                  # CMake 构建输出（git 忽略）
-│   ├── CMakeCache.txt      # 配置缓存（生成器 VS17 2022，源目录 E:/afsim/ysim/src）
+│   ├── CMakeCache.txt      # 配置缓存（生成器 VS17 2022，源目录 E:/Project/ysim/src）
 │   ├── 3rd_party/          # 预编译三方依赖（Qt 5.12.11、geos 等，含 lupdate/lrelease 工具链）
 │   ├── Release/ Debug/     # 产物目录：mission.exe、wizard.exe、warlock.exe 及各领域 DLL
 │   ├── build_wsf/ build_wsf_mil/ build_wizard/ build_mission/ ...  # 各目标子构建目录（含 .vcxproj）

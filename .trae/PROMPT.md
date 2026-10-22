@@ -51,14 +51,14 @@ void WsfXxx::DoSomething()
 
 ### 5. 资源存放路径约束（最高优先级）
 
-- **AI 可调用电脑上任何工具**（PowerShell、Git、MSBuild、Qt 工具链、CMake 等），但**生成的脚本、图片等中间资源必须放到 `E:\afsim\ysim\temp` 路径下**
+- **AI 可调用电脑上任何工具**（PowerShell、Git、MSBuild、Qt 工具链、CMake 等），但**生成的脚本、图片等中间资源必须放到 `E:\Project\ysim\temp` 路径下**
 - **禁止将任何生成文件放到工作区外**（如 `C:\Users\...\AppData\Local\Temp\`、`C:\Temp\`、桌面、下载目录等）
 - 例外：最终交付物（文档、报告、修改日志等）按既有规范放置；临时脚本（如 `.ps1` 批量处理脚本）统一放 `temp/`，用完即删
-- 验证：每次生成文件前确认目标路径前缀为 `E:\afsim\ysim\temp\`，否则拒绝写入
+- 验证：每次生成文件前确认目标路径前缀为 `E:\Project\ysim\temp\`，否则拒绝写入
 
 ```powershell
 # 正确：临时脚本放 temp 目录
-$scriptPath = "E:\afsim\ysim\temp\my_script.ps1"
+$scriptPath = "E:\Project\ysim\temp\my_script.ps1"
 
 # 错误：临时脚本放工作区外
 $scriptPath = "C:\Users\$env:USERNAME\AppData\Local\Temp\my_script.ps1"
@@ -68,10 +68,10 @@ $scriptPath = "C:\Users\$env:USERNAME\AppData\Local\Temp\my_script.ps1"
 
 ```powershell
 # 编译单目标（日常）
-cmake --build E:/afsim/ysim/build --config Release --target wizard -- /m
+cmake --build E:/Project/ysim/build --config Release --target wizard -- /m
 
 # 新增/删除源文件后必须重新 configure（GLOB 是配置期扫描）
-cmake -B E:/afsim/ysim/build -S E:/afsim/ysim/src
+cmake -B E:/Project/ysim/build -S E:/Project/ysim/src
 ```
 
 - 改动验证：编译对应 `*_test` 目标跑单元测试；GUI 改动启动 wizard 验证

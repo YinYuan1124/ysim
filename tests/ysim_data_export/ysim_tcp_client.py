@@ -12,7 +12,7 @@ import time
 
 HOST = "127.0.0.1"
 PORT = int(os.environ.get("YSIM_PORT", "31600"))
-RESULT_FILE = r"E:\afsim\ysim\temp\ysim_client_result.txt"
+RESULT_FILE = r"E:\Project\ysim\temp\ysim_client_result.txt"
 
 
 def tstamp(sim_time):

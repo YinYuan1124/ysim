@@ -11,10 +11,10 @@ rem       Formal assertion runs: python dis_b1_verify.py
 rem *****************************************************************
 chcp 65001 >nul
 set PYTHONUTF8=1
-set "MISSION=e:\afsim\ysim\build\Release\mission.exe"
-set "DEMO=e:\afsim\ysim\build\demos\air_to_air"
-set "IBLK=e:\afsim\ysim\tests\ysim_dis_gateway\scenarios\dis_iface_block.txt"
-set "SCEN=e:\afsim\ysim\tests\ysim_dis_gateway\scenarios\dis_b1_scenario.txt"
+set "MISSION=e:\Project\ysim\build\Release\mission.exe"
+set "DEMO=e:\Project\ysim\build\demos\air_to_air"
+set "IBLK=e:\Project\ysim\tests\ysim_dis_gateway\scenarios\dis_iface_block.txt"
+set "SCEN=e:\Project\ysim\tests\ysim_dis_gateway\scenarios\dis_b1_scenario.txt"
 set "WTITLE=ysim-bat-dis1"
 cd /d %~dp0
 taskkill /F /T /FI "WINDOWTITLE eq %WTITLE%" >nul 2>&1
